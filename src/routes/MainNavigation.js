@@ -1,23 +1,37 @@
 /* eslint-disable react-native/no-inline-styles */
 import * as React from 'react';
-import { Button, Text, View } from 'react-native';
+import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Home from '../pages/Home';
+import Home, { HeaderHome } from '../pages/Home';
 import Product from '../pages/Product';
 import Favorite from '../pages/Favorite';
 import Transaksi from '../pages/Transaksi';
 import Akun from '../pages/Akun';
-
+import MyTabbar from './MyTabbar';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { sizeFont } from '../assets/responsive';
+import { color } from '../assets/colors/Index';
 
 const HomeStack = createStackNavigator();
 
 function HomeStackScreen() {
     return (
-        <HomeStack.Navigator>
-            <HomeStack.Screen name="Home" component={Home} />
-        </HomeStack.Navigator>
+        <>
+            <StatusBar translucent={false} backgroundColor={color.mainColor} barStyle="light-content" />
+            <HomeStack.Navigator>
+                <HomeStack.Screen
+                    name="Home"
+                    component={Home}
+                    options={{
+                        header: ({ navigation }) => {
+                            return <HeaderHome navigation={navigation} />;
+                        },
+                    }}
+                />
+            </HomeStack.Navigator>
+        </>
     );
 }
 
@@ -66,12 +80,87 @@ const Tab = createBottomTabNavigator();
 export default function MainNavigation() {
     return (
         <NavigationContainer>
-            <Tab.Navigator>
-                <Tab.Screen name="HomeStackScreen" component={HomeStackScreen} />
-                <Tab.Screen name="ProductStackScreen" component={ProductStackScreen} />
-                <Tab.Screen name="FavoriteStackScreen" component={FavoriteStackScreen} />
-                <Tab.Screen name="TransaksiStackScreen" component={TransaksiStackScreen} />
-                <Tab.Screen name="AkunStackScreen" component={AkunStackScreen} />
+            <Tab.Navigator
+                activeColor={color.mainColor}
+                inactiveColor={color.fontBody1}
+                barStyle={{
+                    backgroundColor: color.mainColor,
+                }}>
+                <Tab.Screen
+                    name="Home"
+                    component={HomeStackScreen}
+                    options={{
+                        tabBarIcon: () => {
+                            return (
+                                <Ionicons
+                                    name="home"
+                                    size={sizeFont(5)}
+                                    color={color.mainColor}
+                                />
+                            );
+                        },
+                    }}
+                />
+                <Tab.Screen
+                    name="Product"
+                    component={ProductStackScreen}
+                    options={{
+                        tabBarIcon: () => {
+                            return (
+                                <Ionicons
+                                    name="briefcase"
+                                    size={sizeFont(5)}
+                                    color={color.mainColor}
+                                />
+                            );
+                        },
+                    }}
+                />
+                <Tab.Screen
+                    name="Favorite"
+                    component={FavoriteStackScreen}
+                    options={{
+                        tabBarIcon: () => {
+                            return (
+                                <Ionicons
+                                    name="heart"
+                                    size={sizeFont(5)}
+                                    color={color.mainColor}
+                                />
+                            );
+                        },
+                    }}
+                />
+                <Tab.Screen
+                    name="Transaktion"
+                    component={TransaksiStackScreen}
+                    options={{
+                        tabBarIcon: () => {
+                            return (
+                                <Ionicons
+                                    name="swap-horizontal"
+                                    size={sizeFont(5)}
+                                    color={color.mainColor}
+                                />
+                            );
+                        },
+                    }}
+                />
+                <Tab.Screen
+                    name="Akun"
+                    component={AkunStackScreen}
+                    options={{
+                        tabBarIcon: () => {
+                            return (
+                                <Ionicons
+                                    name="person"
+                                    size={sizeFont(5)}
+                                    color={color.mainColor}
+                                />
+                            );
+                        },
+                    }}
+                />
             </Tab.Navigator>
         </NavigationContainer>
     );

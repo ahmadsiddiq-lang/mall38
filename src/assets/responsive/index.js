@@ -1,6 +1,6 @@
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('screen');
 
 const percentHeight = height / 100;
 const percentWidth = width / 100;
@@ -18,5 +18,5 @@ export const imageWidth = () => Math.round((width * 9) / 17.5);
 export const imageHeight = () => Math.round((imageWidth() * 9) / 18.5);
 
 //default
-export const SCREEN_HEIGHT = Dimensions.get('window').height;
-export const SCREEN_WIDTH = Dimensions.get('window').width;
+export const SCREEN_HEIGHT = Dimensions.get('screen').height;
+export const SCREEN_WIDTH = Dimensions.get('screen').width;
