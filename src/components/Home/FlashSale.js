@@ -73,7 +73,7 @@ export default function FlashSale() {
 const styles = StyleSheet.create({
     Container: {
         // padding: sizeWidth(5),
-        marginVertical: sizeHeight(2),
+        marginVertical: sizeHeight(1.5),
     },
     Content: {
         backgroundColor: color.bgWhite,

@@ -15,7 +15,7 @@ export default function Carousel({ navigation }) {
             scrollRef.current.scrollTo({
                 animatde: true,
                 y: 0,
-                x: SCREEN_WIDTH * indexOf,
+                x: sizeWidth(94) * indexOf,
             });
         }, 3000);
         return () => {
@@ -59,12 +59,12 @@ const styles = StyleSheet.create({
         // borderWidth: 1,
     },
     Image: {
-        width: SCREEN_WIDTH,
+        width: sizeWidth(94),
         height: sizeHeight(17),
     },
     BoxImage: {
         overflow: 'hidden',
-        width: SCREEN_WIDTH,
+        width: sizeWidth(94),
         height: sizeHeight(17),
         // borderWidth: 1,
         borderRadius: 8,
