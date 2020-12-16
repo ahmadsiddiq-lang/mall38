@@ -7,7 +7,7 @@ import { color } from '../../assets/colors/Index';
 import CardProduk, { CardEnd } from '../CardProduk';
 
 
-export default function FlashSale({ navigation, dataProduk }) {
+export default function FlashSale({ navigation, dataFlash, dateFlashShale }) {
 
     const renderItem = (item, index) => {
         return (
@@ -35,32 +35,50 @@ export default function FlashSale({ navigation, dataProduk }) {
                         fontSize: sizeFont(4),
                         fontFamily: Poppins.MediumItalic,
                         color: color.fontBlack,
-                    }}>Pilihan Rantang </Text>
+                    }}>Flash Sale</Text>
                     {/* <Text style={{
                         fontSize: sizeFont(3.5),
                         color: color.fontBlack,
                     }}>Lihat semua</Text> */}
-                    <View style={styles.BoxTime}>
-                        <View style={styles.BoxItemTime}>
-                            <Text style={styles.TextTime}>01</Text>
-                        </View>
-                        <Text style={styles.TextTime}>:</Text>
-                        <View style={styles.BoxItemTime}>
-                            <Text style={styles.TextTime}>20</Text>
-                        </View>
-                        <Text style={styles.TextTime}>:</Text>
-                        <View style={styles.BoxItemTime}>
-                            <Text style={styles.TextTime}>30</Text>
-                        </View>
-                    </View>
+                    {
+                        dateFlashShale ?
+                            <View style={styles.BoxTime}>
+                                <View style={styles.BoxItemTime}>
+                                    <Text style={styles.TextTime}>{dateFlashShale.hours}</Text>
+                                </View>
+                                <Text style={styles.TextTime}>:</Text>
+                                <View style={styles.BoxItemTime}>
+                                    <Text style={styles.TextTime}>{dateFlashShale.minutes}</Text>
+                                </View>
+                                <Text style={styles.TextTime}>:</Text>
+                                <View style={styles.BoxItemTime}>
+                                    <Text style={styles.TextTime}>{dateFlashShale.seconds}</Text>
+                                </View>
+                            </View>
+                            :
+                            <View style={styles.BoxTime}>
+                                <View style={styles.BoxItemTime}>
+                                    <Text style={styles.TextTime}>00</Text>
+                                </View>
+                                <Text style={styles.TextTime}>:</Text>
+                                <View style={styles.BoxItemTime}>
+                                    <Text style={styles.TextTime}>00</Text>
+                                </View>
+                                <Text style={styles.TextTime}>:</Text>
+                                <View style={styles.BoxItemTime}>
+                                    <Text style={styles.TextTime}>00</Text>
+                                </View>
+                            </View>
+
+                    }
                 </View>
                 <ScrollView
                     showsHorizontalScrollIndicator={false}
                     horizontal
                 >
                     <View style={styles.ContainerProduk}>
-                        {dataProduk &&
-                            dataProduk.slice(0, 3).map(renderItem)}
+                        {dataFlash &&
+                            dataFlash.slice(0, 3).map(renderItem)}
                         <CardEnd />
                     </View>
                 </ScrollView>

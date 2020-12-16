@@ -8,7 +8,7 @@ import CardProduk, { CardEnd } from '../CardProduk';
 import { DefaultText } from '../DefaultText';
 
 
-export default function FavoritList({ dataProduk, navigation }) {
+export default function FavoritList({ dataFlash, navigation }) {
 
     // const [dataProduk, setDataProduk] = useState([1, 2, 3, 4, 5]);
 
@@ -39,8 +39,8 @@ export default function FavoritList({ dataProduk, navigation }) {
                     paddingHorizontal: sizeWidth(2.5),
                 }}>
                     {
-                        dataProduk &&
-                        dataProduk.slice(0, 4).map((item, index) => (
+                        dataFlash &&
+                        dataFlash.slice(0, 4).map((item, index) => (
                             <View key={index}>
                                 <CardProduk item={item} />
                             </View>

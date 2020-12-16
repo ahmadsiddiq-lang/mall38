@@ -1,12 +1,36 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import ListProduk from '../components/Produk/ListProduk';
+import { getProduk } from '../redux/actions/Produk';
 
-export default function Product() {
+
+export default function Product({ navigation }) {
+    const dispatch = useDispatch();
+
+    const dataProduk = useSelector(state => state.produk.produk);
+
+    const getProduks = useCallback(async () => {
+        dispatch(getProduk());
+    }, [dispatch]);
+
+
+    useEffect(() => {
+        getProduks();
+        return () => {
+            getProduks();
+        };
+    }, [getProduks]);
+
     return (
-        <View>
-            <Text>Product</Text>
+        <View style={styles.Container}>
+            <ListProduk navigation={navigation} dataProduk={dataProduk} />
         </View>
     );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    Container: {
+        flex: 1,
+    },
+});

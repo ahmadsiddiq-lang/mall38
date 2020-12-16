@@ -4,10 +4,16 @@ export const GET_CAROUSEL = 'GET_CAROUSEL';
 
 export const getCarousel = () => {
     return async (dispatch) => {
-        const dataCarousel = await Axios.get(BASE_URL + 'banner');
-        dispatch({
-            type: GET_CAROUSEL,
-            data: dataCarousel.data.data.banner,
-        });
+        await Axios.get(BASE_URL + 'banner').then(dataCarousel => {
+            dispatch({
+                type: GET_CAROUSEL,
+                data: dataCarousel.data.data.banner,
+            });
+        }).catch(err => console.log(err));
+        // const dataCarousel = await Axios.get(BASE_URL + 'banner');
+        // dispatch({
+        //     type: GET_CAROUSEL,
+        //     data: dataCarousel.data.data.banner,
+        // });
     };
 };

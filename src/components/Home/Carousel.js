@@ -4,17 +4,19 @@ import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-nat
 import { color } from '../../assets/colors/Index';
 import { sizeHeight, sizeWidth } from '../../assets/responsive';
 
-export default function Carousel({ navigation, dataCarousel }) {
+export default function Carousel({ navigation, dataCarousel = [] }) {
 
     const scrollRef = React.useRef();
     const data = dataCarousel;
+    // console.log(data);
 
     const [indexOf, setIndexOf] = useState(0);
 
 
     useEffect(() => {
+        const lenghtData = dataCarousel.length;
         const interval = setInterval(() => {
-            setIndexOf(indexOf === [1, 2, 3, 4].length - 1 ? 0 : indexOf + 1);
+            setIndexOf(indexOf === lenghtData - 1 ? 0 : indexOf + 1);
             scrollRef.current.scrollTo({
                 animatde: true,
                 y: 0,
@@ -24,7 +26,7 @@ export default function Carousel({ navigation, dataCarousel }) {
         return () => {
             clearInterval(interval);
         };
-    }, [indexOf]);
+    });
 
 
     return (
@@ -41,15 +43,19 @@ export default function Carousel({ navigation, dataCarousel }) {
                 }}>
                     {
                         data &&
-                        data.map((item, index) => (
-                            <TouchableOpacity
-                                key={index}
-                                activeOpacity={0.8}
-                                style={styles.BoxImage}
-                            >
-                                <Image resizeMethod="auto" style={styles.Image} source={{ uri: item.image }} />
-                            </TouchableOpacity>
-                        ))
+                        data.map((item, index) => {
+                            // if (item.position === 'top') {
+                            return (
+                                <TouchableOpacity
+                                    key={index}
+                                    activeOpacity={0.8}
+                                    style={styles.BoxImage}
+                                >
+                                    <Image resizeMethod="auto" style={styles.Image} source={{ uri: item.image }} />
+                                </TouchableOpacity>
+                            );
+                            // }
+                        })
                     }
                 </View>
             </ScrollView>
@@ -86,7 +92,6 @@ const styles = StyleSheet.create({
         width: sizeWidth(94),
         height: sizeHeight(17),
         // borderWidth: 1,
-        borderRadius: 8,
     },
     CircleDiv: {
         // position: 'absolute',

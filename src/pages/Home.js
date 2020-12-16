@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { color } from '../assets/colors/Index';
 import { sizeHeight, sizeWidth } from '../assets/responsive';
@@ -11,14 +11,17 @@ import Spesial from '../components/Home/Spesial';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCarousel } from '../redux/actions/Carousel';
 import { getCategori } from '../redux/actions/Categori';
-import { getProduk } from '../redux/actions/Produk';
+import { getFlashSale } from '../redux/actions/FlashSale';
+import { countDown } from '../config/function';
+// import { countDown } from '../config/function';
 
 export default function Home({ navigation }) {
 
     const dispatch = useDispatch();
     const dataCarousel = useSelector(state => state.Carousel.Carousel);
     const dataCategori = useSelector(state => state.categori.categori);
-    const dataProduk = useSelector(state => state.produk.produk);
+    const dataFlash = useSelector(state => state.flashsale.flashsale);
+    const [dateFlashShale, setDateFlash] = useState('');
 
     // console.log(dataProduk);
 
@@ -30,14 +33,29 @@ export default function Home({ navigation }) {
         dispatch(getCategori());
     }, [dispatch]);
 
-    const getProduks = useCallback(async () => {
-        dispatch(getProduk());
+    const getFlash = useCallback(async () => {
+        dispatch(getFlashSale());
     }, [dispatch]);
+
 
     useEffect(() => {
         getCarousels();
         getCategoris();
-        getProduks();
+        getFlash();
+        // var countDownDate = new Date('Dec 16, 2020 21:37:25').getTime();
+        // const x = setInterval(function () {
+        //     const time = countDown(countDownDate);
+        //     setDateFlash(time);
+        //     if (time.distance < 0) {
+        //         clearInterval(x);
+        //     }
+        // }, 1000);
+        return () => {
+            // clearInterval(x);
+            getCarousels();
+            getCategoris();
+            getFlash();
+        };
     });
 
     return (
@@ -46,9 +64,9 @@ export default function Home({ navigation }) {
                 <Carousel dataCarousel={dataCarousel} />
             </View>
             <Categori navigation={navigation} dataCategori={dataCategori} />
-            <FlashSale navigation={navigation} dataProduk={dataProduk} />
+            <FlashSale dateFlashShale={dateFlashShale} navigation={navigation} dataFlash={dataFlash} />
             <Spesial />
-            <FavoritList navigation={navigation} dataProduk={dataProduk} />
+            <FavoritList navigation={navigation} dataFlash={dataFlash} />
         </ScrollView>
     );
 }

@@ -8,12 +8,14 @@ import thunk from 'redux-thunk';
 import CarouselReducer from './src/redux/reducers/Carousel';
 import CategoriReducer from './src/redux/reducers/Categori';
 import ProdukReducer from './src/redux/reducers/Produk';
+import FlashReducer from './src/redux/reducers/FlashSlae';
 import { combineReducers, applyMiddleware, createStore } from 'redux';
 
 const RootReducer = combineReducers({
   Carousel: CarouselReducer,
   categori: CategoriReducer,
   produk: ProdukReducer,
+  flashsale: FlashReducer,
 });
 
 const store = createStore(RootReducer, applyMiddleware(thunk));

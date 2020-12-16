@@ -52,12 +52,13 @@ export default function Home({ navigation }) {
 const styles = StyleSheet.create({
     Container: {
         width: '100%',
-        height: sizeHeight(6.5),
+        // height: sizeHeight(6.5),
         backgroundColor: color.mainColor,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingHorizontal: sizeWidth(5),
+        paddingVertical: sizeHeight(0.5),
     },
     textInput: {
         color: color.mainColor,

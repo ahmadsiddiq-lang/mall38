@@ -39,7 +39,15 @@ const ProductStack = createStackNavigator();
 function ProductStackScreen() {
     return (
         <ProductStack.Navigator>
-            <ProductStack.Screen name="Product" component={Product} />
+            <ProductStack.Screen
+                name="Product"
+                component={Product}
+                options={{
+                    header: ({ navigation }) => {
+                        return <HeaderHome navigation={navigation} />;
+                    },
+                }}
+            />
         </ProductStack.Navigator>
     );
 }
@@ -80,8 +88,10 @@ export default function MainNavigation() {
     return (
         <NavigationContainer>
             <Tab.Navigator
-                activeColor={color.mainColor}
-                inactiveColor={color.fontBody1}
+                tabBarOptions={{
+                    activeTintColor: color.mainColor,
+                    inactiveTintColor: color.fontBlack1,
+                }}
                 barStyle={{
                     backgroundColor: color.mainColor,
                 }}>
@@ -89,10 +99,10 @@ export default function MainNavigation() {
                     name="Home"
                     component={HomeStackScreen}
                     options={{
-                        tabBarIcon: () => {
+                        tabBarIcon: ({ focused }) => {
                             return (
                                 <Ionicons
-                                    name="home"
+                                    name={focused ? 'home' : 'home-outline'}
                                     size={sizeFont(5)}
                                     color={color.mainColor}
                                 />
@@ -104,10 +114,10 @@ export default function MainNavigation() {
                     name="Product"
                     component={ProductStackScreen}
                     options={{
-                        tabBarIcon: () => {
+                        tabBarIcon: ({ focused }) => {
                             return (
                                 <Ionicons
-                                    name="briefcase"
+                                    name={focused ? 'briefcase' : 'briefcase-outline'}
                                     size={sizeFont(5)}
                                     color={color.mainColor}
                                 />
@@ -119,10 +129,10 @@ export default function MainNavigation() {
                     name="Favorite"
                     component={FavoriteStackScreen}
                     options={{
-                        tabBarIcon: () => {
+                        tabBarIcon: ({ focused }) => {
                             return (
                                 <Ionicons
-                                    name="heart"
+                                    name={focused ? 'heart' : 'heart-outline'}
                                     size={sizeFont(5)}
                                     color={color.mainColor}
                                 />
@@ -149,10 +159,10 @@ export default function MainNavigation() {
                     name="Akun"
                     component={AkunStackScreen}
                     options={{
-                        tabBarIcon: () => {
+                        tabBarIcon: ({ focused }) => {
                             return (
                                 <Ionicons
-                                    name="person"
+                                    name={focused ? 'person' : 'person-outline'}
                                     size={sizeFont(5)}
                                     color={color.mainColor}
                                 />

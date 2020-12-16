@@ -8,7 +8,7 @@ import { DefaultTitle } from './DefaultText';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { rupiah } from '../config/function';
 
-export default function CardProduk({ item, navigation, onPressProduk, onPressBeli }) {
+export default function CardProdukVer({ item, navigation, onPressProduk, onPressBeli }) {
     return (
         <View style={styles.Container}>
             <TouchableOpacity
@@ -76,18 +76,21 @@ const styles = StyleSheet.create({
         borderColor: color.border2,
         borderRadius: 8,
         marginHorizontal: sizeWidth(2.5),
-        width: sizeWidth(40),
+        flex: 1,
+        marginVertical: sizeHeight(2),
+        paddingBottom: sizeHeight(6),
     },
     BoxImage: {
         // borderWidth: 1,
-        width: sizeWidth(40),
+        // width: sizeWidth(40),
+        flex: 1,
         height: sizeWidth(25),
         overflow: 'hidden',
         borderTopLeftRadius: 8,
         borderTopRightRadius: 8,
     },
     image: {
-        width: sizeWidth(40),
+        width: '100%',
         height: sizeWidth(25),
     },
     BoxText: {
@@ -101,5 +104,8 @@ const styles = StyleSheet.create({
         marginHorizontal: sizeWidth(2),
         marginVertical: sizeHeight(1),
         borderRadius: 8,
+        position: 'absolute',
+        bottom: 0,
+        width: '90%',
     },
 });
