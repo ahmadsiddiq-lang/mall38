@@ -1,6 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import Axios from 'axios';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { color } from '../assets/colors/Index';
 import { sizeHeight, sizeWidth } from '../assets/responsive';
 import Header from '../components/Header/Home';
@@ -12,13 +11,16 @@ import Spesial from '../components/Home/Spesial';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCarousel } from '../redux/actions/Carousel';
 import { getCategori } from '../redux/actions/Categori';
-import { BASE_URL } from '../config/URL';
+import { getProduk } from '../redux/actions/Produk';
 
 export default function Home({ navigation }) {
 
     const dispatch = useDispatch();
     const dataCarousel = useSelector(state => state.Carousel.Carousel);
     const dataCategori = useSelector(state => state.categori.categori);
+    const dataProduk = useSelector(state => state.produk.produk);
+
+    // console.log(dataProduk);
 
     const getCarousels = useCallback(async () => {
         dispatch(getCarousel());
@@ -28,9 +30,14 @@ export default function Home({ navigation }) {
         dispatch(getCategori());
     }, [dispatch]);
 
+    const getProduks = useCallback(async () => {
+        dispatch(getProduk());
+    }, [dispatch]);
+
     useEffect(() => {
         getCarousels();
         getCategoris();
+        getProduks();
     });
 
     return (
@@ -39,9 +46,9 @@ export default function Home({ navigation }) {
                 <Carousel dataCarousel={dataCarousel} />
             </View>
             <Categori navigation={navigation} dataCategori={dataCategori} />
-            <FlashSale />
+            <FlashSale navigation={navigation} dataProduk={dataProduk} />
             <Spesial />
-            <FavoritList />
+            <FavoritList navigation={navigation} dataProduk={dataProduk} />
         </ScrollView>
     );
 }
@@ -53,7 +60,6 @@ export const HeaderHome = ({ navigation }) => {
 const styles = StyleSheet.create({
     Container: {
         flex: 1,
-        // backgroundColor: color.bgWhite,
     },
     BoxCarousel: {
         paddingVertical: sizeHeight(2),

@@ -6,8 +6,10 @@ import { Poppins } from '../assets/fonts';
 import { sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
 import { DefaultTitle } from './DefaultText';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { rupiah } from '../config/function';
 
-export default function CardProduk({ navigation, onPressProduk, onPressBeli }) {
+export default function CardProduk({ item, navigation, onPressProduk, onPressBeli }) {
+    console.log(item);
     return (
         <View style={styles.Container}>
             <TouchableOpacity
@@ -15,18 +17,23 @@ export default function CardProduk({ navigation, onPressProduk, onPressBeli }) {
                 onPress={() => onPressProduk && onPressProduk()}
             >
                 <View style={styles.BoxImage}>
-                    <Image resizeMethod="auto" style={styles.image} source={require('../assets/images/Produk/Produk1.png')} />
+                    {
+                        item !== undefined ?
+                            <Image resizeMethod="auto" style={styles.image} source={{ uri: item.image }} />
+                            :
+                            <Image resizeMethod="auto" style={styles.image} source={require('../assets/images/Produk/imagedefault.png')} />
+                    }
                 </View>
                 <View style={styles.BoxText}>
-                    <DefaultTitle>Oreo Dairy Milk</DefaultTitle>
+                    <DefaultTitle>{item && item.name}</DefaultTitle>
                     <Text style={{
                         fontSize: sizeFont(3.3),
                         color: color.fontBlack1,
-                    }}>Coklat</Text>
+                    }}>{item && item.category.name}</Text>
                     <Text style={{
                         fontSize: sizeFont(3.8),
                         fontFamily: Poppins.Medium,
-                    }}>Rp. 12.000</Text>
+                    }}>Rp. {item && rupiah(item.price)}</Text>
                 </View>
             </TouchableOpacity>
             <TouchableOpacity
@@ -70,6 +77,7 @@ const styles = StyleSheet.create({
         borderColor: color.border2,
         borderRadius: 8,
         marginHorizontal: sizeWidth(2.5),
+        width: sizeWidth(40),
     },
     BoxImage: {
         // borderWidth: 1,

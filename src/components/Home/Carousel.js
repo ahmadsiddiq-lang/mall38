@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { color } from '../../assets/colors/Index';
 import { sizeHeight, sizeWidth } from '../../assets/responsive';
 
 export default function Carousel({ navigation, dataCarousel }) {
@@ -52,6 +53,20 @@ export default function Carousel({ navigation, dataCarousel }) {
                     }
                 </View>
             </ScrollView>
+            <View style={styles.CircleDiv}>
+                {data &&
+                    data.map((_, index) => {
+                        // console.log(indexOf);
+                        return (
+                            <View key={index} style={[
+                                styles.WhiteCircle,
+                                { backgroundColor: index === indexOf ? color.bgBlack : color.bgWhite },
+                                { width: index === indexOf ? sizeWidth(5) : 8 },
+                            ]} />
+                        );
+                    })
+                }
+            </View>
         </View>
     );
 }
@@ -72,5 +87,21 @@ const styles = StyleSheet.create({
         height: sizeHeight(17),
         // borderWidth: 1,
         borderRadius: 8,
+    },
+    CircleDiv: {
+        // position: 'absolute',
+        // width: '100%',
+        marginTop: sizeHeight(1),
+        height: 15,
+        bottom: 0,
+        display: 'flex',
+        flexDirection: 'row',
+        // justifyContent: 'center',
+        alignItems: 'center',
+    },
+    WhiteCircle: {
+        height: 8,
+        borderRadius: 6,
+        margin: 5,
     },
 });

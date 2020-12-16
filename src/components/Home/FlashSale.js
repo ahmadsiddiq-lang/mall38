@@ -7,9 +7,7 @@ import { color } from '../../assets/colors/Index';
 import CardProduk, { CardEnd } from '../CardProduk';
 
 
-export default function FlashSale() {
-
-    const [dataProduk, setDataProduk] = useState([1, 2, 3, 4, 5]);
+export default function FlashSale({ navigation, dataProduk }) {
 
     const renderItem = (item, index) => {
         return (
@@ -17,7 +15,7 @@ export default function FlashSale() {
                 key={index}
                 style={styles.CardProduk}
             >
-                <CardProduk />
+                <CardProduk item={item} />
             </View>
         );
     };
@@ -61,7 +59,8 @@ export default function FlashSale() {
                     horizontal
                 >
                     <View style={styles.ContainerProduk}>
-                        {dataProduk.slice(0, 3).map(renderItem)}
+                        {dataProduk &&
+                            dataProduk.slice(0, 3).map(renderItem)}
                         <CardEnd />
                     </View>
                 </ScrollView>

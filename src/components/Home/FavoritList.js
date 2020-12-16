@@ -8,9 +8,9 @@ import CardProduk, { CardEnd } from '../CardProduk';
 import { DefaultText } from '../DefaultText';
 
 
-export default function FavoritList() {
+export default function FavoritList({ dataProduk, navigation }) {
 
-    const [dataProduk, setDataProduk] = useState([1, 2, 3, 4, 5]);
+    // const [dataProduk, setDataProduk] = useState([1, 2, 3, 4, 5]);
 
     return (
         <View style={styles.Container}>
@@ -39,9 +39,10 @@ export default function FavoritList() {
                     paddingHorizontal: sizeWidth(2.5),
                 }}>
                     {
+                        dataProduk &&
                         dataProduk.slice(0, 4).map((item, index) => (
                             <View key={index}>
-                                <CardProduk />
+                                <CardProduk item={item} />
                             </View>
                         ))
                     }

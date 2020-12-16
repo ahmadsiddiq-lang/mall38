@@ -4,7 +4,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
 import { Poppins } from '../../assets/fonts';
 import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
-import { DefaultTitle } from '../DefaultText';
+import { DefaultText } from '../DefaultText';
 
 export default function Spesial() {
     return (
@@ -22,7 +22,7 @@ export default function Spesial() {
                 <TouchableOpacity
                     activeOpacity={0.8}
                 >
-                    <DefaultTitle>Lihat semua</DefaultTitle>
+                    <DefaultText>Lihat semua</DefaultText>
                 </TouchableOpacity>
             </View>
             <Image resizeMethod="auto" style={styles.image} source={require('../../assets/images/banner/Spesial.png')} />
