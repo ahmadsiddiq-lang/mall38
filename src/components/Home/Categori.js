@@ -1,45 +1,56 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
 import { sizeHeight, sizeWidth } from '../../assets/responsive';
 
-export default function Categori() {
-    return (
-        <View style={styles.Container}>
-            {
-                [1, 2, 3, 4].map((_, index) => (
-                    <TouchableOpacity
-                        key={index}
-                        activeOpacity={0.8}
-                        style={styles.BoxImage}>
-                        <Image resizeMethod="auto" style={styles.image} source={require('../../assets/images/categori/Icon4.png')} />
-                    </TouchableOpacity>
-                ))
-            }
+export default function Categori({ dataCategori, navigation }) {
 
-        </View>
+    const data = dataCategori;
+
+    return (
+        <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={styles.Container}>
+            <View style={{
+                flexDirection: 'row',
+                paddingHorizontal: sizeWidth(2.5),
+                paddingVertical: sizeHeight(3),
+            }}>
+                {
+                    data &&
+                    data.map((item, index) => (
+                        <TouchableOpacity
+                            onPress={() => console.log('Ahmad')}
+                            key={index}
+                            activeOpacity={0.8}
+                            style={styles.BoxImage}>
+                            <Image resizeMethod="auto" style={styles.image} source={{ uri: item.icon }} />
+                        </TouchableOpacity>
+                    ))
+                }
+            </View>
+        </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
     Container: {
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-        paddingHorizontal: sizeWidth(5),
-        paddingVertical: sizeHeight(2),
         backgroundColor: color.bgWhite,
     },
     BoxImage: {
         width: sizeWidth(13),
         height: sizeWidth(13),
         overflow: 'hidden',
-        borderRadius: 100,
+        // borderRadius: 100,
         alignItems: 'center',
         justifyContent: 'center',
+        marginHorizontal: sizeWidth(2.5),
     },
     image: {
-        width: sizeWidth(13),
-        height: sizeWidth(13),
+        width: sizeWidth(12),
+        height: sizeWidth(12),
     },
 
 });

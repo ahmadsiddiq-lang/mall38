@@ -9,7 +9,6 @@ import Product from '../pages/Product';
 import Favorite from '../pages/Favorite';
 import Transaksi from '../pages/Transaksi';
 import Akun from '../pages/Akun';
-import MyTabbar from './MyTabbar';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { sizeFont } from '../assets/responsive';
 import { color } from '../assets/colors/Index';

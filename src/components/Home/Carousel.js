@@ -1,13 +1,15 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useState } from 'react';
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { SCREEN_WIDTH, sizeHeight, sizeWidth } from '../../assets/responsive';
+import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { sizeHeight, sizeWidth } from '../../assets/responsive';
 
-export default function Carousel({ navigation }) {
+export default function Carousel({ navigation, dataCarousel }) {
 
     const scrollRef = React.useRef();
+    const data = dataCarousel;
 
     const [indexOf, setIndexOf] = useState(0);
+
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -37,13 +39,14 @@ export default function Carousel({ navigation }) {
                     flexDirection: 'row',
                 }}>
                     {
-                        [1, 2, 3, 4, 5, 6, 6].map((_, index) => (
+                        data &&
+                        data.map((item, index) => (
                             <TouchableOpacity
                                 key={index}
                                 activeOpacity={0.8}
                                 style={styles.BoxImage}
                             >
-                                <Image resizeMethod="auto" style={styles.Image} source={require('../../assets/images/banner/Banner1.png')} />
+                                <Image resizeMethod="auto" style={styles.Image} source={{ uri: item.image }} />
                             </TouchableOpacity>
                         ))
                     }
@@ -57,10 +60,11 @@ const styles = StyleSheet.create({
     Container: {
         // height: sizeHeight(18),
         // borderWidth: 1,
+        marginTop: sizeHeight(2),
     },
     Image: {
         width: sizeWidth(94),
-        height: sizeHeight(17),
+        height: sizeHeight(20),
     },
     BoxImage: {
         overflow: 'hidden',
