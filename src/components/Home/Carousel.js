@@ -60,7 +60,7 @@ export default function Carousel({ navigation, dataCarousel }) {
                         return (
                             <View key={index} style={[
                                 styles.WhiteCircle,
-                                { backgroundColor: index === indexOf ? color.bgBlack : color.bgWhite },
+                                { backgroundColor: index === indexOf ? color.bgBlack1 : color.bgWhite },
                                 { width: index === indexOf ? sizeWidth(5) : 8 },
                             ]} />
                         );
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     Container: {
         // height: sizeHeight(18),
         // borderWidth: 1,
-        marginTop: sizeHeight(2),
+        marginTop: sizeHeight(1),
     },
     Image: {
         width: sizeWidth(94),
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     CircleDiv: {
         // position: 'absolute',
         // width: '100%',
-        marginTop: sizeHeight(1),
+        marginTop: sizeHeight(2),
         height: 15,
         bottom: 0,
         display: 'flex',

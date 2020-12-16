@@ -12,7 +12,7 @@ export const color = {
     fontBlue: '#354e94',
     bgWhite: 'white',
     bgBlack: 'black',
-    bgBlack1: '#7d7d7d',
+    bgBlack1: '#525252',
     bgBlack2: '#c2c2c2',
     bgBlack3: '#ebebeb',
     bgBlack4: '#F5F5F5',
