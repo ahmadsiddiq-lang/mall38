@@ -13,7 +13,7 @@ export default function CardProdukVer({ item, navigation, onPressProduk, onPress
         <View style={styles.Container}>
             <TouchableOpacity
                 activeOpacity={0.8}
-                onPressIn={() => navigation.navigate('DetailProduk', {
+                onPress={() => navigation.navigate('DetailProduk', {
                     idProduk: item.id,
                 })}
             >

@@ -36,6 +36,10 @@ export default function ListProduk({ navigation, dataProdukCategori }) {
 
     };
 
+    const onPressBeli = () => {
+        console.log('Beli');
+    };
+
     const listFooterComponent = () => {
         return (
             <View>
@@ -69,7 +73,7 @@ export default function ListProduk({ navigation, dataProdukCategori }) {
                                         );
                                     }
                                     return (
-                                        <CardProdukVer item={item} />
+                                        <CardProdukVer navigation={navigation} onPressBeli={onPressBeli} item={item} />
                                     );
                                 }
                             }}

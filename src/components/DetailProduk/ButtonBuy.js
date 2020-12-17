@@ -9,7 +9,7 @@ export default function ButtonBuy() {
     return (
         <View style={styles.Container}>
             <TouchableOpacity
-                activeOpacity={0.8}
+                activeOpacity={1}
                 style={[styles.BtnAddCart, {
                     backgroundColor: '#05991d',
                     marginRight: sizeWidth(2),
@@ -18,7 +18,7 @@ export default function ButtonBuy() {
                 <FontAwesome5 name="cart-plus" size={sizeFont(5)} solid color={color.fontWhite} />
             </TouchableOpacity>
             <TouchableOpacity
-                activeOpacity={0.8}
+                activeOpacity={1}
                 style={[styles.BtnAddCart, {
                     flex: 3,
                 }]}>

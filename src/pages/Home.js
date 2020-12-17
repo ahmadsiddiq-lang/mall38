@@ -45,12 +45,12 @@ export default function Home({ navigation }) {
     }, [getCarousels, getCategoris, getFlash]);
 
     useEffect(() => {
-        // var countDownDate = new Date('Dec 17, 2020 21:37:25').getTime();
-        var myDate = '12-12-2020';
-        myDate = myDate.split('-');
-        var countDownDate = new Date(myDate[2], myDate[1] - 1, myDate[0]);
+        var countDownDate = new Date('Dec 30, 2020 00:00:25').getTime();
+        // var myDate = '20-12-2020';
+        // myDate = myDate.split('-');
+        // var countDownDate = new Date(myDate[2], myDate[1] - 1, myDate[0]);
         const x = setInterval(function () {
-            const time = countDown(countDownDate.getTime());
+            const time = countDown(countDownDate);
             setDateFlash(time);
             if (time.distance < 0) {
                 clearInterval(x);
@@ -68,10 +68,10 @@ export default function Home({ navigation }) {
                 <View style={styles.BoxCarousel}>
                     <Carousel dataCarousel={dataCarousel} />
                 </View>
-                <Categori navigation={navigation} dataCategori={dataCategori} />
-                <FlashSale dateFlashShale={dateFlashShale} navigation={navigation} dataFlash={dataFlash} />
-                <Spesial />
                 <FavoritList navigation={navigation} dataFlash={dataFlash} />
+                <Categori navigation={navigation} dataCategori={dataCategori} />
+                <Spesial />
+                <FlashSale dateFlashShale={dateFlashShale} navigation={navigation} dataFlash={dataFlash} />
             </ScrollView>
         </View>
     );

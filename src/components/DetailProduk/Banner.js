@@ -37,7 +37,7 @@ export default function Banner({ detailProduk }) {
                                     onPress={() => setImageBanner(item.image)}
                                     activeOpacity={0.8}
                                     key={index} style={styles.BoxImageItem}>
-                                    <Image resizeMethod="resize" style={styles.Image} source={{ uri: item.image }} />
+                                    <Image resizeMethod="auto" style={styles.Image} source={{ uri: item.image }} />
                                     {/* <Image resizeMethod="resize" style={styles.Image} source={require('../../assets/images/Produk/imagedefault.png')} /> */}
                                 </TouchableOpacity>
                             );
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     },
     BoxImageBanner: {
         width: sizeWidth(80),
-        height: sizeHeight(50),
+        height: sizeHeight(35),
         borderLeftWidth: 4,
         borderRightWidth: 4,
         borderBottomWidth: 4,

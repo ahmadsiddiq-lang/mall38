@@ -72,8 +72,8 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         alignItems: 'center',
         justifyContent: 'center',
-        width: sizeWidth(10),
-        height: sizeWidth(10),
+        width: sizeWidth(8),
+        height: sizeWidth(8),
     },
     BoxBtnRight: {
         flexDirection: 'row',

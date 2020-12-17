@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
     Container: {
         backgroundColor: color.bgWhite,
         paddingBottom: sizeHeight(2),
+        marginVertical: sizeHeight(1),
     },
     image: {
         width: SCREEN_WIDTH,

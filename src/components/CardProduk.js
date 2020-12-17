@@ -32,7 +32,7 @@ export default function CardProduk({ item, navigation, onPressBeli }) {
                         color: color.fontBlack1,
                     }}>{item && item.category.name}</Text>
                     <Text style={{
-                        fontSize: sizeFont(3.8),
+                        fontSize: sizeFont(3.5),
                         fontFamily: Poppins.Medium,
                     }}>Rp. {item && rupiah(item.price)}</Text>
                 </View>

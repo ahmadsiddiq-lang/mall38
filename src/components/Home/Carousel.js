@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     },
     Image: {
         width: sizeWidth(94),
-        height: sizeHeight(20),
+        height: sizeHeight(18),
     },
     BoxImage: {
         overflow: 'hidden',

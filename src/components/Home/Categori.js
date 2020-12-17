@@ -42,6 +42,7 @@ export default function Categori({ dataCategori, navigation }) {
 const styles = StyleSheet.create({
     Container: {
         backgroundColor: color.bgWhite,
+        marginTop: sizeHeight(1),
     },
     BoxImage: {
         width: sizeWidth(13),
@@ -52,8 +53,8 @@ const styles = StyleSheet.create({
         marginHorizontal: sizeWidth(2.5),
     },
     image: {
-        width: sizeWidth(10),
-        height: sizeWidth(10),
+        width: sizeWidth(8),
+        height: sizeWidth(8),
     },
 
 });

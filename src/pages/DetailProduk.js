@@ -1,7 +1,6 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { sizeHeight } from '../assets/responsive';
 import Banner from '../components/DetailProduk/Banner';
 import ButtonBuy from '../components/DetailProduk/ButtonBuy';
 import Deskripsi from '../components/DetailProduk/Deskripsi';
@@ -13,15 +12,25 @@ import { getDetailProduk } from '../redux/actions/DetailProduk';
 export default function DetailProduk({ navigation, route }) {
 
     const dispatch = useDispatch();
+    const refScroll = useRef(null);
 
     const dataProduk = useSelector(state => state.produk.produk);
     const detailProduk = useSelector(state => state.detailProduk.detailProduk);
+
+
     const getDetailProduks = useCallback(() => {
         const idProduk = route.params.idProduk;
         if (idProduk) {
             dispatch(getDetailProduk(idProduk));
         }
     }, [dispatch, route.params.idProduk]);
+
+    const goToTop = (id) => {
+        refScroll.current.scrollTo({ x: 0, y: 0, animated: true });
+        navigation.navigate('DetailProduk', {
+            idProduk: id,
+        });
+    };
 
     useEffect(() => {
         getDetailProduks();
@@ -32,14 +41,15 @@ export default function DetailProduk({ navigation, route }) {
             {
                 objekEmpty(detailProduk) &&
                 <ScrollView
-                    maintainVisibleContentPosition={{
-                        minIndexForVisible: 0,
-                    }}
+                    ref={refScroll}
                 >
                     <Headers navigation={navigation} title={'Detail Produk'} />
                     <Banner navigation={navigation} detailProduk={detailProduk} />
                     <Deskripsi detailProduk={detailProduk} />
-                    <Rekomendasi navigation={navigation} dataProduk={dataProduk} />
+                    <Rekomendasi
+                        goToTop={goToTop}
+                        navigation={navigation}
+                        dataProduk={dataProduk} />
                 </ScrollView>
             }
             <ButtonBuy />
