@@ -42,7 +42,7 @@ export default function FavoritList({ dataFlash, navigation }) {
                         dataFlash &&
                         dataFlash.slice(0, 4).map((item, index) => (
                             <View key={index}>
-                                <CardProduk item={item} />
+                                <CardProduk navigation={navigation} item={item} />
                             </View>
                         ))
                     }

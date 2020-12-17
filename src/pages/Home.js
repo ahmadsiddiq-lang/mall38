@@ -68,15 +68,18 @@ export default function Home({ navigation }) {
     }, []);
 
     return (
-        <ScrollView style={styles.Container}>
-            <View style={styles.BoxCarousel}>
-                <Carousel dataCarousel={dataCarousel} />
-            </View>
-            <Categori navigation={navigation} dataCategori={dataCategori} />
-            <FlashSale dateFlashShale={dateFlashShale} navigation={navigation} dataFlash={dataFlash} />
-            <Spesial />
-            <FavoritList navigation={navigation} dataFlash={dataFlash} />
-        </ScrollView>
+        <View style={styles.Container}>
+            <Header navigation={navigation} />
+            <ScrollView style={styles.Container}>
+                <View style={styles.BoxCarousel}>
+                    <Carousel dataCarousel={dataCarousel} />
+                </View>
+                <Categori navigation={navigation} dataCategori={dataCategori} />
+                <FlashSale dateFlashShale={dateFlashShale} navigation={navigation} dataFlash={dataFlash} />
+                <Spesial />
+                <FavoritList navigation={navigation} dataFlash={dataFlash} />
+            </ScrollView>
+        </View>
     );
 }
 

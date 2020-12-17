@@ -13,7 +13,9 @@ export default function CardProdukVer({ item, navigation, onPressProduk, onPress
         <View style={styles.Container}>
             <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => onPressProduk && onPressProduk()}
+                onPressIn={() => navigation.navigate('DetailProduk', {
+                    idProduk: item.id,
+                })}
             >
                 <View style={styles.BoxImage}>
                     {
@@ -35,17 +37,20 @@ export default function CardProdukVer({ item, navigation, onPressProduk, onPress
                     }}>Rp. {item && rupiah(item.price)}</Text>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity
-                onPress={() => onPressBeli && onPressBeli()}
-                activeOpacity={0.8}
-                style={styles.BtnBeli}
-            >
-                <Text style={{
-                    fontFamily: Poppins.Medium,
-                    fontSize: sizeFont(3.5),
-                    color: color.fontWhite,
-                }}>BELI</Text>
-            </TouchableOpacity>
+            {
+                onPressBeli &&
+                <TouchableOpacity
+                    onPress={() => onPressBeli()}
+                    activeOpacity={0.8}
+                    style={styles.BtnBeli}
+                >
+                    <Text style={{
+                        fontFamily: Poppins.Medium,
+                        fontSize: sizeFont(3.5),
+                        color: color.fontWhite,
+                    }}>BELI</Text>
+                </TouchableOpacity>
+            }
         </View>
     );
 }
@@ -78,9 +83,10 @@ const styles = StyleSheet.create({
         marginHorizontal: sizeWidth(2.5),
         flex: 1,
         marginVertical: sizeHeight(2),
-        paddingBottom: sizeHeight(6),
+        // paddingBottom: sizeHeight(6),
         backgroundColor: color.bgWhite,
         overflow: 'hidden',
+        justifyContent: 'space-between',
     },
     BoxImage: {
         // borderWidth: 1,
@@ -106,8 +112,8 @@ const styles = StyleSheet.create({
         marginHorizontal: sizeWidth(2),
         marginVertical: sizeHeight(1),
         borderRadius: 8,
-        position: 'absolute',
-        bottom: 0,
-        width: '90%',
+        // position: 'absolute',
+        // bottom: 0,
+        // width: '90%',
     },
 });

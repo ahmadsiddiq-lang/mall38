@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { color } from '../assets/colors/Index';
 import ListProduk from '../components/Produk/ListProduk';
 import { getProduk } from '../redux/actions/Produk';
+import Header from '../components/Header/Home';
 
 
 export default function Product({ navigation }) {
@@ -24,6 +25,7 @@ export default function Product({ navigation }) {
 
     return (
         <View style={styles.Container}>
+            <Header navigation={navigation} />
             <ListProduk navigation={navigation} dataProduk={dataProduk} />
         </View>
     );

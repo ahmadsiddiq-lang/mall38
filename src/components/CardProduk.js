@@ -12,8 +12,10 @@ export default function CardProduk({ item, navigation, onPressProduk, onPressBel
     return (
         <View style={styles.Container}>
             <TouchableOpacity
+                onPressIn={() => navigation.navigate('DetailProduk', {
+                    idProduk: item.id,
+                })}
                 activeOpacity={0.8}
-                onPress={() => onPressProduk && onPressProduk()}
             >
                 <View style={styles.BoxImage}>
                     {

@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import { Poppins } from '../../assets/fonts';
 import { color } from '../../assets/colors/Index';
@@ -15,7 +15,7 @@ export default function FlashSale({ navigation, dataFlash, dateFlashShale }) {
                 key={index}
                 style={styles.CardProduk}
             >
-                <CardProduk item={item} />
+                <CardProduk navigation={navigation} item={item} />
             </View>
         );
     };
