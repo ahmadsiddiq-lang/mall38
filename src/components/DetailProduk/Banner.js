@@ -1,13 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { color } from '../../assets/colors/Index';
 import { sizeHeight, sizeWidth } from '../../assets/responsive';
 
-export default function Banner() {
+export default function Banner({ detailProduk }) {
+
+    const [ImageBanner, setImageBanner] = useState(null);
+
+    useEffect(() => {
+        setImageBanner(detailProduk.image);
+        return () => {
+            setImageBanner(null);
+        };
+    }, [setImageBanner, detailProduk.image]);
+
     return (
         <View style={styles.BoxBanner}>
             <View style={styles.BoxImageBanner}>
-                <Image resizeMethod="resize" style={styles.Image} source={require('../../assets/images/Produk/tas.png')} />
+                {
+                    ImageBanner !== null ?
+                        <Image resizeMethod="resize" style={styles.Image} source={{ uri: ImageBanner }} />
+                        :
+                        <Image resizeMethod="resize" style={styles.Image} source={require('../../assets/images/Produk/imagedefault.png')} />
+                }
             </View>
             <ScrollView
                 horizontal
@@ -15,11 +31,15 @@ export default function Banner() {
             >
                 <View style={styles.BoxContentImage}>
                     {
-                        [1, 2, 3, 4, 5].map((item, index) => {
+                        detailProduk.images.map((item, index) => {
                             return (
-                                <View key={index} style={styles.BoxImageItem}>
-                                    <Image resizeMethod="resize" style={styles.Image} source={require('../../assets/images/Produk/tas.png')} />
-                                </View>
+                                <TouchableOpacity
+                                    onPress={() => setImageBanner(item.image)}
+                                    activeOpacity={0.8}
+                                    key={index} style={styles.BoxImageItem}>
+                                    <Image resizeMethod="resize" style={styles.Image} source={{ uri: item.image }} />
+                                    {/* <Image resizeMethod="resize" style={styles.Image} source={require('../../assets/images/Produk/imagedefault.png')} /> */}
+                                </TouchableOpacity>
                             );
                         })
                     }
@@ -43,7 +63,7 @@ const styles = StyleSheet.create({
     },
     BoxImageBanner: {
         width: sizeWidth(80),
-        height: sizeHeight(35),
+        height: sizeHeight(50),
         borderLeftWidth: 4,
         borderRightWidth: 4,
         borderBottomWidth: 4,

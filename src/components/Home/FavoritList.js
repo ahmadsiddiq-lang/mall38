@@ -12,6 +12,8 @@ export default function FavoritList({ dataFlash, navigation }) {
 
     // const [dataProduk, setDataProduk] = useState([1, 2, 3, 4, 5]);
 
+    const data = dataFlash.slice(0, 4);
+
     return (
         <View style={styles.Container}>
             <View style={{
@@ -40,7 +42,7 @@ export default function FavoritList({ dataFlash, navigation }) {
                 }}>
                     {
                         dataFlash &&
-                        dataFlash.slice(0, 4).map((item, index) => (
+                        data.map((item, index) => (
                             <View key={index}>
                                 <CardProduk navigation={navigation} item={item} />
                             </View>

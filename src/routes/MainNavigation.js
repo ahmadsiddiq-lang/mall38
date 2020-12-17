@@ -10,6 +10,7 @@ import Transaksi from '../pages/Transaksi';
 import ProductCategori from '../pages/ProductCategori';
 import Akun from '../pages/Akun';
 import DetailProduk from '../pages/DetailProduk';
+import Blink from '../pages/Blink';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { sizeFont } from '../assets/responsive';
 import { color } from '../assets/colors/Index';
@@ -116,6 +117,7 @@ export default function MainNavigation() {
                 <Stack.Screen name="MyTabbar" component={MyTabbar} />
                 <Stack.Screen name="ProductCategori" component={ProductCategori} />
                 <Stack.Screen name="DetailProduk" component={DetailProduk} />
+                <Stack.Screen name="Blink" component={Blink} />
             </Stack.Navigator>
         </NavigationContainer>
     );

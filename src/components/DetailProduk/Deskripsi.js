@@ -4,17 +4,18 @@ import { StyleSheet, Text, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
 import { Poppins } from '../../assets/fonts';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
+import { rupiah } from '../../config/function';
 import { DefaultText } from '../DefaultText';
 import Star from '../Star';
 
-export default function Deskripsi() {
+export default function Deskripsi({ detailProduk }) {
     return (
         <View>
             <View style={styles.BoxText}>
                 <Text style={{
                     fontSize: sizeFont(4.7),
                     fontFamily: Poppins.Medium,
-                }}>Tas Wanita MBT2048</Text>
+                }}>{detailProduk.name}</Text>
                 <View style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
@@ -51,7 +52,7 @@ export default function Deskripsi() {
                         color: color.mainColor,
                         flex: 2,
                         textAlign: 'right',
-                    }} >Rp. 220.000</Text>
+                    }} >Rp. {rupiah(detailProduk.price)}</Text>
                 </View>
             </View>
             <View style={styles.BoxText}>
@@ -132,7 +133,26 @@ export default function Deskripsi() {
                         flex: 3,
                         textAlign: 'right',
                         // color: color.fontBlack1,
-                    }}>100</Text>
+                    }}>{detailProduk.stok}</Text>
+                </View>
+                <View style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    marginBottom: sizeHeight(1),
+                }}>
+                    <Text style={{
+                        fontSize: sizeFont(3.3),
+                        fontFamily: Poppins.Medium,
+                        color: color.fontBlack1,
+                        flex: 2,
+                    }}>Berat</Text>
+                    <Text style={{
+                        fontSize: sizeFont(3.3),
+                        fontFamily: Poppins.Medium,
+                        flex: 3,
+                        textAlign: 'right',
+                        // color: color.fontBlack1,
+                    }}>{detailProduk.berat}</Text>
                 </View>
                 <View style={{
                     marginTop: sizeHeight(1),

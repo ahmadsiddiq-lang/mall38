@@ -8,11 +8,11 @@ import { DefaultTitle } from './DefaultText';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { rupiah } from '../config/function';
 
-export default function CardProduk({ item, navigation, onPressProduk, onPressBeli }) {
+export default function CardProduk({ item, navigation, onPressBeli }) {
     return (
         <View style={styles.Container}>
             <TouchableOpacity
-                onPressIn={() => navigation.navigate('DetailProduk', {
+                onPress={() => navigation.navigate('DetailProduk', {
                     idProduk: item.id,
                 })}
                 activeOpacity={0.8}

@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
 import { color } from '../../assets/colors/Index';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
@@ -15,11 +16,15 @@ export default function Rekomendasi({ navigation, loading, dataProduk = [], page
                     dataProduk.length > 0 ?
                         dataProduk.slice(0, 10).map((item, index) => {
                             return (
-                                <View key={index} style={{
-                                    width: sizeWidth(47.5),
-                                }}>
-                                    <CardProdukVer item={item} />
-                                </View>
+                                <TouchableOpacity
+                                    onPress={() => navigation.navigate('Blink', {
+                                        idProduk: item.id,
+                                    })}
+                                    key={index} style={{
+                                        width: sizeWidth(47.5),
+                                    }}>
+                                    <CardProdukVer navigation={navigation} item={item} />
+                                </TouchableOpacity>
                             );
                         })
                         :
