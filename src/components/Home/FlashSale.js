@@ -25,16 +25,17 @@ export default function FlashSale({ navigation, dataFlash, dateFlashShale }) {
         >
             <View style={styles.Content}>
                 <View style={{
-                    marginHorizontal: sizeWidth(5),
-                    marginVertical: sizeHeight(1),
+                    paddingHorizontal: sizeWidth(5),
+                    // marginVertical: sizeHeight(1),
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     alignItems: 'center',
+                    backgroundColor: color.mainColor,
                 }}>
                     <Text style={{
                         fontSize: sizeFont(4),
                         fontFamily: Poppins.MediumItalic,
-                        color: color.fontBlack,
+                        color: color.fontWhite,
                     }}>Flash Sale</Text>
                     {/* <Text style={{
                         fontSize: sizeFont(3.5),
@@ -100,7 +101,7 @@ const styles = StyleSheet.create({
         width: '50%',
         alignItems: 'center',
         justifyContent: 'space-between',
-        backgroundColor: color.bgBlack3,
+        // backgroundColor: color.bgBlack3,
         borderRadius: 8,
         paddingHorizontal: sizeWidth(4),
         paddingVertical: sizeWidth(1.5),

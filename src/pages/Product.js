@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { color } from '../assets/colors/Index';
 import ListProduk from '../components/Produk/ListProduk';
 import { getProduk } from '../redux/actions/Produk';
 
@@ -13,7 +14,6 @@ export default function Product({ navigation }) {
     const getProduks = useCallback(async () => {
         dispatch(getProduk());
     }, [dispatch]);
-
 
     useEffect(() => {
         getProduks();
@@ -32,5 +32,6 @@ export default function Product({ navigation }) {
 const styles = StyleSheet.create({
     Container: {
         flex: 1,
+        backgroundColor: color.bgWhite,
     },
 });

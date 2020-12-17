@@ -22,7 +22,11 @@ export default function Categori({ dataCategori, navigation }) {
                     data &&
                     data.map((item, index) => (
                         <TouchableOpacity
-                            onPress={() => console.log('Ahmad')}
+                            onPress={() =>
+                                navigation.navigate('ProductCategori', {
+                                    idCategori: item.id,
+                                })
+                            }
                             key={index}
                             activeOpacity={0.8}
                             style={styles.BoxImage}>

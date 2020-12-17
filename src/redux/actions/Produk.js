@@ -4,7 +4,9 @@ export const GET_PRODUK = 'GET_PRODUK';
 
 export const getProduk = (page) => {
     return async (dispatch) => {
-        await Axios.get(BASE_URL + 'product').then(dataProduk => {
+        await Axios.get(BASE_URL + 'product', {
+            withCredentials: true,
+        }).then(dataProduk => {
             dispatch({
                 type: GET_PRODUK,
                 data: dataProduk.data.data.product,

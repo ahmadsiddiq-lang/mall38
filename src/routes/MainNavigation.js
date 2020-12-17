@@ -8,6 +8,7 @@ import Home, { HeaderHome } from '../pages/Home';
 import Product from '../pages/Product';
 import Favorite from '../pages/Favorite';
 import Transaksi from '../pages/Transaksi';
+import ProductCategori, { HeaderProdukCategori } from '../pages/ProductCategori';
 import Akun from '../pages/Akun';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { sizeFont } from '../assets/responsive';
@@ -28,6 +29,11 @@ function HomeStackScreen() {
                             return <HeaderHome navigation={navigation} />;
                         },
                     }}
+                />
+                <HomeStack.Screen
+                    name="ProductCategori"
+                    component={ProductCategori}
+                    options={HeaderProdukCategori}
                 />
             </HomeStack.Navigator>
         </>

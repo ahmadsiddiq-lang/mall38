@@ -4,7 +4,9 @@ export const GET_CAROUSEL = 'GET_CAROUSEL';
 
 export const getCarousel = () => {
     return async (dispatch) => {
-        await Axios.get(BASE_URL + 'banner').then(dataCarousel => {
+        await Axios.get(BASE_URL + 'banner', {
+            withCredentials: true,
+        }).then(dataCarousel => {
             dispatch({
                 type: GET_CAROUSEL,
                 data: dataCarousel.data.data.banner,

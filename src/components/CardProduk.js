@@ -77,6 +77,8 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         marginHorizontal: sizeWidth(2.5),
         width: sizeWidth(40),
+        flex: 1,
+        paddingBottom: sizeHeight(5),
     },
     BoxImage: {
         // borderWidth: 1,
@@ -101,5 +103,8 @@ const styles = StyleSheet.create({
         marginHorizontal: sizeWidth(2),
         marginVertical: sizeHeight(1),
         borderRadius: 8,
+        position: 'absolute',
+        bottom: 0,
+        width: '90%',
     },
 });

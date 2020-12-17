@@ -56,7 +56,7 @@ export default function Home({ navigation }) {
             getCategoris();
             getFlash();
         };
-    });
+    }, [getCarousels, getCategoris, getFlash]);
 
     return (
         <ScrollView style={styles.Container}>

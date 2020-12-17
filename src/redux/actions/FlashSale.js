@@ -4,7 +4,9 @@ export const GET_FLASH = 'GET_PRODUK';
 
 export const getFlashSale = (page) => {
     return async (dispatch) => {
-        await Axios.get(BASE_URL + 'product').then(dataProduk => {
+        await Axios.get(BASE_URL + 'product', {
+            withCredentials: true,
+        }).then(dataProduk => {
             dispatch({
                 type: GET_FLASH,
                 data: dataProduk.data.data.product,
