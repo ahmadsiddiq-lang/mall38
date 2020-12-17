@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { ActivityIndicator, FlatList, View } from 'react-native';
+import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
+import { sizeHeight, sizeWidth } from '../../assets/responsive';
 import CardProdukVer from '../CardProdukVer';
 export default function ListProduk({ navigation, dataProduk }) {
 
@@ -12,12 +13,26 @@ export default function ListProduk({ navigation, dataProduk }) {
         const scrolViewHeight = e.nativeEvent.layoutMeasurement.height;
         const contentHeight = e.nativeEvent.contentSize.height;
         const isScrolledToBottom = scrolViewHeight + scrollPosition;
-        if (isScrolledToBottom >= contentHeight && page <= dataProduk.length) {
+        if (isScrolledToBottom >= (contentHeight - 50) && page <= dataProduk.length) {
             setPage(page + 10);
             setloading(true);
         } else {
             setloading(false);
         }
+    };
+
+    const formatData = (data, colum) => {
+        const totalRows = Math.floor(data.length / colum);
+        let totalLastRows = data.length - (totalRows * colum);
+
+        while (totalLastRows !== 0 && totalLastRows !== colum) {
+            data.push({ 'key': 'blank', 'empty': true });
+            totalLastRows++;
+        }
+        // return data;
+        // console.log(data);
+        return data;
+
     };
 
     const listFooterComponent = () => {
@@ -40,10 +55,15 @@ export default function ListProduk({ navigation, dataProduk }) {
                 dataProduk &&
                 <FlatList
                     numColumns={2}
-                    data={dataProduk}
+                    data={formatData(dataProduk, 2)}
                     keyExtractor={(_, index) => index.toString()}
                     renderItem={({ item, index }) => {
                         if (index + 1 <= page) {
+                            if (item.empty) {
+                                return (
+                                    <View style={styles.itemInvisible} />
+                                );
+                            }
                             return (
                                 <CardProdukVer item={item} />
                             );
@@ -56,3 +76,14 @@ export default function ListProduk({ navigation, dataProduk }) {
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    itemInvisible: {
+        flex: 1,
+        borderRadius: 8,
+        marginHorizontal: sizeWidth(2.5),
+        marginVertical: sizeHeight(2),
+        paddingBottom: sizeHeight(6),
+        backgroundColor: 'transparent',
+    },
+});

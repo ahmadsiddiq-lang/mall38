@@ -42,21 +42,30 @@ export default function Home({ navigation }) {
         getCarousels();
         getCategoris();
         getFlash();
-        // var countDownDate = new Date('Dec 16, 2020 21:37:25').getTime();
-        // const x = setInterval(function () {
-        //     const time = countDown(countDownDate);
-        //     setDateFlash(time);
-        //     if (time.distance < 0) {
-        //         clearInterval(x);
-        //     }
-        // }, 1000);
+
         return () => {
-            // clearInterval(x);
             getCarousels();
             getCategoris();
             getFlash();
         };
     }, [getCarousels, getCategoris, getFlash]);
+
+    useEffect(() => {
+        // var countDownDate = new Date('Dec 17, 2020 21:37:25').getTime();
+        var myDate = '07-12-2020';
+        myDate = myDate.split('-');
+        var countDownDate = new Date(myDate[2], myDate[1] - 1, myDate[0]);
+        const x = setInterval(function () {
+            const time = countDown(countDownDate.getTime());
+            setDateFlash(time);
+            if (time.distance < 0) {
+                clearInterval(x);
+            }
+        }, 1000);
+        return () => {
+            clearInterval(x);
+        };
+    }, []);
 
     return (
         <ScrollView style={styles.Container}>

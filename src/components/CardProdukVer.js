@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
         marginVertical: sizeHeight(2),
         paddingBottom: sizeHeight(6),
         backgroundColor: color.bgWhite,
+        overflow: 'hidden',
     },
     BoxImage: {
         // borderWidth: 1,

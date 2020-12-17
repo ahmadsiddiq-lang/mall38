@@ -26,7 +26,7 @@ export default function Carousel({ navigation, dataCarousel = [] }) {
         return () => {
             clearInterval(interval);
         };
-    });
+    }, [dataCarousel.length, indexOf]);
 
 
     return (

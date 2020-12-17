@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
         width: sizeWidth(40),
         flex: 1,
         paddingBottom: sizeHeight(5),
+        overflow: 'hidden',
     },
     BoxImage: {
         // borderWidth: 1,
