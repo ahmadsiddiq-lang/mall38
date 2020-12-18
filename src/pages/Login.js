@@ -1,0 +1,178 @@
+/* eslint-disable react-native/no-inline-styles */
+import React from 'react';
+import { Image, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { color } from '../assets/colors/Index';
+import { Poppins } from '../assets/fonts';
+import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+
+export default function Login() {
+    return (
+        <View style={styles.Container}>
+            <StatusBar backgroundColor={color.bgWhite} barStyle="dark-content" />
+            <ScrollView>
+                <View style={{
+                    alignItems: 'center',
+                    overflow: 'hidden',
+                }}>
+                    <View style={styles.BackgroundWhite}>
+                        <View style={styles.Content}>
+                            <View style={styles.BoxImage}>
+                                <Image
+                                    style={{
+                                        resizeMode: 'contain',
+                                        width: '100%',
+                                        height: '100%',
+                                    }}
+                                    resizeMethod="auto"
+                                    source={require('../assets/images/logo/logo.png')} />
+                            </View>
+                            <Text style={{
+                                fontSize: sizeFont(6),
+                                fontFamily: Poppins.BoldItalic,
+                                color: color.mainColor,
+                            }}>Login</Text>
+                            <View style={styles.BoxContentInput}>
+                                <View style={{
+                                    alignItems: 'center',
+                                }}>
+                                    <View style={styles.BoxIconUser}>
+                                        <FontAwesome5 name="user" color={color.mainColor} size={sizeFont(12)} solid />
+                                    </View>
+                                </View>
+                                <View style={styles.BoxInput}>
+                                    <FontAwesome5 name="at" color={color.mainColor} size={sizeFont(5)} solid />
+                                    <TextInput
+                                        selectionColor={color.mainColor}
+                                        style={styles.Input}
+                                        placeholder="Email" />
+                                </View>
+                                <View style={styles.BoxInput}>
+                                    <FontAwesome5 name="key" color={color.mainColor} size={sizeFont(5)} solid />
+                                    <TextInput style={styles.Input} placeholder="Password" />
+                                </View>
+                            </View>
+                            <View style={styles.BoxContentLogin}>
+                                <TouchableOpacity
+                                    activeOpacity={0.8}
+                                    style={styles.BtnLogin}
+                                >
+                                    <Text style={{
+                                        fontSize: sizeFont(4.5),
+                                        color: color.fontWhite,
+                                        fontFamily: Poppins.Bold,
+                                        flex: 1,
+                                        textAlign: 'center',
+                                    }}>Login</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+                <View style={styles.BoxRegister}>
+                    <Text style={{
+                        fontSize: sizeFont(4),
+                        color: color.fontWhite,
+                        marginTop: sizeHeight(2),
+                        fontFamily: Poppins.Italic,
+                        marginRight: sizeWidth(3),
+                    }}>Forgot password ?</Text>
+                    <TouchableOpacity
+                        activeOpacity={0.8}
+                        style={styles.BtnRegister}
+                    >
+                        <Text style={{
+                            fontSize: sizeFont(4),
+                            color: color.mainColor,
+                            fontFamily: Poppins.Bold,
+                        }}>Register</Text>
+                    </TouchableOpacity>
+                </View>
+            </ScrollView>
+        </View >
+    );
+}
+
+const styles = StyleSheet.create({
+    Container: {
+        flex: 1,
+        backgroundColor: color.mainColor,
+    },
+    BackgroundWhite: {
+        height: sizeHeight(68),
+        backgroundColor: color.bgWhite,
+        borderBottomLeftRadius: sizeWidth(200) / 2,
+        borderBottomRightRadius: sizeWidth(200) / 2,
+        width: sizeWidth(200),
+        alignItems: 'center',
+    },
+    Content: {
+        // borderWidth: 1,
+        width: SCREEN_WIDTH,
+        flex: 1,
+        alignItems: 'center',
+    },
+    BoxImage: {
+        width: sizeWidth(60),
+        height: sizeWidth(30),
+    },
+    BoxContentInput: {
+        borderWidth: 3,
+        borderColor: color.mainColor,
+        borderRadius: 8,
+        width: sizeWidth(80),
+        padding: sizeHeight(3),
+        marginTop: sizeHeight(8),
+    },
+    BoxInput: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderWidth: 1,
+        paddingHorizontal: sizeHeight(1),
+        borderColor: color.border2,
+        borderRadius: 8,
+        marginVertical: sizeHeight(2),
+    },
+    Input: {
+        // borderWidth: 1,
+        marginLeft: sizeWidth(2),
+        flex: 1,
+    },
+    BoxIconUser: {
+        borderWidth: 3,
+        borderColor: color.mainColor,
+        position: 'absolute',
+        top: -95,
+        borderRadius: 100,
+        width: sizeWidth(25),
+        height: sizeWidth(25),
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: color.bgWhite,
+    },
+    BoxContentLogin: {
+        marginTop: sizeHeight(5),
+    },
+    BtnLogin: {
+        backgroundColor: color.mainColor,
+        width: sizeWidth(40),
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingVertical: sizeHeight(0.5),
+        borderRadius: 8,
+        alignItems: 'center',
+    },
+    BoxRegister: {
+        // borderWidth: 1,
+        alignItems: 'flex-end',
+    },
+    BtnRegister: {
+        backgroundColor: color.bgWhite,
+        marginTop: sizeHeight(2),
+        width: sizeWidth(28),
+        paddingVertical: sizeHeight(0.5),
+        borderTopLeftRadius: 100,
+        borderBottomLeftRadius: 100,
+        paddingLeft: sizeWidth(5),
+    },
+});

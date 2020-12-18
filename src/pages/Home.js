@@ -44,22 +44,22 @@ export default function Home({ navigation }) {
         getFlash();
     }, [getCarousels, getCategoris, getFlash]);
 
-    useEffect(() => {
-        var countDownDate = new Date('Dec 30, 2020 00:00:25').getTime();
-        // var myDate = '20-12-2020';
-        // myDate = myDate.split('-');
-        // var countDownDate = new Date(myDate[2], myDate[1] - 1, myDate[0]);
-        const x = setInterval(function () {
-            const time = countDown(countDownDate);
-            setDateFlash(time);
-            if (time.distance < 0) {
-                clearInterval(x);
-            }
-        }, 1000);
-        return () => {
-            clearInterval(x);
-        };
-    }, []);
+    // useEffect(() => {
+    //     var countDownDate = new Date('Dec 30, 2020 00:00:25').getTime();
+    //     // var myDate = '20-12-2020';
+    //     // myDate = myDate.split('-');
+    //     // var countDownDate = new Date(myDate[2], myDate[1] - 1, myDate[0]);
+    //     const x = setInterval(function () {
+    //         const time = countDown(countDownDate);
+    //         setDateFlash(time);
+    //         if (time.distance < 0) {
+    //             clearInterval(x);
+    //         }
+    //     }, 1000);
+    //     return () => {
+    //         clearInterval(x);
+    //     };
+    // }, []);
 
     return (
         <View style={styles.Container}>
