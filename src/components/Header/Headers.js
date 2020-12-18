@@ -17,7 +17,7 @@ export default function Headers({ navigation, title = '', onPress }) {
             >
                 <Ionicons
                     name="arrow-back"
-                    size={sizeFont(5)}
+                    size={sizeFont(6.5)}
                     color={color.fontWhite}
                 />
             </TouchableOpacity>

@@ -68,8 +68,8 @@ export default function Home({ navigation }) {
                 <View style={styles.BoxCarousel}>
                     <Carousel dataCarousel={dataCarousel} />
                 </View>
-                <FavoritList navigation={navigation} dataFlash={dataFlash} />
                 <Categori navigation={navigation} dataCategori={dataCategori} />
+                <FavoritList navigation={navigation} dataFlash={dataFlash} />
                 <Spesial />
                 <FlashSale dateFlashShale={dateFlashShale} navigation={navigation} dataFlash={dataFlash} />
             </ScrollView>

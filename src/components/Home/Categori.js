@@ -16,7 +16,7 @@ export default function Categori({ dataCategori, navigation }) {
             <View style={{
                 flexDirection: 'row',
                 paddingHorizontal: sizeWidth(2.5),
-                paddingVertical: sizeHeight(2),
+                paddingVertical: sizeHeight(1.5),
             }}>
                 {
                     data &&
@@ -42,11 +42,10 @@ export default function Categori({ dataCategori, navigation }) {
 const styles = StyleSheet.create({
     Container: {
         backgroundColor: color.bgWhite,
-        marginTop: sizeHeight(1),
     },
     BoxImage: {
-        width: sizeWidth(13),
-        height: sizeWidth(15),
+        width: sizeWidth(10),
+        height: sizeWidth(10),
         overflow: 'hidden',
         alignItems: 'center',
         justifyContent: 'center',
