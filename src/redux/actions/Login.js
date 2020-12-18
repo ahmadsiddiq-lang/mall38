@@ -3,16 +3,20 @@ import { BASE_URL } from '../../config/URL';
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOGIN_ADMIN = 'LOGIN_ADMIN';
 
-export const login = (data) => {
+export const LoginUser = (data, handleErrorLogin, handleLoginSuccess) => {
     return async (dispatch) => {
         await Axios.post(BASE_URL + 'user-login', data)
             .then(dataUser => {
                 // console.log(dataUser);
+                handleLoginSuccess(dataUser.data.data.user);
                 dispatch({
                     type: LOGIN_USER,
-                    data: dataUser.data,
+                    data: dataUser.data.data.user,
                 });
-            }).catch(err => console.log(err));
+            }).catch(err => {
+                handleErrorLogin();
+                console.log(err);
+            });
     };
 };
 

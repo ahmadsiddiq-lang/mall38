@@ -1,12 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useState } from 'react';
-import { Image, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, StatusBar, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import { color } from '../assets/colors/Index';
 import { Poppins } from '../assets/fonts';
 import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { useDispatch, useSelector } from 'react-redux';
-import { LoginAdmin } from '../redux/actions/Login';
+import { LoginAdmin, LoginUser } from '../redux/actions/Login';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login({ navigation }) {
 
@@ -14,24 +15,58 @@ export default function Login({ navigation }) {
     const [focus, setFocus] = useState(null);
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
-    const dataUser = useSelector(state => state.dataLogin.dataUser);
+    // const dataUser = useSelector(state => state.dataLogin.dataUser);
     const dataAdmin = useSelector(state => state.dataLogin.dataAdmin);
 
-    const handleLogin = useCallback(() => {
+    const handleErrorLogin = useCallback(async () => {
+        ToastAndroid.showWithGravity('Email atau Password Anda salah', ToastAndroid.LONG, ToastAndroid.CENTER);
+    }, []);
+
+    const handleLoginSuccess = useCallback(async (emailUser) => {
+        try {
+            await AsyncStorage.setItem('email', emailUser.email);
+            navigation.navigate('MyTabbar');
+        } catch (e) {
+            // saving error
+            console.log(e);
+        }
+    }, [navigation]);
+
+    const handleLogin = useCallback(async () => {
+        const value = await AsyncStorage.getItem('token');
         const data = {
             email: email,
             password: password,
         };
-        if (email !== null && password !== null) {
-            dispatch(LoginAdmin(data));
+        if (email !== null && password !== null && value) {
+            dispatch(LoginUser(data, handleErrorLogin, handleLoginSuccess));
         }
-    }, [dispatch, email, password]);
+    }, [dispatch, email, password, handleErrorLogin, handleLoginSuccess]);
 
-    // useEffect(() => {
-    //     if (dataAdmin) {
+    const handleLoginAdmin = useCallback(async () => {
+        const data = {
+            email: 'info@mall38.com',
+            password: 'mall38diloka',
+        };
+        dispatch(LoginAdmin(data));
+    }, [dispatch]);
 
-    //     }
-    // }, []);
+    // console.log(dataAdmin);
+    const storeData = useCallback(async (value) => {
+        try {
+            await AsyncStorage.setItem('token', value);
+        } catch (e) {
+            // saving error
+            console.log(e);
+        }
+    }, []);
+
+    useEffect(() => {
+        handleLoginAdmin();
+        if (dataAdmin.length) {
+            storeData(dataAdmin.token);
+        }
+    }, [dataAdmin, handleLoginAdmin, storeData]);
 
     return (
         <View style={styles.Container}>

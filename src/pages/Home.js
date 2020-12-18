@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StatusBar, StyleSheet, View } from 'react-native';
 import { color } from '../assets/colors/Index';
 import { sizeHeight, sizeWidth } from '../assets/responsive';
 import Header from '../components/Header/Home';
@@ -13,6 +13,7 @@ import { getCarousel } from '../redux/actions/Carousel';
 import { getCategori } from '../redux/actions/Categori';
 import { getFlashSale } from '../redux/actions/FlashSale';
 import { countDown } from '../config/function';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { countDown } from '../config/function';
 
 export default function Home({ navigation }) {
@@ -23,7 +24,11 @@ export default function Home({ navigation }) {
     const dataFlash = useSelector(state => state.flashsale.flashsale);
     const [dateFlashShale, setDateFlash] = useState('');
 
-    // console.log(dataProduk);
+    const getDataUser = useCallback(async () => {
+        const value = await AsyncStorage.getItem('email');
+        console.log(value);
+    }, []);
+
 
     const getCarousels = useCallback(async () => {
         dispatch(getCarousel());
@@ -42,7 +47,8 @@ export default function Home({ navigation }) {
         getCarousels();
         getCategoris();
         getFlash();
-    }, [getCarousels, getCategoris, getFlash]);
+        getDataUser();
+    }, [getCarousels, getCategoris, getFlash, getDataUser]);
 
     // useEffect(() => {
     //     var countDownDate = new Date('Dec 30, 2020 00:00:25').getTime();
@@ -63,6 +69,7 @@ export default function Home({ navigation }) {
 
     return (
         <View style={styles.Container}>
+            <StatusBar translucent={false} backgroundColor={color.mainColor} barStyle="light-content" />
             <Header navigation={navigation} />
             <ScrollView style={styles.Container}>
                 <View style={styles.BoxCarousel}>
