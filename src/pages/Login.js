@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, { useState } from 'react';
 import { Image, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { color } from '../assets/colors/Index';
 import { Poppins } from '../assets/fonts';
@@ -7,6 +7,9 @@ import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../assets/respons
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 export default function Login() {
+
+    const [focus, setFocus] = useState(null);
+
     return (
         <View style={styles.Container}>
             <StatusBar backgroundColor={color.bgWhite} barStyle="dark-content" />
@@ -40,16 +43,37 @@ export default function Login() {
                                         <FontAwesome5 name="user" color={color.mainColor} size={sizeFont(12)} solid />
                                     </View>
                                 </View>
-                                <View style={styles.BoxInput}>
+                                <View style={[styles.BoxInput,
+                                focus === 0 &&
+                                {
+                                    borderWidth: 3,
+                                    borderColor: color.mainColor,
+                                },
+                                ]}>
                                     <FontAwesome5 name="at" color={color.mainColor} size={sizeFont(5)} solid />
                                     <TextInput
-                                        selectionColor={color.mainColor}
+                                        onFocus={() => setFocus(0)}
+                                        onBlur={() => setFocus(null)}
+                                        placeholder="Email"
                                         style={styles.Input}
-                                        placeholder="Email" />
+                                        keyboardType="email-address"
+                                    />
                                 </View>
-                                <View style={styles.BoxInput}>
+                                <View style={[styles.BoxInput,
+                                focus === 1 &&
+                                {
+                                    borderWidth: 3,
+                                    borderColor: color.mainColor,
+                                },
+                                ]}>
                                     <FontAwesome5 name="key" color={color.mainColor} size={sizeFont(5)} solid />
-                                    <TextInput style={styles.Input} placeholder="Password" />
+                                    <TextInput
+                                        secureTextEntry={true}
+                                        onBlur={() => setFocus(null)}
+                                        onFocus={() => setFocus(1)}
+                                        style={styles.Input}
+                                        placeholder="Password"
+                                    />
                                 </View>
                             </View>
                             <View style={styles.BoxContentLogin}>
@@ -137,6 +161,7 @@ const styles = StyleSheet.create({
         // borderWidth: 1,
         marginLeft: sizeWidth(2),
         flex: 1,
+        fontSize: sizeFont(4),
     },
     BoxIconUser: {
         borderWidth: 3,

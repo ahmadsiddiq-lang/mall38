@@ -113,7 +113,7 @@ export default function MainNavigation() {
     return (
         <NavigationContainer>
             <StatusBar translucent={false} backgroundColor={color.mainColor} barStyle="light-content" />
-            <Stack.Navigator initialRouteName="MyTabbar" headerMode="none">
+            <Stack.Navigator initialRouteName="Login" headerMode="none">
                 <Stack.Screen name="MyTabbar" component={MyTabbar} />
                 <Stack.Screen name="ProductCategori" component={ProductCategori} />
                 <Stack.Screen name="DetailProduk" component={DetailProduk} />
