@@ -1,14 +1,37 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Image, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { color } from '../assets/colors/Index';
 import { Poppins } from '../assets/fonts';
 import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { useDispatch, useSelector } from 'react-redux';
+import { LoginAdmin } from '../redux/actions/Login';
 
-export default function Login() {
+export default function Login({ navigation }) {
 
+    const dispatch = useDispatch();
     const [focus, setFocus] = useState(null);
+    const [email, setEmail] = useState(null);
+    const [password, setPassword] = useState(null);
+    const dataUser = useSelector(state => state.dataLogin.dataUser);
+    const dataAdmin = useSelector(state => state.dataLogin.dataAdmin);
+
+    const handleLogin = useCallback(() => {
+        const data = {
+            email: email,
+            password: password,
+        };
+        if (email !== null && password !== null) {
+            dispatch(LoginAdmin(data));
+        }
+    }, [dispatch, email, password]);
+
+    // useEffect(() => {
+    //     if (dataAdmin) {
+
+    //     }
+    // }, []);
 
     return (
         <View style={styles.Container}>
@@ -52,6 +75,7 @@ export default function Login() {
                                 ]}>
                                     <FontAwesome5 name="at" color={color.mainColor} size={sizeFont(5)} solid />
                                     <TextInput
+                                        onChangeText={(e) => setEmail(e)}
                                         onFocus={() => setFocus(0)}
                                         onBlur={() => setFocus(null)}
                                         placeholder="Email"
@@ -68,6 +92,7 @@ export default function Login() {
                                 ]}>
                                     <FontAwesome5 name="key" color={color.mainColor} size={sizeFont(5)} solid />
                                     <TextInput
+                                        onChangeText={(e) => setPassword(e)}
                                         secureTextEntry={true}
                                         onBlur={() => setFocus(null)}
                                         onFocus={() => setFocus(1)}
@@ -78,6 +103,7 @@ export default function Login() {
                             </View>
                             <View style={styles.BoxContentLogin}>
                                 <TouchableOpacity
+                                    onPress={() => handleLogin()}
                                     activeOpacity={0.8}
                                     style={styles.BtnLogin}
                                 >
