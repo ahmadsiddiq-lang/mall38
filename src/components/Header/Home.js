@@ -4,8 +4,12 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useSelector } from 'react-redux';
 
 export default function Home({ navigation }) {
+
+    const dataCart = useSelector(state => state.cart.dataCart);
+
     return (
         <View style={styles.Container}>
             <TouchableOpacity
@@ -45,6 +49,12 @@ export default function Home({ navigation }) {
                     color={color.fontWhite}
                     size={sizeFont(6)}
                 />
+                <View style={styles.Circle}>
+                    <Text style={{
+                        color: color.fontWhite,
+                        fontSize: sizeFont(3),
+                    }}>{dataCart ? dataCart.length : '0'}</Text>
+                </View>
             </TouchableOpacity>
         </View>
     );
@@ -72,5 +82,16 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         paddingHorizontal: sizeWidth(2),
         paddingVertical: sizeHeight(0.8),
+    },
+    Circle: {
+        position: 'absolute',
+        width: 20,
+        height: 20,
+        backgroundColor: '#32a852',
+        borderRadius: 100,
+        alignItems: 'center',
+        justifyContent: 'center',
+        top: 0,
+        right: -8,
     },
 });

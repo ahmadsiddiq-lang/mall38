@@ -6,16 +6,27 @@ import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { DefaultTitle } from '../DefaultText';
 import { Poppins } from '../../assets/fonts';
+import { rupiah } from '../../config/function';
 
-export default function ListProduk() {
+export default function ListProduk({ item }) {
     return (
         <View style={styles.Container}>
             <View style={styles.BoxImage}>
-                <Image
-                    style={styles.Image}
-                    // resizeMode="contain"
-                    resizeMethod="auto"
-                    source={require('../../assets/images/Produk/tas.png')} />
+                {
+                    item.product.image ?
+                        <Image
+                            style={styles.Image}
+                            // resizeMode="contain"
+                            resizeMethod="auto"
+                            source={{ uri: item.product.image }} />
+                        :
+                        <Image
+                            style={styles.Image}
+                            // resizeMode="contain"
+                            resizeMethod="auto"
+                            source={require('../../assets/images/Produk/imagedefault.png')} />
+
+                }
             </View>
             <View style={styles.BoxRight}>
                 <View style={styles.Item}>
@@ -25,16 +36,16 @@ export default function ListProduk() {
                         <Text numberOfLines={1} style={{
                             fontSize: sizeFont(3.5),
                             fontFamily: Poppins.Medium,
-                        }}>Tas Wanita</Text>
+                        }}>{item.product ? item.product.name : 'Nama barang'}</Text>
                         <Text style={{
                             marginTop: sizeHeight(0.3),
                             fontSize: sizeFont(3),
                             color: color.fontBlack1,
-                        }}>Warna: Hitam</Text>
+                        }}>Category : {item.product ? item.product.category : 'not found'}</Text>
                         <Text style={{
                             fontSize: sizeFont(3.8),
                             color: color.mainColor,
-                        }}>Rp. 220.000</Text>
+                        }}>Rp. {item.product ? rupiah(item.product.price) : 'not found'}</Text>
                     </View>
                     <View style={{ alignItems: 'flex-end' }}>
                         <View style={styles.BoxQty}>

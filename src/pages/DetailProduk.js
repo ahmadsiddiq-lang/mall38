@@ -6,7 +6,7 @@ import ButtonBuy from '../components/DetailProduk/ButtonBuy';
 import Deskripsi from '../components/DetailProduk/Deskripsi';
 import Rekomendasi from '../components/DetailProduk/Rekomendasi';
 import Headers from '../components/Header/HeaderDetailProduk';
-import { getIdUser, objekEmpty, ToasSuccess } from '../config/function';
+import { getIdUser, objekEmpty } from '../config/function';
 import { addCart } from '../redux/actions/Cart';
 import { getDetailProduk } from '../redux/actions/DetailProduk';
 
@@ -17,6 +17,7 @@ export default function DetailProduk({ navigation, route }) {
 
     const dataProduk = useSelector(state => state.produk.produk);
     const detailProduk = useSelector(state => state.detailProduk.detailProduk);
+    // const responAddCart = useSelector(state => state.cart.responAddCart);
 
 
     const getDetailProduks = useCallback(() => {
@@ -38,11 +39,10 @@ export default function DetailProduk({ navigation, route }) {
         const idProduk = item.id;
         const data = {
             user_id: idUser,
-            produk_id: idProduk,
+            product_id: idProduk,
             qty: 1,
         };
-        ToasSuccess('Dimasukkan ke keranjang');
-        if (data.produk_id) {
+        if (data.product_id && data.user_id) {
             dispatch(addCart(data));
         } else {
             console.log(data);

@@ -5,7 +5,7 @@ import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { color } from '../../assets/colors/Index';
 
-export default function HeaderCart({ navigation }) {
+export default function HeaderCart({ navigation, dataCart }) {
     return (
         <View style={styles.Container}>
             <TouchableOpacity
@@ -39,6 +39,12 @@ export default function HeaderCart({ navigation }) {
                         size={sizeFont(6.5)}
                         color={color.mainColor}
                     />
+                    <View style={styles.Circle}>
+                        <Text style={{
+                            color: color.fontWhite,
+                            fontSize: sizeFont(3),
+                        }}>{dataCart ? dataCart.length : '0'}</Text>
+                    </View>
                 </TouchableOpacity>
             </View>
         </View>
@@ -68,5 +74,16 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: '25%',
         justifyContent: 'space-between',
+    },
+    Circle: {
+        position: 'absolute',
+        width: 20,
+        height: 20,
+        backgroundColor: '#32a852',
+        borderRadius: 100,
+        alignItems: 'center',
+        justifyContent: 'center',
+        top: -8,
+        right: -8,
     },
 });

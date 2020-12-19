@@ -74,12 +74,13 @@ export const countDown = () => {
 // getToken
 
 export const getIdUser = async () => {
-    await AsyncStorage.getItem('idUser')
-        .then(idUser => {
-            return idUser;
-        }).catch(err => {
-            console.log(err);
-        });
+    try {
+        const idUser = await AsyncStorage.getItem('idUser');
+        return idUser;
+
+    } catch (err) {
+        console.log(err);
+    }
 };
 
 export const ToasSuccess = (message) => {
