@@ -6,7 +6,7 @@ import ButtonBuy from '../components/DetailProduk/ButtonBuy';
 import Deskripsi from '../components/DetailProduk/Deskripsi';
 import Rekomendasi from '../components/DetailProduk/Rekomendasi';
 import Headers from '../components/Header/HeaderDetailProduk';
-import { getIdUser, objekEmpty } from '../config/function';
+import { getIdUser, objekEmpty, ToasSuccess } from '../config/function';
 import { addCart } from '../redux/actions/Cart';
 import { getDetailProduk } from '../redux/actions/DetailProduk';
 
@@ -41,6 +41,7 @@ export default function DetailProduk({ navigation, route }) {
             produk_id: idProduk,
             qty: 1,
         };
+        ToasSuccess('Dimasukkan ke keranjang');
         if (data.produk_id) {
             dispatch(addCart(data));
         } else {

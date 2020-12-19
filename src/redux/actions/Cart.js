@@ -21,7 +21,6 @@ export const addCart = (data) => {
     return async (dispatch) => {
         await Axios.post(BASE_URL + 'add-to-cart', data)
             .then(responAddCart => {
-                ToastAndroid.showWithGravity('Dimasukkan ke keranjang', ToastAndroid.LONG, ToastAndroid.CENTER);
                 dispatch({
                     type: ADD_CART,
                     data: responAddCart,

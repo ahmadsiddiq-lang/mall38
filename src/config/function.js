@@ -1,4 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { WToast } from 'react-native-smart-tip';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { color } from '../assets/colors/Index';
+import { sizeFont } from '../assets/responsive';
+import * as React from 'react';
+import { Easing } from 'react-native';
 
 // convert to rupiah
 export const rupiah = (number) => {
@@ -74,4 +80,18 @@ export const getIdUser = async () => {
         }).catch(err => {
             console.log(err);
         });
+};
+
+export const ToasSuccess = (message) => {
+    const toastOpts = {
+        data: message,
+        textColor: '#ffffff',
+        backgroundColor: 'rgba(74, 74, 74,0.7)',
+        duration: WToast.duration.LONG, //1.SHORT 2.LONG
+        position: WToast.position.CENTER, // 1.TOP 2.CENTER 3.BOTTOM
+        icon: <Ionicons name="checkmark-circle-outline" size={sizeFont(12)} color={color.fontWhite} />,
+        inEasing: Easing.bounce,
+    };
+
+    return WToast.show(toastOpts);
 };

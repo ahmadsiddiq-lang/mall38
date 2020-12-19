@@ -24,7 +24,9 @@ export default function Login({ navigation }) {
 
     const handleLoginSuccess = useCallback(async (idUser) => {
         try {
-            await AsyncStorage.setItem('idUser', idUser.id);
+            const id = JSON.stringify(idUser.id);
+            console.log(id);
+            await AsyncStorage.setItem('idUser', id);
             navigation.navigate('MyTabbar');
         } catch (e) {
             // saving error
