@@ -26,7 +26,7 @@ export default function Home({ navigation }) {
 
     const getDataUser = useCallback(async () => {
         const value = await AsyncStorage.getItem('email');
-        console.log(value);
+        // console.log(value);
     }, []);
 
 

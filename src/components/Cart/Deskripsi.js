@@ -1,0 +1,76 @@
+import React from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { color } from '../../assets/colors/Index';
+import { Poppins } from '../../assets/fonts';
+import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
+
+export default function Deskripsi() {
+    return (
+        <View style={styles.Container}>
+            <View style={styles.Item}>
+                <Text style={styles.TextTitle}>Total Harga Produk</Text>
+                <Text style={styles.TextItem}>Rp. 400.000</Text>
+            </View>
+            <View style={styles.Item}>
+                <Text style={styles.TextTitle}>Ongkos Kirim</Text>
+                <Text style={styles.TextItem}>Rp. 20.000</Text>
+            </View>
+            <View style={styles.Item}>
+                <Text style={styles.TextTitle}>Diskon</Text>
+                <Text style={styles.TextItem}>5%</Text>
+            </View>
+            <View style={styles.Item}>
+                <Text style={styles.TextTitle}>Total Bayar</Text>
+                <Text style={styles.TextItem}>Rp. 389.000</Text>
+            </View>
+            <View style={{
+                marginTop: sizeHeight(3),
+            }}>
+                <TouchableOpacity
+                    activeOpacity={0.8}
+                    style={styles.BtnBuy}
+                >
+                    <Text style={{
+                        fontSize: sizeFont(4),
+                        fontFamily: Poppins.Bold,
+                        color: color.fontWhite,
+                    }}>CHECK OUT</Text>
+                </TouchableOpacity>
+            </View>
+        </View>
+    );
+}
+
+const styles = StyleSheet.create({
+    Container: {
+        borderTopWidth: 1,
+        borderTopColor: color.border2,
+        position: 'absolute',
+        bottom: 0,
+        width: SCREEN_WIDTH,
+        height: sizeHeight(25),
+        backgroundColor: color.bgWhite,
+        paddingTop: sizeHeight(1),
+        paddingHorizontal: sizeWidth(8),
+    },
+    Item: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    TextTitle: {
+        fontSize: sizeFont(3.8),
+        fontFamily: Poppins.Medium,
+        color: color.fontBlack1,
+    },
+    TextItem: {
+        fontSize: sizeFont(3.8),
+        fontFamily: Poppins.Medium,
+        color: color.mainColor,
+    },
+    BtnBuy: {
+        backgroundColor: color.mainColor,
+        alignItems: 'center',
+        paddingVertical: sizeHeight(1.2),
+        borderRadius: 8,
+    },
+});

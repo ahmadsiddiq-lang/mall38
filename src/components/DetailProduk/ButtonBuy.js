@@ -5,10 +5,11 @@ import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../../assets/resp
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { color } from '../../assets/colors/Index';
 import { Poppins } from '../../assets/fonts';
-export default function ButtonBuy() {
+export default function ButtonBuy({ navigation, handleAddTocat, detailProduk }) {
     return (
         <View style={styles.Container}>
             <TouchableOpacity
+                onPress={() => handleAddTocat(detailProduk)}
                 activeOpacity={1}
                 style={[styles.BtnAddCart, {
                     backgroundColor: '#05991d',

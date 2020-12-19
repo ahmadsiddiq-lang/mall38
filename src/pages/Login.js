@@ -22,9 +22,9 @@ export default function Login({ navigation }) {
         ToastAndroid.showWithGravity('Email atau Password Anda salah', ToastAndroid.LONG, ToastAndroid.CENTER);
     }, []);
 
-    const handleLoginSuccess = useCallback(async (emailUser) => {
+    const handleLoginSuccess = useCallback(async (idUser) => {
         try {
-            await AsyncStorage.setItem('email', emailUser.email);
+            await AsyncStorage.setItem('idUser', idUser.id);
             navigation.navigate('MyTabbar');
         } catch (e) {
             // saving error

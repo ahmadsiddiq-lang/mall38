@@ -1,9 +1,11 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
+import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { color } from '../../assets/colors/Index';
-export default function HeaderDetailProduk({ navigation }) {
+
+export default function HeaderCart({ navigation }) {
     return (
         <View style={styles.Container}>
             <TouchableOpacity
@@ -23,7 +25,7 @@ export default function HeaderDetailProduk({ navigation }) {
                     style={styles.Btn}
                 >
                     <Ionicons
-                        name="share-social"
+                        name="search"
                         size={sizeFont(6.5)}
                         color={color.mainColor}
                     />
@@ -38,16 +40,6 @@ export default function HeaderDetailProduk({ navigation }) {
                         color={color.mainColor}
                     />
                 </TouchableOpacity>
-                <TouchableOpacity
-                    activeOpacity={0.8}
-                    style={styles.Btn}
-                >
-                    <Ionicons
-                        name="ellipsis-vertical"
-                        size={sizeFont(6.5)}
-                        color={color.mainColor}
-                    />
-                </TouchableOpacity>
             </View>
         </View>
     );
@@ -55,18 +47,13 @@ export default function HeaderDetailProduk({ navigation }) {
 
 const styles = StyleSheet.create({
     Container: {
-        // position: 'absolute',
-        width: SCREEN_WIDTH,
-        zIndex: 1,
+        // borderBottomWidth: 1,
+        // borderBottomColor: color.border2,
         height: sizeHeight(6.5),
-        borderBottomWidth: 1,
-        borderBottomColor: color.border2,
-        // backgroundColor: 'rgba(252, 252, 252,0.5)',
-        backgroundColor: color.bgWhite,
-        flexDirection: 'row',
         alignItems: 'center',
-        paddingHorizontal: sizeWidth(5),
+        flexDirection: 'row',
         justifyContent: 'space-between',
+        paddingHorizontal: sizeWidth(5),
     },
     Btn: {
         // padding: sizeHeight(2),
@@ -79,7 +66,7 @@ const styles = StyleSheet.create({
     },
     BoxBtnRight: {
         flexDirection: 'row',
-        width: '40%',
+        width: '25%',
         justifyContent: 'space-between',
     },
 });

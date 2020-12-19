@@ -33,6 +33,7 @@ export default function Home({ navigation }) {
                 />
             </TouchableOpacity>
             <TouchableOpacity
+                onPress={() => navigation.navigate('Cart')}
                 activeOpacity={0.8}
                 style={{
                     paddingLeft: 5,

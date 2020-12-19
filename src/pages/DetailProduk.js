@@ -6,7 +6,8 @@ import ButtonBuy from '../components/DetailProduk/ButtonBuy';
 import Deskripsi from '../components/DetailProduk/Deskripsi';
 import Rekomendasi from '../components/DetailProduk/Rekomendasi';
 import Headers from '../components/Header/HeaderDetailProduk';
-import { objekEmpty } from '../config/function';
+import { getIdUser, objekEmpty } from '../config/function';
+import { addCart } from '../redux/actions/Cart';
 import { getDetailProduk } from '../redux/actions/DetailProduk';
 
 export default function DetailProduk({ navigation, route }) {
@@ -32,18 +33,33 @@ export default function DetailProduk({ navigation, route }) {
         });
     };
 
+    const handleAddTocat = useCallback(async (item) => {
+        const idUser = await getIdUser();
+        const idProduk = item.id;
+        const data = {
+            user_id: idUser,
+            produk_id: idProduk,
+            qty: 1,
+        };
+        if (data.produk_id) {
+            dispatch(addCart(data));
+        } else {
+            console.log(data);
+        }
+    }, [dispatch]);
+
     useEffect(() => {
         getDetailProduks();
     }, [getDetailProduks]);
 
     return (
         <View style={styles.Container}>
+            <Headers navigation={navigation} />
             {
                 objekEmpty(detailProduk) &&
                 <ScrollView
                     ref={refScroll}
                 >
-                    <Headers navigation={navigation} title={'Detail Produk'} />
                     <Banner navigation={navigation} detailProduk={detailProduk} />
                     <Deskripsi detailProduk={detailProduk} />
                     <Rekomendasi
@@ -52,7 +68,7 @@ export default function DetailProduk({ navigation, route }) {
                         dataProduk={dataProduk} />
                 </ScrollView>
             }
-            <ButtonBuy />
+            <ButtonBuy handleAddTocat={handleAddTocat} detailProduk={detailProduk} />
         </View>
     );
 }

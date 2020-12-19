@@ -14,6 +14,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { sizeFont } from '../assets/responsive';
 import { color } from '../assets/colors/Index';
 import Login from '../pages/Login';
+import Cart from '../pages/Cart';
 
 const Tab = createBottomTabNavigator();
 
@@ -73,21 +74,6 @@ export function MyTabbar() {
                 }}
             />
             <Tab.Screen
-                name="Transaktion"
-                component={Transaksi}
-                options={{
-                    tabBarIcon: () => {
-                        return (
-                            <Ionicons
-                                name="swap-horizontal"
-                                size={sizeFont(5)}
-                                color={color.mainColor}
-                            />
-                        );
-                    },
-                }}
-            />
-            <Tab.Screen
                 name="Akun"
                 component={Akun}
                 options={{
@@ -113,11 +99,13 @@ export default function MainNavigation() {
     return (
         <NavigationContainer>
             <StatusBar translucent={false} backgroundColor={color.mainColor} barStyle="light-content" />
-            <Stack.Navigator initialRouteName="Login" headerMode="none">
+            <Stack.Navigator initialRouteName="MyTabbar" headerMode="none">
                 <Stack.Screen name="MyTabbar" component={MyTabbar} />
+                <Stack.Screen name="Transaksi" component={Transaksi} />
                 <Stack.Screen name="ProductCategori" component={ProductCategori} />
                 <Stack.Screen name="DetailProduk" component={DetailProduk} />
                 <Stack.Screen name="Login" component={Login} />
+                <Stack.Screen name="Cart" component={Cart} />
             </Stack.Navigator>
         </NavigationContainer>
     );

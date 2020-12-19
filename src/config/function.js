@@ -1,3 +1,5 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 // convert to rupiah
 export const rupiah = (number) => {
     var reverse = number.toString().split('').reverse().join(''),
@@ -61,5 +63,15 @@ export const countDown = () => {
         distance: distance,
     };
     return timeFull;
-}
-    ;
+};
+
+// getToken
+
+export const getIdUser = async () => {
+    await AsyncStorage.getItem('idUser')
+        .then(idUser => {
+            return idUser;
+        }).catch(err => {
+            console.log(err);
+        });
+};
