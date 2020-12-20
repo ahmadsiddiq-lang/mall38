@@ -13,6 +13,8 @@ import HeaderCart from '../components/Header/HeaderCart';
 import { getIdUser } from '../config/function';
 import { getCArt } from '../redux/actions/Cart';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 
 export default function Cart({ navigation }) {
 
@@ -51,6 +53,21 @@ export default function Cart({ navigation }) {
         setDataCart([...dataFromState]);
         handleSelectItem();
     }, [dataCartState, handleSelectItem]);
+
+    const handleChechAll = useCallback(async () => {
+        setToggleCheckBox(!toggleCheckBox);
+        const dataFromState = dataCartState;
+        const newData = [];
+        dataFromState.forEach(element => {
+            newData.push({ ...element, checkbox: !toggleCheckBox });
+        });
+        setDataCart([...newData]);
+        if (!toggleCheckBox) {
+            setFixDataCart([...newData]);
+        } else {
+            setFixDataCart([]);
+        }
+    }, [toggleCheckBox, dataCartState]);
 
     const handleSelectItem = useCallback(async () => {
         const Select = [];
@@ -106,19 +123,46 @@ export default function Cart({ navigation }) {
 
     return (
         <View style={styles.Container}>
+            <StatusBar backgroundColor={color.bgWhite} barStyle="dark-content" />
             <HeaderCart
                 dataCart={dataCart}
                 navigation={navigation}
                 toggleCheckBox={toggleCheckBox}
                 setToggleCheckBox={setToggleCheckBox}
             />
-            <StatusBar backgroundColor={color.bgWhite} barStyle="dark-content" />
-            <Text style={{
-                fontSize: sizeFont(5),
-                paddingLeft: sizeWidth(5),
-                fontFamily: Poppins.ExtraBold,
-                color: color.mainColor,
-            }}>My Cart</Text>
+            <View style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                paddingHorizontal: sizeWidth(5),
+                marginTop: sizeHeight(1),
+            }}>
+                <Text style={{
+                    fontSize: sizeFont(5),
+                    fontFamily: Poppins.ExtraBold,
+                    color: color.mainColor,
+                }}>My Cart</Text>
+                <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() => handleChechAll()}
+                    style={{
+                        marginRight: sizeWidth(2),
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                    }}
+                >
+                    <Text style={{
+                        fontSize: sizeFont(3),
+                        color: color.fontBlack1,
+                        marginRight: sizeWidth(3),
+                    }}>Check All</Text>
+                    {toggleCheckBox ?
+                        <Ionicons name="checkbox" size={sizeFont(5)} color={color.mainColor} />
+                        :
+                        <Ionicons name="checkbox-outline" size={sizeFont(5)} color={color.mainColor} />
+                    }
+                </TouchableOpacity>
+            </View>
             <View style={styles.Content}>
                 {dataCartState &&
                     <FlatList

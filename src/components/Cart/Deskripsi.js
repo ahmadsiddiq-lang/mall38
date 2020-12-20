@@ -15,24 +15,33 @@ export default function Deskripsi({ navigation, fixDataCart = [] }) {
         return total;
     };
 
+    const TotalBayar = () => {
+        let total = 0;
+        const Ongkir = 20000;
+        fixDataCart.forEach(element => {
+            total += (Number(element.product.price) * Number(element.qty));
+        });
+        return total + Ongkir;
+    };
+
     return (
         <View style={styles.Container}>
             <View style={styles.Item}>
-                <Text style={styles.TextTitle}>Total Harga Produk</Text>
+                <Text style={styles.TextTitle}>Sub Total</Text>
                 <Text style={styles.TextItem}>Rp. {rupiah(TotalHargaProduk())}</Text>
             </View>
-            <View style={styles.Item}>
+            {/* <View style={styles.Item}>
                 <Text style={styles.TextTitle}>Ongkos Kirim</Text>
                 <Text style={styles.TextItem}>Rp. 20.000</Text>
             </View>
             <View style={styles.Item}>
                 <Text style={styles.TextTitle}>Diskon</Text>
-                <Text style={styles.TextItem}>5%</Text>
+                <Text style={styles.TextItem}>0%</Text>
             </View>
             <View style={styles.Item}>
                 <Text style={styles.TextTitle}>Total Bayar</Text>
-                <Text style={styles.TextItem}>Rp. 389.000</Text>
-            </View>
+                <Text style={styles.TextItem}>Rp. {rupiah(TotalBayar())}</Text>
+            </View> */}
             <View style={{
                 marginTop: sizeHeight(3),
             }}>

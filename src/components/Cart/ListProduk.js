@@ -72,17 +72,14 @@ export default function ListProduk({ item, handlePlus, handleCechboxItem, handle
                 </View>
                 <TouchableOpacity
                     activeOpacity={0.8}
-                    style={styles.CheckBox}>
-                    <TouchableOpacity
-                        activeOpacity={0.8}
-                        onPress={() => handleCechboxItem(item.id)}
-                    >
-                        {item.checkbox ?
-                            <Ionicons name="checkbox" size={sizeFont(5)} color={color.mainColor} />
-                            :
-                            <Ionicons name="checkbox-outline" size={sizeFont(5)} color={color.mainColor} />
-                        }
-                    </TouchableOpacity>
+                    onPress={() => handleCechboxItem(item.id)}
+                    style={styles.CheckBox}
+                >
+                    {item.checkbox ?
+                        <Ionicons name="checkbox" size={sizeFont(5)} color={color.mainColor} />
+                        :
+                        <Ionicons name="checkbox-outline" size={sizeFont(5)} color={color.mainColor} />
+                    }
                 </TouchableOpacity>
             </View>
         </View>
