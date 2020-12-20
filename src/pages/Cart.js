@@ -30,6 +30,7 @@ export default function Cart({ navigation }) {
         const dataNew = dataFromState;
         // console.log(dataCartState);
         setDataCart([...dataNew]);
+        handleSelectItem();
     };
 
     const handlePlus = useCallback(async (id) => {
@@ -38,16 +39,27 @@ export default function Cart({ navigation }) {
         dataFromState[dataIndex].qty = dataFromState[dataIndex].qty + 1;
         // console.log(dataFromState);
         setDataCart([...dataFromState]);
-    }, [dataCartState]);
+        handleSelectItem();
+    }, [dataCartState, handleSelectItem]);
 
     const handleMinu = useCallback(async (id) => {
-        console.log('masuk');
         const dataFromState = dataCartState;
         const dataIndex = dataFromState.findIndex(cart => cart.id === id);
         if (dataFromState[dataIndex].qty > 1) {
             dataFromState[dataIndex].qty = dataFromState[dataIndex].qty - 1;
         }
         setDataCart([...dataFromState]);
+        handleSelectItem();
+    }, [dataCartState, handleSelectItem]);
+
+    const handleSelectItem = useCallback(async () => {
+        const Select = [];
+        dataCartState.forEach(item => {
+            if (item.checkbox === true) {
+                Select.push(item);
+            }
+        });
+        setFixDataCart(Select);
     }, [dataCartState]);
 
     const hetDataCart = useCallback(async () => {
@@ -65,7 +77,7 @@ export default function Cart({ navigation }) {
         const data = dataCart;
         const newData = [];
         data.forEach(element => {
-            newData.push({ ...element, checkbox: true, qty: 1 });
+            newData.push({ ...element, checkbox: false, qty: 1 });
         });
         setDataCart([...newData]);
     }, [dataCart]);
@@ -135,7 +147,7 @@ export default function Cart({ navigation }) {
                         <MetodeBayar /> */}
                 </View>
             </View>
-            <Deskripsi />
+            <Deskripsi fixDataCart={fixDataCart} />
         </View>
     );
 }

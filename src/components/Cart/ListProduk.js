@@ -78,9 +78,9 @@ export default function ListProduk({ item, handlePlus, handleCechboxItem, handle
                         onPress={() => handleCechboxItem(item.id)}
                     >
                         {item.checkbox ?
-                            <Ionicons name="checkbox-outline" size={sizeFont(5)} color={color.mainColor} />
-                            :
                             <Ionicons name="checkbox" size={sizeFont(5)} color={color.mainColor} />
+                            :
+                            <Ionicons name="checkbox-outline" size={sizeFont(5)} color={color.mainColor} />
                         }
                     </TouchableOpacity>
                 </TouchableOpacity>

@@ -13,7 +13,6 @@ import { getCarousel } from '../redux/actions/Carousel';
 import { getCategori } from '../redux/actions/Categori';
 import { getFlashSale } from '../redux/actions/FlashSale';
 import { countDown } from '../config/function';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { countDown } from '../config/function';
 
 export default function Home({ navigation }) {
@@ -25,7 +24,6 @@ export default function Home({ navigation }) {
     const [dateFlashShale, setDateFlash] = useState('');
 
     const getDataUser = useCallback(async () => {
-        const value = await AsyncStorage.getItem('email');
         // console.log(value);
     }, []);
 

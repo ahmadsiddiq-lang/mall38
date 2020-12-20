@@ -3,13 +3,23 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
 import { Poppins } from '../../assets/fonts';
 import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
+import { rupiah } from '../../config/function';
 
-export default function Deskripsi() {
+export default function Deskripsi({ navigation, fixDataCart = [] }) {
+
+    const TotalHargaProduk = () => {
+        let total = 0;
+        fixDataCart.forEach(element => {
+            total += (Number(element.product.price) * Number(element.qty));
+        });
+        return total;
+    };
+
     return (
         <View style={styles.Container}>
             <View style={styles.Item}>
                 <Text style={styles.TextTitle}>Total Harga Produk</Text>
-                <Text style={styles.TextItem}>Rp. 400.000</Text>
+                <Text style={styles.TextItem}>Rp. {rupiah(TotalHargaProduk())}</Text>
             </View>
             <View style={styles.Item}>
                 <Text style={styles.TextTitle}>Ongkos Kirim</Text>
@@ -27,6 +37,7 @@ export default function Deskripsi() {
                 marginTop: sizeHeight(3),
             }}>
                 <TouchableOpacity
+                    // onPress={() => handleSelectItem()}
                     activeOpacity={0.8}
                     style={styles.BtnBuy}
                 >
@@ -48,10 +59,10 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
         width: SCREEN_WIDTH,
-        height: sizeHeight(25),
         backgroundColor: color.bgWhite,
         paddingTop: sizeHeight(1),
         paddingHorizontal: sizeWidth(8),
+        paddingBottom: sizeHeight(1.5),
     },
     Item: {
         flexDirection: 'row',
@@ -70,7 +81,7 @@ const styles = StyleSheet.create({
     BtnBuy: {
         backgroundColor: color.mainColor,
         alignItems: 'center',
-        paddingVertical: sizeHeight(1.2),
+        paddingVertical: sizeHeight(0.8),
         borderRadius: 8,
     },
 });
