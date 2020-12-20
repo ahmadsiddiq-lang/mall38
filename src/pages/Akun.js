@@ -45,9 +45,9 @@ export default function Akun({ navigation }) {
 
     return (
         <View style={styles.Container}>
-            <StatusBar backgroundColor="#cfa2f5" barStyle="light-content" />
+            {/* <StatusBar backgroundColor="#cfa2f5" barStyle="light-content" /> */}
             <LinearGradient
-                colors={['#cfa2f5', '#b477e6', color.mainColor]}
+                colors={[color.mainColor, '#b477e6', '#cfa2f5']}
                 style={styles.Back}
             >
                 <HeaderAkun ready={ready} navigation={navigation} />
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         right: sizeWidth(15),
         bottom: -40,
-        backgroundColor: '#cfa2f5',
+        backgroundColor: color.mainColor,
     },
     Content: {
         // borderWidth: 1,

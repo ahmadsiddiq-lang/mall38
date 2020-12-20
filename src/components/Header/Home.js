@@ -1,12 +1,29 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getIdUser } from '../../config/function';
+import { getCArt } from '../../redux/actions/Cart';
 
 export default function Home({ navigation }) {
+
+    const dispatch = useDispatch();
+    const dataCart = useSelector(state => state.cart.dataCart);
+    const data = dataCart;
+
+    const hetDataCart = useCallback(async () => {
+        const idUser = await getIdUser();
+        if (idUser) {
+            dispatch(getCArt(idUser));
+        }
+    }, [dispatch]);
+
+    useEffect(() => {
+        hetDataCart();
+    }, [hetDataCart]);
 
     return (
         <View style={styles.Container}>
@@ -47,7 +64,10 @@ export default function Home({ navigation }) {
                     color={color.fontWhite}
                     size={sizeFont(6)}
                 />
-                <View style={styles.Circle} />
+                {
+                    data.length > 0 &&
+                    <View style={styles.Circle} />
+                }
             </TouchableOpacity>
         </View>
     );
@@ -84,7 +104,7 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         alignItems: 'center',
         justifyContent: 'center',
-        top: 5,
+        top: 8,
         right: -5,
         borderColor: color.borderWhite,
         borderWidth: 2,
