@@ -1,23 +1,54 @@
-import React, { useCallback, useEffect } from 'react';
-import { FlatList, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
+/* eslint-disable react-native/no-inline-styles */
+import React, { useCallback, useEffect, useState } from 'react';
+import { FlatList, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { color } from '../assets/colors/Index';
 import { Poppins } from '../assets/fonts';
 import { sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
 import Deskripsi from '../components/Cart/Deskripsi';
-import Kurir from '../components/Cart/Kurir';
+// import Kurir from '../components/Cart/Kurir';
+// import MetodeBayar from '../components/Cart/MetodeBayar';
 import ListProduk from '../components/Cart/ListProduk';
-import MetodeBayar from '../components/Cart/MetodeBayar';
 import HeaderCart from '../components/Header/HeaderCart';
 import { getIdUser } from '../config/function';
 import { getCArt } from '../redux/actions/Cart';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 export default function Cart({ navigation }) {
 
     const dispatch = useDispatch();
     const dataCart = useSelector(state => state.cart.dataCart);
+    const [toggleCheckBox, setToggleCheckBox] = useState(false);
+    const [dataCartState, setDataCart] = useState([]);
+    const [fixDataCart, setFixDataCart] = useState([]);
+    // console.log(dataCartState);
 
-    // console.log(dataCart);
+    const handleCechboxItem = (id) => {
+        const dataFromState = dataCartState;
+        const dataIndex = dataFromState.findIndex(cart => cart.id === id);
+        dataFromState[dataIndex].checkbox = !dataFromState[dataIndex].checkbox;
+        const dataNew = dataFromState;
+        // console.log(dataCartState);
+        setDataCart([...dataNew]);
+    };
+
+    const handlePlus = useCallback(async (id) => {
+        const dataFromState = dataCartState;
+        const dataIndex = dataFromState.findIndex(cart => cart.id === id);
+        dataFromState[dataIndex].qty = dataFromState[dataIndex].qty + 1;
+        // console.log(dataFromState);
+        setDataCart([...dataFromState]);
+    }, [dataCartState]);
+
+    const handleMinu = useCallback(async (id) => {
+        console.log('masuk');
+        const dataFromState = dataCartState;
+        const dataIndex = dataFromState.findIndex(cart => cart.id === id);
+        if (dataFromState[dataIndex].qty > 1) {
+            dataFromState[dataIndex].qty = dataFromState[dataIndex].qty - 1;
+        }
+        setDataCart([...dataFromState]);
+    }, [dataCartState]);
 
     const hetDataCart = useCallback(async () => {
         const idUser = await getIdUser();
@@ -28,14 +59,47 @@ export default function Cart({ navigation }) {
 
     useEffect(() => {
         hetDataCart();
-        return () => {
-            hetDataCart();
-        };
     }, [hetDataCart]);
+
+    useEffect(() => {
+        const data = dataCart;
+        const newData = [];
+        data.forEach(element => {
+            newData.push({ ...element, checkbox: true, qty: 1 });
+        });
+        setDataCart([...newData]);
+    }, [dataCart]);
+
+    const rightSwipe = (progress, dragX) => {
+        return (
+            <TouchableOpacity
+                activeOpacity={0.8}
+                style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: 'red',
+                    marginVertical: sizeHeight(1.3),
+                    borderTopRightRadius: 8,
+                    borderBottomRightRadius: 8,
+                    width: sizeWidth(20),
+                }}>
+                <Text style={{
+                    fontSize: sizeFont(3.5),
+                    fontFamily: Poppins.Medium,
+                    color: color.fontWhite,
+                }}>Delete</Text>
+            </TouchableOpacity>
+        );
+    };
 
     return (
         <View style={styles.Container}>
-            <HeaderCart dataCart={dataCart} navigation={navigation} />
+            <HeaderCart
+                dataCart={dataCart}
+                navigation={navigation}
+                toggleCheckBox={toggleCheckBox}
+                setToggleCheckBox={setToggleCheckBox}
+            />
             <StatusBar backgroundColor={color.bgWhite} barStyle="dark-content" />
             <Text style={{
                 fontSize: sizeFont(5),
@@ -44,14 +108,23 @@ export default function Cart({ navigation }) {
                 color: color.mainColor,
             }}>My Cart</Text>
             <View style={styles.Content}>
-                {dataCart &&
+                {dataCartState &&
                     <FlatList
-                        data={dataCart}
+                        data={dataCartState}
                         keyExtractor={(_, index) => index.toString()}
                         renderItem={({ item }) =>
-                            <View style={styles.BoxCard}>
-                                <ListProduk item={item} />
-                            </View>
+                            <Swipeable
+                                renderRightActions={rightSwipe}
+                                renderLeftActions={false}
+                            >
+                                <View style={styles.BoxCard}>
+                                    <ListProduk
+                                        handleMinu={handleMinu}
+                                        handlePlus={handlePlus}
+                                        handleCechboxItem={handleCechboxItem}
+                                        item={item} />
+                                </View>
+                            </Swipeable>
                         }
                     />
                 }
@@ -80,5 +153,6 @@ const styles = StyleSheet.create({
     },
     BoxCard: {
         marginVertical: sizeHeight(1.2),
+        backgroundColor: color.bgWhite,
     },
 });

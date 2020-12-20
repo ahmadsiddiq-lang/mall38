@@ -11,7 +11,7 @@ import ProdukReducer from './src/redux/reducers/Produk';
 import FlashReducer from './src/redux/reducers/FlashSlae';
 import ProdukCategoriReducer from './src/redux/reducers/ProdukCategori';
 import DetailProduk from './src/redux/reducers/DetailProduk';
-import Login from './src/redux/reducers/Login';
+import loginReducer from './src/redux/reducers/Login';
 import Cart from './src/redux/reducers/Cart';
 import { combineReducers, applyMiddleware, createStore } from 'redux';
 
@@ -22,7 +22,7 @@ const RootReducer = combineReducers({
   flashsale: FlashReducer,
   produkCategori: ProdukCategoriReducer,
   detailProduk: DetailProduk,
-  dataLogin: Login,
+  dataLogin: loginReducer,
   cart: Cart,
 });
 

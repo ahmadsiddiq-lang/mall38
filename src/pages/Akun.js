@@ -11,18 +11,21 @@ import HeaderAkun from '../components/Header/HeaderAkun';
 import { Poppins } from '../assets/fonts';
 import Content from '../components/Akun/Content';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSelector } from 'react-redux';
 
 
 export default function Akun({ navigation }) {
 
     const [ready, setReady] = useState(false);
+    const dataUser = useSelector(state => state.dataLogin.dataUser);
+
+    // console.log(dataUser);
     const handleUser = useCallback(async () => {
         const idUser = await AsyncStorage.getItem('idUser');
-        console.log(idUser);
         if (idUser === undefined || idUser === null) {
             setReady(false);
         } else {
-            setReady(true);
+            setReady(false);
         }
     }, []);
 

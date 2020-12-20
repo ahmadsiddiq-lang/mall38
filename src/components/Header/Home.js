@@ -8,8 +8,6 @@ import { useSelector } from 'react-redux';
 
 export default function Home({ navigation }) {
 
-    const dataCart = useSelector(state => state.cart.dataCart);
-
     return (
         <View style={styles.Container}>
             <TouchableOpacity
@@ -49,12 +47,7 @@ export default function Home({ navigation }) {
                     color={color.fontWhite}
                     size={sizeFont(6)}
                 />
-                <View style={styles.Circle}>
-                    <Text style={{
-                        color: color.fontWhite,
-                        fontSize: sizeFont(3),
-                    }}>{dataCart ? dataCart.length : '0'}</Text>
-                </View>
+                <View style={styles.Circle} />
             </TouchableOpacity>
         </View>
     );
@@ -85,13 +78,15 @@ const styles = StyleSheet.create({
     },
     Circle: {
         position: 'absolute',
-        width: 20,
-        height: 20,
+        width: 13,
+        height: 13,
         backgroundColor: '#32a852',
         borderRadius: 100,
         alignItems: 'center',
         justifyContent: 'center',
-        top: 0,
-        right: -8,
+        top: 5,
+        right: -5,
+        borderColor: color.borderWhite,
+        borderWidth: 2,
     },
 });

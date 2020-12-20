@@ -5,9 +5,10 @@ const initialState = {
     dataAdmin: [],
 };
 
-const login = (state = initialState, action) => {
+const loginReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOGIN_USER:
+            // console.log(action.data);
             return {
                 ...state,
                 dataUser: action.data,
@@ -24,4 +25,4 @@ const login = (state = initialState, action) => {
     }
 };
 
-export default login;
+export default loginReducer;

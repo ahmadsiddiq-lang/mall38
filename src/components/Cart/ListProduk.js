@@ -4,11 +4,10 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { DefaultTitle } from '../DefaultText';
 import { Poppins } from '../../assets/fonts';
 import { rupiah } from '../../config/function';
-
-export default function ListProduk({ item }) {
+// import CheckBox from '@react-native-community/checkbox';
+export default function ListProduk({ item, handlePlus, handleCechboxItem, handleMinu }) {
     return (
         <View style={styles.Container}>
             <View style={styles.BoxImage}>
@@ -50,6 +49,7 @@ export default function ListProduk({ item }) {
                     <View style={{ alignItems: 'flex-end' }}>
                         <View style={styles.BoxQty}>
                             <TouchableOpacity
+                                onPress={() => handleMinu(item.id)}
                                 activeOpacity={0.8}
                                 style={{
                                     paddingRight: sizeWidth(4),
@@ -57,8 +57,9 @@ export default function ListProduk({ item }) {
                             >
                                 <Ionicons name="remove-circle" size={sizeFont(5)} color={color.mainColor} />
                             </TouchableOpacity>
-                            <Text>1</Text>
+                            <Text style={{ fontSize: sizeFont(3.5) }}>{item.qty}</Text>
                             <TouchableOpacity
+                                onPress={() => handlePlus(item.id)}
                                 activeOpacity={0.8}
                                 style={{
                                     paddingLeft: sizeWidth(4),
@@ -71,8 +72,17 @@ export default function ListProduk({ item }) {
                 </View>
                 <TouchableOpacity
                     activeOpacity={0.8}
-                    style={styles.Trash}>
-                    <Ionicons name="trash-bin" size={sizeFont(5)} color={color.mainColor} />
+                    style={styles.CheckBox}>
+                    <TouchableOpacity
+                        activeOpacity={0.8}
+                        onPress={() => handleCechboxItem(item.id)}
+                    >
+                        {item.checkbox ?
+                            <Ionicons name="checkbox-outline" size={sizeFont(5)} color={color.mainColor} />
+                            :
+                            <Ionicons name="checkbox" size={sizeFont(5)} color={color.mainColor} />
+                        }
+                    </TouchableOpacity>
                 </TouchableOpacity>
             </View>
         </View>
@@ -108,9 +118,9 @@ const styles = StyleSheet.create({
         // borderWidth: 1,
         flex: 1,
     },
-    Trash: {
+    CheckBox: {
         position: 'absolute',
-        right: sizeWidth(2),
+        right: sizeWidth(1.5),
         top: sizeHeight(1),
     },
     BoxQty: {
