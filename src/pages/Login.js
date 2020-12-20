@@ -26,7 +26,7 @@ export default function Login({ navigation }) {
         try {
             const id = JSON.stringify(idUser.id);
             await AsyncStorage.setItem('idUser', id);
-            navigation.navigate('Home');
+            navigation.navigate('Akun');
         } catch (e) {
             // saving error
             console.log(e);

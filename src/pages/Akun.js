@@ -16,23 +16,20 @@ import { useSelector } from 'react-redux';
 
 export default function Akun({ navigation }) {
 
-    const [ready, setReady] = useState(false);
+    const [ready, setReady] = useState(null);
+    const [dataScreen, setDataScreen] = useState(null);
     const dataUser = useSelector(state => state.dataLogin.dataUser);
 
-    // console.log(dataUser);
     const handleUser = useCallback(async () => {
         const idUser = await AsyncStorage.getItem('idUser');
-        if (idUser === undefined || idUser === null) {
-            setReady(false);
-        } else {
-            setReady(false);
-        }
+        setReady(idUser);
+
     }, []);
 
     const removeUser = async () => {
         try {
             await AsyncStorage.removeItem('idUser');
-            setReady(false);
+            setReady(null);
             return true;
         }
         catch (exception) {
@@ -41,7 +38,9 @@ export default function Akun({ navigation }) {
     };
 
     useEffect(() => {
-        handleUser();
+        if (dataUser) {
+            handleUser();
+        }
     });
 
     return (
@@ -53,7 +52,7 @@ export default function Akun({ navigation }) {
             >
                 <HeaderAkun ready={ready} navigation={navigation} />
                 <View style={styles.BoxUser}>
-                    <FontAwesome5 name="user" color={color.fontWhite} size={sizeFont(13)} solid />
+                    <FontAwesome5 onPress={() => handleUser()} name="user" color={color.fontWhite} size={sizeFont(13)} solid />
                 </View>
             </LinearGradient>
             <ScrollView>
@@ -62,7 +61,7 @@ export default function Akun({ navigation }) {
                 </View>
                 <View style={styles.Footer}>
                     {
-                        ready ?
+                        ready !== null ?
                             <TouchableOpacity
                                 onPress={() => removeUser()}
                                 activeOpacity={0.8}
