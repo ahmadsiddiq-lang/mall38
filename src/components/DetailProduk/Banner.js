@@ -30,6 +30,12 @@ export default function Banner({ detailProduk }) {
                 showsHorizontalScrollIndicator={false}
             >
                 <View style={styles.BoxContentImage}>
+                    <TouchableOpacity
+                        onPress={() => setImageBanner(detailProduk.image)}
+                        activeOpacity={0.8}
+                        style={styles.BoxImageItem}>
+                        <Image resizeMethod="resize" style={styles.Image} source={{ uri: detailProduk.image }} />
+                    </TouchableOpacity>
                     {
                         detailProduk.images.map((item, index) => {
                             return (

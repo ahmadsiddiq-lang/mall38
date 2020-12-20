@@ -46,7 +46,9 @@ export default function Deskripsi({ navigation, fixDataCart = [] }) {
                 marginTop: sizeHeight(3),
             }}>
                 <TouchableOpacity
-                    // onPress={() => handleSelectItem()}
+                    onPress={() => navigation.navigate('CheckOut', {
+                        data: fixDataCart,
+                    })}
                     activeOpacity={0.8}
                     style={styles.BtnBuy}
                 >

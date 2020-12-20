@@ -191,7 +191,9 @@ export default function Cart({ navigation }) {
                         <MetodeBayar /> */}
                 </View>
             </View>
-            <Deskripsi fixDataCart={fixDataCart} />
+            <Deskripsi
+                navigation={navigation}
+                fixDataCart={fixDataCart} />
         </View>
     );
 }
