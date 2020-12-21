@@ -77,7 +77,6 @@ export const getIdUser = async () => {
     try {
         const idUser = await AsyncStorage.getItem('idUser');
         return idUser;
-
     } catch (err) {
         console.log(err);
     }

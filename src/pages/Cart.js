@@ -123,7 +123,7 @@ export default function Cart({ navigation }) {
 
     return (
         <View style={styles.Container}>
-            <StatusBar backgroundColor={color.bgWhite} barStyle="dark-content" />
+            <StatusBar translucent={false} backgroundColor={color.bgWhite} barStyle="dark-content" />
             <HeaderCart
                 dataCart={dataCart}
                 navigation={navigation}

@@ -45,9 +45,9 @@ export default function DetailProduk({ navigation, route }) {
         if (data.product_id && data.user_id) {
             dispatch(addCart(data));
         } else {
-            console.log(data);
+            navigation.navigate('Login');
         }
-    }, [dispatch]);
+    }, [dispatch, navigation]);
 
     useEffect(() => {
         getDetailProduks();
@@ -55,12 +55,12 @@ export default function DetailProduk({ navigation, route }) {
 
     return (
         <View style={styles.Container}>
-            <Headers navigation={navigation} />
             {
                 objekEmpty(detailProduk) &&
                 <ScrollView
                     ref={refScroll}
                 >
+                    <Headers navigation={navigation} />
                     <Banner navigation={navigation} detailProduk={detailProduk} />
                     <Deskripsi detailProduk={detailProduk} />
                     <Rekomendasi

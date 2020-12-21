@@ -1,15 +1,27 @@
-import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useCallback } from 'react';
+import { StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { color } from '../../assets/colors/Index';
 import { useSelector } from 'react-redux';
+import { getIdUser } from '../../config/function';
 export default function HeaderDetailProduk({ navigation }) {
 
     const dataCart = useSelector(state => state.cart.dataCart);
 
+    const handleTocart = useCallback(async () => {
+        const idUser = await getIdUser();
+        if (idUser === null) {
+            // console.log(idUser);
+            navigation.navigate('Login');
+        } else {
+            navigation.navigate('Cart');
+        }
+    }, [navigation]);
+
     return (
         <View style={styles.Container}>
+            <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
             <TouchableOpacity
                 onPress={() => navigation.goBack()}
                 activeOpacity={0.8}
@@ -33,7 +45,7 @@ export default function HeaderDetailProduk({ navigation }) {
                     />
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('Cart')}
+                    onPress={() => handleTocart()}
                     activeOpacity={0.8}
                     style={styles.Btn}
                 >
@@ -66,18 +78,19 @@ export default function HeaderDetailProduk({ navigation }) {
 
 const styles = StyleSheet.create({
     Container: {
-        // position: 'absolute',
+        position: 'absolute',
         width: SCREEN_WIDTH,
         zIndex: 1,
         height: sizeHeight(6.5),
-        borderBottomWidth: 1,
+        // borderBottomWidth: 1,
         borderBottomColor: color.border2,
         // backgroundColor: 'rgba(252, 252, 252,0.5)',
-        backgroundColor: color.bgWhite,
+        // backgroundColor: color.bgWhite,
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: sizeWidth(5),
         justifyContent: 'space-between',
+        marginTop: sizeHeight(3.8),
     },
     Btn: {
         // padding: sizeHeight(2),

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { color } from '../../assets/colors/Index';
-import { sizeHeight, sizeWidth } from '../../assets/responsive';
+import { SCREEN_WIDTH, sizeHeight, sizeWidth } from '../../assets/responsive';
 
 export default function Banner({ detailProduk }) {
 
@@ -68,12 +68,13 @@ const styles = StyleSheet.create({
         height: '100%',
     },
     BoxImageBanner: {
-        width: sizeWidth(80),
-        height: sizeHeight(35),
-        borderLeftWidth: 4,
-        borderRightWidth: 4,
-        borderBottomWidth: 4,
-        borderColor: color.border1,
+        width: SCREEN_WIDTH,
+        height: sizeHeight(45),
+        // borderLeftWidth: 4,
+        // borderRightWidth: 4,
+        // borderBottomWidth: 4,
+        // borderWidth: 4,
+        // borderColor: color.border1,
     },
     BoxContentImage: {
         flexDirection: 'row',

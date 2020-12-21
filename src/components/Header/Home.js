@@ -16,10 +16,19 @@ export default function Home({ navigation }) {
 
     const hetDataCart = useCallback(async () => {
         const idUser = await getIdUser();
-        if (idUser) {
+        if (idUser !== null) {
             dispatch(getCArt(idUser));
         }
     }, [dispatch]);
+
+    const handleToCart = useCallback(async () => {
+        const idUser = await getIdUser();
+        if (idUser !== null) {
+            navigation.navigate('Cart');
+        } else {
+            navigation.navigate('Login');
+        }
+    }, [navigation]);
 
     useEffect(() => {
         hetDataCart();
@@ -52,7 +61,7 @@ export default function Home({ navigation }) {
                 />
             </TouchableOpacity>
             <TouchableOpacity
-                onPress={() => navigation.navigate('Cart')}
+                onPress={() => handleToCart()}
                 activeOpacity={0.8}
                 style={{
                     paddingLeft: 5,

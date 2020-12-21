@@ -8,6 +8,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { useDispatch, useSelector } from 'react-redux';
 import { LoginAdmin, LoginUser } from '../redux/actions/Login';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function Login({ navigation }) {
 
@@ -72,6 +73,21 @@ export default function Login({ navigation }) {
     return (
         <View style={styles.Container}>
             <StatusBar backgroundColor={color.bgWhite} barStyle="dark-content" />
+            <TouchableOpacity
+                onPress={() => navigation.goBack()}
+                activeOpacity={0.8}
+                style={{
+                    position: 'absolute',
+                    zIndex: 1,
+                    left: 0,
+                    // borderWidth: 1,
+                    marginTop: sizeHeight(6),
+                    paddingLeft: sizeWidth(5),
+                    paddingVertical: sizeHeight(1),
+                    paddingRight: sizeWidth(2),
+                }}>
+                <Ionicons name="arrow-back" size={sizeFont(6.5)} color={color.mainColor} />
+            </TouchableOpacity>
             <ScrollView>
                 <View style={{
                     alignItems: 'center',
@@ -89,11 +105,6 @@ export default function Login({ navigation }) {
                                     resizeMethod="auto"
                                     source={require('../assets/images/logo/logo.png')} />
                             </View>
-                            <Text style={{
-                                fontSize: sizeFont(6),
-                                fontFamily: Poppins.BoldItalic,
-                                color: color.mainColor,
-                            }}>Login</Text>
                             <View style={styles.BoxContentInput}>
                                 <View style={{
                                     alignItems: 'center',
@@ -185,7 +196,8 @@ const styles = StyleSheet.create({
         backgroundColor: color.mainColor,
     },
     BackgroundWhite: {
-        height: sizeHeight(68),
+        // height: sizeHeight(68),
+        height: 550,
         backgroundColor: color.bgWhite,
         borderBottomLeftRadius: sizeWidth(200) / 2,
         borderBottomRightRadius: sizeWidth(200) / 2,
