@@ -32,3 +32,4 @@ export const LoginAdmin = (data) => {
             }).catch(err => console.log(err));
     };
 };
+

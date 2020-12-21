@@ -1,4 +1,5 @@
 import { ADD_CART, GET_CART } from '../actions/Cart';
+import { CLEAR_ALL } from '../actions/Clear';
 
 const initioalState = {
     dataCart: [],
@@ -16,6 +17,11 @@ const cartReducer = (state = initioalState, action) => {
             return {
                 ...state,
                 responAddCart: action.data,
+            };
+        case CLEAR_ALL:
+            return {
+                ...state,
+                dataCart: action.data,
             };
         default:
             return state;

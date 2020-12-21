@@ -12,7 +12,8 @@ export default function Headers({ navigation, title = '', onPress }) {
                 activeOpacity={0.8}
                 onPress={() => navigation.goBack()}
                 style={{
-                    padding: sizeWidth(5),
+                    paddingVertical: sizeWidth(3.5),
+                    paddingLeft: sizeWidth(5),
                 }}
             >
                 <Ionicons

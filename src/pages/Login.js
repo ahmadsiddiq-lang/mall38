@@ -10,6 +10,7 @@ import { LoginAdmin, LoginUser } from '../redux/actions/Login';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getDataUser } from '../redux/actions/User';
+import { getCArt } from '../redux/actions/Cart';
 
 export default function Login({ navigation }) {
 
@@ -28,8 +29,9 @@ export default function Login({ navigation }) {
         try {
             const id = JSON.stringify(idUser.id);
             dispatch(getDataUser(id));
+            dispatch(getCArt());
             await AsyncStorage.setItem('idUser', id);
-            navigation.navigate('Akun');
+            navigation.goBack();
         } catch (e) {
             // saving error
             console.log(e);
@@ -201,7 +203,7 @@ const styles = StyleSheet.create({
         backgroundColor: color.mainColor,
     },
     BackgroundWhite: {
-        height: sizeHeight(75),
+        height: sizeHeight(70),
         // height: 550,
         backgroundColor: color.bgWhite,
         borderBottomLeftRadius: sizeWidth(200) / 2,

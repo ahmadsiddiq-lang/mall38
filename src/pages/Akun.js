@@ -12,14 +12,14 @@ import Content from '../components/Akun/Content';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSelector, useDispatch } from 'react-redux';
 import { getDataUser, clearDataUser } from '../redux/actions/User';
-
+import { clearAll } from '../redux/actions/Clear';
 
 export default function Akun({ navigation }) {
 
     const dispatch = useDispatch();
     const dataUser = useSelector(state => state.dataUser.dataUser);
     const [modalVisible, setModalVisible] = useState(false);
-
+    console.log(dataUser.photo);
 
     const handleUser = useCallback(async () => {
         const idUser = await getIdUser();
@@ -32,6 +32,7 @@ export default function Akun({ navigation }) {
         const idUser = await getIdUser();
         if (idUser !== null) {
             dispatch(clearDataUser());
+            dispatch(clearAll());
             await AsyncStorage.removeItem('idUser');
             setModalVisible(!modalVisible);
         }
@@ -55,8 +56,8 @@ export default function Akun({ navigation }) {
                 <HeaderAkun dataUser={dataUser} navigation={navigation} />
                 <View style={styles.BoxUser}>
                     {
-                        dataUser.image !== null ?
-                            <Image resizeMethod="auto" style={styles.ImageUser} source={{ uri: dataUser.photo }} />
+                        dataUser.photo !== 'https://mall38.com/images/user/NULL' || dataUser.photo !== undefined ?
+                            < Image resizeMethod="auto" style={styles.ImageUser} source={{ uri: dataUser.photo }} />
                             :
                             <FontAwesome5 onPress={() => handleUser()} name="user" color={color.fontWhite} size={sizeFont(13)} solid />
                     }
