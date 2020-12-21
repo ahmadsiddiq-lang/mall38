@@ -8,7 +8,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { Poppins } from '../assets/fonts';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../redux/actions/Register';
-import { ToasSuccess } from '../config/function';
+import { ToasInvalid, ToasSuccess } from '../config/function';
 
 export default function Register({ navigation }) {
 
@@ -37,6 +37,7 @@ export default function Register({ navigation }) {
             dispatch(registerUser(data, handleReponsSucces));
         } else {
             console.log(data);
+            ToasInvalid('Lengkapi data Anda');
         }
     }, [email, password, username, dispatch, handleReponsSucces]);
 

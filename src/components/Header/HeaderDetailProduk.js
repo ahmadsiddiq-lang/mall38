@@ -5,7 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { color } from '../../assets/colors/Index';
 import { useSelector } from 'react-redux';
 import { getIdUser } from '../../config/function';
-export default function HeaderDetailProduk({ navigation }) {
+export default function HeaderDetailProduk({ navigation, clearDetailProduks }) {
 
     const dataCart = useSelector(state => state.cart.dataCart);
 
@@ -16,14 +16,19 @@ export default function HeaderDetailProduk({ navigation }) {
             navigation.navigate('Login');
         } else {
             navigation.navigate('Cart');
+            // clearDetailProduks();
         }
     }, [navigation]);
 
+    const handleGoback = () => {
+        navigation.goBack();
+        clearDetailProduks();
+    };
+
     return (
         <View style={styles.Container}>
-            <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
             <TouchableOpacity
-                onPress={() => navigation.goBack()}
+                onPress={() => handleGoback()}
                 activeOpacity={0.8}
                 style={styles.Btn}
             >

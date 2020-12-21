@@ -53,13 +53,13 @@ export default function HeaderCart({ navigation, dataCart }) {
 
 const styles = StyleSheet.create({
     Container: {
-        // borderBottomWidth: 1,
         // borderBottomColor: color.border2,
-        height: sizeHeight(6.5),
+        // height: sizeHeight(6.5),
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: sizeWidth(5),
+        paddingTop: sizeHeight(2),
     },
     Btn: {
         // padding: sizeHeight(2),

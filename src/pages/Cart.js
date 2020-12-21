@@ -164,7 +164,7 @@ export default function Cart({ navigation }) {
                 </TouchableOpacity>
             </View>
             <View style={styles.Content}>
-                {dataCartState &&
+                {dataCartState.length > 0 ?
                     <FlatList
                         data={dataCartState}
                         keyExtractor={(_, index) => index.toString()}
@@ -183,6 +183,18 @@ export default function Cart({ navigation }) {
                             </Swipeable>
                         }
                     />
+                    :
+                    <View style={{
+                        flex: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}>
+                        <Ionicons name="cart" size={sizeFont(30)} color={color.fontBlack3} />
+                        <Text style={{
+                            fontSize: sizeFont(4),
+                            color: color.fontBlack3,
+                        }}>Keranjang Kosong</Text>
+                    </View>
                 }
                 <View style={{
                     marginTop: sizeHeight(4),

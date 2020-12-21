@@ -1,5 +1,6 @@
-import React, { useCallback, useEffect } from 'react';
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+/* eslint-disable react-native/no-inline-styles */
+import React, { useCallback, useEffect, useState } from 'react';
+import { Image, Modal, ScrollView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
 import { getIdUser, objekEmpty } from '../config/function';
 import LinearGradient from 'react-native-linear-gradient';
 import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
@@ -17,6 +18,9 @@ export default function Akun({ navigation }) {
 
     const dispatch = useDispatch();
     const dataUser = useSelector(state => state.dataUser.dataUser);
+    const [modalVisible, setModalVisible] = useState(true);
+
+
     const handleUser = useCallback(async () => {
         const idUser = await getIdUser();
         if (idUser !== null) {
@@ -28,19 +32,15 @@ export default function Akun({ navigation }) {
         const idUser = await getIdUser();
         if (idUser !== null) {
             dispatch(clearDataUser());
-        }
-    }, [dispatch]);
-
-    const removeUser = async () => {
-        try {
-            handleClearDataUser();
             await AsyncStorage.removeItem('idUser');
-            return true;
+            setModalVisible(!modalVisible);
         }
-        catch (exception) {
-            return false;
-        }
-    };
+    }, [dispatch, modalVisible]);
+
+    const handleLogOut = useCallback(async () => {
+        setModalVisible(!modalVisible);
+    }, [modalVisible]);
+
 
     useEffect(() => {
         handleUser();
@@ -70,7 +70,7 @@ export default function Akun({ navigation }) {
                     {
                         objekEmpty(dataUser) ?
                             <TouchableOpacity
-                                onPress={() => removeUser()}
+                                onPress={() => handleLogOut()}
                                 activeOpacity={0.8}
                                 style={styles.Bnt}
                             >
@@ -100,6 +100,48 @@ export default function Akun({ navigation }) {
                     }}>Version 1.0</Text>
                 </View>
             </ScrollView>
+            <Modal
+                animationType="fade"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                    // Alert.alert("Modal has been closed.");
+                }}
+            >
+                <View style={styles.ContainerLogOut}>
+                    <View style={styles.ContentLogOut}>
+                        <Text style={{
+                            fontSize: sizeFont(4),
+                            fontFamily: Poppins.Medium,
+                            textAlign: 'center',
+                            color: color.fontBlack1,
+                        }}>Yakin untuk keluar ?</Text>
+                        <View style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                        }}>
+                            <TouchableHighlight
+                                underlayColor="#b477e6"
+                                style={{ ...styles.openButton, backgroundColor: color.mainColor }}
+                                onPress={() => {
+                                    setModalVisible(!modalVisible);
+                                }}
+                            >
+                                <Text style={styles.textStyle}>Tidak</Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight
+                                underlayColor="#fc6565"
+                                style={{ ...styles.openButton, backgroundColor: 'red' }}
+                                onPress={() => {
+                                    handleClearDataUser();
+                                }}
+                            >
+                                <Text style={styles.textStyle}>Ya</Text>
+                            </TouchableHighlight>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
         </View>
     );
 }
@@ -151,5 +193,31 @@ const styles = StyleSheet.create({
         paddingVertical: sizeHeight(0.8),
         alignItems: 'center',
         borderRadius: 8,
+    },
+    ContainerLogOut: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1,
+    },
+    ContentLogOut: {
+        backgroundColor: color.bgBlack3,
+        borderWidth: 1,
+        borderColor: color.border2,
+        padding: sizeWidth(3),
+        borderRadius: 8,
+    },
+    openButton: {
+        marginTop: sizeHeight(2),
+        borderRadius: 20,
+        paddingVertical: sizeHeight(0.6),
+        elevation: 2,
+        alignItems: 'center',
+        marginHorizontal: sizeWidth(2),
+        width: sizeWidth(30),
+    },
+    textStyle: {
+        fontSize: sizeFont(4),
+        fontFamily: Poppins.Medium,
+        color: color.fontWhite,
     },
 });

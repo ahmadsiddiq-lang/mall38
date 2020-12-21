@@ -1,6 +1,8 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useRef } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, ScrollView, StatusBar, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { color } from '../assets/colors/Index';
 import Banner from '../components/DetailProduk/Banner';
 import ButtonBuy from '../components/DetailProduk/ButtonBuy';
 import Deskripsi from '../components/DetailProduk/Deskripsi';
@@ -8,7 +10,7 @@ import Rekomendasi from '../components/DetailProduk/Rekomendasi';
 import Headers from '../components/Header/HeaderDetailProduk';
 import { getIdUser, objekEmpty } from '../config/function';
 import { addCart } from '../redux/actions/Cart';
-import { getDetailProduk } from '../redux/actions/DetailProduk';
+import { getDetailProduk, clearDetailProduk } from '../redux/actions/DetailProduk';
 
 export default function DetailProduk({ navigation, route }) {
 
@@ -49,25 +51,39 @@ export default function DetailProduk({ navigation, route }) {
         }
     }, [dispatch, navigation]);
 
+    const clearDetailProduks = useCallback(async () => {
+        dispatch(clearDetailProduk());
+    }, [dispatch]);
+
     useEffect(() => {
         getDetailProduks();
     }, [getDetailProduks]);
 
     return (
         <View style={styles.Container}>
+            <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
+
             {
-                objekEmpty(detailProduk) &&
-                <ScrollView
-                    ref={refScroll}
-                >
-                    <Headers navigation={navigation} />
-                    <Banner navigation={navigation} detailProduk={detailProduk} />
-                    <Deskripsi detailProduk={detailProduk} />
-                    <Rekomendasi
-                        goToTop={goToTop}
-                        navigation={navigation}
-                        dataProduk={dataProduk} />
-                </ScrollView>
+                objekEmpty(detailProduk) ?
+                    <ScrollView
+                        ref={refScroll}
+                    >
+                        <Headers navigation={navigation} clearDetailProduks={clearDetailProduks} />
+                        <Banner navigation={navigation} detailProduk={detailProduk} />
+                        <Deskripsi detailProduk={detailProduk} />
+                        <Rekomendasi
+                            goToTop={goToTop}
+                            navigation={navigation}
+                            dataProduk={dataProduk} />
+                    </ScrollView>
+                    :
+                    <View style={{
+                        flex: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}>
+                        <ActivityIndicator size="large" color={color.mainColor} />
+                    </View>
             }
             <ButtonBuy handleAddTocat={handleAddTocat} detailProduk={detailProduk} />
         </View>

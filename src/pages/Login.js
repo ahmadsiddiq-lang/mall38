@@ -75,7 +75,7 @@ export default function Login({ navigation }) {
 
     return (
         <View style={styles.Container}>
-            <StatusBar backgroundColor={color.bgWhite} barStyle="dark-content" />
+            <StatusBar translucent={false} backgroundColor={color.bgWhite} barStyle="dark-content" />
             <TouchableOpacity
                 onPress={() => navigation.goBack()}
                 activeOpacity={0.8}

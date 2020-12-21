@@ -25,7 +25,7 @@ export default function FavoritList({ dataFlash, navigation }) {
                 <Text style={{
                     fontSize: sizeFont(4),
                     fontFamily: Poppins.MediumItalic,
-                }}>Favorit</Text>
+                }}>Favorite</Text>
                 <TouchableOpacity
                     activeOpacity={0.8}
                 >

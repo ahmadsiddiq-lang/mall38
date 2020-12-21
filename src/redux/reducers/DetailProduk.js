@@ -1,4 +1,4 @@
-import { DETAIL_PRODUK } from '../actions/DetailProduk';
+import { DETAIL_PRODUK, CLEAR_DETAIL_PRODUK } from '../actions/DetailProduk';
 
 const initialState = {
     detailProduk: [],
@@ -7,6 +7,11 @@ const initialState = {
 const getDetailProduk = (state = initialState, action) => {
     switch (action.type) {
         case DETAIL_PRODUK:
+            return {
+                ...state,
+                detailProduk: action.data,
+            };
+        case CLEAR_DETAIL_PRODUK:
             return {
                 ...state,
                 detailProduk: action.data,

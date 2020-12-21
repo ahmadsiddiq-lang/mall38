@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import { BASE_URL } from '../../config/URL';
 export const DETAIL_PRODUK = 'DETAIL_PRODUK';
+export const CLEAR_DETAIL_PRODUK = 'CLEAR_DETAIL_PRODUK';
 
 export const getDetailProduk = (id) => {
     return async (dispatch) => {
@@ -11,5 +12,13 @@ export const getDetailProduk = (id) => {
                     data: dataDetailProduk.data.data,
                 });
             }).catch(err => console.log(err));
+    };
+};
+export const clearDetailProduk = () => {
+    return async (dispatch) => {
+        dispatch({
+            type: CLEAR_DETAIL_PRODUK,
+            data: {},
+        });
     };
 };
