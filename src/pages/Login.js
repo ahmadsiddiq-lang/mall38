@@ -84,7 +84,7 @@ export default function Login({ navigation }) {
                     zIndex: 1,
                     left: 0,
                     // borderWidth: 1,
-                    marginTop: sizeHeight(6),
+                    marginTop: sizeHeight(1),
                     paddingLeft: sizeWidth(5),
                     paddingVertical: sizeHeight(1),
                     paddingRight: sizeWidth(2),
@@ -178,6 +178,7 @@ export default function Login({ navigation }) {
                         marginRight: sizeWidth(3),
                     }}>Forgot password ?</Text>
                     <TouchableOpacity
+                        onPress={() => navigation.navigate('Register')}
                         activeOpacity={0.8}
                         style={styles.BtnRegister}
                     >

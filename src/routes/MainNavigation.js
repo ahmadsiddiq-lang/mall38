@@ -15,6 +15,7 @@ import { sizeFont } from '../assets/responsive';
 import { color } from '../assets/colors/Index';
 import Login from '../pages/Login';
 import Cart from '../pages/Cart';
+import Register from '../pages/Register';
 import CheckOut from '../pages/CheckOut';
 
 const Tab = createBottomTabNavigator();
@@ -106,6 +107,7 @@ export default function MainNavigation() {
                 <Stack.Screen name="ProductCategori" component={ProductCategori} />
                 <Stack.Screen name="DetailProduk" component={DetailProduk} />
                 <Stack.Screen name="Login" component={Login} />
+                <Stack.Screen name="Register" component={Register} />
                 <Stack.Screen name="Cart" component={Cart} />
                 <Stack.Screen name="CheckOut" component={CheckOut} />
             </Stack.Navigator>
