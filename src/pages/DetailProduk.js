@@ -9,7 +9,7 @@ import Deskripsi from '../components/DetailProduk/Deskripsi';
 import Rekomendasi from '../components/DetailProduk/Rekomendasi';
 import Headers from '../components/Header/HeaderDetailProduk';
 import { getIdUser, objekEmpty } from '../config/function';
-import { addCart } from '../redux/actions/Cart';
+import { addCart, getCArt } from '../redux/actions/Cart';
 import { getDetailProduk, clearDetailProduk } from '../redux/actions/DetailProduk';
 
 export default function DetailProduk({ navigation, route }) {
@@ -21,7 +21,6 @@ export default function DetailProduk({ navigation, route }) {
     const detailProduk = useSelector(state => state.detailProduk.detailProduk);
     // const responAddCart = useSelector(state => state.cart.responAddCart);
 
-
     const getDetailProduks = useCallback(() => {
         const idProduk = route.params.idProduk;
         if (idProduk) {
@@ -29,12 +28,13 @@ export default function DetailProduk({ navigation, route }) {
         }
     }, [dispatch, route.params.idProduk]);
 
-    const goToTop = (id) => {
+    const goToTop = useCallback((idProduk) => {
         refScroll.current.scrollTo({ x: 0, y: 0, animated: true });
-        navigation.navigate('DetailProduk', {
-            idProduk: id,
-        });
-    };
+        clearDetailProduks();
+        if (idProduk) {
+            dispatch(getDetailProduk(idProduk));
+        }
+    }, [dispatch, clearDetailProduks]);
 
     const handleAddTocat = useCallback(async (item) => {
         const idUser = await getIdUser();
@@ -46,6 +46,7 @@ export default function DetailProduk({ navigation, route }) {
         };
         if (data.product_id && data.user_id) {
             dispatch(addCart(data));
+            dispatch(getCArt(idUser));
         } else {
             navigation.navigate('Login');
         }

@@ -1,3 +1,5 @@
+/* eslint-disable no-return-assign */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -11,13 +13,12 @@ import Deskripsi from '../components/Cart/Deskripsi';
 import ListProduk from '../components/Cart/ListProduk';
 import HeaderCart from '../components/Header/HeaderCart';
 import { getIdUser } from '../config/function';
-import { getCArt } from '../redux/actions/Cart';
+import { deleteProdukCart, getCArt } from '../redux/actions/Cart';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
 export default function Cart({ navigation }) {
-
     const dispatch = useDispatch();
     const dataCart = useSelector(state => state.cart.dataCart);
     const [toggleCheckBox, setToggleCheckBox] = useState(false);
@@ -86,6 +87,33 @@ export default function Cart({ navigation }) {
         }
     }, [dispatch]);
 
+    let row: Array<any> = [];
+    // let prevOpenedRow;
+    const deleteProduk = useCallback(async (idProduk, index) => {
+        const idUser = await getIdUser();
+        const product_id = idProduk.product.id;
+        const data = {
+            user_id: idUser,
+            list_product: [
+                { product_id: product_id },
+            ],
+        };
+        row[index].close();
+        if (data.user_id !== null && product_id !== undefined) {
+            dispatch(deleteProdukCart(data, hetDataCart));
+        } else {
+            console.log(data);
+        }
+    }, [dispatch, hetDataCart, row]);
+
+    // const closeRow = (index) => {
+    //     // console.log(row[index].close());
+    //     if (prevOpenedRow && prevOpenedRow !== row[index]) {
+    //         prevOpenedRow.recenter();
+    //     }
+    //     prevOpenedRow = row[index];
+    // };
+
     useEffect(() => {
         hetDataCart();
     }, [hetDataCart]);
@@ -99,9 +127,10 @@ export default function Cart({ navigation }) {
         setDataCart([...newData]);
     }, [dataCart]);
 
-    const rightSwipe = (progress, dragX) => {
+    const rightSwipe = (item, index) => {
         return (
             <TouchableOpacity
+                onPress={() => deleteProduk(item, index)}
                 activeOpacity={0.8}
                 style={{
                     alignItems: 'center',
@@ -166,11 +195,17 @@ export default function Cart({ navigation }) {
             <View style={styles.Content}>
                 {dataCartState.length > 0 ?
                     <FlatList
+                        contentContainerStyle={{
+                            paddingHorizontal: sizeWidth(5),
+                            paddingBottom: sizeHeight(13),
+                        }}
                         data={dataCartState}
                         keyExtractor={(_, index) => index.toString()}
-                        renderItem={({ item }) =>
+                        renderItem={({ item, index }) =>
                             <Swipeable
-                                renderRightActions={rightSwipe}
+                                ref={ref => row[index] = ref}
+                                // onSwipeableOpen={() => closeRow(index)}
+                                renderRightActions={() => rightSwipe(item, index)}
                                 renderLeftActions={false}
                             >
                                 <View style={styles.BoxCard}>
@@ -218,8 +253,8 @@ const styles = StyleSheet.create({
     Content: {
         flex: 1,
         paddingTop: sizeHeight(1),
-        paddingHorizontal: sizeWidth(5),
-        paddingBottom: sizeHeight(28),
+        // paddingHorizontal: sizeWidth(5),
+        // paddingBottom: sizeHeight(10),
     },
     BoxCard: {
         marginVertical: sizeHeight(1.2),

@@ -55,7 +55,7 @@ export default function ListProduk({ navigation, dataProduk }) {
 
 
     return (
-        <View>
+        <View style={styles.Container}>
             {
                 dataProduk &&
                 <FlatList
@@ -83,6 +83,9 @@ export default function ListProduk({ navigation, dataProduk }) {
 }
 
 const styles = StyleSheet.create({
+    Container: {
+        paddingBottom: sizeHeight(8),
+    },
     itemInvisible: {
         flex: 1,
         borderRadius: 8,

@@ -16,9 +16,11 @@ export default function Rekomendasi({ navigation, dataProduk = [], goToTop }) {
                         dataProduk.slice(0, 10).map((item, index) => {
                             return (
                                 <TouchableOpacity
+                                    activeOpacity={0.8}
                                     onPress={() => goToTop && goToTop()}
                                     key={index} style={{
                                         width: sizeWidth(47.5),
+                                        flex: 1,
                                     }}>
                                     <CardProdukVer navigation={navigation} item={item} />
                                 </TouchableOpacity>

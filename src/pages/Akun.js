@@ -18,7 +18,7 @@ export default function Akun({ navigation }) {
 
     const dispatch = useDispatch();
     const dataUser = useSelector(state => state.dataUser.dataUser);
-    const [modalVisible, setModalVisible] = useState(true);
+    const [modalVisible, setModalVisible] = useState(false);
 
 
     const handleUser = useCallback(async () => {
