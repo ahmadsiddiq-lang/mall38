@@ -95,3 +95,16 @@ export const ToasSuccess = (message) => {
 
     return WToast.show(toastOpts);
 };
+export const ToasInvalid = (message) => {
+    const toastOpts = {
+        data: message,
+        textColor: '#ffffff',
+        backgroundColor: 'rgba(74, 74, 74,0.7)',
+        duration: WToast.duration.LONG, //1.SHORT 2.LONG
+        position: WToast.position.CENTER, // 1.TOP 2.CENTER 3.BOTTOM
+        icon: <Ionicons name="close-circle-outline" size={sizeFont(12)} color={color.fontWhite} />,
+        inEasing: Easing.bounce,
+    };
+
+    return WToast.show(toastOpts);
+};

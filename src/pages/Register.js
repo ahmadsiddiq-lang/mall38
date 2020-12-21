@@ -1,17 +1,45 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { color } from '../assets/colors/Index';
 import { sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
 import HeaderRegister from '../components/Header/HeaderRegister';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { Poppins } from '../assets/fonts';
+import { useDispatch } from 'react-redux';
+import { registerUser } from '../redux/actions/Register';
+import { ToasSuccess } from '../config/function';
 
 export default function Register({ navigation }) {
+
+    const dispatch = useDispatch();
+
     const [focus, setFocus] = useState(null);
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
     const [username, setUsername] = useState(null);
+
+    const handleReponsSucces = useCallback(async () => {
+        ToasSuccess('Register Success');
+        setTimeout(() => {
+            navigation.goBack();
+        }, 1000);
+    }, [navigation]);
+
+
+    const handleRegister = useCallback(async () => {
+        const data = {
+            name: username,
+            email: email,
+            password: password,
+        };
+        if (email !== null && password !== null && username !== null) {
+            dispatch(registerUser(data, handleReponsSucces));
+        } else {
+            console.log(data);
+        }
+    }, [email, password, username, dispatch, handleReponsSucces]);
+
 
     return (
         <View style={styles.Container}>
@@ -98,7 +126,7 @@ export default function Register({ navigation }) {
                     </View>
                     <View style={styles.BoxContentLogin}>
                         <TouchableOpacity
-                            // onPress={() => handleLogin()}
+                            onPress={() => handleRegister()}
                             activeOpacity={0.8}
                             style={styles.BtnLogin}
                         >
