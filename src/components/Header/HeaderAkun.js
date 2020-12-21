@@ -1,39 +1,29 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { color } from '../../assets/colors/Index';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import { Poppins } from '../../assets/fonts';
+import { objekEmpty } from '../../config/function';
 
-export default function HeaderAkun({ navigation, ready }) {
+export default function HeaderAkun({ navigation, dataUser }) {
+
     return (
         <View style={styles.Container}>
-            {/* <TouchableOpacity
-                onPress={() => navigation.goBack()}
-                activeOpacity={0.8}
-                style={styles.BtnBack}
-            >
-                <Ionicons
-                    name="arrow-back"
-                    size={sizeFont(6.5)}
-                    color={color.fontWhite}
-                />
-            </TouchableOpacity> */}
             {
-                ready ?
+                objekEmpty(dataUser) ?
                     <View>
                         <Text style={{
                             fontSize: sizeFont(5.5),
                             fontFamily: Poppins.Bold,
                             color: color.fontWhite,
                             marginLeft: sizeWidth(5),
-                        }}>Ahmad Siddiq</Text>
+                        }}>{dataUser.name}</Text>
                         <Text style={{
                             fontSize: sizeFont(3.5),
                             color: color.fontWhite,
                             marginLeft: sizeWidth(5),
-                        }}>ahmads@gmail.com</Text>
+                        }}>{dataUser.email}</Text>
                     </View>
                     :
                     <View>
@@ -51,7 +41,6 @@ export default function HeaderAkun({ navigation, ready }) {
                     </View>
             }
             <TouchableOpacity
-                // onPress={() => navigation.goBack()}
                 activeOpacity={0.8}
                 style={styles.BtnBack}
             >

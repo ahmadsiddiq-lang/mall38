@@ -8,10 +8,10 @@ export const LoginUser = (data, handleErrorLogin, handleLoginSuccess) => {
         await Axios.post(BASE_URL + 'user-login', data)
             .then(dataUser => {
                 // console.log(dataUser);
-                handleLoginSuccess(dataUser.data.data.user);
+                handleLoginSuccess(dataUser.data.data);
                 dispatch({
                     type: LOGIN_USER,
-                    data: dataUser.data.data.user,
+                    data: dataUser.data.data,
                 });
             }).catch(err => {
                 handleErrorLogin();

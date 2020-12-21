@@ -13,6 +13,7 @@ import ProdukCategoriReducer from './src/redux/reducers/ProdukCategori';
 import DetailProduk from './src/redux/reducers/DetailProduk';
 import loginReducer from './src/redux/reducers/Login';
 import Cart from './src/redux/reducers/Cart';
+import getDataUserReducer from './src/redux/reducers/User';
 import { combineReducers, applyMiddleware, createStore } from 'redux';
 
 const RootReducer = combineReducers({
@@ -24,6 +25,7 @@ const RootReducer = combineReducers({
   detailProduk: DetailProduk,
   dataLogin: loginReducer,
   cart: Cart,
+  dataUser: getDataUserReducer,
 });
 
 const store = createStore(RootReducer, applyMiddleware(thunk));

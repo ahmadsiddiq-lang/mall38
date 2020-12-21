@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { LoginAdmin, LoginUser } from '../redux/actions/Login';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { getDataUser } from '../redux/actions/User';
 
 export default function Login({ navigation }) {
 
@@ -26,13 +27,14 @@ export default function Login({ navigation }) {
     const handleLoginSuccess = useCallback(async (idUser) => {
         try {
             const id = JSON.stringify(idUser.id);
+            dispatch(getDataUser(id));
             await AsyncStorage.setItem('idUser', id);
             navigation.navigate('Akun');
         } catch (e) {
             // saving error
             console.log(e);
         }
-    }, [navigation]);
+    }, [navigation, dispatch]);
 
     const handleLogin = useCallback(async () => {
         const value = await AsyncStorage.getItem('token');
@@ -40,7 +42,8 @@ export default function Login({ navigation }) {
             email: email,
             password: password,
         };
-        if (email !== null && password !== null && value) {
+        // if (email !== null && password !== null && value) {
+        if (email !== null && password !== null) {
             dispatch(LoginUser(data, handleErrorLogin, handleLoginSuccess));
         }
     }, [dispatch, email, password, handleErrorLogin, handleLoginSuccess]);

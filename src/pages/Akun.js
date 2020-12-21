@@ -1,8 +1,6 @@
-/* eslint-disable react-native/no-inline-styles */
-import React, { useCallback, useEffect, useState } from 'react';
-import { ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { getIdUser } from '../config/function';
-import Login from './Login';
+import React, { useCallback, useEffect } from 'react';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { getIdUser, objekEmpty } from '../config/function';
 import LinearGradient from 'react-native-linear-gradient';
 import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
 import { color } from '../assets/colors/Index';
@@ -11,25 +9,32 @@ import HeaderAkun from '../components/Header/HeaderAkun';
 import { Poppins } from '../assets/fonts';
 import Content from '../components/Akun/Content';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { getDataUser, clearDataUser } from '../redux/actions/User';
 
 
 export default function Akun({ navigation }) {
 
-    const [ready, setReady] = useState(null);
-    const [dataScreen, setDataScreen] = useState(null);
-    const dataUser = useSelector(state => state.dataLogin.dataUser);
-
+    const dispatch = useDispatch();
+    const dataUser = useSelector(state => state.dataUser.dataUser);
     const handleUser = useCallback(async () => {
-        const idUser = await AsyncStorage.getItem('idUser');
-        setReady(idUser);
+        const idUser = await getIdUser();
+        if (idUser !== null) {
+            dispatch(getDataUser(idUser));
+        }
+    }, [dispatch]);
 
-    }, []);
+    const handleClearDataUser = useCallback(async () => {
+        const idUser = await getIdUser();
+        if (idUser !== null) {
+            dispatch(clearDataUser());
+        }
+    }, [dispatch]);
 
     const removeUser = async () => {
         try {
+            handleClearDataUser();
             await AsyncStorage.removeItem('idUser');
-            setReady(null);
             return true;
         }
         catch (exception) {
@@ -38,21 +43,23 @@ export default function Akun({ navigation }) {
     };
 
     useEffect(() => {
-        if (dataUser) {
-            handleUser();
-        }
-    });
+        handleUser();
+    }, [handleUser]);
 
     return (
         <View style={styles.Container}>
-            {/* <StatusBar backgroundColor="#cfa2f5" barStyle="light-content" /> */}
             <LinearGradient
                 colors={[color.mainColor, '#b477e6', '#cfa2f5']}
                 style={styles.Back}
             >
-                <HeaderAkun ready={ready} navigation={navigation} />
+                <HeaderAkun dataUser={dataUser} navigation={navigation} />
                 <View style={styles.BoxUser}>
-                    <FontAwesome5 onPress={() => handleUser()} name="user" color={color.fontWhite} size={sizeFont(13)} solid />
+                    {
+                        objekEmpty(dataUser) ?
+                            <Image resizeMethod="auto" style={styles.ImageUser} source={{ uri: dataUser.photo }} />
+                            :
+                            <FontAwesome5 onPress={() => handleUser()} name="user" color={color.fontWhite} size={sizeFont(13)} solid />
+                    }
                 </View>
             </LinearGradient>
             <ScrollView>
@@ -61,7 +68,7 @@ export default function Akun({ navigation }) {
                 </View>
                 <View style={styles.Footer}>
                     {
-                        ready !== null ?
+                        objekEmpty(dataUser) ?
                             <TouchableOpacity
                                 onPress={() => removeUser()}
                                 activeOpacity={0.8}
@@ -121,6 +128,13 @@ const styles = StyleSheet.create({
         right: sizeWidth(15),
         bottom: -40,
         backgroundColor: color.mainColor,
+        overflow: 'hidden',
+        padding: sizeWidth(1),
+    },
+    ImageUser: {
+        width: '100%',
+        height: '100%',
+        borderRadius: 100,
     },
     Content: {
         // borderWidth: 1,
