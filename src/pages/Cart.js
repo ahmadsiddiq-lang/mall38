@@ -88,7 +88,7 @@ export default function Cart({ navigation }) {
     }, [dispatch]);
 
     let row: Array<any> = [];
-    // let prevOpenedRow;
+    let prevOpenedRow;
     const deleteProduk = useCallback(async (idProduk, index) => {
         const idUser = await getIdUser();
         const product_id = idProduk.product.id;
@@ -106,13 +106,13 @@ export default function Cart({ navigation }) {
         }
     }, [dispatch, hetDataCart, row]);
 
-    // const closeRow = (index) => {
-    //     // console.log(row[index].close());
-    //     if (prevOpenedRow && prevOpenedRow !== row[index]) {
-    //         prevOpenedRow.recenter();
-    //     }
-    //     prevOpenedRow = row[index];
-    // };
+    const closeRow = (index) => {
+        // console.log();
+        if (prevOpenedRow && prevOpenedRow !== row[index]) {
+            prevOpenedRow.close();
+        }
+        prevOpenedRow = row[index];
+    };
 
     useEffect(() => {
         hetDataCart();
@@ -204,7 +204,7 @@ export default function Cart({ navigation }) {
                         renderItem={({ item, index }) =>
                             <Swipeable
                                 ref={ref => row[index] = ref}
-                                // onSwipeableOpen={() => closeRow(index)}
+                                onSwipeableOpen={() => closeRow(index)}
                                 renderRightActions={() => rightSwipe(item, index)}
                                 renderLeftActions={false}
                             >

@@ -55,7 +55,7 @@ export default function Akun({ navigation }) {
                 <HeaderAkun dataUser={dataUser} navigation={navigation} />
                 <View style={styles.BoxUser}>
                     {
-                        dataUser.image ?
+                        dataUser.image !== null ?
                             <Image resizeMethod="auto" style={styles.ImageUser} source={{ uri: dataUser.photo }} />
                             :
                             <FontAwesome5 onPress={() => handleUser()} name="user" color={color.fontWhite} size={sizeFont(13)} solid />

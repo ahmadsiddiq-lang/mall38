@@ -10,16 +10,16 @@ import { getCArt } from '../../redux/actions/Cart';
 
 export default function Home({ navigation }) {
 
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const dataCart = useSelector(state => state.cart.dataCart);
     const data = dataCart;
 
-    const hetDataCart = useCallback(async () => {
-        const idUser = await getIdUser();
-        if (idUser !== null) {
-            dispatch(getCArt(idUser));
-        }
-    }, [dispatch]);
+    // const hetDataCart = useCallback(async () => {
+    //     const idUser = await getIdUser();
+    //     if (idUser !== null) {
+    //         dispatch(getCArt(idUser));
+    //     }
+    // }, [dispatch]);
 
     const handleToCart = useCallback(async () => {
         const idUser = await getIdUser();
@@ -30,9 +30,9 @@ export default function Home({ navigation }) {
         }
     }, [navigation]);
 
-    useEffect(() => {
-        hetDataCart();
-    }, [hetDataCart]);
+    // useEffect(() => {
+    //     hetDataCart();
+    // }, [hetDataCart]);
 
     return (
         <View style={styles.Container}>

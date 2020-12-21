@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
 import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -8,6 +8,7 @@ import { Poppins } from '../../assets/fonts';
 export default function HeaderRegister({ navigation, title }) {
     return (
         <View style={styles.Container}>
+            <StatusBar backgroundColor={color.mainColor} barStyle="light-content" />
             <TouchableOpacity
                 onPress={() => navigation.goBack()}
                 activeOpacity={0.8}
@@ -19,14 +20,14 @@ export default function HeaderRegister({ navigation, title }) {
             >
                 <Ionicons
                     name="arrow-back"
-                    color={color.mainColor}
+                    color={color.fontWhite}
                     size={sizeFont(6.5)}
                 />
             </TouchableOpacity>
             <Text style={{
                 fontSize: sizeFont(4.5),
                 fontFamily: Poppins.Bold,
-                color: color.mainColor,
+                color: color.fontWhite,
             }}>{title}</Text>
         </View>
     );
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
     Container: {
         borderBottomWidth: 1,
         borderBottomColor: color.border2,
-        backgroundColor: color.bgWhite,
+        backgroundColor: color.mainColor,
         height: sizeHeight(6.5),
         alignItems: 'center',
         flexDirection: 'row',

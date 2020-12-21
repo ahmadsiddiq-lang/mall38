@@ -125,12 +125,13 @@ export default function Login({ navigation }) {
                                 ]}>
                                     <FontAwesome5 name="at" color={color.mainColor} size={sizeFont(5)} solid />
                                     <TextInput
+                                        keyboardType="email-address"
                                         onChangeText={(e) => setEmail(e)}
                                         onFocus={() => setFocus(0)}
                                         onBlur={() => setFocus(null)}
                                         placeholder="Email"
                                         style={styles.Input}
-                                        keyboardType="email-address"
+                                        autoCapitalize="none"
                                     />
                                 </View>
                                 <View style={[styles.BoxInput,
@@ -200,8 +201,8 @@ const styles = StyleSheet.create({
         backgroundColor: color.mainColor,
     },
     BackgroundWhite: {
-        // height: sizeHeight(68),
-        height: 550,
+        height: sizeHeight(75),
+        // height: 550,
         backgroundColor: color.bgWhite,
         borderBottomLeftRadius: sizeWidth(200) / 2,
         borderBottomRightRadius: sizeWidth(200) / 2,
