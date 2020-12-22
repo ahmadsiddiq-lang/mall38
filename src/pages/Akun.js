@@ -20,6 +20,10 @@ export default function Akun({ navigation }) {
     const dataUser = useSelector(state => state.dataUser.dataUser);
     const [modalVisible, setModalVisible] = useState(false);
 
+    const dataScreen = dataUser.user;
+
+    // console.log(dataScreen);
+
     const handleUser = useCallback(async () => {
         const idUser = await getIdUser();
         if (idUser !== null) {
@@ -52,11 +56,12 @@ export default function Akun({ navigation }) {
                 colors={[color.mainColor, '#b477e6', '#cfa2f5']}
                 style={styles.Back}
             >
-                <HeaderAkun dataUser={dataUser} navigation={navigation} />
+                <HeaderAkun dataScreen={dataScreen} dataUser={dataUser} navigation={navigation} />
                 <View style={styles.BoxUser}>
                     {
-                        dataUser.photo !== 'https://mall38.com/images/user/NULL' && dataUser.photo !== undefined ?
-                            < Image resizeMethod="auto" style={styles.ImageUser} source={{ uri: dataUser.photo }} />
+                        dataScreen !== undefined &&
+                            dataScreen.photo !== 'https://mall38.com/images/user/NULL' && dataScreen.photo !== undefined ?
+                            < Image resizeMethod="auto" style={styles.ImageUser} source={{ uri: dataScreen.photo }} />
                             :
                             <FontAwesome5 onPress={() => handleUser()} name="user" color={color.fontWhite} size={sizeFont(13)} solid />
                     }
@@ -68,7 +73,8 @@ export default function Akun({ navigation }) {
                 </View>
                 <View style={styles.Footer}>
                     {
-                        objekEmpty(dataUser) ?
+                        dataScreen !== undefined &&
+                            objekEmpty(dataScreen) ?
                             <TouchableOpacity
                                 onPress={() => handleLogOut()}
                                 activeOpacity={0.8}

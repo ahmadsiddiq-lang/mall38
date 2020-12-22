@@ -14,6 +14,7 @@ import { getCategori } from '../redux/actions/Categori';
 import { getFlashSale } from '../redux/actions/FlashSale';
 import { countDown, getIdUser } from '../config/function';
 import { getCArt } from '../redux/actions/Cart';
+import { getDataUser } from '../redux/actions/User';
 // import { countDown } from '../config/function';
 
 export default function Home({ navigation }) {
@@ -25,16 +26,20 @@ export default function Home({ navigation }) {
     const [dateFlashShale, setDateFlash] = useState('');
 
     const getCarousels = useCallback(async () => {
+        const idUser = await getIdUser();
         dispatch(getCarousel());
-    }, [dispatch]);
-
-    const getCategoris = useCallback(async () => {
         dispatch(getCategori());
+        dispatch(getFlashSale());
+        dispatch(getDataUser(idUser));
     }, [dispatch]);
 
-    const getFlash = useCallback(async () => {
-        dispatch(getFlashSale());
-    }, [dispatch]);
+    // const getCategoris = useCallback(async () => {
+    //     dispatch(getCategori());
+    // }, [dispatch]);
+
+    // const getFlash = useCallback(async () => {
+    //     dispatch(getFlashSale());
+    // }, [dispatch]);
 
     const hetDataCart = useCallback(async () => {
         const idUser = await getIdUser();
@@ -46,10 +51,10 @@ export default function Home({ navigation }) {
 
     useEffect(() => {
         getCarousels();
-        getCategoris();
-        getFlash();
         hetDataCart();
-    }, [getCarousels, getCategoris, getFlash, hetDataCart]);
+        // getCategoris();
+        // getFlash();
+    }, [getCarousels, hetDataCart]);
 
     // useEffect(() => {
     //     var countDownDate = new Date('Dec 30, 2020 00:00:25').getTime();

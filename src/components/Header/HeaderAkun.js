@@ -6,33 +6,37 @@ import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import { Poppins } from '../../assets/fonts';
 import { getIdUser, objekEmpty } from '../../config/function';
 
-export default function HeaderAkun({ navigation, dataUser }) {
+export default function HeaderAkun({ navigation, dataUser = [], dataScreen }) {
 
     const handleNavEditUser = useCallback(async () => {
         const idUser = await getIdUser();
+        console.log(dataUser);
         if (idUser) {
-            navigation.navigate('EditUser', {
-                data: dataUser,
-            });
+            if (dataUser.length > 0 || dataUser.user !== undefined) {
+                navigation.navigate('EditUser', {
+                    data: dataUser,
+                });
+            }
         }
     }, [navigation, dataUser]);
 
     return (
         <View style={styles.Container}>
             {
-                objekEmpty(dataUser) ?
+                dataScreen !== undefined &&
+                    objekEmpty(dataScreen) ?
                     <View>
                         <Text style={{
                             fontSize: sizeFont(5.5),
                             fontFamily: Poppins.Bold,
                             color: color.fontWhite,
                             marginLeft: sizeWidth(5),
-                        }}>{dataUser.name}</Text>
+                        }}>{dataScreen.name}</Text>
                         <Text style={{
                             fontSize: sizeFont(3.5),
                             color: color.fontWhite,
                             marginLeft: sizeWidth(5),
-                        }}>{dataUser.email}</Text>
+                        }}>{dataScreen.email}</Text>
                     </View>
                     :
                     <View>

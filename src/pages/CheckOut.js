@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar, StyleSheet, Text, View } from 'react-native';
+import { color } from '../assets/colors/Index';
 import Headers from '../components/Header/Headers';
 
 export default function CheckOut({ navigation, route }) {
@@ -8,7 +9,8 @@ export default function CheckOut({ navigation, route }) {
 
     return (
         <View style={styles.Container}>
-            <Headers />
+            <StatusBar translucent={false} backgroundColor={color.mainColor} barStyle="light-content" />
+            <Headers navigation={navigation} />
             <Text>CheckOut</Text>
         </View>
     );
