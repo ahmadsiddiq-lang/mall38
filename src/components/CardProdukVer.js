@@ -34,6 +34,7 @@ export default function CardProdukVer({ item, navigation, onPressProduk, onPress
                     <Text style={{
                         fontSize: sizeFont(3.8),
                         fontFamily: Poppins.Medium,
+                        color: color.mainColor,
                     }}>Rp. {item && rupiah(item.price)}</Text>
                 </View>
             </TouchableOpacity>
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         marginHorizontal: sizeWidth(2.5),
         flex: 1,
-        marginVertical: sizeHeight(2),
+        marginVertical: sizeHeight(1),
         // paddingBottom: sizeHeight(6),
         backgroundColor: color.bgWhite,
         overflow: 'hidden',

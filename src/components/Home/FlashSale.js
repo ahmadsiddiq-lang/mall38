@@ -1,13 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import { Poppins } from '../../assets/fonts';
 import { color } from '../../assets/colors/Index';
 import CardProduk, { CardEnd } from '../CardProduk';
 
-
-export default function FlashSale({ navigation, dataFlash, dateFlashShale }) {
+export default function FlashSale({ navigation, dataFlash, dateFlashShale, barStatus }) {
 
     const renderItem = (item, index) => {
         return (
@@ -15,7 +14,7 @@ export default function FlashSale({ navigation, dataFlash, dateFlashShale }) {
                 key={index}
                 style={styles.CardProduk}
             >
-                <CardProduk navigation={navigation} item={item} />
+                <CardProduk navigation={navigation} item={item} barStatus={barStatus} />
             </View>
         );
     };
@@ -25,53 +24,67 @@ export default function FlashSale({ navigation, dataFlash, dateFlashShale }) {
         >
             <View style={styles.Content}>
                 <View style={{
-                    paddingHorizontal: sizeWidth(5),
                     // marginVertical: sizeHeight(1),
                     flexDirection: 'row',
-                    justifyContent: 'space-between',
                     alignItems: 'center',
-                    backgroundColor: color.mainColor,
+                    marginTop: sizeHeight(1),
                 }}>
-                    <Text style={{
-                        fontSize: sizeFont(4),
-                        fontFamily: Poppins.MediumItalic,
-                        color: color.fontWhite,
-                    }}>Flash Sale</Text>
-                    {/* <Text style={{
-                        fontSize: sizeFont(3.5),
-                        color: color.fontBlack,
-                    }}>Lihat semua</Text> */}
-                    {
-                        dateFlashShale ?
-                            <View style={styles.BoxTime}>
-                                <View style={styles.BoxItemTime}>
-                                    <Text style={styles.TextTime}>{dateFlashShale.hours}</Text>
+                    <View style={styles.BoxLable}>
+                        <Image
+                            resizeMethod="auto"
+                            style={styles.ImageLable} source={require('../../assets/images/banner/flash_sale.png')} />
+                    </View>
+                    <View style={{
+                        marginLeft: sizeWidth(5),
+                    }}>
+                        <Text style={{
+                            fontSize: sizeFont(3.5),
+                            color: color.fontBlack1,
+                        }}>Berakhir dalam</Text>
+                        {
+                            dateFlashShale ?
+                                <View style={styles.BoxTime}>
+                                    <View style={styles.BoxItemTime}>
+                                        <Text style={styles.TextTime}>{dateFlashShale.hours}</Text>
+                                    </View>
+                                    <Text style={[styles.TextTime, {
+                                        color: color.fontBlack,
+                                        marginHorizontal: sizeWidth(2),
+                                    }]}>:</Text>
+                                    <View style={styles.BoxItemTime}>
+                                        <Text style={styles.TextTime}>{dateFlashShale.minutes}</Text>
+                                    </View>
+                                    <Text style={[styles.TextTime, {
+                                        color: color.fontBlack,
+                                        marginHorizontal: sizeWidth(2),
+                                    }]}>:</Text>
+                                    <View style={styles.BoxItemTime}>
+                                        <Text style={styles.TextTime}>{dateFlashShale.seconds}</Text>
+                                    </View>
                                 </View>
-                                <Text style={styles.TextTime}>:</Text>
-                                <View style={styles.BoxItemTime}>
-                                    <Text style={styles.TextTime}>{dateFlashShale.minutes}</Text>
+                                :
+                                <View style={styles.BoxTime}>
+                                    <View style={styles.BoxItemTime}>
+                                        <Text style={styles.TextTime}>00</Text>
+                                    </View>
+                                    <Text style={[styles.TextTime, {
+                                        color: color.fontBlack,
+                                        marginHorizontal: sizeWidth(2),
+                                    }]}>:</Text>
+                                    <View style={styles.BoxItemTime}>
+                                        <Text style={styles.TextTime}>00</Text>
+                                    </View>
+                                    <Text style={[styles.TextTime, {
+                                        color: color.fontBlack,
+                                        marginHorizontal: sizeWidth(2),
+                                    }]}>:</Text>
+                                    <View style={styles.BoxItemTime}>
+                                        <Text style={styles.TextTime}>00</Text>
+                                    </View>
                                 </View>
-                                <Text style={styles.TextTime}>:</Text>
-                                <View style={styles.BoxItemTime}>
-                                    <Text style={styles.TextTime}>{dateFlashShale.seconds}</Text>
-                                </View>
-                            </View>
-                            :
-                            <View style={styles.BoxTime}>
-                                <View style={styles.BoxItemTime}>
-                                    <Text style={styles.TextTime}>00</Text>
-                                </View>
-                                <Text style={styles.TextTime}>:</Text>
-                                <View style={styles.BoxItemTime}>
-                                    <Text style={styles.TextTime}>00</Text>
-                                </View>
-                                <Text style={styles.TextTime}>:</Text>
-                                <View style={styles.BoxItemTime}>
-                                    <Text style={styles.TextTime}>00</Text>
-                                </View>
-                            </View>
 
-                    }
+                        }
+                    </View>
                 </View>
                 <ScrollView
                     showsHorizontalScrollIndicator={false}
@@ -79,7 +92,7 @@ export default function FlashSale({ navigation, dataFlash, dateFlashShale }) {
                 >
                     <View style={styles.ContainerProduk}>
                         {dataFlash &&
-                            dataFlash.slice(0, 3).map(renderItem)}
+                            dataFlash.slice(0, 10).map(renderItem)}
                         <CardEnd />
                     </View>
                 </ScrollView>
@@ -91,7 +104,7 @@ export default function FlashSale({ navigation, dataFlash, dateFlashShale }) {
 const styles = StyleSheet.create({
     Container: {
         // padding: sizeWidth(5),
-        marginVertical: sizeHeight(1.5),
+        marginVertical: sizeHeight(0.5),
     },
     Content: {
         backgroundColor: color.bgWhite,
@@ -103,23 +116,33 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         // backgroundColor: color.bgBlack3,
         borderRadius: 8,
-        paddingHorizontal: sizeWidth(4),
         paddingVertical: sizeWidth(1.5),
-        marginLeft: sizeWidth(3),
     },
     BoxItemTime: {
         // borderWidth: 1,
-        backgroundColor: color.bgWhite,
+        backgroundColor: color.mainColor,
         paddingHorizontal: sizeWidth(2),
         borderRadius: 5,
     },
     TextTime: {
         fontSize: sizeFont(3.3),
         fontFamily: Poppins.Bold,
+        color: color.fontWhite,
     },
     ContainerProduk: {
         flexDirection: 'row',
         marginHorizontal: sizeWidth(2),
         marginVertical: sizeHeight(2),
+    },
+    BoxLable: {
+        overflow: 'hidden',
+        width: sizeWidth(30),
+        height: sizeWidth(15),
+        marginLeft: sizeWidth(5),
+    },
+    ImageLable: {
+        resizeMode: 'contain',
+        width: '100%',
+        height: '100%',
     },
 });

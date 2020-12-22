@@ -8,7 +8,7 @@ import { DefaultTitle } from './DefaultText';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { rupiah } from '../config/function';
 
-export default function CardProduk({ item, navigation, onPressBeli }) {
+export default function CardProduk({ item, navigation, onPressBeli, barStatus = '' }) {
     return (
         <View style={styles.Container}>
             <TouchableOpacity
@@ -34,10 +34,24 @@ export default function CardProduk({ item, navigation, onPressBeli }) {
                     <Text style={{
                         fontSize: sizeFont(3.5),
                         fontFamily: Poppins.Medium,
+                        color: color.mainColor,
                     }}>Rp. {item && rupiah(item.price)}</Text>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity
+            {
+                barStatus.length > 0 &&
+                <View style={styles.BoxStatusBar}>
+                    <View style={styles.BarBack}>
+                        <View style={styles.BarUp} />
+                    </View>
+                    <Text style={{
+                        fontSize: sizeFont(3),
+                        color: color.fontBlack1,
+                        marginTop: 2,
+                    }}>Segera habis</Text>
+                </View>
+            }
+            {/* <TouchableOpacity
                 onPress={() => onPressBeli && onPressBeli()}
                 activeOpacity={0.8}
                 style={styles.BtnBeli}
@@ -47,7 +61,7 @@ export default function CardProduk({ item, navigation, onPressBeli }) {
                     fontSize: sizeFont(3.5),
                     color: color.fontWhite,
                 }}>BELI</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
         </View>
     );
 }
@@ -80,7 +94,7 @@ const styles = StyleSheet.create({
         marginHorizontal: sizeWidth(2.5),
         width: sizeWidth(40),
         flex: 1,
-        paddingBottom: sizeHeight(5),
+        paddingBottom: sizeHeight(0.8),
         overflow: 'hidden',
     },
     BoxImage: {
@@ -96,7 +110,7 @@ const styles = StyleSheet.create({
         height: sizeWidth(25),
     },
     BoxText: {
-        paddingHorizontal: sizeWidth(1.5),
+        paddingHorizontal: sizeWidth(2),
         paddingTop: sizeHeight(1),
     },
     BtnBeli: {
@@ -109,5 +123,25 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
         width: '90%',
+    },
+    BoxStatusBar: {
+        // position: 'absolute',
+        // bottom: sizeHeight(0.5),
+        width: '100%',
+        paddingHorizontal: sizeWidth(2),
+        marginVertical: sizeHeight(0.8),
+    },
+    BarBack: {
+        height: 5,
+        width: '100%',
+        backgroundColor: color.bgBlack2,
+        borderRadius: 8,
+        overflow: 'hidden',
+    },
+    BarUp: {
+        height: 5,
+        width: '80%',
+        position: 'absolute',
+        backgroundColor: color.mainColor,
     },
 });

@@ -15,6 +15,11 @@ import { getFlashSale } from '../redux/actions/FlashSale';
 import { countDown, getIdUser } from '../config/function';
 import { getCArt } from '../redux/actions/Cart';
 import { getDataUser } from '../redux/actions/User';
+import PromoMenarik from '../components/Home/PromoMenarik';
+import ProdukLokal from '../components/Home/ProdukLokal';
+import ProdukImpor from '../components/Home/ProdukImpor';
+import BannerCategori from '../components/Home/BannerCategori';
+import ProdukBaru from '../components/Home/ProdukBaru';
 // import { countDown } from '../config/function';
 
 export default function Home({ navigation }) {
@@ -77,14 +82,19 @@ export default function Home({ navigation }) {
         <View style={styles.Container}>
             <StatusBar translucent={false} backgroundColor={color.mainColor} barStyle="light-content" />
             <Header navigation={navigation} />
-            <ScrollView style={styles.Container}>
+            <ScrollView>
                 <View style={styles.BoxCarousel}>
                     <Carousel dataCarousel={dataCarousel} />
                 </View>
                 <Categori navigation={navigation} dataCategori={dataCategori} />
+                <FlashSale dateFlashShale={dateFlashShale} navigation={navigation} dataFlash={dataFlash} barStatus={'80%'} />
                 {/* <FavoritList navigation={navigation} dataFlash={dataFlash} /> */}
                 {/* <Spesial /> */}
-                {/* <FlashSale dateFlashShale={dateFlashShale} navigation={navigation} dataFlash={dataFlash} /> */}
+                <PromoMenarik navigation={navigation} />
+                <ProdukLokal navigation={navigation} dataProduk={dataFlash} />
+                <ProdukImpor navigation={navigation} dataProduk={dataFlash} />
+                <BannerCategori navigation={navigation} dataCategori={dataCategori} />
+                <ProdukBaru navigation={navigation} dataProduk={dataFlash} />
             </ScrollView>
         </View>
     );

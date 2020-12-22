@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
     Container: {
         backgroundColor: color.bgWhite,
         flex: 1,
+        marginBottom: sizeHeight(0.5),
     },
     BoxCard: {
         width: SCREEN_WIDTH + sizeWidth(32),
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
     },
     BoxLable: {
         overflow: 'hidden',
-        width: sizeWidth(30),
+        width: sizeWidth(35),
         height: sizeWidth(15),
         marginLeft: sizeWidth(5),
     },
