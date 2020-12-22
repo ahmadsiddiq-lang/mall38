@@ -5,9 +5,11 @@ import { sizeFont, sizeWidth } from '../../assets/responsive';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Poppins } from '../../assets/fonts';
 
-export default function Headers({ navigation, title = '', onPress }) {
+export default function Headers({ navigation, title = '', onPress, backgroundColor, colorBtnBack, textColo }) {
     return (
-        <View style={styles.Container}>
+        <View style={[styles.Container, backgroundColor && {
+            backgroundColor: backgroundColor,
+        }]}>
             <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={() => navigation.goBack()}
@@ -19,13 +21,13 @@ export default function Headers({ navigation, title = '', onPress }) {
                 <Ionicons
                     name="arrow-back"
                     size={sizeFont(6.5)}
-                    color={color.fontWhite}
+                    color={colorBtnBack ? colorBtnBack : color.fontWhite}
                 />
             </TouchableOpacity>
             <Text style={{
                 marginLeft: sizeWidth(5),
                 fontSize: sizeFont(4.5),
-                color: color.fontWhite,
+                color: textColo ? textColo : color.fontWhite,
                 fontFamily: Poppins.Medium,
             }}>{title}</Text>
         </View>

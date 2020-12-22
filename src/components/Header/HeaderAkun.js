@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { color } from '../../assets/colors/Index';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import { Poppins } from '../../assets/fonts';
-import { objekEmpty } from '../../config/function';
+import { getIdUser, objekEmpty } from '../../config/function';
 
 export default function HeaderAkun({ navigation, dataUser }) {
+
+    const handleNavEditUser = useCallback(async () => {
+        const idUser = await getIdUser();
+        if (idUser) {
+            navigation.navigate('EditUser', {
+                data: dataUser,
+            });
+        }
+    }, [navigation, dataUser]);
 
     return (
         <View style={styles.Container}>
@@ -41,6 +50,7 @@ export default function HeaderAkun({ navigation, dataUser }) {
                     </View>
             }
             <TouchableOpacity
+                onPress={() => handleNavEditUser()}
                 activeOpacity={0.8}
                 style={styles.BtnBack}
             >

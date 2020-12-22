@@ -19,7 +19,6 @@ export default function Akun({ navigation }) {
     const dispatch = useDispatch();
     const dataUser = useSelector(state => state.dataUser.dataUser);
     const [modalVisible, setModalVisible] = useState(false);
-    console.log(dataUser.photo);
 
     const handleUser = useCallback(async () => {
         const idUser = await getIdUser();

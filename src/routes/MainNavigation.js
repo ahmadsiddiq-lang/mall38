@@ -17,6 +17,7 @@ import Login from '../pages/Login';
 import Cart from '../pages/Cart';
 import Register from '../pages/Register';
 import CheckOut from '../pages/CheckOut';
+import EditUser from '../pages/EditUser';
 
 const Tab = createBottomTabNavigator();
 
@@ -110,6 +111,7 @@ export default function MainNavigation() {
                 <Stack.Screen name="Register" component={Register} />
                 <Stack.Screen name="Cart" component={Cart} />
                 <Stack.Screen name="CheckOut" component={CheckOut} />
+                <Stack.Screen name="EditUser" component={EditUser} />
             </Stack.Navigator>
         </NavigationContainer>
     );
