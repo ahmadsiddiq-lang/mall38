@@ -82,9 +82,9 @@ export default function Home({ navigation }) {
                     <Carousel dataCarousel={dataCarousel} />
                 </View>
                 <Categori navigation={navigation} dataCategori={dataCategori} />
-                <FavoritList navigation={navigation} dataFlash={dataFlash} />
-                <Spesial />
-                <FlashSale dateFlashShale={dateFlashShale} navigation={navigation} dataFlash={dataFlash} />
+                {/* <FavoritList navigation={navigation} dataFlash={dataFlash} /> */}
+                {/* <Spesial /> */}
+                {/* <FlashSale dateFlashShale={dateFlashShale} navigation={navigation} dataFlash={dataFlash} /> */}
             </ScrollView>
         </View>
     );
