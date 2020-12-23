@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
 import { Poppins } from '../../assets/fonts';
@@ -24,10 +24,22 @@ export default function Deskripsi({ navigation, fixDataCart = [] }) {
         return total + Ongkir;
     };
 
+    const handleProduk = useCallback(() => {
+        const newData = [];
+        fixDataCart.forEach((element, index) => {
+            const total = (Number(element.product.price) * Number(element.qty));
+            const berat = (Number(element.product.berat) * Number(element.qty));
+            fixDataCart[index].product.price = total;
+            fixDataCart[index].product.berat = berat;
+            newData.push(fixDataCart[index]);
+        });
+        return newData;
+    }, [fixDataCart]);
+
     const handleNav = () => {
         if (fixDataCart.length > 0) {
             navigation.navigate('CheckOut', {
-                data: fixDataCart,
+                data: handleProduk(),
             });
         }
     };
