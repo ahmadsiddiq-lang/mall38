@@ -28,7 +28,7 @@ export const clearDataUser = () => {
     };
 };
 
-export const updateProfile = (data) => {
+export const updateProfile = (data, handleUser) => {
     return async (dispatch) => {
         console.log(data);
         await Axios.post(BASE_URL + 'post-update-profile', data, {
@@ -38,6 +38,7 @@ export const updateProfile = (data) => {
             },
         })
             .then(respon => {
+                handleUser();
                 ToasSuccess('Update Berhasil');
             }).catch(err => {
                 ToasInvalid('Update Gagal');

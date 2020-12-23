@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useState } from 'react';
-import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, Modal, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Headers from '../components/Header/Headers';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { color } from '../assets/colors/Index';
@@ -9,9 +9,11 @@ import { Picker } from '@react-native-picker/picker';
 import { Poppins } from '../assets/fonts';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { useDispatch } from 'react-redux';
-import { updateProfile } from '../redux/actions/User';
-import { ToasSuccess, ToasInvalid, getIdUser } from '../config/function';
+import { getDataUser, updateProfile } from '../redux/actions/User';
+import { getIdUser } from '../config/function';
 import FormData from 'form-data';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 
 export default function EditUser({ navigation, route }) {
     const dataUser = route.params.data;
@@ -22,6 +24,9 @@ export default function EditUser({ navigation, route }) {
     const photo = dataUser.user.photo === 'https://mall38.com/images/user/NULL' ? false : dataUser.user.photo;
 
     const dispatch = useDispatch();
+
+    const [modalVisible, setModalVisible] = useState(false);
+
     const [name, setName] = useState(dataUser.user.name);
     const [phone, setPhone] = useState(phoneData);
     const [ktp, setKtp] = useState(dataUser.user.ktp);
@@ -33,6 +38,15 @@ export default function EditUser({ navigation, route }) {
     const [dataKabupaten, setDataKabupaten] = useState([]);
     const [dataKecamatan, setDataKecamatan] = useState([]);
     const [image, setImage] = useState(null);
+    const options = {
+        title: 'Select Avatar',
+        storageOptions: {
+            skipBackup: true,
+            path: 'images',
+        },
+        saveToPhotos: true,
+        quality: 0.5,
+    };
 
     const handleProvinsi = useCallback(async (value) => {
         setProvinsi(value);
@@ -56,14 +70,21 @@ export default function EditUser({ navigation, route }) {
         setKecamatan(data[0].kecamatan_id);
     }, [dataUser]);
 
+    const handleUser = useCallback(async () => {
+        const idUser = await getIdUser();
+        if (idUser !== null) {
+            dispatch(getDataUser(idUser));
+        }
+    }, [dispatch]);
+
     const handleUpdate = useCallback(async () => {
         const idUser = await getIdUser();
         const data = new FormData();
         data.append('user_id', idUser);
         data.append('photo', image === null ? null : {
-            uri: image,
-            type: 'image/jpg',
-            name: 'image.jpg',
+            uri: image.uri,
+            type: image.type,
+            name: image.fileName,
         });
         data.append('nama', name);
         data.append('telp', phone);
@@ -75,30 +96,40 @@ export default function EditUser({ navigation, route }) {
         data.append('kecamatan_id', kecamatan);
 
         if (data) {
-            dispatch(updateProfile(data));
+            dispatch(updateProfile(data, handleUser));
         }
 
-    }, [name, phone, ktp, alamat, kodePos, provinsi, kecamatan, kabupaten, image, dispatch]);
+    }, [name, phone, ktp, alamat, kodePos, provinsi, kecamatan, kabupaten, image, dispatch, handleUser]);
 
-    const handleImage = () => {
-        const options = {
-            title: 'Select Avatar',
-            storageOptions: {
-                skipBackup: true,
-                path: 'images',
-            },
-            saveToPhotos: true,
-            quality: 0.5,
-        };
-        launchImageLibrary(options, (response) => {
+    const handleCamera = () => {
+        launchCamera(options, (response) => {
             console.log('Response = ', response);
+            setModalVisible(!modalVisible);
 
             if (response.didCancel) {
                 console.log('User cancelled image picker');
             } else if (response.error) {
                 console.log('ImagePicker Error: ', response.error);
             } else {
-                const source = response.uri;
+                const source = response;
+                // You can also display the image using data:
+                // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+                setImage(source);
+            }
+        });
+    };
+
+    const handleLibrary = () => {
+        launchImageLibrary(options, (response) => {
+            console.log('Response = ', response);
+            setModalVisible(!modalVisible);
+
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else {
+                const source = response;
                 // You can also display the image using data:
                 // const source = { uri: 'data:image/jpeg;base64,' + response.data };
                 setImage(source);
@@ -119,7 +150,9 @@ export default function EditUser({ navigation, route }) {
             <ScrollView>
                 <View style={styles.Banner}>
                     <TouchableOpacity
-                        onPress={() => handleImage()}
+                        onPress={() => {
+                            setModalVisible(true);
+                        }}
                         activeOpacity={0.8}
                         style={styles.BoxImage}>
                         {
@@ -135,7 +168,7 @@ export default function EditUser({ navigation, route }) {
                                 <Image
                                     style={styles.Image}
                                     resizeMethod="auto"
-                                    source={{ uri: image }} />
+                                    source={{ uri: image.uri }} />
                         }
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -279,6 +312,46 @@ export default function EditUser({ navigation, route }) {
                     </TouchableOpacity>
                 </View>
             </ScrollView>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                    // Alert.alert("Modal has been closed.");
+                }}
+            >
+                <View style={styles.BoxPickImage}>
+                    <View style={styles.modalView}>
+                        <TouchableOpacity
+                            activeOpacity={0.8}
+                            style={styles.BoxPickImageItem}
+                            onPress={() => {
+                                handleLibrary();
+                            }}
+                        >
+                            <Image style={styles.ImagePick} resizeMethod="auto" source={require('../assets/images/pickImage/imagedefault.png')} />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            activeOpacity={0.8}
+                            style={styles.BoxPickImageItem}
+                            onPress={() => {
+                                handleCamera();
+                            }}
+                        >
+                            <Image style={styles.ImagePick} resizeMethod="auto" source={require('../assets/images/pickImage/camera.jpg')} />
+                        </TouchableOpacity>
+                    </View>
+                    <TouchableOpacity
+                        onPress={() => {
+                            setModalVisible(!modalVisible);
+                        }}
+                        activeOpacity={0.8}
+                        style={styles.BtnCancle}
+                    >
+                        <Ionicons name="close-circle-outline" size={sizeFont(12)} color={color.fontWhite} />
+                    </TouchableOpacity>
+                </View>
+            </Modal>
         </View>
     );
 }
@@ -329,5 +402,37 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         paddingVertical: sizeHeight(0.8),
         alignItems: 'center',
+    },
+    BoxPickImage: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1,
+        backgroundColor: 'rgba(0,0,0,0.3)',
+    },
+    modalView: {
+        borderWidth: 4,
+        borderRadius: 8,
+        borderColor: color.mainColor,
+        flexDirection: 'row',
+        overflow: 'hidden',
+        marginTop: sizeHeight(50),
+    },
+    BoxPickImageItem: {
+        overflow: 'hidden',
+        width: sizeWidth(25),
+        height: sizeWidth(25),
+    },
+    ImagePick: {
+        width: '100%',
+        height: '100%',
+    },
+    BtnCancle: {
+        width: sizeWidth(15),
+        height: sizeWidth(15),
+        backgroundColor: color.mainColor,
+        borderRadius: 100,
+        marginTop: sizeHeight(3),
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 });
