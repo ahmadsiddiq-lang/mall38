@@ -10,7 +10,6 @@ export default function HeaderAkun({ navigation, dataUser = [], dataScreen }) {
 
     const handleNavEditUser = useCallback(async () => {
         const idUser = await getIdUser();
-        console.log(dataUser);
         if (idUser) {
             if (dataUser.length > 0 || dataUser.user !== undefined) {
                 navigation.navigate('EditUser', {

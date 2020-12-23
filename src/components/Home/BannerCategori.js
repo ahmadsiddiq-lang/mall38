@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     },
     ContentBox: {
         flexDirection: 'row',
-        width: SCREEN_WIDTH + sizeWidth(70),
+        width: SCREEN_WIDTH + sizeWidth(65),
         flexWrap: 'wrap',
         marginHorizontal: sizeWidth(2.5),
     },

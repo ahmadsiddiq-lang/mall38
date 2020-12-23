@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Headers from '../components/Header/Headers';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -10,25 +10,41 @@ import { Poppins } from '../assets/fonts';
 
 export default function EditUser({ navigation, route }) {
     const dataUser = route.params.data;
+    const provinsi_id = dataUser.user.provinsi === null ? dataUser.provinsi[0].provinsi_id : dataUser.user.provinsi.provinsi_id;
+    const kabupaten_id = dataUser.user.kabupaten === null ? dataUser.kabupaten[0].kabupaten_id : dataUser.user.kabupaten.kabupaten_id;
+    const kecamatan_id = dataUser.user.kecamatan === null ? dataUser.kecamatan[0].kecamatan_id : dataUser.user.kecamatan.kecamatan_id;
+    const phoneData = dataUser.user.phone === 'NULL' ? null : dataUser.user.phone;
 
     const [name, setName] = useState(dataUser.user.name);
-    const [phone, setPhone] = useState(dataUser.user.phone);
+    const [phone, setPhone] = useState(phoneData);
     const [alamat, setAlamat] = useState(dataUser.user.alamat);
-    const [provinsi, setProvinsi] = useState(dataUser.user.provinsi.provinsi_id);
-    const [kabupaten, setKabupaten] = useState(dataUser.user.kabupaten.kabupaten_id);
-    const [kecamatan, setKecamatan] = useState(dataUser.user.kecamatan.kecamatan_id);
+    const [provinsi, setProvinsi] = useState(provinsi_id);
+    const [kabupaten, setKabupaten] = useState(kabupaten_id);
+    const [kecamatan, setKecamatan] = useState(kecamatan_id);
+    const [dataKabupaten, setDataKabupaten] = useState([]);
+    const [dataKecamatan, setDataKecamatan] = useState([]);
 
-    const findKabupaten = () => {
-        const data = dataUser.kabupaten.filter(kab => kab.provinsi_id === provinsi);
-        // console.log(data);
-        return data;
-    };
+    const handleProvinsi = useCallback(async (value) => {
+        setProvinsi(value);
+        findKabupaten(value);
+    }, [findKabupaten]);
 
-    const findKecamatan = () => {
-        const data = dataUser.kecamatan.filter(kab => kab.kabupaten_id === kabupaten);
-        // console.log(data);
-        return data;
-    };
+    const handleKabupaten = useCallback(async (value) => {
+        setKabupaten(value);
+        findKecamatan(value);
+    }, [findKecamatan]);
+
+    const findKabupaten = useCallback(async (id) => {
+        const data = dataUser.kabupaten.filter(kab => kab.provinsi_id === id);
+        setDataKabupaten(data);
+        findKecamatan(data[0].kabupaten_id);
+    }, [dataUser, findKecamatan]);
+
+    const findKecamatan = useCallback(async (id) => {
+        const data = dataUser.kecamatan.filter(kab => kab.kabupaten_id === id);
+        setDataKecamatan(data);
+        setKecamatan(data[0].kecamatan_id);
+    }, [dataUser]);
 
     const handleUpdate = () => {
         const data = {
@@ -39,8 +55,13 @@ export default function EditUser({ navigation, route }) {
             kabupaten: kabupaten,
             kecamatan: kecamatan,
         };
-        console.log(data);
+        // const id_kecamatan = dataUser.kecamatan.find(kab => kab.kecamatan_id === kecamatan);
+        console.log(dataUser.user);
     };
+
+    useEffect(() => {
+        handleProvinsi(provinsi);
+    }, [handleProvinsi, provinsi]);
 
     return (
         <View style={styles.Container}>
@@ -114,7 +135,7 @@ export default function EditUser({ navigation, route }) {
                             selectedValue={provinsi}
                             style={styles.DropDown}
                             onValueChange={(itemValue, itemIndex) =>
-                                setProvinsi(itemValue)
+                                handleProvinsi(itemValue)
                                 // console.log(itemValue)
                             }
                         >
@@ -140,12 +161,12 @@ export default function EditUser({ navigation, route }) {
                             selectedValue={kabupaten}
                             style={styles.DropDown}
                             onValueChange={(itemValue, itemIndex) =>
-                                setKabupaten(itemValue)
+                                handleKabupaten(itemValue)
                             }
                         >
                             {
                                 dataUser !== undefined &&
-                                findKabupaten().map((item, index) => {
+                                dataKabupaten.map((item, index) => {
                                     return (
                                         <Picker.Item key={index} label={item.nama_kabupaten} value={item.kabupaten_id} />
                                     );
@@ -169,7 +190,7 @@ export default function EditUser({ navigation, route }) {
                             }
                         >
                             {
-                                findKecamatan().map((item, index) => {
+                                dataKecamatan.map((item, index) => {
                                     return (
                                         <Picker.Item key={index} label={item.nama_kecamatan} value={item.kecamatan_id} />
                                     );
