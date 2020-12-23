@@ -208,13 +208,18 @@ export default function Cart({ navigation }) {
                                 renderRightActions={() => rightSwipe(item, index)}
                                 renderLeftActions={false}
                             >
-                                <View style={styles.BoxCard}>
+                                <TouchableOpacity
+                                    onPress={() => navigation.navigate('DetailProduk', {
+                                        idProduk: item.product.id,
+                                    })}
+                                    activeOpacity={0.8}
+                                    style={styles.BoxCard}>
                                     <ListProduk
                                         handleMinu={handleMinu}
                                         handlePlus={handlePlus}
                                         handleCechboxItem={handleCechboxItem}
                                         item={item} />
-                                </View>
+                                </TouchableOpacity>
                             </Swipeable>
                         }
                     />
