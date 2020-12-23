@@ -15,7 +15,7 @@ export default function ProdukBaru({ navigation, dataProduk }) {
             <View style={styles.ContainerCard}>
                 {
                     dataProduk &&
-                    dataProduk.slice(30, 50).map((item, index) => {
+                    dataProduk.slice(10, 15).map((item, index) => {
                         return (
                             <View key={index} style={styles.BoxCard}>
                                 <CardProdukVer navigation={navigation} item={item} />

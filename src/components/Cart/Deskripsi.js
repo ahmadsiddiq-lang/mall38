@@ -24,6 +24,14 @@ export default function Deskripsi({ navigation, fixDataCart = [] }) {
         return total + Ongkir;
     };
 
+    const handleNav = () => {
+        if (fixDataCart.length > 0) {
+            navigation.navigate('CheckOut', {
+                data: fixDataCart,
+            });
+        }
+    };
+
     return (
         <View style={styles.Container}>
             <View style={styles.Item}>
@@ -46,9 +54,7 @@ export default function Deskripsi({ navigation, fixDataCart = [] }) {
                 marginTop: sizeHeight(3),
             }}>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('CheckOut', {
-                        data: fixDataCart,
-                    })}
+                    onPress={() => handleNav()}
                     activeOpacity={0.8}
                     style={styles.BtnBuy}
                 >

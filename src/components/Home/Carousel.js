@@ -13,20 +13,20 @@ export default function Carousel({ navigation, dataCarousel = [] }) {
     const [indexOf, setIndexOf] = useState(0);
 
 
-    useEffect(() => {
-        const lenghtData = dataCarousel.length;
-        const interval = setInterval(() => {
-            setIndexOf(indexOf === lenghtData - 1 ? 0 : indexOf + 1);
-            scrollRef.current.scrollTo({
-                animatde: true,
-                y: 0,
-                x: sizeWidth(94) * indexOf,
-            });
-        }, 3000);
-        return () => {
-            clearInterval(interval);
-        };
-    }, [dataCarousel.length, indexOf]);
+    // useEffect(() => {
+    //     const lenghtData = dataCarousel.length;
+    //     const interval = setInterval(() => {
+    //         setIndexOf(indexOf === lenghtData - 1 ? 0 : indexOf + 1);
+    //         scrollRef.current.scrollTo({
+    //             animatde: true,
+    //             y: 0,
+    //             x: sizeWidth(94) * indexOf,
+    //         });
+    //     }, 3000);
+    //     return () => {
+    //         clearInterval(interval);
+    //     };
+    // }, [dataCarousel.length, indexOf]);
 
 
     return (

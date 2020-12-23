@@ -10,7 +10,7 @@ import { rupiah } from '../config/function';
 
 export default function CardProduk({ item, navigation, onPressBeli, barStatus = '' }) {
     return (
-        <View style={styles.Container}>
+        <View style={[styles.Container, barStatus.length > 0 && { paddingBottom: sizeHeight(5) }]}>
             <TouchableOpacity
                 onPress={() => navigation.navigate('DetailProduk', {
                     idProduk: item.id,
@@ -125,8 +125,8 @@ const styles = StyleSheet.create({
         width: '90%',
     },
     BoxStatusBar: {
-        // position: 'absolute',
-        // bottom: sizeHeight(0.5),
+        position: 'absolute',
+        bottom: sizeHeight(0.5),
         width: '100%',
         paddingHorizontal: sizeWidth(2),
         marginVertical: sizeHeight(0.8),

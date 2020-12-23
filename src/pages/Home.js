@@ -30,7 +30,7 @@ export default function Home({ navigation }) {
     const dataFlash = useSelector(state => state.flashsale.flashsale);
     const [dateFlashShale, setDateFlash] = useState('');
 
-    const getCarousels = useCallback(async () => {
+    const getData = useCallback(async () => {
         const idUser = await getIdUser();
         dispatch(getCarousel());
         dispatch(getCategori());
@@ -55,11 +55,9 @@ export default function Home({ navigation }) {
 
 
     useEffect(() => {
-        getCarousels();
+        getData();
         hetDataCart();
-        // getCategoris();
-        // getFlash();
-    }, [getCarousels, hetDataCart]);
+    }, [getData, hetDataCart]);
 
     // useEffect(() => {
     //     var countDownDate = new Date('Dec 30, 2020 00:00:25').getTime();
