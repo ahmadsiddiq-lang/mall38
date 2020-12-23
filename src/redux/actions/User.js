@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import { ToasInvalid, ToasSuccess } from '../../config/function';
 import { BASE_URL } from '../../config/URL';
 
 export const GET_USER = 'GET_USER';
@@ -24,5 +25,23 @@ export const clearDataUser = () => {
             type: CLEAR_USER,
             data: {},
         });
+    };
+};
+
+export const updateProfile = (data) => {
+    return async (dispatch) => {
+        console.log(data);
+        await Axios.post(BASE_URL + 'post-update-profile', data, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        })
+            .then(respon => {
+                ToasSuccess('Update Berhasil');
+            }).catch(err => {
+                ToasInvalid('Update Gagal');
+                console.log(err);
+            });
     };
 };

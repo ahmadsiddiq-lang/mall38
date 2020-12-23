@@ -7,6 +7,11 @@ import { color } from '../assets/colors/Index';
 import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
 import { Picker } from '@react-native-picker/picker';
 import { Poppins } from '../assets/fonts';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { useDispatch } from 'react-redux';
+import { updateProfile } from '../redux/actions/User';
+import { ToasSuccess, ToasInvalid, getIdUser } from '../config/function';
+import FormData from 'form-data';
 
 export default function EditUser({ navigation, route }) {
     const dataUser = route.params.data;
@@ -14,15 +19,20 @@ export default function EditUser({ navigation, route }) {
     const kabupaten_id = dataUser.user.kabupaten === null ? dataUser.kabupaten[0].kabupaten_id : dataUser.user.kabupaten.kabupaten_id;
     const kecamatan_id = dataUser.user.kecamatan === null ? dataUser.kecamatan[0].kecamatan_id : dataUser.user.kecamatan.kecamatan_id;
     const phoneData = dataUser.user.phone === 'NULL' ? null : dataUser.user.phone;
+    const photo = dataUser.user.photo === 'https://mall38.com/images/user/NULL' ? false : dataUser.user.photo;
 
+    const dispatch = useDispatch();
     const [name, setName] = useState(dataUser.user.name);
     const [phone, setPhone] = useState(phoneData);
+    const [ktp, setKtp] = useState(dataUser.user.ktp);
+    const [kodePos, setKodePos] = useState(dataUser.user.kode_pos);
     const [alamat, setAlamat] = useState(dataUser.user.alamat);
     const [provinsi, setProvinsi] = useState(provinsi_id);
     const [kabupaten, setKabupaten] = useState(kabupaten_id);
     const [kecamatan, setKecamatan] = useState(kecamatan_id);
     const [dataKabupaten, setDataKabupaten] = useState([]);
     const [dataKecamatan, setDataKecamatan] = useState([]);
+    const [image, setImage] = useState(null);
 
     const handleProvinsi = useCallback(async (value) => {
         setProvinsi(value);
@@ -46,17 +56,54 @@ export default function EditUser({ navigation, route }) {
         setKecamatan(data[0].kecamatan_id);
     }, [dataUser]);
 
-    const handleUpdate = () => {
-        const data = {
-            name: name,
-            phone: phone,
-            alamat: alamat,
-            provinsi: provinsi,
-            kabupaten: kabupaten,
-            kecamatan: kecamatan,
+    const handleUpdate = useCallback(async () => {
+        const idUser = await getIdUser();
+        const data = new FormData();
+        data.append('user_id', idUser);
+        data.append('photo', image === null ? null : {
+            uri: image,
+            type: 'image/jpg',
+            name: 'image.jpg',
+        });
+        data.append('nama', name);
+        data.append('telp', phone);
+        data.append('ktp', ktp);
+        data.append('kode_pos', kodePos);
+        data.append('alamat', alamat);
+        data.append('provinsi_id', provinsi);
+        data.append('kabupaten_id', kabupaten);
+        data.append('kecamatan_id', kecamatan);
+
+        if (data) {
+            dispatch(updateProfile(data));
+        }
+
+    }, [name, phone, ktp, alamat, kodePos, provinsi, kecamatan, kabupaten, image, dispatch]);
+
+    const handleImage = () => {
+        const options = {
+            title: 'Select Avatar',
+            storageOptions: {
+                skipBackup: true,
+                path: 'images',
+            },
+            saveToPhotos: true,
+            quality: 0.5,
         };
-        // const id_kecamatan = dataUser.kecamatan.find(kab => kab.kecamatan_id === kecamatan);
-        console.log(dataUser.user);
+        launchImageLibrary(options, (response) => {
+            console.log('Response = ', response);
+
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else {
+                const source = response.uri;
+                // You can also display the image using data:
+                // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+                setImage(source);
+            }
+        });
     };
 
     useEffect(() => {
@@ -72,18 +119,23 @@ export default function EditUser({ navigation, route }) {
             <ScrollView>
                 <View style={styles.Banner}>
                     <TouchableOpacity
-                        onPress={() => handleUpdate()}
+                        onPress={() => handleImage()}
                         activeOpacity={0.8}
                         style={styles.BoxImage}>
                         {
-                            dataUser !== undefined &&
-                                dataUser.user.photo !== 'https://mall38.com/images/user/NULL' && dataUser.user.photo !== undefined ?
+                            image === null ?
+                                photo ?
+                                    <Image
+                                        style={styles.Image}
+                                        resizeMethod="auto"
+                                        source={{ uri: dataUser.user.photo }} />
+                                    :
+                                    <FontAwesome5 name="user" color={color.fontWhite} size={sizeFont(13)} solid />
+                                :
                                 <Image
                                     style={styles.Image}
                                     resizeMethod="auto"
-                                    source={{ uri: dataUser.user.photo }} />
-                                :
-                                <FontAwesome5 name="user" color={color.mainColor} size={sizeFont(13)} solid />
+                                    source={{ uri: image }} />
                         }
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -119,9 +171,21 @@ export default function EditUser({ navigation, route }) {
                     />
                     <TextInput
                         style={styles.Input}
+                        placeholder="KTP"
+                        value={ktp}
+                        onChangeText={(e) => setKtp(e)}
+                    />
+                    <TextInput
+                        style={styles.Input}
+                        placeholder="Kode POS"
+                        value={kodePos}
+                        onChangeText={(e) => setKodePos(e)}
+                    />
+                    <TextInput
+                        style={styles.Input}
                         placeholder="Alamat"
                         value={alamat}
-                        onChangeText={(e) => setAlamat}
+                        onChangeText={(e) => setAlamat(e)}
                     />
                     <View style={styles.BoxDropdown}>
                         <Text style={{
