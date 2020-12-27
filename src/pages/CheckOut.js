@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../assets/colors/Index';
 import Headers from '../components/Header/Headers';
@@ -9,12 +9,28 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import ListProduk from '../components/CheckOut/ListProduk';
 import Kurir from '../components/CheckOut/Kurir';
 import MetodeBayar from '../components/CheckOut/MetodeBayar';
+import { getIdUser } from '../config/function';
+import { getDataUser } from '../redux/actions/User';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 export default function CheckOut({ navigation, route }) {
 
+    const dispatch = useDispatch();
+    const dataUser = useSelector(state => state.dataUser.dataUser.user);
+
     const dataProduk = route.params.data;
-    // console.log(dataProduk);
+    // console.log(dataUser);
+    const handleUser = useCallback(async () => {
+        const idUser = await getIdUser();
+        if (idUser !== null) {
+            dispatch(getDataUser(idUser));
+        }
+    }, [dispatch]);
+
+    useEffect(() => {
+        handleUser();
+    }, [handleUser]);
 
     return (
         <View style={styles.Container}>
@@ -49,9 +65,24 @@ export default function CheckOut({ navigation, route }) {
                                         />
                                     </TouchableOpacity>
                                 </View>
-                                <Text style={{
-                                    marginTop: sizeHeight(1),
-                                }}>The Mansion Kemayoran - Tower Fontana BH 33 1 Jakarta, East Pademangan, Pademangan, North Jakarta City, Jakarta 14410</Text>
+                                {
+                                    dataUser.provinsi !== null ?
+                                        <View>
+                                            <Text style={{
+                                                marginTop: sizeHeight(1),
+                                                fontSize: sizeFont(3.3),
+                                            }}>[{dataUser.phone}]</Text>
+                                            <Text style={{
+                                                fontSize: sizeFont(3.3),
+                                            }}>{dataUser.alamat + ', ' + dataUser.kecamatan.nama_kecamatan + ', ' + dataUser.kabupaten.nama_kabupaten + ', ' + dataUser.provinsi.nama_provinsi}</Text>
+                                        </View>
+                                        :
+                                        <Text style={{
+                                            marginTop: sizeHeight(1),
+                                            fontSize: sizeFont(3.3),
+                                        }}>Pilih Alamat</Text>
+
+                                }
                             </View>
                         </View>
                     </View>
