@@ -1,13 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
 import { Poppins } from '../../assets/fonts';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { rupiah } from '../../config/function';
 
-export default function Kurir({ setKurir, dataKurir }) {
+export default function Kurir({ handleMOdalItem, dataKurir }) {
 
     // console.log(dataKurir);
 
@@ -19,7 +19,7 @@ export default function Kurir({ setKurir, dataKurir }) {
                 marginBottom: sizeHeight(1),
             }}>Ongkos Kirim</Text>
             <TouchableOpacity
-                onPress={() => setKurir(true)}
+                onPress={() => handleMOdalItem(0)}
                 activeOpacity={0.8}
                 style={styles.Content}>
                 <View style={{
@@ -27,7 +27,7 @@ export default function Kurir({ setKurir, dataKurir }) {
                     alignItems: 'center',
                 }}>
                     <View style={{
-                        // marginLeft: sizeWidth(2),
+                        marginLeft: sizeWidth(2),
                     }}>
                         <Text style={{
                             fontSize: sizeFont(3.7),

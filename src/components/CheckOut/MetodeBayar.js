@@ -1,12 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
 import { Poppins } from '../../assets/fonts';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-export default function MetodeBayar() {
+export default function MetodeBayar({ handleMOdalItem, metodeBayar }) {
     return (
         <View style={styles.Container}>
             <Text style={{
@@ -14,30 +14,25 @@ export default function MetodeBayar() {
                 fontFamily: Poppins.Medium,
                 marginBottom: sizeHeight(1),
             }}>Metode Bayar</Text>
-            <View style={styles.Content}>
+            <TouchableOpacity
+                onPress={() => handleMOdalItem(1)}
+                activeOpacity={0.8}
+                style={styles.Content}>
                 <View style={{
                     flexDirection: 'row',
                     alignItems: 'center',
                 }}>
-                    <View style={styles.BoxImage}>
-                        <Image
-                            style={{
-                                resizeMode: 'contain',
-                                width: sizeWidth(10),
-                            }}
-                            source={require('../../assets/images/MetodeBayar/bni.png')} />
-                    </View>
                     <View style={{
                         marginLeft: sizeWidth(2),
                     }}>
                         <Text style={{
                             fontSize: sizeFont(3.7),
-                            fontFamily: Poppins.Medium,
-                        }}>BNI</Text>
+                            fontFamily: Poppins.Italic,
+                        }}>Bank {metodeBayar.name}</Text>
                         <Text style={{
                             fontSize: sizeFont(3.3),
                             color: color.fontBlack1,
-                        }}>Bank Negara Indonesia</Text>
+                        }}>Transfer Bank</Text>
                     </View>
                 </View>
                 <View style={{
@@ -49,7 +44,7 @@ export default function MetodeBayar() {
                         color={color.mainColor}
                     />
                 </View>
-            </View>
+            </TouchableOpacity>
         </View>
     );
 }

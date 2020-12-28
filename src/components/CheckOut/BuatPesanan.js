@@ -6,16 +6,8 @@ import { Poppins } from '../../assets/fonts';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import { rupiah } from '../../config/function';
 
-export default function BuatPesanan({ handleHargaTotal, dataKurir }) {
+export default function BuatPesanan({ handleHargaTotal, handleMetodeBayar, handleTotalHargaBayar }) {
 
-    console.log(dataKurir);
-
-    const handleTotalHargaBatay = () => {
-        if (dataKurir !== null) {
-            const total = handleHargaTotal() + dataKurir.value;
-            return total;
-        }
-    };
 
     return (
         <View style={styles.Container}>
@@ -41,13 +33,13 @@ export default function BuatPesanan({ handleHargaTotal, dataKurir }) {
                 <Text style={{
                     fontSize: sizeFont(4),
                     color: color.mainColor,
-                }}>Rp. {handleTotalHargaBatay() > 0 && rupiah(handleTotalHargaBatay())}</Text>
+                }}>Rp. {handleTotalHargaBayar() > 0 && rupiah(handleTotalHargaBayar())}</Text>
             </View>
             <View style={{
                 marginTop: sizeHeight(3),
             }}>
                 <TouchableOpacity
-                    // onPress={() => handleNav()}
+                    onPress={() => handleMetodeBayar()}
                     activeOpacity={0.8}
                     style={styles.BtnBuy}
                 >

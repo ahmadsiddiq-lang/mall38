@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, Image, Modal, ScrollView, StatusBar, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
+import { Modal, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../assets/colors/Index';
 import Headers from '../components/Header/Headers';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -9,12 +9,14 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import ListProduk from '../components/CheckOut/ListProduk';
 import Kurir from '../components/CheckOut/Kurir';
 import MetodeBayar from '../components/CheckOut/MetodeBayar';
-import { getIdUser, rupiah } from '../config/function';
+import { getIdUser } from '../config/function';
 import { getDataUser } from '../redux/actions/User';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOngkir } from '../redux/actions/getOngkir';
-import { Poppins } from '../assets/fonts';
 import BuatPesanan from '../components/CheckOut/BuatPesanan';
+import ListKurir from '../components/CheckOut/ListKurir';
+import ListMeodeBayar from '../components/CheckOut/ListMeodeBayar';
+import { checkOut } from '../redux/actions/CheckOut';
 
 
 export default function CheckOut({ navigation, route }) {
@@ -24,6 +26,10 @@ export default function CheckOut({ navigation, route }) {
     const dataOngkir = useSelector(state => state.dataOngkir.dataOngkir.result);
     const [modalKurir, setKurir] = useState(false);
     const [dataKurir, setDataKurir] = useState(null);
+    const [modalItem, setModalItem] = useState(null);
+    const [curentIndex, setCurentIndex] = useState(0);
+    const [metodeBayar, setMetodeBayar] = useState({ name: 'BNI', bank: 'bni', image: require('../assets/images/MetodeBayar/bni.png') });
+
 
     const dataProduk = route.params.data;
     // console.log(dataOngkir);
@@ -43,13 +49,20 @@ export default function CheckOut({ navigation, route }) {
         return berat;
     }, [dataProduk]);
 
-    const handleHargaTotal = () => {
+    const handleHargaTotal = useCallback(() => {
         let total = 0;
         dataProduk.forEach(element => {
             total += Number(element.product.price);
         });
         return total;
-    };
+    }, [dataProduk]);
+
+    const handleTotalHargaBayar = useCallback(() => {
+        if (dataKurir !== null) {
+            const total = handleHargaTotal() + dataKurir.value;
+            return total;
+        }
+    }, [dataKurir, handleHargaTotal]);
 
     const getOngkirs = useCallback(async () => {
         const idUser = await getIdUser();
@@ -88,6 +101,48 @@ export default function CheckOut({ navigation, route }) {
             // console.log(data);
         }
     }, [modalKurir]);
+
+    const handlePilihMetodeBayar = useCallback((value, index) => {
+        setMetodeBayar(value);
+        setCurentIndex(index);
+        setKurir(!modalKurir);
+    }, [setMetodeBayar, setCurentIndex, modalKurir]);
+
+    const filterdataProduk = useCallback(async () => {
+        if (dataProduk !== undefined) {
+            let newData = [];
+            dataProduk.forEach(item => {
+                newData.push({
+                    product_id: item.product.id,
+                    qty: item.qty,
+                });
+            });
+            return newData;
+        }
+    }, [dataProduk]);
+
+    const handleMetodeBayar = useCallback(async () => {
+        const idUser = await getIdUser();
+        const amount = handleTotalHargaBayar();
+        const bank = metodeBayar.bank;
+        const produk = await filterdataProduk();
+        const data = {
+            user_id: idUser,
+            courier: dataKurir.name,
+            service: dataKurir.service,
+            ongkir: dataKurir.value,
+            amount: amount,
+            bank_name: bank,
+            list_product: produk,
+        };
+        // console.log(data);
+        dispatch(checkOut(data));
+    }, [dataKurir, handleTotalHargaBayar, metodeBayar, filterdataProduk, dispatch]);
+
+    const handleMOdalItem = (value) => {
+        setKurir(!modalKurir);
+        setModalItem(value);
+    };
 
     useEffect(() => {
         handleUser();
@@ -167,14 +222,18 @@ export default function CheckOut({ navigation, route }) {
                     <View style={styles.ContentItem}>
                         <Kurir
                             dataKurir={dataKurir}
-                            setKurir={setKurir} />
-                        <MetodeBayar />
+                            handleMOdalItem={handleMOdalItem} />
+                        <MetodeBayar
+                            metodeBayar={metodeBayar}
+                            handleMOdalItem={handleMOdalItem}
+                        />
                     </View>
                 </View>
             </ScrollView>
             <BuatPesanan
-                dataKurir={dataKurir}
                 handleHargaTotal={handleHargaTotal}
+                handleTotalHargaBayar={handleTotalHargaBayar}
+                handleMetodeBayar={handleMetodeBayar}
             />
             <Modal
                 animationType="slide"
@@ -202,79 +261,18 @@ export default function CheckOut({ navigation, route }) {
                                 light
                             />
                         </TouchableOpacity>
-                        <Text style={{
-                            fontSize: sizeFont(4),
-                            fontFamily: Poppins.Medium,
-                            marginLeft: sizeWidth(5),
-                            marginVertical: sizeHeight(3),
-                        }}>Pilih Kurir</Text>
-                        <ScrollView>
-                            <View style={styles.Content}>
-                                {dataOngkir !== undefined ?
-                                    dataOngkir.map((item, index) => {
-                                        return (
-                                            <View
-                                                key={index}
-                                                style={styles.ListKurir}
-                                            >
-                                                <Text style={{
-                                                    fontSize: sizeFont(3.5),
-                                                    fontFamily: Poppins.Medium,
-                                                }}>{item[0].name}</Text>
-                                                {
-                                                    item[0].costs.map((subItem, subIndex) => {
-                                                        return (
-                                                            <TouchableOpacity
-                                                                onPress={() => {
-                                                                    setDataOngkirnew(subItem, item[0].name);
-                                                                }}
-                                                                key={subIndex}
-                                                                activeOpacity={0.8}
-                                                                style={styles.BoxList}>
-                                                                <View>
-                                                                    <Text style={{
-                                                                        fontSize: sizeFont(3.3),
-                                                                        fontFamily: Poppins.Medium,
-                                                                    }}>{subItem.service}</Text>
-                                                                    <View>
-                                                                        <Text style={{
-                                                                            fontSize: sizeFont(3.3),
-                                                                            color: color.fontBlack1,
-                                                                        }}>Ongkos Kirim</Text>
-                                                                        <Text style={{
-                                                                            fontSize: sizeFont(3.3),
-                                                                            color: color.fontBlack1,
-                                                                        }}>Akan diterima dalam {subItem.cost[0].etd.replace('HARI', '')} Hari</Text>
-                                                                    </View>
-                                                                </View>
-                                                                <View style={{
-                                                                    alignItems: 'flex-end',
-                                                                    justifyContent: 'center',
-                                                                }}>
-                                                                    <Text style={{
-                                                                        fontSize: sizeFont(3.5),
-                                                                        fontFamily: Poppins.Medium,
-                                                                        color: color.mainColor,
-                                                                    }}>Rp. {rupiah(subItem.cost[0].value)}</Text>
-                                                                </View>
-                                                            </TouchableOpacity>
-                                                        );
-                                                    })
-                                                }
-                                            </View>
-                                        );
-                                    })
-                                    :
-                                    <View style={{
-                                        flex: 1,
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                    }}>
-                                        <ActivityIndicator size="large" color={color.mainColor} />
-                                    </View>
-                                }
-                            </View>
-                        </ScrollView>
+                        {
+                            modalItem === 0 ?
+                                <ListKurir
+                                    dataOngkir={dataOngkir}
+                                    setDataOngkirnew={setDataOngkirnew}
+                                />
+                                :
+                                <ListMeodeBayar
+                                    curentIndex={curentIndex}
+                                    handlePilihMetodeBayar={handlePilihMetodeBayar}
+                                />
+                        }
                     </View>
                 </View>
             </Modal>
