@@ -1,12 +1,16 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
 import { Poppins } from '../../assets/fonts';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { rupiah } from '../../config/function';
 
-export default function Kurir() {
+export default function Kurir({ setKurir, dataKurir }) {
+
+    // console.log(dataKurir);
+
     return (
         <View style={styles.Container}>
             <Text style={{
@@ -14,30 +18,29 @@ export default function Kurir() {
                 fontFamily: Poppins.Medium,
                 marginBottom: sizeHeight(1),
             }}>Ongkos Kirim</Text>
-            <View style={styles.Content}>
+            <TouchableOpacity
+                onPress={() => setKurir(true)}
+                activeOpacity={0.8}
+                style={styles.Content}>
                 <View style={{
                     flexDirection: 'row',
                     alignItems: 'center',
                 }}>
-                    <View style={styles.BoxImage}>
-                        <Image
-                            style={{
-                                resizeMode: 'contain',
-                                width: sizeWidth(10),
-                            }}
-                            source={require('../../assets/images/Kurir/jne.png')} />
-                    </View>
                     <View style={{
-                        marginLeft: sizeWidth(2),
+                        // marginLeft: sizeWidth(2),
                     }}>
                         <Text style={{
                             fontSize: sizeFont(3.7),
-                            fontFamily: Poppins.Medium,
-                        }}>JNE</Text>
+                            fontFamily: Poppins.Italic,
+                        }}>{dataKurir != null && dataKurir.service}</Text>
                         <Text style={{
                             fontSize: sizeFont(3.3),
                             color: color.fontBlack1,
-                        }}>Jalur Nugraha Ekakurir</Text>
+                        }}>{dataKurir != null && dataKurir.name}</Text>
+                        <Text style={{
+                            fontSize: sizeFont(3.3),
+                            color: color.fontBlack1,
+                        }}>Akan sampai {dataKurir != null && dataKurir.etd.replace('HARI', '')} Hari</Text>
                     </View>
                 </View>
                 <View style={{
@@ -47,14 +50,14 @@ export default function Kurir() {
                         fontSize: sizeFont(3.8),
                         fontFamily: Poppins.Medium,
                         color: color.mainColor,
-                    }}>Rp. 20.000</Text>
+                    }}>Rp. {dataKurir != null && rupiah(dataKurir.value)}</Text>
                     <Ionicons
                         name="chevron-forward"
                         size={sizeFont(3)}
                         color={color.mainColor}
                     />
                 </View>
-            </View>
+            </TouchableOpacity>
         </View>
     );
 }

@@ -15,6 +15,7 @@ import loginReducer from './src/redux/reducers/Login';
 import Cart from './src/redux/reducers/Cart';
 import getDataUserReducer from './src/redux/reducers/User';
 import { combineReducers, applyMiddleware, createStore } from 'redux';
+import reducerOngkir from './src/redux/reducers/getOngkir';
 
 const RootReducer = combineReducers({
   Carousel: CarouselReducer,
@@ -26,6 +27,7 @@ const RootReducer = combineReducers({
   dataLogin: loginReducer,
   cart: Cart,
   dataUser: getDataUserReducer,
+  dataOngkir: reducerOngkir,
 });
 
 const store = createStore(RootReducer, applyMiddleware(thunk));
