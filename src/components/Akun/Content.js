@@ -1,11 +1,28 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { getIdUser } from '../../config/function';
+import { getTransaksi } from '../../redux/actions/Transaksi';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function Content({ navigation }) {
+    const dispatch = useDispatch();
+    const dataTransaksi = useSelector(state => state.dataTransaksi.dataTransaksi.order);
+    const handleGetTransaksi = useCallback(async () => {
+        const idUser = await getIdUser();
+        if (idUser !== null) {
+            dispatch(getTransaksi(idUser));
+        }
+    }, [dispatch]);
+
+
+    useEffect(() => {
+        handleGetTransaksi();
+    }, [handleGetTransaksi]);
+
     return (
         <View>
             <TouchableOpacity
@@ -18,7 +35,10 @@ export default function Content({ navigation }) {
                     alignItems: 'center',
                 }}>
                     <View>
-                        <View style={styles.Circle} />
+                        {
+                            dataTransaksi !== undefined && dataTransaksi.length > 0 &&
+                            <View style={styles.Circle} />
+                        }
                         <Ionicons
                             name="cube-outline"
                             color={color.mainColor}

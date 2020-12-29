@@ -2,11 +2,11 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
-import { sizeHeight } from '../../assets/responsive';
+import { sizeFont, sizeHeight } from '../../assets/responsive';
 
-export default function TopBar() {
+export default function TopBar({ handleTabbarFilter }) {
 
-    const dataBar = ['Semua', 'Pending', 'Cancel', 'Paid', 'Delivery'];
+    const dataBar = ['Semua', 'pending', 'cancel', 'paid', 'delivery'];
     const [curenIndex, setCurentIndex] = useState(0);
 
     return (
@@ -17,6 +17,7 @@ export default function TopBar() {
                         return (
                             <TouchableOpacity
                                 onPress={() => {
+                                    handleTabbarFilter(item);
                                     setCurentIndex(index);
                                 }}
                                 key={index}
@@ -29,7 +30,10 @@ export default function TopBar() {
                                 },
                                 ]}
                             >
-                                <Text>{item}</Text>
+                                <Text style={{
+                                    textTransform: 'capitalize',
+                                    fontSize: sizeFont(3.5),
+                                }}>{item}</Text>
                             </TouchableOpacity>
                         );
                     })
@@ -44,6 +48,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 0.5,
         borderBottomColor: color.mainColor,
         backgroundColor: color.bgWhite,
+        marginBottom: sizeHeight(1),
     },
     BoxBar: {
         flexDirection: 'row',

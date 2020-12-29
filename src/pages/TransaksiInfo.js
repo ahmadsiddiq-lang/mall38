@@ -1,24 +1,83 @@
-import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+/* eslint-disable react-native/no-inline-styles */
+import React, { useCallback, useEffect, useState } from 'react';
+import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import { color } from '../assets/colors/Index';
 import { sizeHeight, sizeWidth } from '../assets/responsive';
 import Headers from '../components/Header/Headers';
 import CardProduk from '../components/TransaksiInfo/CardProduk';
 import TopBar from '../components/TransaksiInfo/TopBar';
+import { getIdUser } from '../config/function';
+import { getTransaksi } from '../redux/actions/Transaksi';
 
 export default function Transaksi({ navigation }) {
 
+    const dispatch = useDispatch();
+    const dataAll = useSelector(state => state.dataTransaksi.dataTransaksi.order);
+    const [dataTransaksi, setDataTransaksi] = useState(null);
 
+    // console.log(dataAll);
+    const handleGetTransaksi = useCallback(async () => {
+        const idUser = await getIdUser();
+        if (idUser !== null) {
+            dispatch(getTransaksi(idUser));
+        }
+    }, [dispatch]);
+
+    const handleTabbarFilter = (value) => {
+        if (value === 'Semua') {
+            setDataTransaksi(dataAll);
+        } else if (value === 'delivery') {
+            const data = dataAll.filter(item => item.status_pengiriman === value);
+            setDataTransaksi(data);
+        } else {
+            const data = dataAll.filter(item => item.status_pembayaran === value);
+            setDataTransaksi(data);
+        }
+    };
+
+    useEffect(() => {
+        handleGetTransaksi();
+    }, [handleGetTransaksi]);
+
+    useEffect(() => {
+        setDataTransaksi(dataAll);
+    }, [dataAll]);
 
     return (
         <View style={styles.Container}>
             <Headers navigation={navigation} title={'Pesanan Saya'} />
-            <TopBar />
-            <ScrollView>
-                <View style={styles.Content}>
-                    <CardProduk />
-                </View>
-            </ScrollView>
+            <TopBar
+                handleTabbarFilter={handleTabbarFilter}
+            />
+            <View style={styles.Content}>
+                {
+                    dataTransaksi !== null && dataTransaksi !== undefined ?
+                        <ScrollView>
+                            {
+                                dataTransaksi.map((item, index) => {
+                                    return (
+                                        <View key={index} style={styles.BoxCard}>
+                                            <CardProduk
+                                                navigation={navigation}
+                                                item={item}
+                                            />
+                                        </View>
+                                    );
+                                })
+                            }
+                        </ScrollView>
+                        :
+                        <View style={{
+                            flex: 1,
+                            backgroundColor: color.bgWhite,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }}>
+                            <ActivityIndicator size="large" color={color.mainColor} />
+                        </View>
+                }
+            </View>
         </View>
     );
 }
@@ -26,10 +85,13 @@ export default function Transaksi({ navigation }) {
 const styles = StyleSheet.create({
     Container: {
         flex: 1,
-        backgroundColor: color.bgWhite,
     },
     Content: {
+        flex: 1,
+    },
+    BoxCard: {
+        backgroundColor: color.bgWhite,
+        marginBottom: sizeHeight(1),
         paddingHorizontal: sizeWidth(5),
-        marginVertical: sizeHeight(2),
     },
 });

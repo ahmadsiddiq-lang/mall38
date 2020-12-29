@@ -4,8 +4,13 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
 import { Poppins } from '../../assets/fonts';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
+import { rupiah } from '../../config/function';
 
-export default function CardProduk() {
+export default function CardProduk({ item, navigation }) {
+
+    const produk = item.order_product[0].product;
+    // console.log(item.order_product.length);
+
     return (
         <View style={styles.Container}>
             <TouchableOpacity
@@ -14,20 +19,48 @@ export default function CardProduk() {
             >
                 <View style={{
                     flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    marginBottom: sizeHeight(1),
+                }}>
+                    <Text style={{
+                        fontSize: sizeFont(3),
+                        color: color.fontBlack1,
+                    }}>Status pembayaran</Text>
+                    <Text style={{
+                        fontSize: sizeFont(3.5),
+                        fontFamily: Poppins.Medium,
+                        color: color.mainColor,
+                        textTransform: 'capitalize',
+                    }}>{item.status_pembayaran}</Text>
+                </View>
+                <View style={{
+                    flexDirection: 'row',
                     flex: 1,
                     borderBottomWidth: 0.5,
                     borderBottomColor: color.border1,
                     paddingBottom: sizeHeight(1),
                 }}>
                     <View style={styles.BoxImage}>
-                        <Image
-                            resizeMethod="auto"
-                            style={{
-                                resizeMode: 'contain',
-                                width: '100%',
-                                height: '100%',
-                            }}
-                            source={require('../../assets/images/Produk/tas.png')} />
+                        {
+                            produk !== undefined ?
+                                <Image
+                                    resizeMethod="auto"
+                                    style={{
+                                        resizeMode: 'contain',
+                                        width: '100%',
+                                        height: '100%',
+                                    }}
+                                    source={{ uri: produk.image }} />
+                                :
+                                <Image
+                                    resizeMethod="auto"
+                                    style={{
+                                        resizeMode: 'contain',
+                                        width: '100%',
+                                        height: '100%',
+                                    }}
+                                    source={require('../../assets/images/Produk/imagedefault.png')} />
+                        }
                     </View>
                     <View style={{
                         flex: 1,
@@ -36,52 +69,56 @@ export default function CardProduk() {
                         <Text numberOfLines={1} style={{
                             fontSize: sizeFont(3.5),
                             fontFamily: Poppins.Medium,
-                        }}>Tas Wanita</Text>
+                        }}>{produk.name}</Text>
                         <View style={{
                             flexDirection: 'row',
                             justifyContent: 'space-between',
                         }}>
                             <Text style={{
-                                fontSize: sizeFont(3),
+                                fontSize: sizeFont(3.3),
                                 color: color.fontBlack1,
-                            }}>Status:</Text>
+                            }}>{produk.category.name}</Text>
                             <Text style={{
-                                fontSize: sizeFont(3.5),
-                                fontFamily: Poppins.Medium,
-                                color: color.mainColor,
-                            }}> Pending</Text>
+                                fontSize: sizeFont(3.3),
+                                color: color.fontBlack1,
+                            }}>x{item.order_product[0].qty}</Text>
                         </View>
                         <View style={{
                             flexDirection: 'row',
                             justifyContent: 'space-between',
+                            marginBottom: sizeHeight(1),
                         }}>
                             <Text style={{
-                                fontSize: sizeFont(3.3),
+                                fontSize: sizeFont(3),
                                 color: color.fontBlack1,
-                            }}>tas wanita</Text>
+                            }}>Status pengirirman</Text>
                             <Text style={{
                                 fontSize: sizeFont(3.3),
                                 color: color.fontBlack1,
-                            }}>x1</Text>
+                                textTransform: 'capitalize',
+                            }}>{item.status_pengiriman}</Text>
                         </View>
                         <Text style={{
                             textAlign: 'right',
                             fontSize: sizeFont(3.3),
                             color: color.mainColor,
-                        }}>Rp. 200.000</Text>
+                        }}>Rp. {produk.price !== undefined && rupiah(produk.price)}</Text>
                     </View>
                 </View>
-                <View style={{
-                    borderBottomWidth: 0.5,
-                    borderBottomColor: color.border1,
-                    alignItems: 'center',
-                    paddingVertical: sizeHeight(0.8),
-                }}>
-                    <Text style={{
-                        fontSize: sizeFont(3.3),
-                        color: color.fontBlack1,
-                    }}>Tampilkan Produk</Text>
-                </View>
+                {
+                    item.order_product.length > 1 &&
+                    <View style={{
+                        borderBottomWidth: 0.5,
+                        borderBottomColor: color.border1,
+                        alignItems: 'center',
+                        paddingVertical: sizeHeight(0.8),
+                    }}>
+                        <Text style={{
+                            fontSize: sizeFont(3.3),
+                            color: color.fontBlack1,
+                        }}>Tampilkan Produk</Text>
+                    </View>
+                }
                 <View style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
@@ -91,7 +128,7 @@ export default function CardProduk() {
                     <Text style={{
                         fontSize: sizeFont(3.3),
                         color: color.fontBlack1,
-                    }}>2 produk</Text>
+                    }}>{item.order_product.length} produk</Text>
                     <Text style={{
                         fontSize: sizeFont(3.3),
                     }}>Total Pesanan :
@@ -99,7 +136,7 @@ export default function CardProduk() {
                             fontSize: sizeFont(3.5),
                             fontFamily: Poppins.Medium,
                             color: color.mainColor,
-                        }}>  Rp. 300.000</Text>
+                        }}>  Rp. {produk.price !== undefined && rupiah(item.total_pembayaran)}</Text>
                     </Text>
                 </View>
             </TouchableOpacity>
@@ -112,8 +149,8 @@ const styles = StyleSheet.create({
         marginVertical: sizeHeight(1),
     },
     ListProduk: {
-        borderBottomWidth: 0.5,
-        borderBottomColor: color.border1,
+        // borderBottomWidth: 0.5,
+        // borderBottomColor: color.border1,
     },
     BoxImage: {
         width: sizeWidth(20),

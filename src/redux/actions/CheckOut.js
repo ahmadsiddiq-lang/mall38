@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import { ToasInvalid } from '../../config/function';
 import { BASE_URL } from '../../config/URL';
 
 export const CHECKOUT = 'CHECKOUT';
@@ -11,7 +12,9 @@ export const checkOut = (data, handleNavToPembayaran) => {
             if (respons) {
                 handleNavToPembayaran(respons.data.data);
             }
-            // console.log(respons);
-        }).catch(err => console.log(err));
+        }).catch(err => {
+            ToasInvalid('Pesanan Gagal');
+            console.log(err);
+        });
     };
 };
