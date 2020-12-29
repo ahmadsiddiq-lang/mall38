@@ -1,9 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { color } from '../assets/colors/Index';
-import { sizeHeight, sizeWidth } from '../assets/responsive';
+import { SCREEN_HEIGHT, sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
 import Headers from '../components/Header/Headers';
 import CardProduk from '../components/TransaksiInfo/CardProduk';
 import TopBar from '../components/TransaksiInfo/TopBar';
@@ -16,7 +16,7 @@ export default function Transaksi({ navigation }) {
     const dataAll = useSelector(state => state.dataTransaksi.dataTransaksi.order);
     const [dataTransaksi, setDataTransaksi] = useState(null);
 
-    // console.log(dataAll);
+    // console.log(dataTransaksi);
     const handleGetTransaksi = useCallback(async () => {
         const idUser = await getIdUser();
         if (idUser !== null) {
@@ -27,6 +27,7 @@ export default function Transaksi({ navigation }) {
     const handleTabbarFilter = (value) => {
         if (value === 'Semua') {
             setDataTransaksi(dataAll);
+            handleGetTransaksi();
         } else if (value === 'delivery') {
             const data = dataAll.filter(item => item.status_pengiriman === value);
             setDataTransaksi(data);
@@ -53,20 +54,33 @@ export default function Transaksi({ navigation }) {
             <View style={styles.Content}>
                 {
                     dataTransaksi !== null && dataTransaksi !== undefined ?
-                        <ScrollView>
-                            {
-                                dataTransaksi.map((item, index) => {
-                                    return (
-                                        <View key={index} style={styles.BoxCard}>
-                                            <CardProduk
-                                                navigation={navigation}
-                                                item={item}
-                                            />
-                                        </View>
-                                    );
-                                })
-                            }
-                        </ScrollView>
+                        dataTransaksi.length > 0 ?
+                            <ScrollView>
+                                {
+                                    dataTransaksi.map((item, index) => {
+                                        return (
+                                            <View key={index} style={styles.BoxCard}>
+                                                <CardProduk
+                                                    navigation={navigation}
+                                                    item={item}
+                                                />
+                                            </View>
+                                        );
+                                    })
+
+                                }
+                            </ScrollView>
+                            :
+                            <View style={{
+                                flex: 1,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}>
+                                <Text style={{
+                                    fontSize: sizeFont(4),
+                                    color: color.fontBlack1,
+                                }}>Tidak ada pesanan</Text>
+                            </View>
                         :
                         <View style={{
                             flex: 1,

@@ -87,7 +87,7 @@ export default function ListProduk({ navigation, dataProdukCategori }) {
                             justifyContent: 'center',
                         }}>
                             <Text style={{
-                                fontSize: sizeFont(5),
+                                fontSize: sizeFont(4),
                                 color: color.fontBlack1,
                             }}>Produk belum tersedia</Text>
                         </View>

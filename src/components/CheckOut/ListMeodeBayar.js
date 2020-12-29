@@ -11,8 +11,7 @@ export default function ListMeodeBayar({ curentIndex, handlePilihMetodeBayar }) 
         { name: 'BCA', bank: 'bca', image: require('../../assets/images/MetodeBayar/bca.png') },
         { name: 'BNI', bank: 'bni', image: require('../../assets/images/MetodeBayar/bni.png') },
         { name: 'BRI', bank: 'bri', image: require('../../assets/images/MetodeBayar/bri.png') },
-        { name: 'Permata', bank: 'permata', image: require('../../assets/images/MetodeBayar/dana.png') },
-        { name: 'MANDIRI', bank: 'mandiri', image: require('../../assets/images/MetodeBayar/mandiri.png') },
+        // { name: 'MANDIRI', bank: 'mandiri', image: require('../../assets/images/MetodeBayar/mandiri.png') },
     ];
 
 

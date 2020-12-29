@@ -30,7 +30,6 @@ export const clearDataUser = () => {
 
 export const updateProfile = (data, handleUser) => {
     return async (dispatch) => {
-        console.log(data);
         await Axios.post(BASE_URL + 'post-update-profile', data, {
             withCredentials: true,
             headers: {
