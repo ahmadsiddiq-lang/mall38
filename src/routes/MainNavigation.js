@@ -6,7 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../pages/Home';
 import Product from '../pages/Product';
 import Favorite from '../pages/Favorite';
-import Transaksi from '../pages/Transaksi';
+import TransaksiInfo from '../pages/TransaksiInfo';
 import ProductCategori from '../pages/ProductCategori';
 import Akun from '../pages/Akun';
 import DetailProduk from '../pages/DetailProduk';
@@ -105,7 +105,7 @@ export default function MainNavigation() {
             <StatusBar translucent={false} backgroundColor={color.mainColor} barStyle="light-content" />
             <Stack.Navigator initialRouteName="MyTabbar" headerMode="none">
                 <Stack.Screen name="MyTabbar" component={MyTabbar} />
-                <Stack.Screen name="Transaksi" component={Transaksi} />
+                <Stack.Screen name="TransaksiInfo" component={TransaksiInfo} />
                 <Stack.Screen name="ProductCategori" component={ProductCategori} />
                 <Stack.Screen name="DetailProduk" component={DetailProduk} />
                 <Stack.Screen name="Login" component={Login} />

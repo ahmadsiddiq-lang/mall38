@@ -9,6 +9,34 @@ export default function Content({ navigation }) {
     return (
         <View>
             <TouchableOpacity
+                onPress={() => navigation.navigate('TransaksiInfo')}
+                activeOpacity={0.8}
+                style={styles.BtnList}
+            >
+                <View style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                }}>
+                    <View>
+                        <View style={styles.Circle} />
+                        <Ionicons
+                            name="cube-outline"
+                            color={color.mainColor}
+                            size={sizeFont(6.5)}
+                        />
+                    </View>
+                    <Text style={{
+                        fontSize: sizeFont(3.6),
+                        marginLeft: sizeWidth(3),
+                    }}>Pesanan Saya</Text>
+                </View>
+                <Ionicons
+                    name="chevron-forward"
+                    color={color.mainColor}
+                    size={sizeFont(4.5)}
+                />
+            </TouchableOpacity>
+            <TouchableOpacity
                 activeOpacity={0.8}
                 style={styles.BtnList}
             >
@@ -116,5 +144,16 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
+    },
+    Circle: {
+        position: 'absolute',
+        width: 10,
+        height: 10,
+        backgroundColor: '#2a05ff',
+        borderRadius: 100,
+        alignItems: 'center',
+        justifyContent: 'center',
+        top: 2,
+        right: -2,
     },
 });

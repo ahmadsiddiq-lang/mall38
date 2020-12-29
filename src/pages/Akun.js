@@ -69,7 +69,7 @@ export default function Akun({ navigation }) {
             </LinearGradient>
             <ScrollView>
                 <View style={styles.Content}>
-                    <Content />
+                    <Content navigation={navigation} />
                 </View>
                 <View style={styles.Footer}>
                     {
