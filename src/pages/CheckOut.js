@@ -121,6 +121,12 @@ export default function CheckOut({ navigation, route }) {
         }
     }, [dataProduk]);
 
+    const handleNavToPembayaran = useCallback(async (value) => {
+        navigation.navigate('Pembayaran', {
+            data: value,
+        });
+    }, [navigation]);
+
     const handleMetodeBayar = useCallback(async () => {
         const idUser = await getIdUser();
         const amount = handleTotalHargaBayar();
@@ -136,8 +142,8 @@ export default function CheckOut({ navigation, route }) {
             list_product: produk,
         };
         // console.log(data);
-        dispatch(checkOut(data));
-    }, [dataKurir, handleTotalHargaBayar, metodeBayar, filterdataProduk, dispatch]);
+        dispatch(checkOut(data, handleNavToPembayaran));
+    }, [dataKurir, handleTotalHargaBayar, metodeBayar, filterdataProduk, dispatch, handleNavToPembayaran]);
 
     const handleMOdalItem = (value) => {
         setKurir(!modalKurir);
