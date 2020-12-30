@@ -5,8 +5,15 @@ import { color } from '../../assets/colors/Index';
 import { Poppins } from '../../assets/fonts';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Clipboard from '@react-native-community/clipboard';
+import { ToasSuccess } from '../../config/function';
 
 export default function MetodeBayar({ dataDetailOrder }) {
+
+    const SalinAccount = () => {
+        Clipboard.setString(dataDetailOrder.kode_pembayaran);
+        ToasSuccess('Berhasil disalin');
+    };
     return (
         <View style={{
             backgroundColor: color.bgWhite,
@@ -35,10 +42,12 @@ export default function MetodeBayar({ dataDetailOrder }) {
                 }}>Bank
                      <Text style={{ textTransform: 'uppercase' }}> {dataDetailOrder.bank_name}</Text>
                 </Text>
-                <Text style={{
-                    fontSize: sizeFont(3.5),
-                    color: color.mainColor,
-                }}>Salin</Text>
+                <Text
+                    onPress={() => SalinAccount()}
+                    style={{
+                        fontSize: sizeFont(3.5),
+                        color: color.mainColor,
+                    }}>Salin</Text>
             </View>
             <View style={{
                 flexDirection: 'row',

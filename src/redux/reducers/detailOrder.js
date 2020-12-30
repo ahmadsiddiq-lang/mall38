@@ -1,7 +1,7 @@
 import { DETAIL_ORDER } from '../actions/DetailOrder';
 
 const initiolState = {
-    detailOrder: [],
+    detailOrder: {},
 };
 
 const detailOrderReducer = (state = initiolState, action) => {

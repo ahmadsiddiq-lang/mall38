@@ -12,14 +12,14 @@ import MetodeBayar from '../components/DetailOrder/MetodeBayar';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
 import { detailOrder } from '../redux/actions/DetailOrder';
-import { rupiah } from '../config/function';
+import { rupiah, objekEmpty } from '../config/function';
 
 export default function DetailOrder({ navigation, route }) {
 
     const dispatch = useDispatch();
     const dataDetailOrder = useSelector(state => state.detailOrder.detailOrder);
 
-    // console.log(dataDetailOrder);
+    // console.log(objekEmpty(dataDetailOrde));
 
     const getDataDetailOrder = useCallback(async () => {
         const idOrer = route.params.orderId;
@@ -38,7 +38,7 @@ export default function DetailOrder({ navigation, route }) {
             <Headers navigation={navigation} title={'Detail Pesanan'} />
             <ScrollView>
                 {
-                    dataDetailOrder !== undefined &&
+                    objekEmpty(dataDetailOrder) &&
                     <Alamat
                         dataDetailOrder={dataDetailOrder}
                     />
@@ -63,7 +63,7 @@ export default function DetailOrder({ navigation, route }) {
                     }}>Pending</Text>
                 </View>
                 {
-                    dataDetailOrder !== undefined &&
+                    objekEmpty(dataDetailOrder) &&
                     dataDetailOrder.order_product.map((item, index) => {
                         return (
                             <View
@@ -91,7 +91,9 @@ export default function DetailOrder({ navigation, route }) {
                         fontSize: sizeFont(3.5),
                         fontFamily: Poppins.Medium,
                         color: color.mainColor,
-                    }}>  Rp. {dataDetailOrder !== undefined && rupiah(dataDetailOrder.ongkir)}</Text>
+                    }}>  Rp. {
+                            objekEmpty(dataDetailOrder) &&
+                            rupiah(dataDetailOrder.ongkir)}</Text>
                 </View>
                 <View style={{
                     flexDirection: 'row',
@@ -104,7 +106,7 @@ export default function DetailOrder({ navigation, route }) {
                     <Text style={{
                         fontSize: sizeFont(3.3),
                         color: color.fontBlack1,
-                    }}>{dataDetailOrder !== undefined && dataDetailOrder.order_product.length} produk</Text>
+                    }}>{objekEmpty(dataDetailOrder) && dataDetailOrder.order_product.length} produk</Text>
                     <Text style={{
                         fontSize: sizeFont(3.3),
                     }}>Total Pesanan :
@@ -112,11 +114,12 @@ export default function DetailOrder({ navigation, route }) {
                             fontSize: sizeFont(4),
                             fontFamily: Poppins.Medium,
                             color: color.mainColor,
-                        }}>  Rp. {dataDetailOrder !== undefined && rupiah(dataDetailOrder.total_pembayaran)}</Text>
+                        }}>  Rp. {objekEmpty(dataDetailOrder) &&
+                            rupiah(dataDetailOrder.total_pembayaran)}</Text>
                     </Text>
                 </View>
                 {
-                    dataDetailOrder !== undefined &&
+                    objekEmpty(dataDetailOrder) &&
                     <MetodeBayar
                         dataDetailOrder={dataDetailOrder}
                     />
