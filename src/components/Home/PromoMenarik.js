@@ -4,7 +4,7 @@ import { color } from '../../assets/colors/Index';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import CarouselStandar from '../CarouselStandar';
 
-export default function PromoMenarik() {
+export default function PromoMenarik({ dataCarousel, navigation }) {
     return (
         <View style={styles.Container}>
             <View style={styles.Head}>
@@ -19,7 +19,7 @@ export default function PromoMenarik() {
                 }}>Lihat semua</Text>
             </View>
             <View>
-                <CarouselStandar />
+                <CarouselStandar dataCarousel={dataCarousel} />
             </View>
         </View>
     );

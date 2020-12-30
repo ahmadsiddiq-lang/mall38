@@ -21,13 +21,14 @@ export default function CardProduk({ navigation, item }) {
                     borderWidth: 1.5,
                     borderColor: color.mainColor,
                     borderRadius: 8,
+                    overflow: 'hidden',
                 }}>
                     {
                         item.product.image != null ?
                             <Image
                                 resizeMethod="auto"
                                 style={{
-                                    resizeMode: 'contain',
+                                    resizeMode: 'stretch',
                                     width: '100%',
                                     height: '100%',
                                 }}

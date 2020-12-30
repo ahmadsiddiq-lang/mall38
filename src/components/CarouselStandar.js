@@ -2,7 +2,14 @@ import React from 'react';
 import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { sizeWidth } from '../assets/responsive';
 
-export default function CarouselStandar() {
+export default function CarouselStandar({ dataCarousel }) {
+
+    const finterData = () => {
+        return dataCarousel.filter(item => item.position === 'center');
+    };
+
+    const data = finterData();
+    console.log(data);
     return (
         <View style={styles.Container}>
             <ScrollView
@@ -11,12 +18,13 @@ export default function CarouselStandar() {
             >
                 <View style={styles.Content}>
                     {
-                        [1, 2, 3, 4].map((item, index) => {
+                        data &&
+                        data.map((item, index) => {
                             return (
                                 <View key={index} style={styles.BoxImage}>
                                     <Image resizeMethod="auto"
                                         style={styles.Image}
-                                        source={require('../assets/images/banner/Banner3.png')} />
+                                        source={{ uri: item.image }} />
                                 </View>
                             );
                         })

@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useRef } from 'react';
-import { ActivityIndicator, ScrollView, StatusBar, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Animated, ScrollView, StatusBar, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { color } from '../assets/colors/Index';
 import Banner from '../components/DetailProduk/Banner';
@@ -16,6 +16,13 @@ export default function DetailProduk({ navigation, route }) {
 
     const dispatch = useDispatch();
     const refScroll = useRef(null);
+
+    const yOffset = useRef(new Animated.Value(0)).current;
+    const headerOpacity = yOffset.interpolate({
+        inputRange: [0, 200],
+        outputRange: [0, 1],
+        extrapolate: 'clamp',
+    });
 
     const dataProduk = useSelector(state => state.produk.produk);
     const detailProduk = useSelector(state => state.detailProduk.detailProduk);
@@ -80,20 +87,36 @@ export default function DetailProduk({ navigation, route }) {
     return (
         <View style={styles.Container}>
             <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
+            <Headers
+                headerOpacity={headerOpacity}
+                navigation={navigation}
+                clearDetailProduks={clearDetailProduks} />
 
             {
                 objekEmpty(detailProduk) ?
-                    <ScrollView
+                    <Animated.ScrollView
                         ref={refScroll}
+                        onScroll={Animated.event(
+                            [
+                                {
+                                    nativeEvent: {
+                                        contentOffset: {
+                                            y: yOffset,
+                                        },
+                                    },
+                                },
+                            ],
+                            { useNativeDriver: true }
+                        )}
+                        scrollEventThrottle={16}
                     >
-                        <Headers navigation={navigation} clearDetailProduks={clearDetailProduks} />
                         <Banner navigation={navigation} detailProduk={detailProduk} />
                         <Deskripsi detailProduk={detailProduk} />
                         <Rekomendasi
                             goToTop={goToTop}
                             navigation={navigation}
                             dataProduk={dataProduk} />
-                    </ScrollView>
+                    </Animated.ScrollView>
                     :
                     <View style={{
                         flex: 1,
@@ -106,6 +129,7 @@ export default function DetailProduk({ navigation, route }) {
             <ButtonBuy
                 handleBuy={handleBuy}
                 handleAddTocat={handleAddTocat}
+                navigation={navigation}
                 detailProduk={detailProduk} />
         </View>
     );

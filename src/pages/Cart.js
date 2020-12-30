@@ -135,7 +135,7 @@ export default function Cart({ navigation }) {
                 style={{
                     alignItems: 'center',
                     justifyContent: 'center',
-                    backgroundColor: 'red',
+                    backgroundColor: '#FD3A69',
                     marginVertical: sizeHeight(1.3),
                     borderTopRightRadius: 8,
                     borderBottomRightRadius: 8,

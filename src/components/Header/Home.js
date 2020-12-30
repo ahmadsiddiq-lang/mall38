@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginTop: sizeHeight(5),
+        marginTop: sizeHeight(4.5),
     },
     textInput: {
         color: color.mainColor,

@@ -7,12 +7,17 @@ import { SCREEN_WIDTH, sizeHeight, sizeWidth } from '../../assets/responsive';
 export default function Carousel({ navigation, dataCarousel = [] }) {
 
     const scrollRef = React.useRef();
-    const data = dataCarousel;
+
+    const finterData = () => {
+        return dataCarousel.filter(item => item.position === 'mobile');
+    };
+
+    const data = finterData();
 
     const [indexOf, setIndexOf] = useState(0);
 
     useEffect(() => {
-        const lenghtData = dataCarousel.length;
+        const lenghtData = data.length;
         const interval = setInterval(() => {
             setIndexOf(indexOf === lenghtData - 1 ? 0 : indexOf + 1);
             scrollRef.current.scrollTo({
@@ -24,7 +29,7 @@ export default function Carousel({ navigation, dataCarousel = [] }) {
         return () => {
             clearInterval(interval);
         };
-    }, [dataCarousel.length, indexOf]);
+    }, [data, indexOf]);
 
 
     return (

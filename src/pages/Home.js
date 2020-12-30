@@ -1,7 +1,6 @@
 import React, { useEffect, useCallback, useState, useRef } from 'react';
-import { Animated, ScrollView, StatusBar, StyleSheet, View } from 'react-native';
-import { color } from '../assets/colors/Index';
-import { SCREEN_WIDTH, sizeHeight, sizeWidth } from '../assets/responsive';
+import { Animated, StatusBar, StyleSheet, View } from 'react-native';
+import { SCREEN_WIDTH } from '../assets/responsive';
 import Header from '../components/Header/Home';
 import Carousel from '../components/Home/Carousel';
 import Categori from '../components/Home/Categori';
@@ -100,7 +99,7 @@ export default function Home({ navigation }) {
                 </View>
                 <Categori navigation={navigation} dataCategori={dataCategori} />
                 <FlashSale dateFlashShale={dateFlashShale} navigation={navigation} dataFlash={dataFlash} barStatus={'80%'} />
-                <PromoMenarik navigation={navigation} />
+                <PromoMenarik navigation={navigation} dataCarousel={dataCarousel} />
                 <ProdukLokal navigation={navigation} dataProduk={dataFlash} />
                 <ProdukImpor navigation={navigation} dataProduk={dataFlash} />
                 <BannerCategori navigation={navigation} dataCategori={dataCategori} />

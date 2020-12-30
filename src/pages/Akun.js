@@ -187,6 +187,7 @@ const styles = StyleSheet.create({
         backgroundColor: color.mainColor,
         overflow: 'hidden',
         padding: sizeWidth(1),
+        zIndex: 1,
     },
     ImageUser: {
         width: '100%',

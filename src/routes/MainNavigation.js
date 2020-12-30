@@ -20,6 +20,7 @@ import CheckOut from '../pages/CheckOut';
 import EditUser from '../pages/EditUser';
 import Pembayaran from '../pages/Pembayaran';
 import DetailOrder from '../pages/DetailOrder';
+import EditAlamat from '../pages/EditAlamat';
 
 const Tab = createBottomTabNavigator();
 
@@ -41,7 +42,7 @@ export function MyTabbar() {
                         return (
                             <Ionicons
                                 name={focused ? 'home' : 'home-outline'}
-                                size={sizeFont(5)}
+                                size={sizeFont(6)}
                                 color={color.mainColor}
                             />
                         );
@@ -56,7 +57,7 @@ export function MyTabbar() {
                         return (
                             <Ionicons
                                 name={focused ? 'briefcase' : 'briefcase-outline'}
-                                size={sizeFont(5)}
+                                size={sizeFont(6)}
                                 color={color.mainColor}
                             />
                         );
@@ -71,7 +72,7 @@ export function MyTabbar() {
                         return (
                             <Ionicons
                                 name={focused ? 'heart' : 'heart-outline'}
-                                size={sizeFont(5)}
+                                size={sizeFont(6)}
                                 color={color.mainColor}
                             />
                         );
@@ -86,7 +87,7 @@ export function MyTabbar() {
                         return (
                             <Ionicons
                                 name={focused ? 'person' : 'person-outline'}
-                                size={sizeFont(5)}
+                                size={sizeFont(6)}
                                 color={color.mainColor}
                             />
                         );
@@ -116,6 +117,7 @@ export default function MainNavigation() {
                 <Stack.Screen name="EditUser" component={EditUser} />
                 <Stack.Screen name="Pembayaran" component={Pembayaran} />
                 <Stack.Screen name="DetailOrder" component={DetailOrder} />
+                <Stack.Screen name="EditAlamat" component={EditAlamat} />
             </Stack.Navigator>
         </NavigationContainer>
     );

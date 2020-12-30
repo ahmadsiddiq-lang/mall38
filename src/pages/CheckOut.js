@@ -181,6 +181,7 @@ export default function CheckOut({ navigation, route }) {
                                 }}>
                                     <Text>Alamat Pengiriman</Text>
                                     <TouchableOpacity
+                                        onPress={() => navigation.navigate('EditAlamat')}
                                         activeOpacity={0.8}
                                         style={styles.BtnBack}
                                     >

@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: sizeWidth(5),
-        marginTop: sizeHeight(3),
+        marginTop: sizeHeight(4),
     },
     BtnBack: {
         width: sizeWidth(8),

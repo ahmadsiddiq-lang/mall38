@@ -41,7 +41,7 @@ export default function CardProdukVer({ item, navigation, onPressProduk, onPress
             {
                 onPressBeli &&
                 <TouchableOpacity
-                    onPress={() => onPressBeli()}
+                    onPress={() => onPressBeli(item)}
                     activeOpacity={0.8}
                     style={styles.BtnBeli}
                 >

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
 import { sizeFont, sizeWidth } from '../../assets/responsive';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -10,6 +10,7 @@ export default function Headers({ navigation, title = '', onPress, backgroundCol
         <View style={[styles.Container, backgroundColor && {
             backgroundColor: backgroundColor,
         }]}>
+            <StatusBar translucent={false} backgroundColor={color.mainColor} barStyle="light-content" />
             <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={() => navigation.goBack()}

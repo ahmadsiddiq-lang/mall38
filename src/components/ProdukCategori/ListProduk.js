@@ -1,13 +1,17 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { ActivityIndicator, FlatList, Text, View, StyleSheet } from 'react-native';
+import { useDispatch } from 'react-redux';
 import { color } from '../../assets/colors/Index';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
+import { getIdUser } from '../../config/function';
+import { addCart } from '../../redux/actions/Cart';
 import CardProdukVer from '../CardProdukVer';
 export default function ListProduk({ navigation, dataProdukCategori }) {
 
     const [loading, setloading] = useState(false);
     const [page, setPage] = useState(10);
+    const dispatch = useDispatch();
 
     const handleScroll = (e) => {
         const scrollPosition = e.nativeEvent.contentOffset.y;
@@ -36,9 +40,22 @@ export default function ListProduk({ navigation, dataProdukCategori }) {
 
     };
 
-    const onPressBeli = () => {
-        console.log('Beli');
-    };
+    const onPressBeli = useCallback(async (item) => {
+        const idUser = await getIdUser();
+        const idProduk = item.id;
+        const data = {
+            user_id: idUser,
+            product_id: idProduk,
+            qty: 1,
+        };
+        if (data.product_id && data.user_id) {
+            dispatch(addCart(data));
+            navigation.navigate('Cart');
+        } else {
+            navigation.navigate('Login');
+        }
+    }, [dispatch, navigation]);
+
 
     const listFooterComponent = () => {
         return (

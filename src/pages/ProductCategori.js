@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StatusBar, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { color } from '../assets/colors/Index';
 import Categori from '../components/ProdukCategori/Categori';
@@ -27,6 +27,7 @@ export default function ProductCategori({ navigation, route }) {
 
     return (
         <View style={styles.Container}>
+            <StatusBar translucent={false} backgroundColor={color.mainColor} barStyle="light-content" />
             <Headers navigation={navigation} title={'Produk Kategori'} />
             <Categori
                 navigation={navigation}
