@@ -6,7 +6,8 @@ import { color } from '../../assets/colors/Index';
 import { Poppins } from '../../assets/fonts';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 
-export default function Alamat() {
+export default function Alamat({ dataDetailOrder }) {
+
     return (
         <View style={styles.Container}>
             <Ionicons name="location" color={color.mainColor} size={sizeFont(6)} />
@@ -28,10 +29,15 @@ export default function Alamat() {
                     <Text style={{
                         marginTop: sizeHeight(1),
                         fontSize: sizeFont(3.3),
-                    }}>[08237375279]</Text>
+                    }}>[{dataDetailOrder.telp}]</Text>
                     <Text style={{
                         fontSize: sizeFont(3.3),
-                    }}>Palembang sumatra selatan, Kecamatan Abab, Kabupaten Pali</Text>
+                    }}>{
+                            dataDetailOrder.alamat_lengkap + ', ' +
+                            dataDetailOrder.kecamatan + ', ' +
+                            dataDetailOrder.kabupaten + ', ' +
+                            dataDetailOrder.provinsi
+                        }</Text>
                 </View>
             </View>
         </View>

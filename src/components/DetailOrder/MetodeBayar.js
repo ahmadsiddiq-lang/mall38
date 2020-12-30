@@ -6,7 +6,7 @@ import { Poppins } from '../../assets/fonts';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-export default function MetodeBayar() {
+export default function MetodeBayar({ dataDetailOrder }) {
     return (
         <View style={{
             backgroundColor: color.bgWhite,
@@ -32,7 +32,9 @@ export default function MetodeBayar() {
                 <Text style={{
                     fontSize: sizeFont(3.5),
                     color: color.fontBlack1,
-                }}>Bank BNI</Text>
+                }}>Bank
+                     <Text style={{ textTransform: 'uppercase' }}> {dataDetailOrder.bank_name}</Text>
+                </Text>
                 <Text style={{
                     fontSize: sizeFont(3.5),
                     color: color.mainColor,
@@ -51,7 +53,7 @@ export default function MetodeBayar() {
                 <Text style={{
                     fontSize: sizeFont(4),
                     color: color.mainColor,
-                }}>088296389126398</Text>
+                }}>{dataDetailOrder.kode_pembayaran}</Text>
             </View>
             <View style={{
                 flexDirection: 'row',
@@ -66,7 +68,7 @@ export default function MetodeBayar() {
                 <Text style={{
                     fontSize: sizeFont(3.5),
                     color: color.mainColor,
-                }}>20-04-2020 20:00</Text>
+                }}>{dataDetailOrder.expired_time}</Text>
             </View>
         </View>
     );

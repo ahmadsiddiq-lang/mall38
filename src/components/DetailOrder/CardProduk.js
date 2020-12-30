@@ -4,8 +4,9 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
 import { Poppins } from '../../assets/fonts';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
+import { rupiah } from '../../config/function';
 
-export default function CardProduk() {
+export default function CardProduk({ navigation, item }) {
     return (
         <View style={styles.Container}>
             <View style={{
@@ -17,15 +18,31 @@ export default function CardProduk() {
                 <View style={{
                     width: sizeWidth(20),
                     height: sizeWidth(20),
+                    borderWidth: 1.5,
+                    borderColor: color.mainColor,
+                    borderRadius: 8,
                 }}>
-                    <Image
-                        resizeMethod="auto"
-                        style={{
-                            resizeMode: 'contain',
-                            width: '100%',
-                            height: '100%',
-                        }}
-                        source={require('../../assets/images/Produk/imagedefault.png')} />
+                    {
+                        item.product.image != null ?
+                            <Image
+                                resizeMethod="auto"
+                                style={{
+                                    resizeMode: 'contain',
+                                    width: '100%',
+                                    height: '100%',
+                                }}
+                                source={{ uri: item.product.image }} />
+                            :
+                            <Image
+                                resizeMethod="auto"
+                                style={{
+                                    resizeMode: 'contain',
+                                    width: '100%',
+                                    height: '100%',
+                                }}
+                                source={require('../../assets/images/Produk/imagedefault.png')} />
+
+                    }
                 </View>
                 <View style={{
                     flex: 1,
@@ -34,7 +51,7 @@ export default function CardProduk() {
                     <Text numberOfLines={1} style={{
                         fontSize: sizeFont(3.5),
                         fontFamily: Poppins.Medium,
-                    }}>Tas Wanita</Text>
+                    }}>{item.product.name}</Text>
                     <View style={{
                         flexDirection: 'row',
                         justifyContent: 'space-between',
@@ -42,17 +59,18 @@ export default function CardProduk() {
                         <Text style={{
                             fontSize: sizeFont(3.3),
                             color: color.fontBlack1,
-                        }}>tas</Text>
+                        }}>{item.product.category.name}</Text>
                         <Text style={{
                             fontSize: sizeFont(3.3),
                             color: color.fontBlack1,
-                        }}>x1</Text>
+                        }}>x{item.qty}</Text>
                     </View>
                     <Text style={{
                         textAlign: 'right',
                         fontSize: sizeFont(3.3),
                         color: color.mainColor,
-                    }}>Rp. 200.000</Text>
+                        marginTop: sizeHeight(2),
+                    }}>Rp. {item.product.price != null && rupiah(item.product.price)}</Text>
                 </View>
             </View>
         </View>

@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../assets/colors/Index';
 import { Poppins } from '../assets/fonts';
@@ -10,15 +10,39 @@ import InfoPengiriman from '../components/DetailOrder/InfoPengiriman';
 import Headers from '../components/Header/Headers';
 import MetodeBayar from '../components/DetailOrder/MetodeBayar';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useDispatch, useSelector } from 'react-redux';
+import { detailOrder } from '../redux/actions/DetailOrder';
+import { rupiah } from '../config/function';
 
 export default function DetailOrder({ navigation, route }) {
 
-    // console.log(route.params.orderId);
+    const dispatch = useDispatch();
+    const dataDetailOrder = useSelector(state => state.detailOrder.detailOrder);
+
+    // console.log(dataDetailOrder);
+
+    const getDataDetailOrder = useCallback(async () => {
+        const idOrer = route.params.orderId;
+        if (idOrer) {
+            dispatch(detailOrder(idOrer));
+        }
+    }, [dispatch, route]);
+
+    useEffect(() => {
+        getDataDetailOrder();
+    }, [getDataDetailOrder]);
+
+
     return (
         <View style={styles.Container}>
             <Headers navigation={navigation} title={'Detail Pesanan'} />
             <ScrollView>
-                <Alamat />
+                {
+                    dataDetailOrder !== undefined &&
+                    <Alamat
+                        dataDetailOrder={dataDetailOrder}
+                    />
+                }
                 <InfoPengiriman />
                 <View style={{
                     flexDirection: 'row',
@@ -38,9 +62,21 @@ export default function DetailOrder({ navigation, route }) {
                         textTransform: 'capitalize',
                     }}>Pending</Text>
                 </View>
-                <View style={styles.BoxCard}>
-                    <CardProduk />
-                </View>
+                {
+                    dataDetailOrder !== undefined &&
+                    dataDetailOrder.order_product.map((item, index) => {
+                        return (
+                            <View
+                                key={index}
+                                style={styles.BoxCard}>
+                                <CardProduk
+                                    navigation={navigation}
+                                    item={item}
+                                />
+                            </View>
+                        );
+                    })
+                }
                 <View style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
@@ -55,7 +91,7 @@ export default function DetailOrder({ navigation, route }) {
                         fontSize: sizeFont(3.5),
                         fontFamily: Poppins.Medium,
                         color: color.mainColor,
-                    }}>  Rp. 300.000</Text>
+                    }}>  Rp. {dataDetailOrder !== undefined && rupiah(dataDetailOrder.ongkir)}</Text>
                 </View>
                 <View style={{
                     flexDirection: 'row',
@@ -68,7 +104,7 @@ export default function DetailOrder({ navigation, route }) {
                     <Text style={{
                         fontSize: sizeFont(3.3),
                         color: color.fontBlack1,
-                    }}>2 produk</Text>
+                    }}>{dataDetailOrder !== undefined && dataDetailOrder.order_product.length} produk</Text>
                     <Text style={{
                         fontSize: sizeFont(3.3),
                     }}>Total Pesanan :
@@ -76,10 +112,15 @@ export default function DetailOrder({ navigation, route }) {
                             fontSize: sizeFont(4),
                             fontFamily: Poppins.Medium,
                             color: color.mainColor,
-                        }}>  Rp. 300.000</Text>
+                        }}>  Rp. {dataDetailOrder !== undefined && rupiah(dataDetailOrder.total_pembayaran)}</Text>
                     </Text>
                 </View>
-                <MetodeBayar />
+                {
+                    dataDetailOrder !== undefined &&
+                    <MetodeBayar
+                        dataDetailOrder={dataDetailOrder}
+                    />
+                }
             </ScrollView>
             <View style={{
                 paddingVertical: sizeHeight(2),
