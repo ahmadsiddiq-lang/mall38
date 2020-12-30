@@ -1,13 +1,11 @@
-import React, { useEffect, useCallback, useState } from 'react';
-import { ScrollView, StatusBar, StyleSheet, View } from 'react-native';
+import React, { useEffect, useCallback, useState, useRef } from 'react';
+import { Animated, ScrollView, StatusBar, StyleSheet, View } from 'react-native';
 import { color } from '../assets/colors/Index';
-import { sizeHeight, sizeWidth } from '../assets/responsive';
+import { SCREEN_WIDTH, sizeHeight, sizeWidth } from '../assets/responsive';
 import Header from '../components/Header/Home';
 import Carousel from '../components/Home/Carousel';
 import Categori from '../components/Home/Categori';
-import FavoritList from '../components/Home/FavoritList';
 import FlashSale from '../components/Home/FlashSale';
-import Spesial from '../components/Home/Spesial';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCarousel } from '../redux/actions/Carousel';
 import { getCategori } from '../redux/actions/Categori';
@@ -30,6 +28,13 @@ export default function Home({ navigation }) {
     const dataFlash = useSelector(state => state.flashsale.flashsale);
     const [dateFlashShale, setDateFlash] = useState('');
 
+    const yOffset = useRef(new Animated.Value(0)).current;
+    const headerOpacity = yOffset.interpolate({
+        inputRange: [0, 200],
+        outputRange: [0, 1],
+        extrapolate: 'clamp',
+    });
+
     const getData = useCallback(async () => {
         const idUser = await getIdUser();
         dispatch(getCarousel());
@@ -37,14 +42,6 @@ export default function Home({ navigation }) {
         dispatch(getFlashSale());
         dispatch(getDataUser(idUser));
     }, [dispatch]);
-
-    // const getCategoris = useCallback(async () => {
-    //     dispatch(getCategori());
-    // }, [dispatch]);
-
-    // const getFlash = useCallback(async () => {
-    //     dispatch(getFlashSale());
-    // }, [dispatch]);
 
     const hetDataCart = useCallback(async () => {
         const idUser = await getIdUser();
@@ -76,24 +73,39 @@ export default function Home({ navigation }) {
     //     };
     // }, []);
 
+
     return (
         <View style={styles.Container}>
-            <StatusBar translucent={false} backgroundColor={color.mainColor} barStyle="light-content" />
-            <Header navigation={navigation} />
-            <ScrollView>
+            <StatusBar translucent={true} backgroundColor="transparent" barStyle="light-content" />
+            <View style={styles.BoxHedaer}>
+                <Header navigation={navigation} headerOpacity={headerOpacity} />
+            </View>
+            <Animated.ScrollView
+                onScroll={Animated.event(
+                    [
+                        {
+                            nativeEvent: {
+                                contentOffset: {
+                                    y: yOffset,
+                                },
+                            },
+                        },
+                    ],
+                    { useNativeDriver: true }
+                )}
+                scrollEventThrottle={16}
+            >
                 <View style={styles.BoxCarousel}>
                     <Carousel dataCarousel={dataCarousel} />
                 </View>
                 <Categori navigation={navigation} dataCategori={dataCategori} />
                 <FlashSale dateFlashShale={dateFlashShale} navigation={navigation} dataFlash={dataFlash} barStatus={'80%'} />
-                {/* <FavoritList navigation={navigation} dataFlash={dataFlash} /> */}
-                {/* <Spesial /> */}
                 <PromoMenarik navigation={navigation} />
                 <ProdukLokal navigation={navigation} dataProduk={dataFlash} />
                 <ProdukImpor navigation={navigation} dataProduk={dataFlash} />
                 <BannerCategori navigation={navigation} dataCategori={dataCategori} />
                 <ProdukBaru navigation={navigation} dataProduk={dataFlash} />
-            </ScrollView>
+            </Animated.ScrollView>
         </View>
     );
 }
@@ -106,9 +118,13 @@ const styles = StyleSheet.create({
     Container: {
         flex: 1,
     },
+    BoxHedaer: {
+        position: 'absolute',
+        width: SCREEN_WIDTH,
+        top: 0,
+        zIndex: 1,
+    },
     BoxCarousel: {
-        paddingVertical: sizeHeight(2),
-        backgroundColor: color.mainColor,
-        paddingHorizontal: sizeWidth(3),
+        // backgroundColor: color.mainColor,
     },
 });

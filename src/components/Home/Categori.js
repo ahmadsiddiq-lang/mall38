@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
         backgroundColor: color.bgWhite,
         flex: 1,
         marginBottom: sizeHeight(0.5),
+        paddingTop: sizeHeight(2),
     },
     BoxCard: {
         width: SCREEN_WIDTH + sizeWidth(32),

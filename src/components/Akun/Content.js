@@ -175,5 +175,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         top: 2,
         right: -2,
+        zIndex: 1,
     },
 });
