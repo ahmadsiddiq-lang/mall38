@@ -67,7 +67,6 @@ export default function EditUser({ navigation, route }) {
     const findKecamatan = useCallback(async (id) => {
         const data = dataUser.kecamatan.filter(kab => kab.kabupaten_id === id);
         setDataKecamatan(data);
-        setKecamatan(data[0].kecamatan_id);
     }, [dataUser]);
 
     const handleUser = useCallback(async () => {
@@ -140,6 +139,10 @@ export default function EditUser({ navigation, route }) {
     useEffect(() => {
         handleProvinsi(provinsi);
     }, [handleProvinsi, provinsi]);
+
+    useEffect(() => {
+        findKecamatan(kabupaten);
+    }, [findKecamatan, kabupaten]);
 
     return (
         <View style={styles.Container}>
