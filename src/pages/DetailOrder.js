@@ -9,6 +9,7 @@ import CardProduk from '../components/DetailOrder/CardProduk';
 import InfoPengiriman from '../components/DetailOrder/InfoPengiriman';
 import Headers from '../components/Header/Headers';
 import MetodeBayar from '../components/DetailOrder/MetodeBayar';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function DetailOrder({ navigation, route }) {
 
@@ -94,11 +95,17 @@ export default function DetailOrder({ navigation, route }) {
                         borderRadius: 8,
                         alignItems: 'center',
                         backgroundColor: color.mainColor,
+                        flexDirection: 'row',
+                        alignContent: 'center',
+                        justifyContent: 'center',
                     }}
                 >
+                    <Ionicons name="logo-whatsapp" color={color.fontWhite} size={sizeFont(6)} />
                     <Text style={{
                         color: color.fontWhite,
                         fontSize: sizeFont(3.5),
+                        marginLeft: sizeWidth(2),
+                        fontFamily: Poppins.Medium,
                     }}>Chat Penjual</Text>
                 </TouchableOpacity>
             </View>
