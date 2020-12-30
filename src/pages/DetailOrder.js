@@ -12,7 +12,7 @@ import MetodeBayar from '../components/DetailOrder/MetodeBayar';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
 import { detailOrder } from '../redux/actions/DetailOrder';
-import { rupiah, objekEmpty } from '../config/function';
+import { rupiah, objekEmpty, openWhatsApp } from '../config/function';
 
 export default function DetailOrder({ navigation, route }) {
 
@@ -133,6 +133,7 @@ export default function DetailOrder({ navigation, route }) {
                 borderTopColor: color.border2,
             }}>
                 <TouchableOpacity
+                    onPress={() => openWhatsApp('Salam')}
                     activeOpacity={0.8}
                     style={{
                         paddingVertical: sizeHeight(1),

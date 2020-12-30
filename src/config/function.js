@@ -4,7 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { color } from '../assets/colors/Index';
 import { sizeFont } from '../assets/responsive';
 import * as React from 'react';
-import { Easing } from 'react-native';
+import { Alert, Easing, Linking } from 'react-native';
 
 // convert to rupiah
 export const rupiah = (number) => {
@@ -107,4 +107,30 @@ export const ToasInvalid = (message) => {
     };
 
     return WToast.show(toastOpts);
+};
+
+
+export const openWhatsApp = (message) => {
+    let msg = message;
+    let mobile = 89505243068;
+    if (mobile) {
+        if (msg) {
+            let url =
+                'whatsapp://send?text=' +
+                msg +
+                '&phone=62' +
+                mobile;
+            Linking.openURL(url)
+                .then(data => {
+                    console.log('WhatsApp Opened successfully ' + data);
+                })
+                .catch(() => {
+                    Alert.alert('Make sure WhatsApp installed on your device');
+                });
+        } else {
+            Alert.alert('Please enter message to send');
+        }
+    } else {
+        Alert.alert('Please enter mobile no');
+    }
 };
