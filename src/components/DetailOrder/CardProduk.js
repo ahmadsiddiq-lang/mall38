@@ -18,9 +18,6 @@ export default function CardProduk({ navigation, item }) {
                 <View style={{
                     width: sizeWidth(20),
                     height: sizeWidth(20),
-                    borderWidth: 1.5,
-                    borderColor: color.mainColor,
-                    borderRadius: 8,
                     overflow: 'hidden',
                 }}>
                     {
@@ -28,7 +25,7 @@ export default function CardProduk({ navigation, item }) {
                             <Image
                                 resizeMethod="auto"
                                 style={{
-                                    resizeMode: 'stretch',
+                                    resizeMode: 'contain',
                                     width: '100%',
                                     height: '100%',
                                 }}

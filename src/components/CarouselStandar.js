@@ -7,9 +7,7 @@ export default function CarouselStandar({ dataCarousel }) {
     const finterData = () => {
         return dataCarousel.filter(item => item.position === 'center');
     };
-
     const data = finterData();
-    console.log(data);
     return (
         <View style={styles.Container}>
             <ScrollView

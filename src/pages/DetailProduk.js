@@ -37,11 +37,12 @@ export default function DetailProduk({ navigation, route }) {
 
     const goToTop = useCallback((idProduk) => {
         refScroll.current.scrollTo({ x: 0, y: 0, animated: true });
+        yOffset.setValue(0);
         clearDetailProduks();
         if (idProduk) {
             dispatch(getDetailProduk(idProduk));
         }
-    }, [dispatch, clearDetailProduks]);
+    }, [dispatch, clearDetailProduks, yOffset]);
 
     const handleAddTocat = useCallback(async (item) => {
         const idUser = await getIdUser();

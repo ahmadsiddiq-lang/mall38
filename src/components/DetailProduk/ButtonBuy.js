@@ -9,17 +9,22 @@ import { getIdUser, openWhatsApp } from '../../config/function';
 import { BASE_URL } from '../../config/URL';
 export default function ButtonBuy({ navigation, handleAddTocat, detailProduk, handleBuy }) {
 
-    // console.log(encodedData);
+    const encodedData = async () => {
+        if (detailProduk.id !== undefined) {
+            return window.btoa(detailProduk.id);
+        }
+    };
 
-    const handleToWa = useCallback(async () => {
-        const encodedData = window.btoa(detailProduk.id);
+
+    const handleToWa = async () => {
         const idUser = await getIdUser();
+        console.log(encodedData());
         if (idUser) {
-            openWhatsApp('https://mall38.com/product/tunik-msb2009/' + encodedData);
+            // openWhatsApp('https://mall38.com/product/tunik-msb2009/' + encodedData());
         } else {
             navigation.navigate('Login');
         }
-    }, [navigation, detailProduk]);
+    };
 
     return (
         <View style={styles.Container}>
