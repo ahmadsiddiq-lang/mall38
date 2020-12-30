@@ -19,6 +19,7 @@ import Register from '../pages/Register';
 import CheckOut from '../pages/CheckOut';
 import EditUser from '../pages/EditUser';
 import Pembayaran from '../pages/Pembayaran';
+import DetailOrder from '../pages/DetailOrder';
 
 const Tab = createBottomTabNavigator();
 
@@ -103,7 +104,7 @@ export default function MainNavigation() {
     return (
         <NavigationContainer>
             <StatusBar translucent={false} backgroundColor={color.mainColor} barStyle="light-content" />
-            <Stack.Navigator initialRouteName="Pembayaran" headerMode="none">
+            <Stack.Navigator initialRouteName="MyTabbar" headerMode="none">
                 <Stack.Screen name="MyTabbar" component={MyTabbar} />
                 <Stack.Screen name="TransaksiInfo" component={TransaksiInfo} />
                 <Stack.Screen name="ProductCategori" component={ProductCategori} />
@@ -114,6 +115,7 @@ export default function MainNavigation() {
                 <Stack.Screen name="CheckOut" component={CheckOut} />
                 <Stack.Screen name="EditUser" component={EditUser} />
                 <Stack.Screen name="Pembayaran" component={Pembayaran} />
+                <Stack.Screen name="DetailOrder" component={DetailOrder} />
             </Stack.Navigator>
         </NavigationContainer>
     );

@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { color } from '../assets/colors/Index';
-import { SCREEN_HEIGHT, sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
+import { sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
 import Headers from '../components/Header/Headers';
 import CardProduk from '../components/TransaksiInfo/CardProduk';
 import TopBar from '../components/TransaksiInfo/TopBar';
@@ -16,7 +16,7 @@ export default function Transaksi({ navigation }) {
     const dataAll = useSelector(state => state.dataTransaksi.dataTransaksi.order);
     const [dataTransaksi, setDataTransaksi] = useState(null);
 
-    // console.log(dataTransaksi);
+    // console.log(dataAll);
     const handleGetTransaksi = useCallback(async () => {
         const idUser = await getIdUser();
         if (idUser !== null) {

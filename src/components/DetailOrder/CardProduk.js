@@ -8,7 +8,7 @@ import { rupiah } from '../../config/function';
 
 export default function CardProduk({ item, navigation }) {
 
-    const produk = item.order_product[0].product;
+    // const produk = item.order_product[0].product;
     // console.log(item);
 
     return (
@@ -31,7 +31,8 @@ export default function CardProduk({ item, navigation }) {
                         fontFamily: Poppins.Medium,
                         color: color.mainColor,
                         textTransform: 'capitalize',
-                    }}>{item.status_pembayaran}</Text>
+                        // }}>{item.status_pembayaran}</Text>
+                    }}>Pending</Text>
                 </View>
                 <View style={{
                     flexDirection: 'row',
@@ -41,7 +42,7 @@ export default function CardProduk({ item, navigation }) {
                     paddingBottom: sizeHeight(1),
                 }}>
                     <View style={styles.BoxImage}>
-                        {
+                        {/* {
                             produk !== undefined ?
                                 <Image
                                     resizeMethod="auto"
@@ -51,16 +52,16 @@ export default function CardProduk({ item, navigation }) {
                                         height: '100%',
                                     }}
                                     source={{ uri: produk.image }} />
-                                :
-                                <Image
-                                    resizeMethod="auto"
-                                    style={{
-                                        resizeMode: 'contain',
-                                        width: '100%',
-                                        height: '100%',
-                                    }}
-                                    source={require('../../assets/images/Produk/imagedefault.png')} />
-                        }
+                                : */}
+                        <Image
+                            resizeMethod="auto"
+                            style={{
+                                resizeMode: 'contain',
+                                width: '100%',
+                                height: '100%',
+                            }}
+                            source={require('../../assets/images/Produk/imagedefault.png')} />
+                        {/* } */}
                     </View>
                     <View style={{
                         flex: 1,
@@ -69,7 +70,8 @@ export default function CardProduk({ item, navigation }) {
                         <Text numberOfLines={1} style={{
                             fontSize: sizeFont(3.5),
                             fontFamily: Poppins.Medium,
-                        }}>{produk.name}</Text>
+                            // }}>{produk.name}</Text>
+                        }}>Tas Wnita</Text>
                         <View style={{
                             flexDirection: 'row',
                             justifyContent: 'space-between',
@@ -77,11 +79,13 @@ export default function CardProduk({ item, navigation }) {
                             <Text style={{
                                 fontSize: sizeFont(3.3),
                                 color: color.fontBlack1,
-                            }}>{produk.category.name}</Text>
+                                // }}>{produk.category.name}</Text>
+                            }}>tas</Text>
                             <Text style={{
                                 fontSize: sizeFont(3.3),
                                 color: color.fontBlack1,
-                            }}>x{item.order_product[0].qty}</Text>
+                                // }}>x{item.order_product[0].qty}</Text>
+                            }}>x1</Text>
                         </View>
                         <View style={{
                             flexDirection: 'row',
@@ -96,29 +100,31 @@ export default function CardProduk({ item, navigation }) {
                                 fontSize: sizeFont(3.3),
                                 color: color.fontBlack1,
                                 textTransform: 'capitalize',
-                            }}>{item.status_pengiriman}</Text>
+                                // }}>{item.status_pengiriman}</Text>
+                            }}>Pending</Text>
                         </View>
                         <Text style={{
                             textAlign: 'right',
                             fontSize: sizeFont(3.3),
                             color: color.mainColor,
-                        }}>Rp. {produk.price !== undefined && rupiah(produk.price)}</Text>
+                            // }}>Rp. {produk.price !== undefined && rupiah(produk.price)}</Text>
+                        }}>Rp. 200.000</Text>
                     </View>
                 </View>
-                {
-                    item.order_product.length > 1 &&
-                    <View style={{
-                        borderBottomWidth: 0.5,
-                        borderBottomColor: color.border1,
-                        alignItems: 'center',
-                        paddingVertical: sizeHeight(0.8),
-                    }}>
-                        <Text style={{
-                            fontSize: sizeFont(3.3),
-                            color: color.fontBlack1,
-                        }}>Tampilkan Produk</Text>
-                    </View>
-                }
+                {/* {
+                    item.order_product.length > 1 && */}
+                <View style={{
+                    borderBottomWidth: 0.5,
+                    borderBottomColor: color.border1,
+                    alignItems: 'center',
+                    paddingVertical: sizeHeight(0.8),
+                }}>
+                    <Text style={{
+                        fontSize: sizeFont(3.3),
+                        color: color.fontBlack1,
+                    }}>Tampilkan Produk</Text>
+                </View>
+                {/* } */}
                 <View style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
@@ -128,7 +134,8 @@ export default function CardProduk({ item, navigation }) {
                     <Text style={{
                         fontSize: sizeFont(3.3),
                         color: color.fontBlack1,
-                    }}>{item.order_product.length} produk</Text>
+                        // }}>{item.order_product.length} produk</Text>
+                    }}>2 produk</Text>
                     <Text style={{
                         fontSize: sizeFont(3.3),
                     }}>Total Pesanan :
@@ -136,15 +143,16 @@ export default function CardProduk({ item, navigation }) {
                             fontSize: sizeFont(3.5),
                             fontFamily: Poppins.Medium,
                             color: color.mainColor,
-                        }}>  Rp. {produk.price !== undefined && rupiah(item.total_pembayaran)}</Text>
+                            // }}>  Rp. {produk.price !== undefined && rupiah(item.total_pembayaran)}</Text>
+                        }}>  Rp. 300.000</Text>
                     </Text>
                 </View>
             </View>
             <View>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('DetailOrder', {
-                        orderId: item.order_id,
-                    })}
+                    // onPress={() => navigation.navigate('DetailOrder', {
+                    //     orderId: item.order_id,
+                    // })}
                     activeOpacity={0.8}
                     style={{
                         // width: sizeWidth(30),
@@ -154,18 +162,18 @@ export default function CardProduk({ item, navigation }) {
                         borderRadius: 8,
                     }}
                 >
-                    {
+                    {/* {
                         item.status_pembayaran === 'pending' ?
                             <Text style={{
                                 fontSize: sizeFont(4),
                                 color: color.fontWhite,
                             }}>Bayar</Text>
-                            :
-                            <Text style={{
-                                fontSize: sizeFont(4),
-                                color: color.fontWhite,
-                            }}>Detail</Text>
-                    }
+                            : */}
+                    <Text style={{
+                        fontSize: sizeFont(4),
+                        color: color.fontWhite,
+                    }}>Detail</Text>
+                    {/* } */}
                 </TouchableOpacity>
             </View>
         </View>

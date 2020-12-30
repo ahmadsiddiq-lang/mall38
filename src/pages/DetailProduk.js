@@ -8,7 +8,7 @@ import ButtonBuy from '../components/DetailProduk/ButtonBuy';
 import Deskripsi from '../components/DetailProduk/Deskripsi';
 import Rekomendasi from '../components/DetailProduk/Rekomendasi';
 import Headers from '../components/Header/HeaderDetailProduk';
-import { getIdUser, objekEmpty } from '../config/function';
+import { getIdUser, objekEmpty, ToasSuccess } from '../config/function';
 import { addCart, getCArt } from '../redux/actions/Cart';
 import { getDetailProduk, clearDetailProduk } from '../redux/actions/DetailProduk';
 
@@ -47,6 +47,23 @@ export default function DetailProduk({ navigation, route }) {
         if (data.product_id && data.user_id) {
             dispatch(addCart(data));
             dispatch(getCArt(idUser));
+            ToasSuccess('Dimasukkan ke keranjang');
+        } else {
+            navigation.navigate('Login');
+        }
+    }, [dispatch, navigation]);
+
+    const handleBuy = useCallback(async (item) => {
+        const idUser = await getIdUser();
+        const idProduk = item.id;
+        const data = {
+            user_id: idUser,
+            product_id: idProduk,
+            qty: 1,
+        };
+        if (data.product_id && data.user_id) {
+            dispatch(addCart(data));
+            navigation.navigate('Cart');
         } else {
             navigation.navigate('Login');
         }
@@ -86,7 +103,10 @@ export default function DetailProduk({ navigation, route }) {
                         <ActivityIndicator size="large" color={color.mainColor} />
                     </View>
             }
-            <ButtonBuy handleAddTocat={handleAddTocat} detailProduk={detailProduk} />
+            <ButtonBuy
+                handleBuy={handleBuy}
+                handleAddTocat={handleAddTocat}
+                detailProduk={detailProduk} />
         </View>
     );
 }

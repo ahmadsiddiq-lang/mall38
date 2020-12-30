@@ -23,7 +23,6 @@ export const addCart = (data) => {
     return async (dispatch) => {
         await Axios.post(BASE_URL + 'add-to-cart', data)
             .then(responAddCart => {
-                ToasSuccess('Dimasukkan ke keranjang');
                 dispatch({
                     type: ADD_CART,
                     data: responAddCart,

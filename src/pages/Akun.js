@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSelector, useDispatch } from 'react-redux';
 import { getDataUser, clearDataUser } from '../redux/actions/User';
 import { clearAll } from '../redux/actions/Clear';
+import { getTransaksi } from '../redux/actions/Transaksi';
 
 export default function Akun({ navigation }) {
 
@@ -45,10 +46,18 @@ export default function Akun({ navigation }) {
         setModalVisible(!modalVisible);
     }, [modalVisible]);
 
+    const handleGetTransaksi = useCallback(async () => {
+        const idUser = await getIdUser();
+        if (idUser !== null) {
+            dispatch(getTransaksi(idUser));
+        }
+    }, [dispatch]);
+
 
     useEffect(() => {
         handleUser();
-    }, [handleUser]);
+        handleGetTransaksi();
+    }, [handleUser, handleGetTransaksi]);
 
     return (
         <View style={styles.Container}>
