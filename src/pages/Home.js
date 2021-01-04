@@ -156,13 +156,13 @@ export default function Home({ navigation }) {
                         <Carousel dataCarousel={dataCarousel} />
                     </View>
                 </ShimmerPlaceHolder>
-                <Categori
+                {/* <Categori
                     navigation={navigation}
                     dataCategori={dataCategori}
                     ShimmerPlaceHolder={ShimmerPlaceHolder}
                     visibleCategori={visibleCategori}
                     CategoriShemer={CategoriShemer}
-                />
+                /> */}
                 <FlashSale
                     dateFlashShale={dateFlashShale}
                     navigation={navigation}
