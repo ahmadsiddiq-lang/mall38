@@ -151,7 +151,7 @@ export default function Home({ navigation }) {
                         <PromoMenarik navigation={navigation} dataCarousel={dataCarousel} />
                         <ProdukLokal navigation={navigation} dataProduk={dataFlash} />
                         <ProdukImpor navigation={navigation} dataProduk={dataFlash} />
-                        {/* <BannerCategori navigation={navigation} dataCategori={dataCategori} /> */}
+                        <BannerCategori navigation={navigation} dataCategori={dataCategori} />
                         <ProdukBaru navigation={navigation} dataProduk={dataFlash} />
                     </>
                 }

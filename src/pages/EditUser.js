@@ -35,8 +35,9 @@ export default function EditUser({ navigation, route }) {
     const [provinsi, setProvinsi] = useState(provinsi_id);
     const [kabupaten, setKabupaten] = useState(kabupaten_id);
     const [kecamatan, setKecamatan] = useState(kecamatan_id);
-    const [dataKabupaten, setDataKabupaten] = useState([]);
-    const [dataKecamatan, setDataKecamatan] = useState([]);
+
+    const [dataKabupaten, setDataKabupaten] = useState(null);
+    const [dataKecamatan, setDataKecamatan] = useState(null);
     const [image, setImage] = useState(null);
     const options = {
         title: 'Select Avatar',
@@ -48,26 +49,30 @@ export default function EditUser({ navigation, route }) {
         quality: 0.5,
     };
 
-    const handleProvinsi = useCallback(async (value) => {
-        setProvinsi(value);
-        findKabupaten(value);
-    }, [findKabupaten]);
+    const filterData = useCallback((idProv) => {
+        const dataKab = dataUser.kabupaten.filter(item => item.provinsi_id === idProv);
+        const dataKec = dataUser.kecamatan.filter(item => item.kabupaten_id === kabupaten);
+        setDataKabupaten(dataKab);
+        setDataKecamatan(dataKec);
+    }, [dataUser, kabupaten]);
 
-    const handleKabupaten = useCallback(async (value) => {
-        setKabupaten(value);
-        findKecamatan(value);
-    }, [findKecamatan]);
-
-    const findKabupaten = useCallback(async (id) => {
-        const data = dataUser.kabupaten.filter(kab => kab.provinsi_id === id);
-        setDataKabupaten(data);
-        findKecamatan(data[0].kabupaten_id);
-    }, [dataUser, findKecamatan]);
-
-    const findKecamatan = useCallback(async (id) => {
-        const data = dataUser.kecamatan.filter(kab => kab.kabupaten_id === id);
-        setDataKecamatan(data);
+    const handleSetKecamatan = useCallback((idKab) => {
+        const dataKec = dataUser.kecamatan.filter(item => item.kabupaten_id === idKab);
+        setDataKecamatan(dataKec);
+        setKecamatan(dataKec[0].kecamatan_id);
     }, [dataUser]);
+
+    const handleSetKabupaten = useCallback((idProv) => {
+        const dataKab = dataUser.kabupaten.filter(item => item.provinsi_id === idProv);
+        setDataKabupaten(dataKab);
+        setKabupaten(dataKab[0].kabupaten_id);
+        handleSetKecamatan(dataKab[0].kabupaten_id);
+    }, [dataUser, handleSetKecamatan]);
+
+    const handleProv = useCallback((idProv) => {
+        setProvinsi(idProv);
+        handleSetKabupaten(idProv);
+    }, [handleSetKabupaten]);
 
     const handleUser = useCallback(async () => {
         const idUser = await getIdUser();
@@ -137,12 +142,8 @@ export default function EditUser({ navigation, route }) {
     };
 
     useEffect(() => {
-        handleProvinsi(provinsi);
-    }, [handleProvinsi, provinsi]);
-
-    useEffect(() => {
-        findKecamatan(kabupaten);
-    }, [findKecamatan, kabupaten]);
+        filterData(provinsi);
+    }, [filterData, provinsi]);
 
     return (
         <View style={styles.Container}>
@@ -235,8 +236,7 @@ export default function EditUser({ navigation, route }) {
                             selectedValue={provinsi}
                             style={styles.DropDown}
                             onValueChange={(itemValue, itemIndex) =>
-                                handleProvinsi(itemValue)
-                                // console.log(itemValue)
+                                handleProv(itemValue)
                             }
                         >
                             {
@@ -260,12 +260,13 @@ export default function EditUser({ navigation, route }) {
                             mode="dialog"
                             selectedValue={kabupaten}
                             style={styles.DropDown}
-                            onValueChange={(itemValue, itemIndex) =>
-                                handleKabupaten(itemValue)
-                            }
+                            onValueChange={(itemValue, itemIndex) => {
+                                setKabupaten(itemValue);
+                                handleSetKecamatan(itemValue);
+                            }}
                         >
                             {
-                                dataUser !== undefined &&
+                                dataKabupaten != null &&
                                 dataKabupaten.map((item, index) => {
                                     return (
                                         <Picker.Item key={index} label={item.nama_kabupaten} value={item.kabupaten_id} />
@@ -290,6 +291,7 @@ export default function EditUser({ navigation, route }) {
                             }
                         >
                             {
+                                dataKecamatan != null &&
                                 dataKecamatan.map((item, index) => {
                                     return (
                                         <Picker.Item key={index} label={item.nama_kecamatan} value={item.kecamatan_id} />
