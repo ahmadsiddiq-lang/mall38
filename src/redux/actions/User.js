@@ -11,7 +11,9 @@ export const getDataUser = (id, setLoadingData) => {
             withCredentials: true,
         }).then(dataUser => {
             // console.log(dataUser);
-            setLoadingData(true);
+            if (setLoadingData) {
+                setLoadingData(true);
+            }
             dispatch({
                 type: GET_USER,
                 data: dataUser.data.data,
