@@ -74,7 +74,7 @@ export const CardEnd = ({ onPressLihatSemua }) => {
             style={{
                 width: sizeWidth(40),
                 borderWidth: 1,
-                borderColor: color.border2,
+                borderColor: color.border3,
                 borderRadius: 8,
                 alignItems: 'center',
                 justifyContent: 'center',

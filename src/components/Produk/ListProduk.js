@@ -1,12 +1,12 @@
 import React, { useCallback, useState } from 'react';
-import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, FlatList, RefreshControl, StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { color } from '../../assets/colors/Index';
 import { sizeHeight, sizeWidth } from '../../assets/responsive';
 import { getIdUser } from '../../config/function';
 import { addCart } from '../../redux/actions/Cart';
 import CardProdukVer from '../CardProdukVer';
-export default function ListProduk({ navigation, dataProduk }) {
+export default function ListProduk({ navigation, dataProduk, onRefresh, refreshing }) {
 
     const dispatch = useDispatch();
 
@@ -94,6 +94,12 @@ export default function ListProduk({ navigation, dataProduk }) {
                     }}
                     ListFooterComponent={listFooterComponent}
                     onMomentumScrollEnd={(e) => handleScroll(e)}
+                    refreshControl={
+                        <RefreshControl
+                            colors={[color.mainColor, '#689F38']}
+                            refreshing={refreshing}
+                            onRefresh={onRefresh} />
+                    }
                 />
             }
         </View>

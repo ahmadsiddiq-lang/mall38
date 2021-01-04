@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useState } from 'react';
-import { Image, Modal, ScrollView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
+import { Image, Modal, RefreshControl, ScrollView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
 import { getIdUser, objekEmpty } from '../config/function';
 import LinearGradient from 'react-native-linear-gradient';
 import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
@@ -20,6 +20,7 @@ export default function Akun({ navigation }) {
     const dispatch = useDispatch();
     const dataUser = useSelector(state => state.dataUser.dataUser);
     const [modalVisible, setModalVisible] = useState(false);
+    const [refreshing, setRefreshing] = React.useState(false);
 
     const dataScreen = dataUser.user;
 
@@ -29,8 +30,11 @@ export default function Akun({ navigation }) {
         const idUser = await getIdUser();
         if (idUser !== null) {
             dispatch(getDataUser(idUser));
+            if (dataScreen !== undefined) {
+                handleGetTransaksi();
+            }
         }
-    }, [dispatch]);
+    }, [dispatch, dataScreen, handleGetTransaksi]);
 
     const handleClearDataUser = useCallback(async () => {
         const idUser = await getIdUser();
@@ -53,11 +57,25 @@ export default function Akun({ navigation }) {
         }
     }, [dispatch]);
 
+    const wait = useCallback((timeout) => {
+        return new Promise(resolve => {
+            setTimeout(resolve, timeout);
+        });
+    }, []);
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        wait(2000).then(() => {
+            handleUser();
+            handleGetTransaksi();
+            setRefreshing(false);
+        });
+    }, [wait, handleUser, handleGetTransaksi]);
+
 
     useEffect(() => {
         handleUser();
-        handleGetTransaksi();
-    }, [handleUser, handleGetTransaksi]);
+    }, [handleUser]);
 
     return (
         <View style={styles.Container}>
@@ -76,7 +94,17 @@ export default function Akun({ navigation }) {
                     }
                 </View>
             </LinearGradient>
-            <ScrollView>
+            <ScrollView
+                refreshControl={
+                    <RefreshControl
+                        style={{
+                            zIndex: 999,
+                            marginTop: sizeHeight(15),
+                        }}
+                        colors={['#689F38', color.mainColor]}
+                        refreshing={refreshing} onRefresh={onRefresh} />
+                }
+            >
                 <View style={styles.Content}>
                     <Content navigation={navigation} />
                 </View>
@@ -146,7 +174,7 @@ export default function Akun({ navigation }) {
                             </TouchableHighlight>
                             <TouchableHighlight
                                 underlayColor="#fc6565"
-                                style={{ ...styles.openButton, backgroundColor: 'red' }}
+                                style={{ ...styles.openButton, backgroundColor: '#FD3A69' }}
                                 onPress={() => {
                                     handleClearDataUser();
                                 }}

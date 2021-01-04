@@ -1,5 +1,6 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useCallback, useState, useRef } from 'react';
-import { Animated, StatusBar, StyleSheet, View } from 'react-native';
+import { Animated, RefreshControl, StatusBar, StyleSheet, View } from 'react-native';
 import { SCREEN_WIDTH, sizeHeight } from '../assets/responsive';
 import Header from '../components/Header/Home';
 import Carousel from '../components/Home/Carousel';
@@ -19,10 +20,12 @@ import BannerCategori from '../components/Home/BannerCategori';
 import ProdukBaru from '../components/Home/ProdukBaru';
 import LinearGradient from 'react-native-linear-gradient';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
+import { color } from '../assets/colors/Index';
 
 // import { countDown } from '../config/function';
 
 export default function Home({ navigation }) {
+
 
     const dispatch = useDispatch();
 
@@ -30,6 +33,7 @@ export default function Home({ navigation }) {
     const dataCategori = useSelector(state => state.categori.categori);
     const dataFlash = useSelector(state => state.flashsale.flashsale);
     const [dateFlashShale, setDateFlash] = useState('');
+    const [refreshing, setRefreshing] = React.useState(false);
 
     // shimer
     const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
@@ -46,6 +50,20 @@ export default function Home({ navigation }) {
         outputRange: [0, 1],
         extrapolate: 'clamp',
     });
+
+    const wait = useCallback((timeout) => {
+        return new Promise(resolve => {
+            setTimeout(resolve, timeout);
+        });
+    }, []);
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        wait(2000).then(() => {
+            getData();
+            setRefreshing(false);
+        });
+    }, [wait, getData]);
 
     const getData = useCallback(async () => {
         const idUser = await getIdUser();
@@ -115,6 +133,15 @@ export default function Home({ navigation }) {
                     { useNativeDriver: true }
                 )}
                 scrollEventThrottle={16}
+                refreshControl={
+                    <RefreshControl
+                        style={{
+                            zIndex: 999,
+                            marginTop: sizeHeight(15),
+                        }}
+                        colors={['#689F38', color.mainColor]}
+                        refreshing={refreshing} onRefresh={onRefresh} />
+                }
             >
                 <ShimmerPlaceHolder
                     ref={CarouselUp}

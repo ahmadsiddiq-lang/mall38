@@ -34,7 +34,11 @@ export default function Register({ navigation }) {
             password: password,
         };
         if (email !== null && password !== null && username !== null) {
-            dispatch(registerUser(data, handleReponsSucces));
+            if (password.length >= 6) {
+                dispatch(registerUser(data, handleReponsSucces));
+            } else {
+                ToasInvalid('Password Invalid');
+            }
         } else {
             console.log(data);
             ToasInvalid('Lengkapi data Anda');

@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export default function Content({ navigation }) {
     const dispatch = useDispatch();
+
+    const [CircleStatus, setCircleStatus] = useState(false);
     const dataTransaksi = useSelector(state => state.dataTransaksi.dataTransaksi.order);
     const handleGetTransaksi = useCallback(async () => {
         const idUser = await getIdUser();
@@ -19,9 +21,26 @@ export default function Content({ navigation }) {
     }, [dispatch]);
 
 
+    const handleCircle = useCallback(async () => {
+        const idUser = await getIdUser();
+        if (idUser !== null && dataTransaksi !== undefined) {
+            const data = dataTransaksi.filter(item => item.status_pembayaran === 'pending');
+            if (data.length > 0) {
+                setCircleStatus(true);
+            }
+        }
+    }, [dataTransaksi]);
+
+
+
+
     useEffect(() => {
         handleGetTransaksi();
     }, [handleGetTransaksi]);
+
+    useEffect(() => {
+        handleCircle();
+    }, [handleCircle]);
 
     return (
         <View>
@@ -36,7 +55,7 @@ export default function Content({ navigation }) {
                 }}>
                     <View>
                         {
-                            dataTransaksi !== undefined && dataTransaksi.length > 0 &&
+                            CircleStatus &&
                             <View style={styles.Circle} />
                         }
                         <Ionicons
