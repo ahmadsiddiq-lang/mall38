@@ -6,7 +6,7 @@ import { sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
 import Headers from '../components/Header/Headers';
 import { Picker } from '@react-native-picker/picker';
 import { Poppins } from '../assets/fonts';
-import { getIdUser } from '../config/function';
+import { getIdUser, ToasInvalid } from '../config/function';
 import { useDispatch } from 'react-redux';
 import { getDataUser, updateProfile } from '../redux/actions/User';
 
@@ -14,16 +14,22 @@ export default function EditAlamat({ navigation, route }) {
 
     const dataUser = route.params.dataUser;
     const dispatch = useDispatch();
+
+    const provinsi_id = dataUser.user.provinsi === null ? dataUser.provinsi[0].provinsi_id : dataUser.user.provinsi.provinsi_id;
+    const kabupaten_id = dataUser.user.kabupaten === null ? dataUser.kabupaten[0].kabupaten_id : dataUser.user.kabupaten.kabupaten_id;
+    const kecamatan_id = dataUser.user.kecamatan === null ? dataUser.kecamatan[0].kecamatan_id : dataUser.user.kecamatan.kecamatan_id;
+    const phoneData = dataUser.user.phone === 'NULL' ? null : dataUser.user.phone;
+
     // console.log(dataUser);
 
     const name = dataUser.user.name;
     const ktp = dataUser.user.ktp;
     const kodePos = dataUser.user.kode_pos;
-    const [telpon, setTelpon] = useState(dataUser.user.phone);
+    const [telpon, setTelpon] = useState(phoneData);
     const [alamat, setAlamat] = useState(dataUser.user.alamat);
-    const [provinsi, setProvinsi] = useState(dataUser.user.provinsi.provinsi_id);
-    const [kabupaten, setKabupaten] = useState(dataUser.user.kabupaten.kabupaten_id);
-    const [kecamatan, setKecamatan] = useState(dataUser.user.kecamatan.kecamatan_id);
+    const [provinsi, setProvinsi] = useState(provinsi_id);
+    const [kabupaten, setKabupaten] = useState(kabupaten_id);
+    const [kecamatan, setKecamatan] = useState(kecamatan_id);
 
     const [dataKabupaten, setDataKabupaten] = useState(null);
     const [dataKecamatan, setDataKecamatan] = useState(null);
@@ -74,8 +80,10 @@ export default function EditAlamat({ navigation, route }) {
         data.append('kabupaten_id', kabupaten);
         data.append('kecamatan_id', kecamatan);
 
-        if (data) {
+        if (data && telpon != null && alamat != null) {
             dispatch(updateProfile(data, handleUser));
+        } else {
+            ToasInvalid('Isi data dengan benar !');
         }
         // console.log(data);
 
@@ -96,6 +104,7 @@ export default function EditAlamat({ navigation, route }) {
                             fontSize: sizeFont(3.5),
                         }}>Nomor Telephone / HP</Text>
                         <TextInput
+                            keyboardType="phone-pad"
                             onChangeText={(e) => setTelpon(e)}
                             value={telpon}
                             placeholder="Nomor Telepon"

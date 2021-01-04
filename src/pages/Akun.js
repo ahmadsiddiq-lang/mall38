@@ -40,7 +40,6 @@ export default function Akun({ navigation }) {
         const idUser = await getIdUser();
         if (idUser !== null) {
             dispatch(clearDataUser());
-            dispatch(clearAll());
             await AsyncStorage.removeItem('idUser');
             setModalVisible(!modalVisible);
         }

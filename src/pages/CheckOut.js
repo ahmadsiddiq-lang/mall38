@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useState } from 'react';
-import { Modal, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Modal, RefreshControl, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../assets/colors/Index';
 import Headers from '../components/Header/Headers';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -31,9 +31,24 @@ export default function CheckOut({ navigation, route }) {
     const [curentIndex, setCurentIndex] = useState(0);
     const [metodeBayar, setMetodeBayar] = useState({ name: 'BNI', bank: 'bni', image: require('../assets/images/MetodeBayar/bni.png') });
 
+    const [refreshing, setRefreshing] = React.useState(false);
+
+    const wait = useCallback((timeout) => {
+        return new Promise(resolve => {
+            setTimeout(resolve, timeout);
+        });
+    }, []);
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        wait(2000).then(() => {
+            getOngkirs();
+            setRefreshing(false);
+        });
+    }, [wait, getOngkirs]);
 
     const dataProduk = route.params.data;
-    // console.log(dataUser.user);
+    // console.log(dataOngkir);
 
     const handleUser = useCallback(async () => {
         const idUser = await getIdUser();
@@ -164,7 +179,17 @@ export default function CheckOut({ navigation, route }) {
         <View style={styles.Container}>
             <StatusBar translucent={false} backgroundColor={color.mainColor} barStyle="light-content" />
             <Headers navigation={navigation} title={'Check Out'} />
-            <ScrollView>
+            <ScrollView
+                refreshControl={
+                    <RefreshControl
+                        style={{
+                            zIndex: 999,
+                            marginTop: sizeHeight(15),
+                        }}
+                        colors={['#689F38', color.mainColor]}
+                        refreshing={refreshing} onRefresh={onRefresh} />
+                }
+            >
                 <View>
                     <View style={styles.BoxAlamat}>
                         <View style={{
@@ -198,8 +223,9 @@ export default function CheckOut({ navigation, route }) {
                                 </View>
                                 {
                                     loadingData &&
-                                        dataUser.user !== undefined ?
+                                        dataUser.user.kecamatan !== null ?
                                         <View>
+                                            {console.log(dataUser)}
                                             <Text style={{
                                                 marginTop: sizeHeight(1),
                                                 fontSize: sizeFont(3.3),
@@ -231,6 +257,7 @@ export default function CheckOut({ navigation, route }) {
                     </View>
                     <View style={styles.ContentItem}>
                         <Kurir
+                            dataOngkir={dataOngkir}
                             dataKurir={dataKurir}
                             handleMOdalItem={handleMOdalItem} />
                         <MetodeBayar
