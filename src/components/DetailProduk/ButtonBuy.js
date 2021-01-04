@@ -5,26 +5,20 @@ import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../../assets/resp
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { color } from '../../assets/colors/Index';
 import { Poppins } from '../../assets/fonts';
-import { getIdUser, openWhatsApp } from '../../config/function';
+import { getIdUser, objekEmpty, openWhatsApp } from '../../config/function';
 import { BASE_URL } from '../../config/URL';
 export default function ButtonBuy({ navigation, handleAddTocat, detailProduk, handleBuy }) {
 
-    const encodedData = async () => {
-        if (detailProduk.id !== undefined) {
-            return window.btoa(detailProduk.id);
-        }
-    };
+    // const encodedData =  window.btoa(detailProduk.id);
 
-
-    const handleToWa = async () => {
+    const handleToWa = useCallback(async () => {
         const idUser = await getIdUser();
-        console.log(encodedData());
         if (idUser) {
-            // openWhatsApp('https://mall38.com/product/tunik-msb2009/' + encodedData());
+            openWhatsApp('https://mall38.com/product/tunik-msb2009/');
         } else {
             navigation.navigate('Login');
         }
-    };
+    }, [navigation]);
 
     return (
         <View style={styles.Container}>
