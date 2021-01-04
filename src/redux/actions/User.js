@@ -5,12 +5,13 @@ import { BASE_URL } from '../../config/URL';
 export const GET_USER = 'GET_USER';
 export const CLEAR_USER = 'GET_USER';
 
-export const getDataUser = (id) => {
+export const getDataUser = (id, setLoadingData) => {
     return async (dispatch) => {
         await Axios.get(BASE_URL + 'get-user-profile?user_id=' + id, {
             withCredentials: true,
         }).then(dataUser => {
             // console.log(dataUser);
+            setLoadingData(true);
             dispatch({
                 type: GET_USER,
                 data: dataUser.data.data,

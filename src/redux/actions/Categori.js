@@ -2,11 +2,12 @@ import Axios from 'axios';
 import { BASE_URL } from '../../config/URL';
 export const GET_CATEGORI = 'GET_CATEGORI';
 
-export const getCategori = (masuk) => {
+export const getCategori = (setVisibleCategori) => {
     return async (dispatch) => {
         await Axios.get(BASE_URL + 'category', {
             withCredentials: true,
         }).then(dataCategori => {
+            setVisibleCategori(true);
             dispatch({
                 type: GET_CATEGORI,
                 data: dataCategori.data.data.category,

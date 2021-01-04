@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback, useState, useRef } from 'react';
 import { Animated, StatusBar, StyleSheet, View } from 'react-native';
-import { SCREEN_WIDTH } from '../assets/responsive';
+import { SCREEN_WIDTH, sizeHeight } from '../assets/responsive';
 import Header from '../components/Header/Home';
 import Carousel from '../components/Home/Carousel';
 import Categori from '../components/Home/Categori';
@@ -17,15 +17,28 @@ import ProdukLokal from '../components/Home/ProdukLokal';
 import ProdukImpor from '../components/Home/ProdukImpor';
 import BannerCategori from '../components/Home/BannerCategori';
 import ProdukBaru from '../components/Home/ProdukBaru';
+import LinearGradient from 'react-native-linear-gradient';
+import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
+
 // import { countDown } from '../config/function';
 
 export default function Home({ navigation }) {
 
     const dispatch = useDispatch();
+
     const dataCarousel = useSelector(state => state.Carousel.Carousel);
     const dataCategori = useSelector(state => state.categori.categori);
     const dataFlash = useSelector(state => state.flashsale.flashsale);
     const [dateFlashShale, setDateFlash] = useState('');
+
+    // shimer
+    const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
+    const [visible, setVisible] = useState(false);
+    const [visibleCategori, setVisibleCategori] = useState(false);
+    const [visibleFlashSale, setvisibleFlashSale] = useState(false);
+    const CarouselUp = React.createRef();
+    const CategoriShemer = React.createRef();
+    const FlashSaleShimer = React.createRef();
 
     const yOffset = useRef(new Animated.Value(0)).current;
     const headerOpacity = yOffset.interpolate({
@@ -36,9 +49,9 @@ export default function Home({ navigation }) {
 
     const getData = useCallback(async () => {
         const idUser = await getIdUser();
-        dispatch(getCarousel());
-        dispatch(getCategori());
-        dispatch(getFlashSale());
+        dispatch(getCarousel(setVisible));
+        dispatch(getCategori(setVisibleCategori));
+        dispatch(getFlashSale(setvisibleFlashSale));
         dispatch(getDataUser(idUser));
     }, [dispatch]);
 
@@ -54,6 +67,15 @@ export default function Home({ navigation }) {
         getData();
         hetDataCart();
     }, [getData, hetDataCart]);
+
+    React.useEffect(() => {
+        const facebookAnimated = Animated.stagger(400, [CarouselUp.current.getAnimated(),
+            // Animated.parallel([
+            //     CarouselUp.current.getAnimated(),
+            // ])
+        ]);
+        Animated.loop(facebookAnimated).start();
+    }, [CarouselUp]);
 
     // useEffect(() => {
     //     var countDownDate = new Date('Dec 30, 2020 00:00:25').getTime();
@@ -94,16 +116,45 @@ export default function Home({ navigation }) {
                 )}
                 scrollEventThrottle={16}
             >
-                <View style={styles.BoxCarousel}>
-                    <Carousel dataCarousel={dataCarousel} />
-                </View>
-                <Categori navigation={navigation} dataCategori={dataCategori} />
-                <FlashSale dateFlashShale={dateFlashShale} navigation={navigation} dataFlash={dataFlash} barStatus={'80%'} />
-                <PromoMenarik navigation={navigation} dataCarousel={dataCarousel} />
-                <ProdukLokal navigation={navigation} dataProduk={dataFlash} />
-                <ProdukImpor navigation={navigation} dataProduk={dataFlash} />
-                <BannerCategori navigation={navigation} dataCategori={dataCategori} />
-                <ProdukBaru navigation={navigation} dataProduk={dataFlash} />
+                <ShimmerPlaceHolder
+                    ref={CarouselUp}
+                    visible={visible}
+                    style={{
+                        width: SCREEN_WIDTH,
+                        height: sizeHeight(39),
+                    }}
+                    stopAutoRun
+                >
+                    <View style={styles.BoxCarousel}>
+                        <Carousel dataCarousel={dataCarousel} />
+                    </View>
+                </ShimmerPlaceHolder>
+                <Categori
+                    navigation={navigation}
+                    dataCategori={dataCategori}
+                    ShimmerPlaceHolder={ShimmerPlaceHolder}
+                    visibleCategori={visibleCategori}
+                    CategoriShemer={CategoriShemer}
+                />
+                <FlashSale
+                    dateFlashShale={dateFlashShale}
+                    navigation={navigation}
+                    dataFlash={dataFlash}
+                    barStatus={'80%'}
+                    FlashSaleShimer={FlashSaleShimer}
+                    visibleFlashSale={visibleFlashSale}
+                    ShimmerPlaceHolder={ShimmerPlaceHolder}
+                />
+                {
+                    visibleFlashSale &&
+                    <>
+                        <PromoMenarik navigation={navigation} dataCarousel={dataCarousel} />
+                        <ProdukLokal navigation={navigation} dataProduk={dataFlash} />
+                        <ProdukImpor navigation={navigation} dataProduk={dataFlash} />
+                        {/* <BannerCategori navigation={navigation} dataCategori={dataCategori} /> */}
+                        <ProdukBaru navigation={navigation} dataProduk={dataFlash} />
+                    </>
+                }
             </Animated.ScrollView>
         </View>
     );

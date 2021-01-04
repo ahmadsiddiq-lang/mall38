@@ -22,9 +22,10 @@ import { checkOut } from '../redux/actions/CheckOut';
 export default function CheckOut({ navigation, route }) {
 
     const dispatch = useDispatch();
-    const dataUser = useSelector(state => state.dataUser.dataUser.user);
+    const dataUser = useSelector(state => state.dataUser.dataUser);
     const dataOngkir = useSelector(state => state.dataOngkir.dataOngkir.result);
     const [modalKurir, setKurir] = useState(false);
+    const [loadingData, setLoadingData] = useState(false);
     const [dataKurir, setDataKurir] = useState(null);
     const [modalItem, setModalItem] = useState(null);
     const [curentIndex, setCurentIndex] = useState(0);
@@ -32,12 +33,12 @@ export default function CheckOut({ navigation, route }) {
 
 
     const dataProduk = route.params.data;
-    // console.log(dataOngkir);
+    // console.log(dataUser.user);
 
     const handleUser = useCallback(async () => {
         const idUser = await getIdUser();
         if (idUser !== null) {
-            dispatch(getDataUser(idUser));
+            dispatch(getDataUser(idUser, setLoadingData));
         }
     }, [dispatch]);
 
@@ -181,7 +182,9 @@ export default function CheckOut({ navigation, route }) {
                                 }}>
                                     <Text>Alamat Pengiriman</Text>
                                     <TouchableOpacity
-                                        onPress={() => navigation.navigate('EditAlamat')}
+                                        onPress={() => navigation.navigate('EditAlamat', {
+                                            dataUser: dataUser,
+                                        })}
                                         activeOpacity={0.8}
                                         style={styles.BtnBack}
                                     >
@@ -194,16 +197,16 @@ export default function CheckOut({ navigation, route }) {
                                     </TouchableOpacity>
                                 </View>
                                 {
-                                    dataUser &&
-                                        dataUser.provinsi !== null ?
+                                    loadingData &&
+                                        dataUser.user !== undefined ?
                                         <View>
                                             <Text style={{
                                                 marginTop: sizeHeight(1),
                                                 fontSize: sizeFont(3.3),
-                                            }}>[{dataUser.phone}]</Text>
+                                            }}>[{dataUser.user.phone}]</Text>
                                             <Text style={{
                                                 fontSize: sizeFont(3.3),
-                                            }}>{dataUser.alamat + ', ' + dataUser.kecamatan.nama_kecamatan + ', ' + dataUser.kabupaten.nama_kabupaten + ', ' + dataUser.provinsi.nama_provinsi}</Text>
+                                            }}>{dataUser.user.alamat + ', ' + dataUser.user.kecamatan.nama_kecamatan + ', ' + dataUser.user.kabupaten.nama_kabupaten + ', ' + dataUser.user.provinsi.nama_provinsi}</Text>
                                         </View>
                                         :
                                         <Text style={{

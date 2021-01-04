@@ -6,15 +6,40 @@ import { Poppins } from '../../assets/fonts';
 import { color } from '../../assets/colors/Index';
 import CardProduk, { CardEnd } from '../CardProduk';
 
-export default function FlashSale({ navigation, dataFlash, dateFlashShale, barStatus }) {
+export default function FlashSale({ navigation, dataFlash, dateFlashShale, barStatus, FlashSaleShimer, visibleFlashSale, ShimmerPlaceHolder }) {
+
+    const fakeData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
     const renderItem = (item, index) => {
         return (
             <View
                 key={index}
+            >
+                <CardProduk
+                    navigation={navigation}
+                    item={item}
+                    barStatus={barStatus}
+                />
+            </View>
+        );
+    };
+    const renderItemShimer = (item, index) => {
+        return (
+            <View
+                key={index}
                 style={styles.CardProduk}
             >
-                <CardProduk navigation={navigation} item={item} barStatus={barStatus} />
+                <ShimmerPlaceHolder
+                    style={{
+                        borderColor: color.border2,
+                        borderRadius: 8,
+                        marginHorizontal: sizeWidth(2.5),
+                        width: sizeWidth(40),
+                        height: sizeHeight(25),
+                        flex: 1,
+                        overflow: 'hidden',
+                    }}
+                />
             </View>
         );
     };
@@ -29,70 +54,75 @@ export default function FlashSale({ navigation, dataFlash, dateFlashShale, barSt
                     alignItems: 'center',
                     marginTop: sizeHeight(1),
                 }}>
-                    <View style={styles.BoxLable}>
+                    <ShimmerPlaceHolder
+                        visible={visibleFlashSale}
+                        style={styles.BoxLable}>
                         <Image
                             resizeMethod="auto"
                             style={styles.ImageLable} source={require('../../assets/images/banner/flash_sale.png')} />
-                    </View>
-                    <View style={{
-                        marginLeft: sizeWidth(5),
-                    }}>
-                        <Text style={{
-                            fontSize: sizeFont(3.5),
-                            color: color.fontBlack1,
-                        }}>Berakhir dalam</Text>
-                        {
-                            dateFlashShale ?
-                                <View style={styles.BoxTime}>
-                                    <View style={styles.BoxItemTime}>
-                                        <Text style={styles.TextTime}>{dateFlashShale.hours}</Text>
+                    </ShimmerPlaceHolder>
+                    {
+                        visibleFlashSale &&
+                        <View style={{
+                            marginLeft: sizeWidth(5),
+                        }}>
+                            <Text style={{
+                                fontSize: sizeFont(3.5),
+                                color: color.fontBlack1,
+                            }}>Berakhir dalam</Text>
+                            {
+                                dateFlashShale ?
+                                    <View style={styles.BoxTime}>
+                                        <View style={styles.BoxItemTime}>
+                                            <Text style={styles.TextTime}>{dateFlashShale.hours}</Text>
+                                        </View>
+                                        <Text style={[styles.TextTime, {
+                                            color: color.fontBlack,
+                                            marginHorizontal: sizeWidth(2),
+                                        }]}>:</Text>
+                                        <View style={styles.BoxItemTime}>
+                                            <Text style={styles.TextTime}>{dateFlashShale.minutes}</Text>
+                                        </View>
+                                        <Text style={[styles.TextTime, {
+                                            color: color.fontBlack,
+                                            marginHorizontal: sizeWidth(2),
+                                        }]}>:</Text>
+                                        <View style={styles.BoxItemTime}>
+                                            <Text style={styles.TextTime}>{dateFlashShale.seconds}</Text>
+                                        </View>
                                     </View>
-                                    <Text style={[styles.TextTime, {
-                                        color: color.fontBlack,
-                                        marginHorizontal: sizeWidth(2),
-                                    }]}>:</Text>
-                                    <View style={styles.BoxItemTime}>
-                                        <Text style={styles.TextTime}>{dateFlashShale.minutes}</Text>
+                                    :
+                                    <View style={styles.BoxTime}>
+                                        <View style={styles.BoxItemTime}>
+                                            <Text style={styles.TextTime}>00</Text>
+                                        </View>
+                                        <Text style={[styles.TextTime, {
+                                            color: color.fontBlack,
+                                            marginHorizontal: sizeWidth(2),
+                                        }]}>:</Text>
+                                        <View style={styles.BoxItemTime}>
+                                            <Text style={styles.TextTime}>00</Text>
+                                        </View>
+                                        <Text style={[styles.TextTime, {
+                                            color: color.fontBlack,
+                                            marginHorizontal: sizeWidth(2),
+                                        }]}>:</Text>
+                                        <View style={styles.BoxItemTime}>
+                                            <Text style={styles.TextTime}>00</Text>
+                                        </View>
                                     </View>
-                                    <Text style={[styles.TextTime, {
-                                        color: color.fontBlack,
-                                        marginHorizontal: sizeWidth(2),
-                                    }]}>:</Text>
-                                    <View style={styles.BoxItemTime}>
-                                        <Text style={styles.TextTime}>{dateFlashShale.seconds}</Text>
-                                    </View>
-                                </View>
-                                :
-                                <View style={styles.BoxTime}>
-                                    <View style={styles.BoxItemTime}>
-                                        <Text style={styles.TextTime}>00</Text>
-                                    </View>
-                                    <Text style={[styles.TextTime, {
-                                        color: color.fontBlack,
-                                        marginHorizontal: sizeWidth(2),
-                                    }]}>:</Text>
-                                    <View style={styles.BoxItemTime}>
-                                        <Text style={styles.TextTime}>00</Text>
-                                    </View>
-                                    <Text style={[styles.TextTime, {
-                                        color: color.fontBlack,
-                                        marginHorizontal: sizeWidth(2),
-                                    }]}>:</Text>
-                                    <View style={styles.BoxItemTime}>
-                                        <Text style={styles.TextTime}>00</Text>
-                                    </View>
-                                </View>
 
-                        }
-                    </View>
+                            }
+                        </View>
+                    }
                 </View>
                 <ScrollView
                     showsHorizontalScrollIndicator={false}
                     horizontal
                 >
                     <View style={styles.ContainerProduk}>
-                        {dataFlash &&
-                            dataFlash.slice(0, 10).map(renderItem)}
+                        {visibleFlashSale ?
+                            dataFlash.slice(0, 10).map(renderItem) : fakeData.map(renderItemShimer)}
                         <CardEnd />
                     </View>
                 </ScrollView>

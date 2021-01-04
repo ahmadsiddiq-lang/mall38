@@ -4,19 +4,28 @@ import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'rea
 import { color } from '../../assets/colors/Index';
 import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 
-export default function Categori({ dataCategori, navigation }) {
+export default function Categori({ dataCategori, navigation, ShimmerPlaceHolder, visibleCategori, CategoriShemer }) {
 
     const data = dataCategori;
+
+    const fakeData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
     // console.log(data);
 
     return (
         <View style={styles.Container}>
             <View style={styles.BoxLable}>
-                <Image
-                    resizeMethod="auto"
+                <ShimmerPlaceHolder
+                    ref={CategoriShemer}
+                    visible={visibleCategori}
                     style={styles.ImageLable}
-                    source={require('../../assets/images/banner/Kategori.png')} />
+                // stopAutoRun
+                >
+                    <Image
+                        resizeMethod="auto"
+                        style={styles.ImageLable}
+                        source={require('../../assets/images/banner/Kategori.png')} />
+                </ShimmerPlaceHolder>
             </View>
             <ScrollView
                 horizontal
@@ -24,29 +33,44 @@ export default function Categori({ dataCategori, navigation }) {
             >
                 <View style={styles.BoxCard}>
                     {
-                        data &&
-                        data.map((item, index) => (
-                            <TouchableOpacity
-                                onPress={() =>
-                                    navigation.navigate('ProductCategori', {
-                                        idCategori: item.id,
-                                    })
-                                }
-                                key={index}
-                                activeOpacity={0.8}
-                                style={styles.BoxItem}
-                            >
-                                <View style={styles.BoxImage}>
-                                    <Image resizeMethod="auto" style={styles.image} source={{ uri: item.icon }} />
+                        visibleCategori ?
+                            data.map((item, index) => (
+                                <TouchableOpacity
+                                    onPress={() =>
+                                        navigation.navigate('ProductCategori', {
+                                            idCategori: item.id,
+                                        })
+                                    }
+                                    key={index}
+                                    activeOpacity={0.8}
+                                    style={styles.BoxItem}
+                                >
+                                    <View style={styles.BoxImage}>
+                                        <Image resizeMethod="auto" style={styles.image} source={{ uri: item.icon }} />
 
+                                    </View>
+                                    <Text style={{
+                                        textAlign: 'center',
+                                        fontSize: sizeFont(3.3),
+                                        marginTop: sizeHeight(1),
+                                    }}>{item.name}</Text>
+                                </TouchableOpacity>
+                            ))
+                            :
+                            fakeData.map((item, index) => (
+                                <View key={index} style={styles.BoxItem}>
+                                    <ShimmerPlaceHolder
+                                        ref={CategoriShemer}
+                                        visible={visibleCategori}
+                                        style={{
+                                            width: sizeWidth(15),
+                                            height: sizeWidth(15),
+                                            borderRadius: 8,
+                                        }}
+                                    />
                                 </View>
-                                <Text style={{
-                                    textAlign: 'center',
-                                    fontSize: sizeFont(3.3),
-                                    marginTop: sizeHeight(1),
-                                }}>{item.name}</Text>
-                            </TouchableOpacity>
-                        ))
+                            ))
+
                     }
                 </View>
             </ScrollView>
