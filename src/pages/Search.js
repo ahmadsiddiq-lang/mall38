@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useState } from 'react';
-import { StatusBar, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, StatusBar, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 import { color } from '../assets/colors/Index';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
@@ -15,6 +15,7 @@ export default function Search({ navigation }) {
     const dataProduk = useSelector(state => state.produk.produk);
     const [dataSearch, setDataSearch] = useState('');
     const [dataProdukSearch, setDataProduk] = useState([]);
+    const [loading, setLoading] = useState(true);
     // console.log(dataProduk);
 
     const getProduks = useCallback(async () => {
@@ -24,6 +25,11 @@ export default function Search({ navigation }) {
     const handleSearch = useCallback(() => {
         const data = dataProduk.filter(item => {
             if (item.name !== undefined && dataSearch.length > 0) {
+                setLoading(false);
+                const x = setTimeout(() => {
+                    setLoading(true);
+                    clearTimeout(x);
+                }, 2000);
                 return item.name.toLowerCase().indexOf(dataSearch.toLowerCase()) > -1;
             }
         });
@@ -65,10 +71,21 @@ export default function Search({ navigation }) {
             <View style={{
                 flex: 1,
             }}>
-                <ListProduk
-                    navigation={navigation}
-                    dataProdukSearch={dataProdukSearch}
-                />
+                {
+                    loading ?
+                        <ListProduk
+                            navigation={navigation}
+                            dataProdukSearch={dataProdukSearch}
+                        />
+                        :
+                        <View style={{
+                            flex: 1,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}>
+                            <ActivityIndicator color={color.mainColor} size="large" />
+                        </View>
+                }
             </View>
         </View>
     );
