@@ -71,27 +71,32 @@ export default function ListProduk({ navigation, dataProduk, onRefresh, refreshi
         );
     };
 
+    const renderItem = ({ item, index }) => {
+        if (index + 1 <= page) {
+            if (item.empty) {
+                return (
+                    <View style={styles.itemInvisible} />
+                );
+            }
+            return (
+                <CardProdukVer navigation={navigation} item={item} onPressBeli={onPressBeli} />
+            );
+        }
+    };
+
 
     return (
         <View style={styles.Container}>
             {
                 dataProduk &&
                 <FlatList
+                    contentContainerStyle={{
+                        paddingHorizontal: sizeWidth(2.5),
+                    }}
                     numColumns={2}
                     data={formatData(dataProduk, 2)}
                     keyExtractor={(_, index) => index.toString()}
-                    renderItem={({ item, index }) => {
-                        if (index + 1 <= page) {
-                            if (item.empty) {
-                                return (
-                                    <View style={styles.itemInvisible} />
-                                );
-                            }
-                            return (
-                                <CardProdukVer navigation={navigation} item={item} onPressBeli={onPressBeli} />
-                            );
-                        }
-                    }}
+                    renderItem={renderItem}
                     ListFooterComponent={listFooterComponent}
                     onMomentumScrollEnd={(e) => handleScroll(e)}
                     refreshControl={
