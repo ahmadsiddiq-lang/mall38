@@ -24,7 +24,7 @@ export default function Search({ navigation }) {
     const handleSearch = useCallback(() => {
         const data = dataProduk.filter(item => {
             if (item.name !== undefined && dataSearch.length > 0) {
-                return item.name.toLowerCase().indexOf(dataSearch) > -1;
+                return item.name.toLowerCase().indexOf(dataSearch.toLowerCase()) > -1;
             }
         });
         setDataProduk(data);
