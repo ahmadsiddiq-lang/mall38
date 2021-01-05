@@ -23,7 +23,6 @@ import DetailOrder from '../pages/DetailOrder';
 import EditAlamat from '../pages/EditAlamat';
 import Search from '../pages/Search';
 import Auth from '../pages/Auth';
-import { getIdUser } from '../config/function';
 
 const Tab = createBottomTabNavigator();
 

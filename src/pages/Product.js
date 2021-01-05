@@ -14,7 +14,6 @@ export default function Product({ navigation }) {
     const dataProduk = useSelector(state => state.produk.produk);
     const [refreshing, setRefreshing] = React.useState(false);
 
-
     const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
     const [visible, setVisible] = useState(false);
     const ProdukRef = React.useRef();
@@ -38,19 +37,14 @@ export default function Product({ navigation }) {
     }, [dispatch]);
 
     React.useEffect(() => {
-        const facebookAnimated = Animated.stagger(400, [ProdukRef.current.getAnimated(),
-            // Animated.parallel([
-            //     CarouselUp.current.getAnimated(),
-            // ])
-        ]);
-        Animated.loop(facebookAnimated).start();
+        if (ProdukRef !== null) {
+            const facebookAnimated = Animated.stagger(400, [ProdukRef.current.getAnimated()]);
+            Animated.loop(facebookAnimated).start();
+        }
     }, [ProdukRef]);
 
     useEffect(() => {
         getProduks();
-        return () => {
-            getProduks();
-        };
     }, [getProduks]);
 
     return (

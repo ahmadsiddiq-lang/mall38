@@ -31,7 +31,7 @@ export default function Login({ navigation }) {
             dispatch(getDataUser(id));
             dispatch(getCArt());
             await AsyncStorage.setItem('idUser', id);
-            navigation.navigate('MyTabbar');
+            navigation.replace('MyTabbar');
         } catch (e) {
             // saving error
             console.log(e);
