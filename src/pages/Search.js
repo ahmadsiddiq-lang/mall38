@@ -29,7 +29,7 @@ export default function Search({ navigation }) {
                 const x = setTimeout(() => {
                     setLoading(true);
                     clearTimeout(x);
-                }, 2000);
+                }, 1000);
                 return item.name.toLowerCase().indexOf(dataSearch.toLowerCase()) > -1;
             }
         });

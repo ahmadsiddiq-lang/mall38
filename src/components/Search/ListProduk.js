@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
+import { Poppins } from '../../assets/fonts';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import CardProdukVer from '../CardProdukVer';
 
@@ -70,17 +71,33 @@ export default function ListProduk({ navigation, dataProdukSearch = [] }) {
                 fontSize: sizeFont(3.5),
                 marginLeft: sizeWidth(5),
             }}>Hasil Pencarian</Text>
-            <FlatList
-                contentContainerStyle={{
-                    paddingHorizontal: sizeWidth(2.5),
-                }}
-                numColumns={2}
-                data={formatData(dataProdukSearch, 2)}
-                keyExtractor={(_, index) => index.toString()}
-                renderItem={renderItem}
-                ListFooterComponent={listFooterComponent}
-                onMomentumScrollEnd={(e) => handleScroll(e)}
-            />
+            {
+                dataProdukSearch.length > 0 ?
+                    <FlatList
+                        contentContainerStyle={{
+                            paddingHorizontal: sizeWidth(2.5),
+                        }}
+                        numColumns={2}
+                        data={formatData(dataProdukSearch, 2)}
+                        keyExtractor={(_, index) => index.toString()}
+                        renderItem={renderItem}
+                        ListFooterComponent={listFooterComponent}
+                        onMomentumScrollEnd={(e) => handleScroll(e)}
+                    />
+                    :
+                    <View style={{
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flex: 1,
+                    }}>
+                        <Text style={{
+                            alignItems: 'center',
+                            fontSize: sizeFont(4),
+                            fontFamily: Poppins.Medium,
+                            color: color.fontBlack1,
+                        }}>Produk belum tersedia</Text>
+                    </View>
+            }
         </View>
     );
 }
