@@ -67,10 +67,6 @@ export default function ListProduk({ navigation, dataProdukSearch = [], statusDa
 
     return (
         <View style={styles.Container}>
-            <Text style={{
-                fontSize: sizeFont(3.5),
-                marginLeft: sizeWidth(5),
-            }}>Hasil Pencarian</Text>
             {
                 statusData ?
                     <FlatList

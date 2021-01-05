@@ -8,7 +8,6 @@ export const getProduk = (setVisible) => {
             withCredentials: true,
         }).then(dataProduk => {
             if (setVisible) {
-                console.log('masuk');
                 setVisible(true);
             }
             dispatch({
