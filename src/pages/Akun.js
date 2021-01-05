@@ -19,10 +19,13 @@ export default function Akun({ navigation }) {
 
     const dispatch = useDispatch();
     const dataUser = useSelector(state => state.dataUser.dataUser);
+    const dataAll = dataUser.user;
+
+
+    const [dataScreen, setDataUser] = useState(dataAll);
     const [modalVisible, setModalVisible] = useState(false);
     const [refreshing, setRefreshing] = React.useState(false);
 
-    const dataScreen = dataUser.user;
 
     // console.log(dataScreen);
 
@@ -40,10 +43,12 @@ export default function Akun({ navigation }) {
         const idUser = await getIdUser();
         if (idUser !== null) {
             dispatch(clearDataUser());
-            await AsyncStorage.removeItem('idUser');
+            await AsyncStorage.clear();
             setModalVisible(!modalVisible);
+            setDataUser(undefined);
+            navigation.replace('Login');
         }
-    }, [dispatch, modalVisible]);
+    }, [dispatch, modalVisible, navigation]);
 
     const handleLogOut = useCallback(async () => {
         setModalVisible(!modalVisible);

@@ -31,7 +31,7 @@ export default function Login({ navigation }) {
             dispatch(getDataUser(id));
             dispatch(getCArt());
             await AsyncStorage.setItem('idUser', id);
-            navigation.goBack();
+            navigation.navigate('MyTabbar');
         } catch (e) {
             // saving error
             console.log(e);
@@ -78,21 +78,6 @@ export default function Login({ navigation }) {
     return (
         <View style={styles.Container}>
             <StatusBar translucent={false} backgroundColor={color.bgWhite} barStyle="dark-content" />
-            <TouchableOpacity
-                onPress={() => navigation.goBack()}
-                activeOpacity={0.8}
-                style={{
-                    position: 'absolute',
-                    zIndex: 1,
-                    left: 0,
-                    // borderWidth: 1,
-                    marginTop: sizeHeight(1),
-                    paddingLeft: sizeWidth(5),
-                    paddingVertical: sizeHeight(1),
-                    paddingRight: sizeWidth(2),
-                }}>
-                <Ionicons name="arrow-back" size={sizeFont(6.5)} color={color.mainColor} />
-            </TouchableOpacity>
             <ScrollView>
                 <View style={{
                     alignItems: 'center',
@@ -151,6 +136,7 @@ export default function Login({ navigation }) {
                                         onFocus={() => setFocus(1)}
                                         style={styles.Input}
                                         placeholder="Password"
+                                        onSubmitEditing={() => handleLogin()}
                                     />
                                 </View>
                             </View>
