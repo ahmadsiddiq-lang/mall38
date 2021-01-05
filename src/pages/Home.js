@@ -150,7 +150,6 @@ export default function Home({ navigation }) {
                         width: SCREEN_WIDTH,
                         height: sizeHeight(39),
                     }}
-                    stopAutoRun
                 >
                     <View style={styles.BoxCarousel}>
                         <Carousel dataCarousel={dataCarousel} />

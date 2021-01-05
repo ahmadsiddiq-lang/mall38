@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useState } from 'react';
 import { ActivityIndicator, FlatList, RefreshControl, StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
@@ -6,7 +7,9 @@ import { sizeHeight, sizeWidth } from '../../assets/responsive';
 import { getIdUser } from '../../config/function';
 import { addCart } from '../../redux/actions/Cart';
 import CardProdukVer from '../CardProdukVer';
-export default function ListProduk({ navigation, dataProduk, onRefresh, refreshing }) {
+export default function ListProduk({ navigation, dataProduk, onRefresh, refreshing, ShimmerPlaceHolder, visible, ProdukRef }) {
+
+    const fakeData = [1, 2, 3, 4, 5, 6];
 
     const dispatch = useDispatch();
 
@@ -79,7 +82,29 @@ export default function ListProduk({ navigation, dataProduk, onRefresh, refreshi
                 );
             }
             return (
-                <CardProdukVer navigation={navigation} item={item} onPressBeli={onPressBeli} />
+                <>
+                    {
+                        visible ?
+                            <CardProdukVer navigation={navigation} item={item} onPressBeli={onPressBeli} />
+                            :
+                            <ShimmerPlaceHolder
+                                visible={visible}
+                                ref={ProdukRef}
+                                style={{
+                                    borderWidth: 1,
+                                    borderColor: color.border3,
+                                    borderRadius: 8,
+                                    marginHorizontal: sizeWidth(2),
+                                    flex: 1,
+                                    marginVertical: sizeHeight(1),
+                                    backgroundColor: color.bgWhite,
+                                    overflow: 'hidden',
+                                    justifyContent: 'space-between',
+                                    height: sizeHeight(28),
+                                }}
+                            />
+                    }
+                </>
             );
         }
     };
@@ -94,7 +119,7 @@ export default function ListProduk({ navigation, dataProduk, onRefresh, refreshi
                         paddingHorizontal: sizeWidth(2.5),
                     }}
                     numColumns={2}
-                    data={formatData(dataProduk, 2)}
+                    data={visible ? formatData(dataProduk, 2) : fakeData}
                     keyExtractor={(_, index) => index.toString()}
                     renderItem={renderItem}
                     ListFooterComponent={listFooterComponent}
