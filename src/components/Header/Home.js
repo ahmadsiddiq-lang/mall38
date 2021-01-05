@@ -33,7 +33,7 @@ export default function Home({ navigation, headerOpacity }) {
             }} />
             <View style={styles.content}>
                 <TouchableOpacity
-                    onPress={() => console.log(navigation)}
+                    onPress={() => navigation.navigate('Search')}
                     activeOpacity={0.8}
                     style={styles.BoxSearch}>
                     <Ionicons

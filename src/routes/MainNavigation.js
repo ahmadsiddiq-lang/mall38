@@ -21,6 +21,7 @@ import EditUser from '../pages/EditUser';
 import Pembayaran from '../pages/Pembayaran';
 import DetailOrder from '../pages/DetailOrder';
 import EditAlamat from '../pages/EditAlamat';
+import Search from '../pages/Search';
 
 const Tab = createBottomTabNavigator();
 
@@ -118,6 +119,7 @@ export default function MainNavigation() {
                 <Stack.Screen name="Pembayaran" component={Pembayaran} />
                 <Stack.Screen name="DetailOrder" component={DetailOrder} />
                 <Stack.Screen name="EditAlamat" component={EditAlamat} />
+                <Stack.Screen name="Search" component={Search} />
             </Stack.Navigator>
         </NavigationContainer>
     );

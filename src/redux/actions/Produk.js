@@ -7,7 +7,9 @@ export const getProduk = (setVisible) => {
         await Axios.get(BASE_URL + 'product', {
             withCredentials: true,
         }).then(dataProduk => {
-            setVisible(true);
+            if (setVisible) {
+                setVisible(true);
+            }
             dispatch({
                 type: GET_PRODUK,
                 data: dataProduk.data.data.product,
