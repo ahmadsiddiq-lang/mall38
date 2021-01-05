@@ -4,14 +4,20 @@ import { Image, ScrollView, StyleSheet, TouchableOpacity, View, Text } from 'rea
 import { useDispatch } from 'react-redux';
 import { color } from '../../assets/colors/Index';
 import { sizeHeight, sizeWidth } from '../../assets/responsive';
-import { getProdukCategori } from '../../redux/actions/ProdukCategori';
+import { getProdukCategori, clearData } from '../../redux/actions/ProdukCategori';
 
 export default function Categori({ dataCategori, navigation }) {
     const dispatch = useDispatch();
     const data = dataCategori;
 
     const handleCategori = async (idCategori) => {
-        if (idCategori) { dispatch(getProdukCategori(idCategori)); }
+        dispatch(clearData());
+        const x = setTimeout(() => {
+            if (idCategori) { dispatch(getProdukCategori(idCategori)); }
+            return () => {
+                clearTimeout(x);
+            };
+        }, 1000);
     };
 
     return (

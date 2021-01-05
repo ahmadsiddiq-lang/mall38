@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { color } from '../assets/colors/Index';
 import Categori from '../components/ProdukCategori/Categori';
 import ListProduk from '../components/ProdukCategori/ListProduk';
-import { getProdukCategori } from '../redux/actions/ProdukCategori';
+import { clearData, getProdukCategori } from '../redux/actions/ProdukCategori';
 import Headers from '../components/Header/Headers';
 
 export default function ProductCategori({ navigation, route }) {
@@ -14,8 +14,14 @@ export default function ProductCategori({ navigation, route }) {
     const dataCategori = useSelector(state => state.categori.categori);
 
     const getProdukCategoris = useCallback(async () => {
+        dispatch(clearData());
         const idCategori = route.params.idCategori;
-        if (idCategori) { dispatch(getProdukCategori(idCategori)); }
+        const x = setTimeout(() => {
+            if (idCategori) { dispatch(getProdukCategori(idCategori)); }
+            return () => {
+                clearTimeout(x);
+            };
+        }, 1000);
     }, [dispatch, route.params.idCategori]);
 
     useEffect(() => {

@@ -2,6 +2,7 @@ import Axios from 'axios';
 import { BASE_URL } from '../../config/URL';
 
 export const GET_PRODUK_CATEGORI = 'GET_PRODUK_CATEGORI';
+export const CLEAR = 'CLEAR';
 
 export const getProdukCategori = (id) => {
     return async (dispatch) => {
@@ -14,5 +15,14 @@ export const getProdukCategori = (id) => {
                     data: dataProdukCategori.data.data,
                 });
             }).catch(err => console.log(err));
+    };
+};
+
+export const clearData = () => {
+    return async (dispatch) => {
+        dispatch({
+            type: CLEAR,
+            data: [],
+        });
     };
 };

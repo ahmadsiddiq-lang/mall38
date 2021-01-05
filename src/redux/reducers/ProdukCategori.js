@@ -1,4 +1,4 @@
-import { GET_PRODUK_CATEGORI } from '../actions/ProdukCategori';
+import { GET_PRODUK_CATEGORI, CLEAR } from '../actions/ProdukCategori';
 
 const initialState = {
     produkCategori: [],
@@ -7,6 +7,11 @@ const initialState = {
 const getProdukCategori = (state = initialState, action) => {
     switch (action.type) {
         case GET_PRODUK_CATEGORI:
+            return {
+                ...state,
+                produkCategori: action.data,
+            };
+        case CLEAR:
             return {
                 ...state,
                 produkCategori: action.data,
