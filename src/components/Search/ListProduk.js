@@ -6,7 +6,7 @@ import { Poppins } from '../../assets/fonts';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import CardProdukVer from '../CardProdukVer';
 
-export default function ListProduk({ navigation, dataProdukSearch = [] }) {
+export default function ListProduk({ navigation, dataProdukSearch = [], statusData }) {
 
 
     const [loading, setloading] = useState(false);
@@ -72,7 +72,7 @@ export default function ListProduk({ navigation, dataProdukSearch = [] }) {
                 marginLeft: sizeWidth(5),
             }}>Hasil Pencarian</Text>
             {
-                dataProdukSearch.length > 0 ?
+                statusData ?
                     <FlatList
                         contentContainerStyle={{
                             paddingHorizontal: sizeWidth(2.5),

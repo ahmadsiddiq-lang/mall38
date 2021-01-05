@@ -135,10 +135,7 @@ export default function Home({ navigation }) {
                 scrollEventThrottle={16}
                 refreshControl={
                     <RefreshControl
-                        style={{
-                            zIndex: 999,
-                            marginTop: sizeHeight(15),
-                        }}
+                        progressViewOffset={sizeHeight(10)}
                         colors={['#689F38', color.mainColor]}
                         refreshing={refreshing} onRefresh={onRefresh} />
                 }

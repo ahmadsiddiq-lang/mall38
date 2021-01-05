@@ -15,6 +15,7 @@ export default function Search({ navigation }) {
     const dataProduk = useSelector(state => state.produk.produk);
     const [dataSearch, setDataSearch] = useState('');
     const [dataProdukSearch, setDataProduk] = useState([]);
+    const [statusData, setStatus] = useState(true);
     const [loading, setLoading] = useState(true);
     // console.log(dataProduk);
 
@@ -33,7 +34,14 @@ export default function Search({ navigation }) {
                 return item.name.toLowerCase().indexOf(dataSearch.toLowerCase()) > -1;
             }
         });
-        setDataProduk(data);
+        if (dataSearch.length > 0) {
+            if (data.length < 1) {
+                setStatus(false);
+            } else {
+                setStatus(true);
+                setDataProduk(data);
+            }
+        }
     }, [dataProduk, dataSearch]);
 
 
@@ -76,6 +84,7 @@ export default function Search({ navigation }) {
                         <ListProduk
                             navigation={navigation}
                             dataProdukSearch={dataProdukSearch}
+                            statusData={statusData}
                         />
                         :
                         <View style={{
