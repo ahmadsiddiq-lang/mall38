@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
 import { Poppins } from '../../assets/fonts';
@@ -8,7 +8,7 @@ import { rupiah } from '../../config/function';
 
 export default function BuatPesanan({ handleHargaTotal, handleMetodeBayar, handleTotalHargaBayar }) {
 
-
+    const [statusButton, setButton] = useState(false);
     return (
         <View style={styles.Container}>
             <View style={{
@@ -39,9 +39,13 @@ export default function BuatPesanan({ handleHargaTotal, handleMetodeBayar, handl
                 marginTop: sizeHeight(3),
             }}>
                 <TouchableOpacity
-                    onPress={() => handleMetodeBayar()}
+                    onPress={() => {
+                        setButton(true);
+                        handleMetodeBayar();
+                    }}
                     activeOpacity={0.8}
                     style={styles.BtnBuy}
+                    disabled={statusButton}
                 >
                     <Text style={{
                         fontSize: sizeFont(4),

@@ -9,11 +9,16 @@ export default function Auth({ navigation }) {
 
     const cekLogin = React.useCallback(async () => {
         const idUser = await getIdUser();
-        if (idUser !== null) {
-            navigation.replace('MyTabbar');
-        } else {
-            navigation.replace('Login');
-        }
+        const x = setTimeout(() => {
+            if (idUser !== null) {
+                navigation.replace('MyTabbar');
+            } else {
+                navigation.replace('Login');
+            }
+            return () => {
+                clearTimeout(x);
+            };
+        }, 1000);
     }, [navigation]);
 
 

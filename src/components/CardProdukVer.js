@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: sizeWidth(25),
+        resizeMode: 'cover',
     },
     BoxText: {
         paddingHorizontal: sizeWidth(1.5),

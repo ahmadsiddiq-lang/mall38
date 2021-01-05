@@ -41,7 +41,7 @@ export default function Home({ navigation, headerOpacity }) {
                         color={color.mainColor}
                         size={sizeFont(5)}
                     />
-                    <Text style={styles.textInput}>Mau kirim apa hari ini</Text>
+                    <Text style={styles.textInput}>Cari Produk</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     activeOpacity={0.8}

@@ -106,7 +106,8 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 8,
     },
     image: {
-        width: sizeWidth(40),
+        resizeMode: 'cover',
+        width: '100%',
         height: sizeWidth(25),
     },
     BoxText: {
