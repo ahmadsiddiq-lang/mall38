@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     },
     ContainerProduk: {
         flexDirection: 'row',
-        marginHorizontal: sizeWidth(2),
+        marginHorizontal: sizeWidth(3),
         marginVertical: sizeHeight(2),
     },
 });

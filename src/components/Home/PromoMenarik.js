@@ -4,22 +4,32 @@ import { color } from '../../assets/colors/Index';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import CarouselStandar from '../CarouselStandar';
 
-export default function PromoMenarik({ dataCarousel, navigation }) {
+export default function PromoMenarik({ dataCarousel, navigation, ShimmerPlaceHolder, visible, CarouselUp }) {
     return (
         <View style={styles.Container}>
             <View style={styles.Head}>
-                <View style={styles.BoxLable}>
+                <ShimmerPlaceHolder
+                    ref={CarouselUp}
+                    visible={visible}
+                    style={styles.BoxLable}>
                     <Image
                         resizeMethod="auto"
                         style={styles.ImageLable} source={require('../../assets/images/banner/Promo-Menarik.png')} />
-                </View>
-                <Text style={{
-                    color: color.mainColor,
-                    fontSize: sizeFont(3.5),
-                }}>Lihat semua</Text>
+                </ShimmerPlaceHolder>
+                {
+                    visible &&
+                    <Text style={{
+                        color: color.mainColor,
+                        fontSize: sizeFont(3.5),
+                    }}>Lihat semua</Text>
+                }
             </View>
             <View>
-                <CarouselStandar dataCarousel={dataCarousel} />
+                <CarouselStandar
+                    ShimmerPlaceHolder={ShimmerPlaceHolder}
+                    visible={visible}
+                    CarouselUp={CarouselUp}
+                    dataCarousel={dataCarousel} />
             </View>
         </View>
     );
@@ -37,6 +47,7 @@ const styles = StyleSheet.create({
         width: sizeWidth(40),
         height: sizeWidth(15),
         marginLeft: sizeWidth(5),
+        marginTop: sizeHeight(1),
     },
     ImageLable: {
         resizeMode: 'contain',

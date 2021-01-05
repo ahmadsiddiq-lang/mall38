@@ -4,7 +4,7 @@ import { Animated, RefreshControl, StatusBar, StyleSheet, View } from 'react-nat
 import { SCREEN_WIDTH, sizeHeight } from '../assets/responsive';
 import Header from '../components/Header/Home';
 import Carousel from '../components/Home/Carousel';
-import Categori from '../components/Home/Categori';
+// import Categori from '../components/Home/Categori';
 import FlashSale from '../components/Home/FlashSale';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCarousel } from '../redux/actions/Carousel';
@@ -36,12 +36,12 @@ export default function Home({ navigation }) {
     const [refreshing, setRefreshing] = React.useState(false);
 
     // shimer
+    // const [visibleCategori, setVisibleCategori] = useState(false);
+    // const CategoriShemer = React.createRef();
     const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
     const [visible, setVisible] = useState(false);
-    const [visibleCategori, setVisibleCategori] = useState(false);
     const [visibleFlashSale, setvisibleFlashSale] = useState(false);
     const CarouselUp = React.createRef();
-    const CategoriShemer = React.createRef();
     const FlashSaleShimer = React.createRef();
 
     const yOffset = useRef(new Animated.Value(0)).current;
@@ -68,8 +68,8 @@ export default function Home({ navigation }) {
     const getData = useCallback(async () => {
         const idUser = await getIdUser();
         dispatch(getCarousel(setVisible));
-        dispatch(getCategori(setVisibleCategori));
         dispatch(getFlashSale(setvisibleFlashSale));
+        dispatch(getCategori());
         dispatch(getDataUser(idUser));
     }, [dispatch]);
 
@@ -172,10 +172,16 @@ export default function Home({ navigation }) {
                     visibleFlashSale={visibleFlashSale}
                     ShimmerPlaceHolder={ShimmerPlaceHolder}
                 />
+                <PromoMenarik
+                    navigation={navigation}
+                    dataCarousel={dataCarousel}
+                    ShimmerPlaceHolder={ShimmerPlaceHolder}
+                    visible={visible}
+                    CarouselUp={CarouselUp}
+                />
                 {
                     visibleFlashSale &&
                     <>
-                        <PromoMenarik navigation={navigation} dataCarousel={dataCarousel} />
                         <ProdukLokal navigation={navigation} dataProduk={dataFlash} />
                         <ProdukImpor navigation={navigation} dataProduk={dataFlash} />
                         <BannerCategori navigation={navigation} dataCategori={dataCategori} />
