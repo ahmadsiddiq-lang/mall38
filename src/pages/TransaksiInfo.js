@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { color } from '../assets/colors/Index';
 import { sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
@@ -15,6 +15,8 @@ export default function Transaksi({ navigation }) {
     const dispatch = useDispatch();
     const dataAll = useSelector(state => state.dataTransaksi.dataTransaksi.order);
     const [dataTransaksi, setDataTransaksi] = useState(null);
+    const [refreshing, setRefreshing] = React.useState(false);
+
 
     // console.log(dataAll);
     const handleGetTransaksi = useCallback(async () => {
@@ -37,6 +39,20 @@ export default function Transaksi({ navigation }) {
         }
     };
 
+    const wait = useCallback((timeout) => {
+        return new Promise(resolve => {
+            setTimeout(resolve, timeout);
+        });
+    }, []);
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        handleGetTransaksi();
+        wait(2000).then(() => {
+            setRefreshing(false);
+        });
+    }, [wait, handleGetTransaksi]);
+
     useEffect(() => {
         handleGetTransaksi();
     }, [handleGetTransaksi]);
@@ -55,7 +71,13 @@ export default function Transaksi({ navigation }) {
                 {
                     dataTransaksi !== null && dataTransaksi !== undefined ?
                         dataTransaksi.length > 0 ?
-                            <ScrollView>
+                            <ScrollView
+                                refreshControl={
+                                    <RefreshControl
+                                        colors={['#689F38', color.mainColor]}
+                                        refreshing={refreshing} onRefresh={onRefresh} />
+                                }
+                            >
                                 {
                                     dataTransaksi.map((item, index) => {
                                         return (

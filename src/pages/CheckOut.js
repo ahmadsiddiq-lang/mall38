@@ -17,6 +17,7 @@ import BuatPesanan from '../components/CheckOut/BuatPesanan';
 import ListKurir from '../components/CheckOut/ListKurir';
 import ListMeodeBayar from '../components/CheckOut/ListMeodeBayar';
 import { checkOut } from '../redux/actions/CheckOut';
+import { getTransaksi } from '../redux/actions/Transaksi';
 
 
 export default function CheckOut({ navigation, route }) {
@@ -148,11 +149,19 @@ export default function CheckOut({ navigation, route }) {
         }, 5000);
     };
 
+    const handleGetTransaksi = useCallback(async () => {
+        const idUser = await getIdUser();
+        if (idUser !== null) {
+            dispatch(getTransaksi(idUser));
+        }
+    }, [dispatch]);
+
     const handleNavToPembayaran = useCallback(async (value) => {
+        handleGetTransaksi();
         navigation.replace('Pembayaran', {
             data: value,
         });
-    }, [navigation]);
+    }, [navigation, handleGetTransaksi]);
 
     const handleMetodeBayar = useCallback(async () => {
         setButton(true);

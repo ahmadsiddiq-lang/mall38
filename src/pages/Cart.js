@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useState } from 'react';
-import { FlatList, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { BackHandler, FlatList, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { color } from '../assets/colors/Index';
 import { Poppins } from '../assets/fonts';
@@ -141,6 +141,18 @@ export default function Cart({ navigation }) {
         setDataCart([...newData]);
         setFixDataCart([...newData]);
     }, [dataCart]);
+
+    const handleBackButtonClick = useCallback(() => {
+        navigation.goBack();
+        return true;
+    }, [navigation]);
+
+    useEffect(() => {
+        BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
+        return () => {
+            BackHandler.removeEventListener('hardwareBackPress', handleBackButtonClick);
+        };
+    }, [handleBackButtonClick]);
 
     const rightSwipe = (item, index) => {
         return (

@@ -77,8 +77,14 @@ export default function EditAlamat({ navigation, route }) {
         if (idUser !== null) {
             getOngkirs();
             dispatch(getDataUser(idUser));
+            const x = setTimeout(() => {
+                navigation.navigate('CheckOut');
+                return () => {
+                    clearTimeout(x);
+                };
+            }, 1200);
         }
-    }, [dispatch, getOngkirs]);
+    }, [dispatch, getOngkirs, navigation]);
 
     const handleUpdate = useCallback(async () => {
         const idUser = await getIdUser();

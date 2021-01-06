@@ -28,6 +28,8 @@ export default function DetailProduk({ navigation, route }) {
     const detailProduk = useSelector(state => state.detailProduk.detailProduk);
     // const responAddCart = useSelector(state => state.cart.responAddCart);
 
+    console.log(detailProduk);
+
     const getDetailProduks = useCallback(() => {
         const idProduk = route.params.idProduk;
         if (idProduk) {
@@ -56,10 +58,8 @@ export default function DetailProduk({ navigation, route }) {
             dispatch(addCart(data));
             dispatch(getCArt(idUser));
             ToasSuccess('Dimasukkan ke keranjang');
-        } else {
-            navigation.navigate('Login');
         }
-    }, [dispatch, navigation]);
+    }, [dispatch]);
 
     const handleBuy = useCallback(async (item) => {
         const idUser = await getIdUser();
@@ -72,8 +72,6 @@ export default function DetailProduk({ navigation, route }) {
         if (data.product_id && data.user_id) {
             dispatch(addCart(data));
             navigation.navigate('Cart');
-        } else {
-            navigation.navigate('Login');
         }
     }, [dispatch, navigation]);
 
