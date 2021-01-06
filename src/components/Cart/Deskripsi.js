@@ -3,9 +3,9 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
 import { Poppins } from '../../assets/fonts';
 import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
-import { rupiah } from '../../config/function';
+import { rupiah, ToasInvalid } from '../../config/function';
 
-export default function Deskripsi({ navigation, fixDataCart = [] }) {
+export default function Deskripsi({ navigation, fixDataCart = [], handleUser }) {
 
     const TotalHargaProduk = () => {
         let total = 0;
@@ -13,15 +13,6 @@ export default function Deskripsi({ navigation, fixDataCart = [] }) {
             total += (Number(element.product.price) * Number(element.qty));
         });
         return total;
-    };
-
-    const TotalBayar = () => {
-        let total = 0;
-        const Ongkir = 20000;
-        fixDataCart.forEach(element => {
-            total += (Number(element.product.price) * Number(element.qty));
-        });
-        return total + Ongkir;
     };
 
     const handleProduk = useCallback(() => {
@@ -38,9 +29,12 @@ export default function Deskripsi({ navigation, fixDataCart = [] }) {
 
     const handleNav = () => {
         if (fixDataCart.length > 0) {
+            handleUser();
             navigation.navigate('CheckOut', {
                 data: handleProduk(),
             });
+        } else {
+            ToasInvalid('Pilih Produk dahulu !');
         }
     };
 
@@ -50,18 +44,6 @@ export default function Deskripsi({ navigation, fixDataCart = [] }) {
                 <Text style={styles.TextTitle}>Sub Total</Text>
                 <Text style={styles.TextItem}>Rp. {rupiah(TotalHargaProduk())}</Text>
             </View>
-            {/* <View style={styles.Item}>
-                <Text style={styles.TextTitle}>Ongkos Kirim</Text>
-                <Text style={styles.TextItem}>Rp. 20.000</Text>
-            </View>
-            <View style={styles.Item}>
-                <Text style={styles.TextTitle}>Diskon</Text>
-                <Text style={styles.TextItem}>0%</Text>
-            </View>
-            <View style={styles.Item}>
-                <Text style={styles.TextTitle}>Total Bayar</Text>
-                <Text style={styles.TextItem}>Rp. {rupiah(TotalBayar())}</Text>
-            </View> */}
             <View style={{
                 marginTop: sizeHeight(3),
             }}>

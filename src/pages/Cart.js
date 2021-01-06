@@ -16,12 +16,13 @@ import { getIdUser } from '../config/function';
 import { deleteProdukCart, getCArt } from '../redux/actions/Cart';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { getDataUser } from '../redux/actions/User';
 
 
 export default function Cart({ navigation }) {
     const dispatch = useDispatch();
     const dataCart = useSelector(state => state.cart.dataCart);
-    const [toggleCheckBox, setToggleCheckBox] = useState(false);
+    const [toggleCheckBox, setToggleCheckBox] = useState(true);
     const [dataCartState, setDataCart] = useState([]);
     const [fixDataCart, setFixDataCart] = useState([]);
     // console.log(dataCartState);
@@ -114,17 +115,30 @@ export default function Cart({ navigation }) {
         prevOpenedRow = row[index];
     };
 
+    const handleUser = useCallback(async () => {
+        const idUser = await getIdUser();
+        if (idUser !== null) {
+            dispatch(getDataUser(idUser));
+        }
+    }, [dispatch]);
+
     useEffect(() => {
         hetDataCart();
-    }, [hetDataCart]);
+        handleUser();
+        return () => {
+            hetDataCart();
+            handleUser();
+        };
+    }, [hetDataCart, handleUser]);
 
     useEffect(() => {
         const data = dataCart;
         const newData = [];
         data.forEach(element => {
-            newData.push({ ...element, checkbox: false, qty: 1 });
+            newData.push({ ...element, checkbox: true, qty: 1 });
         });
         setDataCart([...newData]);
+        setFixDataCart([...newData]);
     }, [dataCart]);
 
     const rightSwipe = (item, index) => {
@@ -245,6 +259,7 @@ export default function Cart({ navigation }) {
             </View>
             <Deskripsi
                 navigation={navigation}
+                handleUser={handleUser}
                 fixDataCart={fixDataCart} />
         </View>
     );

@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useState } from 'react';
-import { Modal, RefreshControl, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Modal, RefreshControl, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../assets/colors/Index';
 import Headers from '../components/Header/Headers';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -32,6 +32,7 @@ export default function CheckOut({ navigation, route }) {
     const [metodeBayar, setMetodeBayar] = useState({ name: 'BNI', bank: 'bni', image: require('../assets/images/MetodeBayar/bni.png') });
 
     const [refreshing, setRefreshing] = React.useState(false);
+    const [statusButton, setButton] = useState(false);
 
     const wait = useCallback((timeout) => {
         return new Promise(resolve => {
@@ -138,6 +139,7 @@ export default function CheckOut({ navigation, route }) {
     }, [dataProduk]);
 
     const handleNavToPembayaran = useCallback(async (value) => {
+        setButton(false);
         navigation.navigate('Pembayaran', {
             data: value,
         });
@@ -157,9 +159,11 @@ export default function CheckOut({ navigation, route }) {
             bank_name: bank,
             list_product: produk,
         };
-        // console.log(data);
-        dispatch(checkOut(data, handleNavToPembayaran));
-    }, [dataKurir, handleTotalHargaBayar, metodeBayar, filterdataProduk, dispatch, handleNavToPembayaran]);
+        if (dataUser && data) {
+            // dispatch(checkOut(data, handleNavToPembayaran));
+            setButton(true);
+        }
+    }, [dataKurir, handleTotalHargaBayar, metodeBayar, filterdataProduk, dispatch, handleNavToPembayaran, dataUser]);
 
     const handleMOdalItem = (value) => {
         setKurir(!modalKurir);
@@ -169,10 +173,17 @@ export default function CheckOut({ navigation, route }) {
     useEffect(() => {
         handleUser();
         getOngkirs();
+        return () => {
+            handleUser();
+            getOngkirs();
+        };
     }, [handleUser, getOngkirs]);
 
     useEffect(() => {
         setDefaultOngkir();
+        return () => {
+            setDefaultOngkir();
+        };
     }, [setDefaultOngkir]);
 
     return (
@@ -212,6 +223,7 @@ export default function CheckOut({ navigation, route }) {
                                         })}
                                         activeOpacity={0.8}
                                         style={styles.BtnBack}
+                                        disabled={!loadingData}
                                     >
                                         <FontAwesome5
                                             name="edit"
@@ -222,23 +234,24 @@ export default function CheckOut({ navigation, route }) {
                                     </TouchableOpacity>
                                 </View>
                                 {
-                                    loadingData &&
+                                    loadingData ?
                                         dataUser.user.kecamatan !== null ?
-                                        <View>
-                                            {console.log(dataUser)}
+                                            <View>
+                                                <Text style={{
+                                                    marginTop: sizeHeight(1),
+                                                    fontSize: sizeFont(3.3),
+                                                }}>[{dataUser.user.phone}]</Text>
+                                                <Text style={{
+                                                    fontSize: sizeFont(3.3),
+                                                }}>{dataUser.user.alamat + ', ' + dataUser.user.kecamatan.nama_kecamatan + ', ' + dataUser.user.kabupaten.nama_kabupaten + ', ' + dataUser.user.provinsi.nama_provinsi}</Text>
+                                            </View>
+                                            :
                                             <Text style={{
                                                 marginTop: sizeHeight(1),
                                                 fontSize: sizeFont(3.3),
-                                            }}>[{dataUser.user.phone}]</Text>
-                                            <Text style={{
-                                                fontSize: sizeFont(3.3),
-                                            }}>{dataUser.user.alamat + ', ' + dataUser.user.kecamatan.nama_kecamatan + ', ' + dataUser.user.kabupaten.nama_kabupaten + ', ' + dataUser.user.provinsi.nama_provinsi}</Text>
-                                        </View>
+                                            }}>Pilih Alamat</Text>
                                         :
-                                        <Text style={{
-                                            marginTop: sizeHeight(1),
-                                            fontSize: sizeFont(3.3),
-                                        }}>Pilih Alamat</Text>
+                                        <ActivityIndicator color={color.mainColor} size="small" />
 
                                 }
                             </View>
@@ -271,6 +284,7 @@ export default function CheckOut({ navigation, route }) {
                 handleHargaTotal={handleHargaTotal}
                 handleTotalHargaBayar={handleTotalHargaBayar}
                 handleMetodeBayar={handleMetodeBayar}
+                statusButton={statusButton}
             />
             <Modal
                 animationType="slide"

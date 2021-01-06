@@ -1,14 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
 import { Poppins } from '../../assets/fonts';
-import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
+import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import { rupiah } from '../../config/function';
 
-export default function BuatPesanan({ handleHargaTotal, handleMetodeBayar, handleTotalHargaBayar }) {
+export default function BuatPesanan({ handleHargaTotal, handleMetodeBayar, handleTotalHargaBayar, statusButton }) {
 
-    const [statusButton, setButton] = useState(false);
     return (
         <View style={styles.Container}>
             <View style={{
@@ -35,12 +34,21 @@ export default function BuatPesanan({ handleHargaTotal, handleMetodeBayar, handl
                     color: color.mainColor,
                 }}>Rp. {handleTotalHargaBayar() > 0 && rupiah(handleTotalHargaBayar())}</Text>
             </View>
+            {
+                statusButton &&
+                <View style={{
+                    position: 'absolute',
+                    width: SCREEN_WIDTH,
+                    marginTop: sizeHeight(4),
+                }}>
+                    <ActivityIndicator color={color.mainColor} size="large" />
+                </View>
+            }
             <View style={{
                 marginTop: sizeHeight(3),
             }}>
                 <TouchableOpacity
                     onPress={() => {
-                        setButton(true);
                         handleMetodeBayar();
                     }}
                     activeOpacity={0.8}

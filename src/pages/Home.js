@@ -84,6 +84,10 @@ export default function Home({ navigation }) {
     useEffect(() => {
         getData();
         hetDataCart();
+        return () => {
+            getData();
+            hetDataCart();
+        };
     }, [getData, hetDataCart]);
 
     React.useEffect(() => {
