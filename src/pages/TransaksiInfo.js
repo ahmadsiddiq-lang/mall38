@@ -4,7 +4,7 @@ import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-nat
 import { useDispatch, useSelector } from 'react-redux';
 import { color } from '../assets/colors/Index';
 import { sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
-import Headers from '../components/Header/Headers';
+import Header from '../components/Header/Home';
 import CardProduk from '../components/TransaksiInfo/CardProduk';
 import TopBar from '../components/TransaksiInfo/TopBar';
 import { getIdUser } from '../config/function';
@@ -47,7 +47,7 @@ export default function Transaksi({ navigation }) {
 
     return (
         <View style={styles.Container}>
-            <Headers navigation={navigation} title={'Pesanan Saya'} />
+            <Header navigation={navigation} />
             <TopBar
                 handleTabbarFilter={handleTabbarFilter}
             />

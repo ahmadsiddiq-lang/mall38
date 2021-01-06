@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useRef } from 'react';
-import { ActivityIndicator, Animated, ScrollView, StatusBar, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Animated, BackHandler, ScrollView, StatusBar, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { color } from '../assets/colors/Index';
 import Banner from '../components/DetailProduk/Banner';
@@ -80,6 +80,19 @@ export default function DetailProduk({ navigation, route }) {
     const clearDetailProduks = useCallback(async () => {
         dispatch(clearDetailProduk());
     }, [dispatch]);
+
+    const handleBackButtonClick = useCallback(() => {
+        navigation.goBack();
+        clearDetailProduks();
+        return true;
+    }, [navigation, clearDetailProduks]);
+
+    useEffect(() => {
+        BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
+        return () => {
+            BackHandler.removeEventListener('hardwareBackPress', handleBackButtonClick);
+        };
+    }, [handleBackButtonClick]);
 
     useEffect(() => {
         getDetailProduks();

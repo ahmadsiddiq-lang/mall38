@@ -1,80 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { getIdUser } from '../../config/function';
-import { getTransaksi } from '../../redux/actions/Transaksi';
-import { useDispatch, useSelector } from 'react-redux';
 
-export default function Content({ navigation }) {
-    const dispatch = useDispatch();
-
-    const [CircleStatus, setCircleStatus] = useState(false);
-    const dataTransaksi = useSelector(state => state.dataTransaksi.dataTransaksi.order);
-    const handleGetTransaksi = useCallback(async () => {
-        const idUser = await getIdUser();
-        if (idUser !== null) {
-            dispatch(getTransaksi(idUser));
-        }
-    }, [dispatch]);
-
-
-    const handleCircle = useCallback(async () => {
-        const idUser = await getIdUser();
-        if (idUser !== null && dataTransaksi !== undefined) {
-            const data = dataTransaksi.filter(item => item.status_pembayaran === 'pending');
-            if (data.length > 0) {
-                setCircleStatus(true);
-            }
-        }
-    }, [dataTransaksi]);
-
-
-
-
-    useEffect(() => {
-        handleGetTransaksi();
-    }, [handleGetTransaksi]);
-
-    useEffect(() => {
-        handleCircle();
-    }, [handleCircle]);
+export default function Content() {
 
     return (
         <View>
-            <TouchableOpacity
-                onPress={() => navigation.navigate('TransaksiInfo')}
-                activeOpacity={0.8}
-                style={styles.BtnList}
-            >
-                <View style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                }}>
-                    <View>
-                        {
-                            CircleStatus &&
-                            <View style={styles.Circle} />
-                        }
-                        <Ionicons
-                            name="cube-outline"
-                            color={color.mainColor}
-                            size={sizeFont(6.5)}
-                        />
-                    </View>
-                    <Text style={{
-                        fontSize: sizeFont(3.6),
-                        marginLeft: sizeWidth(3),
-                    }}>Pesanan Saya</Text>
-                </View>
-                <Ionicons
-                    name="chevron-forward"
-                    color={color.mainColor}
-                    size={sizeFont(4.5)}
-                />
-            </TouchableOpacity>
             <TouchableOpacity
                 activeOpacity={0.8}
                 style={styles.BtnList}

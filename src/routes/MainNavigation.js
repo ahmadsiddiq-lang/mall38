@@ -23,10 +23,49 @@ import DetailOrder from '../pages/DetailOrder';
 import EditAlamat from '../pages/EditAlamat';
 import Search from '../pages/Search';
 import Auth from '../pages/Auth';
+import { useDispatch, useSelector } from 'react-redux';
+import { getIdUser } from '../config/function';
+import { getTransaksi } from '../redux/actions/Transaksi';
 
 const Tab = createBottomTabNavigator();
 
 export function MyTabbar() {
+
+    const dispatch = useDispatch();
+
+    const dataTransaksi = useSelector(state => state.dataTransaksi.dataTransaksi.order);
+    const [CircleStatus, setCircleStatus] = React.useState([]);
+    const handleGetTransaksi = React.useCallback(async () => {
+        const idUser = await getIdUser();
+        if (idUser !== null) {
+            dispatch(getTransaksi(idUser));
+        }
+    }, [dispatch]);
+
+    const handleCircle = React.useCallback(async () => {
+        const idUser = await getIdUser();
+        if (idUser !== null && dataTransaksi !== undefined) {
+            const data = dataTransaksi.filter(item => item.status_pembayaran === 'pending');
+            if (data.length > 0) {
+                setCircleStatus(data);
+            }
+        }
+    }, [dataTransaksi]);
+
+    React.useEffect(() => {
+        handleGetTransaksi();
+        return () => {
+            handleGetTransaksi();
+        };
+    }, [handleGetTransaksi]);
+
+    React.useEffect(() => {
+        handleCircle();
+        return () => {
+            handleCircle();
+        };
+    }, [handleCircle]);
+
     return (
         <Tab.Navigator
             tabBarOptions={{
@@ -67,17 +106,21 @@ export function MyTabbar() {
                 }}
             />
             <Tab.Screen
-                name="Favorite"
-                component={Favorite}
+                name="Order"
+                component={TransaksiInfo}
                 options={{
                     tabBarIcon: ({ focused }) => {
                         return (
                             <Ionicons
-                                name={focused ? 'heart' : 'heart-outline'}
+                                name={focused ? 'cube' : 'cube-outline'}
                                 size={sizeFont(6)}
                                 color={color.mainColor}
                             />
                         );
+                    },
+                    tabBarBadge: CircleStatus.length,
+                    tabBarBadgeStyle: {
+                        backgroundColor: '#2a05ff',
                     },
                 }}
             />
@@ -109,7 +152,6 @@ export default function MainNavigation() {
             <StatusBar translucent={false} backgroundColor={color.mainColor} barStyle="light-content" />
             <Stack.Navigator initialRouteName="Auth" headerMode="none">
                 <Stack.Screen name="MyTabbar" component={MyTabbar} />
-                <Stack.Screen name="TransaksiInfo" component={TransaksiInfo} />
                 <Stack.Screen name="ProductCategori" component={ProductCategori} />
                 <Stack.Screen name="DetailProduk" component={DetailProduk} />
                 <Stack.Screen name="Login" component={Login} />
