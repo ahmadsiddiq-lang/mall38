@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: sizeWidth(5),
         paddingVertical: sizeHeight(1.5),
         borderTopWidth: 1,
-        borderTopColor: color.border2,
+        borderTopColor: color.border3,
     },
 
     BtnBuy: {

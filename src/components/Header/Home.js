@@ -82,7 +82,7 @@ export default function Home({ navigation, headerOpacity }) {
 const styles = StyleSheet.create({
     Container: {
         width: SCREEN_WIDTH,
-        height: sizeHeight(10.5),
+        height: sizeHeight(12),
         paddingHorizontal: sizeWidth(5),
     },
     content: {

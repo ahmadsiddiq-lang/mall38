@@ -22,7 +22,7 @@ import { checkOut } from '../redux/actions/CheckOut';
 export default function CheckOut({ navigation, route }) {
 
     const dispatch = useDispatch();
-    const dataUser = route.params.dataUser;
+    const dataUser = useSelector(state => state.dataUser.dataUser);
     const dataOngkir = useSelector(state => state.dataOngkir.dataOngkir.result);
     const [modalKurir, setKurir] = useState(false);
     // const [loadingData, setLoadingData] = useState(false);
@@ -42,14 +42,15 @@ export default function CheckOut({ navigation, route }) {
 
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
+        getOngkirs();
+        setDefaultOngkir();
         wait(2000).then(() => {
-            getOngkirs();
             setRefreshing(false);
         });
-    }, [wait, getOngkirs]);
+    }, [wait, getOngkirs, setDefaultOngkir]);
 
     const dataProduk = route.params.data;
-    console.log(dataUser);
+    // console.log(dataUser);
 
     const handleUser = useCallback(async () => {
         const idUser = await getIdUser();
@@ -92,7 +93,7 @@ export default function CheckOut({ navigation, route }) {
     }, [dispatch, handleBeratProduk]);
 
     const setDefaultOngkir = useCallback(async () => {
-        if (dataOngkir !== undefined && dataKurir == null) {
+        if (dataOngkir !== undefined) {
             const ongkir = dataOngkir[0][0];
             const data = {
                 name: ongkir.name,
@@ -101,9 +102,9 @@ export default function CheckOut({ navigation, route }) {
                 value: ongkir.costs[1].cost[0].value,
             };
             setDataKurir(data);
-            // console.log(data);
         }
-    }, [dataOngkir, dataKurir]);
+        // console.log(dataOngkir);
+    }, [dataOngkir]);
 
     const setDataOngkirnew = useCallback(async (dataParams, name) => {
         if (dataParams !== undefined) {
@@ -138,30 +139,39 @@ export default function CheckOut({ navigation, route }) {
         }
     }, [dataProduk]);
 
+    const hadnleLoading = () => {
+        const x = setTimeout(() => {
+            setButton(false);
+            return () => {
+                clearTimeout(x);
+            };
+        }, 5000);
+    };
+
     const handleNavToPembayaran = useCallback(async (value) => {
-        setButton(false);
-        navigation.navigate('Pembayaran', {
+        navigation.replace('Pembayaran', {
             data: value,
         });
     }, [navigation]);
 
     const handleMetodeBayar = useCallback(async () => {
+        setButton(true);
+        hadnleLoading();
         const idUser = await getIdUser();
         const amount = handleTotalHargaBayar();
         const bank = metodeBayar.bank;
         const produk = await filterdataProduk();
-        const data = {
-            user_id: idUser,
-            courier: dataKurir.name,
-            service: dataKurir.service,
-            ongkir: dataKurir.value,
-            amount: amount,
-            bank_name: bank,
-            list_product: produk,
-        };
-        if (dataUser && data) {
+        if (dataUser && idUser && dataKurir && amount && bank && produk) {
+            const data = {
+                user_id: idUser,
+                courier: dataKurir.name,
+                service: dataKurir.service,
+                ongkir: dataKurir.value,
+                amount: amount,
+                bank_name: bank,
+                list_product: produk,
+            };
             dispatch(checkOut(data, handleNavToPembayaran));
-            setButton(true);
         }
     }, [dataKurir, handleTotalHargaBayar, metodeBayar, filterdataProduk, dispatch, handleNavToPembayaran, dataUser]);
 
