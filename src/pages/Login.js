@@ -11,6 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getDataUser } from '../redux/actions/User';
 import { getCArt } from '../redux/actions/Cart';
+import { validate, validateEmail, validatePassword } from '../config/function';
 
 export default function Login({ navigation }) {
 
@@ -18,6 +19,9 @@ export default function Login({ navigation }) {
     const [focus, setFocus] = useState(null);
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
+    const [eye, setEye] = useState(true);
+
+
     // const dataUser = useSelector(state => state.dataLogin.dataUser);
     const dataAdmin = useSelector(state => state.dataLogin.dataAdmin);
 
@@ -44,9 +48,15 @@ export default function Login({ navigation }) {
             email: email,
             password: password,
         };
-        // if (email !== null && password !== null && value) {
-        if (email !== null && password !== null) {
-            dispatch(LoginUser(data, handleErrorLogin, handleLoginSuccess));
+        if (validateEmail(email)) {
+            // if (validatePassword(password)) {
+            if (password !== null) {
+                dispatch(LoginUser(data, handleErrorLogin, handleLoginSuccess));
+            } else {
+                ToastAndroid.showWithGravity('Periksa kembali password', ToastAndroid.LONG, ToastAndroid.CENTER);
+            }
+        } else {
+            ToastAndroid.showWithGravity('Format email salah !', ToastAndroid.LONG, ToastAndroid.CENTER);
         }
     }, [dispatch, email, password, handleErrorLogin, handleLoginSuccess]);
 
@@ -131,13 +141,14 @@ export default function Login({ navigation }) {
                                     <FontAwesome5 name="key" color={color.mainColor} size={sizeFont(5)} solid />
                                     <TextInput
                                         onChangeText={(e) => setPassword(e)}
-                                        secureTextEntry={true}
+                                        secureTextEntry={eye}
                                         onBlur={() => setFocus(null)}
                                         onFocus={() => setFocus(1)}
                                         style={styles.Input}
                                         placeholder="Password"
                                         onSubmitEditing={() => handleLogin()}
                                     />
+                                    <FontAwesome5 onPress={() => setEye(!eye)} name={eye ? 'eye-slash' : 'eye'} color={color.mainColor} size={sizeFont(4)} solid />
                                 </View>
                             </View>
                             <View style={styles.BoxContentLogin}>

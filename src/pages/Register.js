@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useState } from 'react';
-import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import { color } from '../assets/colors/Index';
 import { sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
 import HeaderRegister from '../components/Header/HeaderRegister';
@@ -8,7 +8,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { Poppins } from '../assets/fonts';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../redux/actions/Register';
-import { ToasInvalid, ToasSuccess } from '../config/function';
+import { ToasInvalid, ToasSuccess, validate, validateEmail, validatePassword } from '../config/function';
 
 export default function Register({ navigation }) {
 
@@ -18,6 +18,8 @@ export default function Register({ navigation }) {
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
     const [username, setUsername] = useState(null);
+    const [eye, setEye] = useState(true);
+
 
     const handleReponsSucces = useCallback(async () => {
         ToasSuccess('Register Success');
@@ -33,15 +35,23 @@ export default function Register({ navigation }) {
             email: email,
             password: password,
         };
-        if (email !== null && password !== null && username !== null) {
-            if (password.length >= 6) {
-                dispatch(registerUser(data, handleReponsSucces));
+        if (validateEmail(email)) {
+            if (validatePassword(password)) {
+                if (password !== null && username !== null) {
+                    if (password.length >= 6) {
+                        dispatch(registerUser(data, handleReponsSucces));
+                    } else {
+                        ToasInvalid('Password kurang dari 6');
+                    }
+                } else {
+                    console.log(data);
+                    ToasInvalid('Lengkapi data Anda');
+                }
             } else {
-                ToasInvalid('Password Invalid');
+                ToastAndroid.showWithGravity('Password 8 karakter dengan huruf besar, kecil dan angka', ToastAndroid.LONG, ToastAndroid.CENTER);
             }
         } else {
-            console.log(data);
-            ToasInvalid('Lengkapi data Anda');
+            ToastAndroid.showWithGravity('Format email salah !', ToastAndroid.LONG, ToastAndroid.CENTER);
         }
     }, [email, password, username, dispatch, handleReponsSucces]);
 
@@ -87,6 +97,7 @@ export default function Register({ navigation }) {
                         ]}>
                             <FontAwesome5 name="user" color={color.mainColor} size={sizeFont(5)} solid />
                             <TextInput
+                                maxLength={30}
                                 onChangeText={(e) => setUsername(e)}
                                 onBlur={() => setFocus(null)}
                                 onFocus={() => setFocus(2)}
@@ -103,6 +114,7 @@ export default function Register({ navigation }) {
                         ]}>
                             <FontAwesome5 name="at" color={color.mainColor} size={sizeFont(5)} solid />
                             <TextInput
+                                maxLength={30}
                                 onChangeText={(e) => setEmail(e)}
                                 onFocus={() => setFocus(0)}
                                 onBlur={() => setFocus(null)}
@@ -120,14 +132,20 @@ export default function Register({ navigation }) {
                         ]}>
                             <FontAwesome5 name="key" color={color.mainColor} size={sizeFont(5)} solid />
                             <TextInput
+                                maxLength={20}
                                 onChangeText={(e) => setPassword(e)}
-                                secureTextEntry={true}
+                                secureTextEntry={eye}
                                 onBlur={() => setFocus(null)}
                                 onFocus={() => setFocus(1)}
                                 style={styles.Input}
                                 placeholder="Password"
                             />
+                            <FontAwesome5 onPress={() => setEye(!eye)} name={eye ? 'eye-slash' : 'eye'} color={color.mainColor} size={sizeFont(4)} solid />
                         </View>
+                        <Text style={{
+                            fontSize: sizeFont(2.6),
+                            color: color.fontBlack2,
+                        }}>Password 8 karakter dengan huruf besar, kecil dan angka</Text>
                     </View>
                     <View style={styles.BoxContentLogin}>
                         <TouchableOpacity

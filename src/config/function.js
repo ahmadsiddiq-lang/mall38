@@ -134,3 +134,13 @@ export const openWhatsApp = (message) => {
         Alert.alert('Please enter mobile no');
     }
 };
+
+export const validateEmail = (text) => {
+    let reg = /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/;
+    return reg.test(text);
+};
+
+export const validatePassword = (text) => {
+    let reg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+    return reg.test(text);
+};
