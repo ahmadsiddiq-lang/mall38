@@ -5,7 +5,7 @@ import { Poppins } from '../../assets/fonts';
 import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import { rupiah, ToasInvalid } from '../../config/function';
 
-export default function Deskripsi({ navigation, fixDataCart = [], handleUser }) {
+export default function Deskripsi({ navigation, fixDataCart = [], dataUser }) {
 
     const TotalHargaProduk = () => {
         let total = 0;
@@ -28,10 +28,10 @@ export default function Deskripsi({ navigation, fixDataCart = [], handleUser }) 
     }, [fixDataCart]);
 
     const handleNav = () => {
-        if (fixDataCart.length > 0) {
-            handleUser();
+        if (fixDataCart.length > 0 && dataUser) {
             navigation.navigate('CheckOut', {
                 data: handleProduk(),
+                dataUser: dataUser,
             });
         } else {
             ToasInvalid('Pilih Produk dahulu !');

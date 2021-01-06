@@ -9,10 +9,12 @@ import { Poppins } from '../assets/fonts';
 import { getIdUser, ToasInvalid } from '../config/function';
 import { useDispatch } from 'react-redux';
 import { getDataUser, updateProfile } from '../redux/actions/User';
+import { getOngkir } from '../redux/actions/getOngkir';
 
 export default function EditAlamat({ navigation, route }) {
 
     const dataUser = route.params.dataUser;
+    const beratProduk = route.params.beratProduk;
     const dispatch = useDispatch();
 
     const provinsi_id = dataUser.user.provinsi === null ? dataUser.provinsi[0].provinsi_id : dataUser.user.provinsi.provinsi_id;
@@ -20,7 +22,7 @@ export default function EditAlamat({ navigation, route }) {
     const kecamatan_id = dataUser.user.kecamatan === null ? dataUser.kecamatan[0].kecamatan_id : dataUser.user.kecamatan.kecamatan_id;
     const phoneData = dataUser.user.phone === 'NULL' ? null : dataUser.user.phone;
 
-    // console.log(dataUser);
+    // console.log(beratProduk);
 
     const name = dataUser.user.name;
     const ktp = dataUser.user.ktp;
@@ -33,6 +35,17 @@ export default function EditAlamat({ navigation, route }) {
 
     const [dataKabupaten, setDataKabupaten] = useState(null);
     const [dataKecamatan, setDataKecamatan] = useState(null);
+
+
+    const getOngkirs = useCallback(async () => {
+        const idUser = await getIdUser();
+        if (idUser !== null) {
+            const data = new FormData();
+            data.append('user_id', idUser);
+            data.append('weight', beratProduk);
+            dispatch(getOngkir(data));
+        }
+    }, [dispatch, beratProduk]);
 
     const filterData = useCallback((idProv) => {
         const dataKab = dataUser.kabupaten.filter(item => item.provinsi_id === idProv);
@@ -62,9 +75,10 @@ export default function EditAlamat({ navigation, route }) {
     const handleUser = useCallback(async () => {
         const idUser = await getIdUser();
         if (idUser !== null) {
+            getOngkirs();
             dispatch(getDataUser(idUser));
         }
-    }, [dispatch]);
+    }, [dispatch, getOngkirs]);
 
     const handleUpdate = useCallback(async () => {
         const idUser = await getIdUser();

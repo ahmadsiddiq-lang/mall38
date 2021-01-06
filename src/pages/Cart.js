@@ -22,6 +22,7 @@ import { getDataUser } from '../redux/actions/User';
 export default function Cart({ navigation }) {
     const dispatch = useDispatch();
     const dataCart = useSelector(state => state.cart.dataCart);
+    const dataUser = useSelector(state => state.dataUser.dataUser);
     const [toggleCheckBox, setToggleCheckBox] = useState(true);
     const [dataCartState, setDataCart] = useState([]);
     const [fixDataCart, setFixDataCart] = useState([]);
@@ -259,7 +260,7 @@ export default function Cart({ navigation }) {
             </View>
             <Deskripsi
                 navigation={navigation}
-                handleUser={handleUser}
+                dataUser={dataUser}
                 fixDataCart={fixDataCart} />
         </View>
     );

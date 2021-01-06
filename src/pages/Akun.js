@@ -79,6 +79,9 @@ export default function Akun({ navigation }) {
 
     useEffect(() => {
         handleUser();
+        return () => {
+            handleUser();
+        };
     }, [handleUser]);
 
     return (

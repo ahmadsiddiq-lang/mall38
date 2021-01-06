@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, Modal, RefreshControl, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Modal, RefreshControl, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../assets/colors/Index';
 import Headers from '../components/Header/Headers';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -22,10 +22,10 @@ import { checkOut } from '../redux/actions/CheckOut';
 export default function CheckOut({ navigation, route }) {
 
     const dispatch = useDispatch();
-    const dataUser = useSelector(state => state.dataUser.dataUser);
+    const dataUser = route.params.dataUser;
     const dataOngkir = useSelector(state => state.dataOngkir.dataOngkir.result);
     const [modalKurir, setKurir] = useState(false);
-    const [loadingData, setLoadingData] = useState(false);
+    // const [loadingData, setLoadingData] = useState(false);
     const [dataKurir, setDataKurir] = useState(null);
     const [modalItem, setModalItem] = useState(null);
     const [curentIndex, setCurentIndex] = useState(0);
@@ -49,12 +49,12 @@ export default function CheckOut({ navigation, route }) {
     }, [wait, getOngkirs]);
 
     const dataProduk = route.params.data;
-    // console.log(dataOngkir);
+    console.log(dataUser);
 
     const handleUser = useCallback(async () => {
         const idUser = await getIdUser();
         if (idUser !== null) {
-            dispatch(getDataUser(idUser, setLoadingData));
+            dispatch(getDataUser(idUser));
         }
     }, [dispatch]);
 
@@ -160,7 +160,7 @@ export default function CheckOut({ navigation, route }) {
             list_product: produk,
         };
         if (dataUser && data) {
-            // dispatch(checkOut(data, handleNavToPembayaran));
+            dispatch(checkOut(data, handleNavToPembayaran));
             setButton(true);
         }
     }, [dataKurir, handleTotalHargaBayar, metodeBayar, filterdataProduk, dispatch, handleNavToPembayaran, dataUser]);
@@ -169,6 +169,13 @@ export default function CheckOut({ navigation, route }) {
         setKurir(!modalKurir);
         setModalItem(value);
     };
+
+    const handleNavToEditAlamat = useCallback(async () => {
+        navigation.navigate('EditAlamat', {
+            dataUser: dataUser,
+            beratProduk: await handleBeratProduk(),
+        });
+    }, [dataUser, navigation, handleBeratProduk]);
 
     useEffect(() => {
         handleUser();
@@ -218,12 +225,9 @@ export default function CheckOut({ navigation, route }) {
                                 }}>
                                     <Text>Alamat Pengiriman</Text>
                                     <TouchableOpacity
-                                        onPress={() => navigation.navigate('EditAlamat', {
-                                            dataUser: dataUser,
-                                        })}
+                                        onPress={() => handleNavToEditAlamat()}
                                         activeOpacity={0.8}
                                         style={styles.BtnBack}
-                                        disabled={!loadingData}
                                     >
                                         <FontAwesome5
                                             name="edit"
@@ -234,24 +238,21 @@ export default function CheckOut({ navigation, route }) {
                                     </TouchableOpacity>
                                 </View>
                                 {
-                                    loadingData ?
-                                        dataUser.user.kecamatan !== null ?
-                                            <View>
-                                                <Text style={{
-                                                    marginTop: sizeHeight(1),
-                                                    fontSize: sizeFont(3.3),
-                                                }}>[{dataUser.user.phone}]</Text>
-                                                <Text style={{
-                                                    fontSize: sizeFont(3.3),
-                                                }}>{dataUser.user.alamat + ', ' + dataUser.user.kecamatan.nama_kecamatan + ', ' + dataUser.user.kabupaten.nama_kabupaten + ', ' + dataUser.user.provinsi.nama_provinsi}</Text>
-                                            </View>
-                                            :
+                                    dataUser.user.kecamatan !== null ?
+                                        <View>
                                             <Text style={{
                                                 marginTop: sizeHeight(1),
                                                 fontSize: sizeFont(3.3),
-                                            }}>Pilih Alamat</Text>
+                                            }}>[{dataUser.user.phone}]</Text>
+                                            <Text style={{
+                                                fontSize: sizeFont(3.3),
+                                            }}>{dataUser.user.alamat + ', ' + dataUser.user.kecamatan.nama_kecamatan + ', ' + dataUser.user.kabupaten.nama_kabupaten + ', ' + dataUser.user.provinsi.nama_provinsi}</Text>
+                                        </View>
                                         :
-                                        <ActivityIndicator color={color.mainColor} size="small" />
+                                        <Text style={{
+                                            marginTop: sizeHeight(1),
+                                            fontSize: sizeFont(3.3),
+                                        }}>Pilih Alamat</Text>
 
                                 }
                             </View>
