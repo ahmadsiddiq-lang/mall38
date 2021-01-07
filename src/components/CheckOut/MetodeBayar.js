@@ -28,11 +28,15 @@ export default function MetodeBayar({ handleMOdalItem, metodeBayar }) {
                         <Text style={{
                             fontSize: sizeFont(3.7),
                             fontFamily: Poppins.Italic,
-                        }}>Bank {metodeBayar.name}</Text>
-                        <Text style={{
-                            fontSize: sizeFont(3.3),
-                            color: color.fontBlack1,
-                        }}>Transfer Bank</Text>
+                        }}>{metodeBayar.name}</Text>
+                        <Image
+                            // resizeMethod="auto"
+                            style={{
+                                resizeMode: 'contain',
+                                width: sizeWidth(15),
+                                height: sizeWidth(10),
+                            }}
+                            source={metodeBayar.image} />
                     </View>
                 </View>
                 <View style={{

@@ -135,6 +135,21 @@ export const openWhatsApp = (message) => {
     }
 };
 
+export const openLink = (link) => {
+    if (link) {
+        let url = link;
+        Linking.openURL(url)
+            .then(data => {
+                console.log('Gojek Opened successfully ' + data);
+            })
+            .catch(() => {
+                Alert.alert('Make sure Gojek installed on your device');
+            });
+    } else {
+        Alert.alert('Please enter link to send');
+    }
+};
+
 export const validateEmail = (text) => {
     let reg = /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/;
     return reg.test(text);

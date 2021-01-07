@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useRef } from 'react';
-import { ActivityIndicator, Animated, BackHandler, ScrollView, StatusBar, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Animated, BackHandler, StatusBar, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { color } from '../assets/colors/Index';
 import Banner from '../components/DetailProduk/Banner';

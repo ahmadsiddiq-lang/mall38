@@ -9,7 +9,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import ListProduk from '../components/CheckOut/ListProduk';
 import Kurir from '../components/CheckOut/Kurir';
 import MetodeBayar from '../components/CheckOut/MetodeBayar';
-import { getIdUser } from '../config/function';
+import { getIdUser, openLink } from '../config/function';
 import { getDataUser } from '../redux/actions/User';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOngkir } from '../redux/actions/getOngkir';
@@ -157,11 +157,17 @@ export default function CheckOut({ navigation, route }) {
     }, [dispatch]);
 
     const handleNavToPembayaran = useCallback(async (value) => {
+        const bank = metodeBayar.bank;
+        const link = value.actions[1].url;
         handleGetTransaksi();
-        navigation.replace('Pembayaran', {
-            data: value,
-        });
-    }, [navigation, handleGetTransaksi]);
+        if (bank === 'gopay') {
+            openLink(link);
+        } else {
+            navigation.replace('Pembayaran', {
+                data: value,
+            });
+        }
+    }, [navigation, handleGetTransaksi, metodeBayar]);
 
     const handleMetodeBayar = useCallback(async () => {
         setButton(true);
@@ -182,6 +188,7 @@ export default function CheckOut({ navigation, route }) {
             };
             dispatch(checkOut(data, handleNavToPembayaran));
         }
+        // handleNavToPembayaran();
     }, [dataKurir, handleTotalHargaBayar, metodeBayar, filterdataProduk, dispatch, handleNavToPembayaran, dataUser]);
 
     const handleMOdalItem = (value) => {
