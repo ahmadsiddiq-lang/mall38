@@ -9,7 +9,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import ListProduk from '../components/CheckOut/ListProduk';
 import Kurir from '../components/CheckOut/Kurir';
 import MetodeBayar from '../components/CheckOut/MetodeBayar';
-import { getIdUser, openLink } from '../config/function';
+import { getIdUser, openLink, ToasInvalid } from '../config/function';
 import { getDataUser } from '../redux/actions/User';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOngkir } from '../redux/actions/getOngkir';
@@ -186,17 +186,22 @@ export default function CheckOut({ navigation, route }) {
         const amount = handleTotalHargaBayar();
         const bank = metodeBayar.bank;
         const produk = await filterdataProduk();
-        if (dataUser && idUser && dataKurir && amount && bank && produk) {
-            const data = {
-                user_id: idUser,
-                courier: dataKurir.name,
-                service: dataKurir.service,
-                ongkir: dataKurir.value,
-                amount: amount,
-                bank_name: bank,
-                list_product: produk,
-            };
-            dispatch(checkOut(data, handleNavToPembayaran));
+        console.log(dataUser);
+        if (dataUser.user.alamat !== undefined) {
+            if (dataUser && idUser && dataKurir && amount && bank && produk) {
+                const data = {
+                    user_id: idUser,
+                    courier: dataKurir.name,
+                    service: dataKurir.service,
+                    ongkir: dataKurir.value,
+                    amount: amount,
+                    bank_name: bank,
+                    list_product: produk,
+                };
+                dispatch(checkOut(data, handleNavToPembayaran));
+            }
+        } else {
+            ToasInvalid('Isi alamat terlebih dahulu !');
         }
         // handleNavToPembayaran();
     }, [dataKurir, handleTotalHargaBayar, metodeBayar, filterdataProduk, dispatch, handleNavToPembayaran, dataUser]);
@@ -228,6 +233,16 @@ export default function CheckOut({ navigation, route }) {
             setDefaultOngkir();
         };
     }, [setDefaultOngkir]);
+
+    useEffect(() => {
+        return () => {
+            setDataKurir(null);
+            setModalItem(null);
+            setMetodeBayar({});
+        };
+    }, []);
+
+
 
     return (
         <View style={styles.Container}>

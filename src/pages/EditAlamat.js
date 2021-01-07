@@ -21,14 +21,16 @@ export default function EditAlamat({ navigation, route }) {
     const kabupaten_id = dataUser.user.kabupaten === null ? dataUser.kabupaten[0].kabupaten_id : dataUser.user.kabupaten.kabupaten_id;
     const kecamatan_id = dataUser.user.kecamatan === null ? dataUser.kecamatan[0].kecamatan_id : dataUser.user.kecamatan.kecamatan_id;
     const phoneData = dataUser.user.phone === 'NULL' ? null : dataUser.user.phone;
+    const kodePosS = dataUser.user.phone === null ? null : dataUser.user.kode_pos;
+    const ktpP = dataUser.user.phone === null ? null : dataUser.user.ktp;
 
     // console.log(beratProduk);
 
     const name = dataUser.user.name;
-    const ktp = dataUser.user.ktp;
-    const kodePos = dataUser.user.kode_pos;
     const [telpon, setTelpon] = useState(phoneData);
     const [alamat, setAlamat] = useState(dataUser.user.alamat);
+    const [kodePos, setKodePos] = useState(kodePosS);
+    const [ktp, setKtp] = useState(ktpP);
     const [provinsi, setProvinsi] = useState(provinsi_id);
     const [kabupaten, setKabupaten] = useState(kabupaten_id);
     const [kecamatan, setKecamatan] = useState(kecamatan_id);
@@ -127,7 +129,7 @@ export default function EditAlamat({ navigation, route }) {
                             keyboardType="phone-pad"
                             onChangeText={(e) => setTelpon(e)}
                             value={telpon}
-                            placeholder="Nomor Telepon"
+                            placeholder="nomor Telepon"
                             style={styles.Input}
                         />
                     </View>
@@ -138,7 +140,29 @@ export default function EditAlamat({ navigation, route }) {
                         <TextInput
                             onChangeText={(e) => setAlamat(e)}
                             value={alamat}
-                            placeholder="Alamat"
+                            placeholder="alamat"
+                            style={styles.Input}
+                        />
+                    </View>
+                    <View style={styles.BoxList}>
+                        <Text style={{
+                            fontSize: sizeFont(3.5),
+                        }}>Kode Pos</Text>
+                        <TextInput
+                            onChangeText={(e) => setKodePos(e)}
+                            value={kodePos}
+                            placeholder="koode pos"
+                            style={styles.Input}
+                        />
+                    </View>
+                    <View style={styles.BoxList}>
+                        <Text style={{
+                            fontSize: sizeFont(3.5),
+                        }}>No. KTP / Tanda Pengenal</Text>
+                        <TextInput
+                            onChangeText={(e) => setKtp(e)}
+                            value={ktp}
+                            placeholder="tanda pengenal"
                             style={styles.Input}
                         />
                     </View>

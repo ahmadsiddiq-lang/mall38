@@ -40,7 +40,8 @@ export const updateProfile = (data, handleUser) => {
         await Axios.post(BASE_URL + 'post-update-profile', data, {
             withCredentials: true,
             headers: {
-                'Content-Type': 'multipart/form-data',
+                Accept: 'application/json',
+                Authorization: 'Bearer' + await getToken(),
             },
         })
             .then(respon => {
