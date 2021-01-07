@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { ToasInvalid, ToasSuccess } from '../../config/function';
+import { getToken, ToasInvalid, ToasSuccess } from '../../config/function';
 import { BASE_URL } from '../../config/URL';
 
 export const GET_USER = 'GET_USER';
@@ -9,6 +9,10 @@ export const getDataUser = (id, setLoadingData) => {
     return async (dispatch) => {
         await Axios.get(BASE_URL + 'get-user-profile?user_id=' + id, {
             withCredentials: true,
+            headers: {
+                Accept: 'application/json',
+                Authorization: 'Bearer' + await getToken(),
+            },
         }).then(dataUser => {
             // console.log(dataUser);
             if (setLoadingData) {

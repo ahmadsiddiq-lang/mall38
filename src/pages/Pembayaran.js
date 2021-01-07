@@ -11,13 +11,17 @@ import { rupiah, ToasSuccess } from '../config/function';
 
 export default function Pembayaran({ navigation, route }) {
 
-    // console.log(route.params);
 
     const dataPembayaran = route.params.data;
+    // console.log(dataPembayaran);
 
     const SalinAccount = () => {
-        Clipboard.setString(dataPembayaran.va_numbers[0].va_number);
+        Clipboard.setString(filterData() ? dataPembayaran.payment_code : dataPembayaran.va_numbers[0].va_number);
         ToasSuccess('Berhasil disalin');
+    };
+
+    const filterData = () => {
+        return dataPembayaran.payment_type === 'cstore';
     };
 
     return (
@@ -63,11 +67,20 @@ export default function Pembayaran({ navigation, route }) {
                     justifyContent: 'space-between',
                     marginTop: sizeHeight(2),
                 }}>
-                    <Text style={{
-                        fontSize: sizeFont(3.5),
-                    }}>Bank <Text style={{
-                        textTransform: 'uppercase',
-                    }} >{dataPembayaran.va_numbers[0].bank}</Text></Text>
+                    {
+                        filterData() ?
+                            <Text style={{
+                                fontSize: sizeFont(3.5),
+                            }}>Store <Text style={{
+                                textTransform: 'uppercase',
+                            }} >{filterData() ? dataPembayaran.store : dataPembayaran.va_numbers[0].bank}</Text></Text>
+                            :
+                            <Text style={{
+                                fontSize: sizeFont(3.5),
+                            }}>Bank <Text style={{
+                                textTransform: 'uppercase',
+                            }} >{filterData() ? dataPembayaran.store : dataPembayaran.va_numbers[0].bank}</Text></Text>
+                    }
                     <Text
                         onPress={() => SalinAccount()}
                         style={{
@@ -81,14 +94,21 @@ export default function Pembayaran({ navigation, route }) {
                     justifyContent: 'space-between',
                     marginVertical: sizeHeight(1),
                 }}>
-                    <Text style={{
-                        fontSize: sizeFont(3.5),
-                    }}>Virtual Account</Text>
+                    {
+                        filterData() ?
+                            <Text style={{
+                                fontSize: sizeFont(3.5),
+                            }}>Payment Code</Text>
+                            :
+                            <Text style={{
+                                fontSize: sizeFont(3.5),
+                            }}>Virtual Account</Text>
+                    }
                     <Text style={{
                         fontSize: sizeFont(4),
                         color: color.mainColor,
                         fontFamily: Poppins.Medium,
-                    }}>{dataPembayaran.va_numbers[0].va_number}</Text>
+                    }}>{filterData() ? dataPembayaran.payment_code : dataPembayaran.va_numbers[0].va_number}</Text>
                 </View>
             </View>
             <View style={{

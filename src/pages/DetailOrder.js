@@ -19,7 +19,7 @@ export default function DetailOrder({ navigation, route }) {
     const dispatch = useDispatch();
     const dataDetailOrder = useSelector(state => state.detailOrder.detailOrder);
 
-    // console.log(objekEmpty(dataDetailOrde));
+    // console.log(dataDetailOrder);
 
     const getDataDetailOrder = useCallback(async () => {
         const idOrer = route.params.orderId;

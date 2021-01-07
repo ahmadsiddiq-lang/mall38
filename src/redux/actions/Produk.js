@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import { getToken } from '../../config/function';
 import { BASE_URL } from '../../config/URL';
 export const GET_PRODUK = 'GET_PRODUK';
 
@@ -6,6 +7,10 @@ export const getProduk = (setVisible) => {
     return async (dispatch) => {
         await Axios.get(BASE_URL + 'product', {
             withCredentials: true,
+            headers: {
+                Accept: 'application/json',
+                Authorization: 'Bearer' + await getToken(),
+            },
         }).then(dataProduk => {
             if (setVisible) {
                 setVisible(true);

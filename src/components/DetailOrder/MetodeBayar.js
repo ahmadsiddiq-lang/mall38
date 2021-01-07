@@ -83,12 +83,7 @@ export default function MetodeBayar({ dataDetailOrder = {} }) {
                             marginLeft: sizeWidth(10),
                             marginTop: sizeHeight(1),
                         }}>
-                            <Text style={{
-                                fontSize: sizeFont(3.5),
-                                color: color.fontBlack1,
-                            }}>Bank
-                                <Text style={{ textTransform: 'uppercase' }}> {dataDetailOrder.bank_name}</Text>
-                            </Text>
+                            <Text style={{ textTransform: 'uppercase' }}> {dataDetailOrder.bank_name}</Text>
                             <Text
                                 onPress={() => SalinAccount()}
                                 style={{
@@ -105,7 +100,7 @@ export default function MetodeBayar({ dataDetailOrder = {} }) {
                             <Text style={{
                                 fontSize: sizeFont(3.3),
                                 color: color.fontBlack1,
-                            }}>Virtual Account</Text>
+                            }}>Kode Pembayaran</Text>
                             <Text style={{
                                 fontSize: sizeFont(4),
                                 color: color.mainColor,

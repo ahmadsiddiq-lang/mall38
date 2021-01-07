@@ -118,7 +118,7 @@ export function MyTabbar() {
                             />
                         );
                     },
-                    tabBarBadge: CircleStatus.length,
+                    tabBarBadge: CircleStatus.length > 0 ? CircleStatus.length : null,
                     tabBarBadgeStyle: {
                         backgroundColor: '#2a05ff',
                         fontSize: sizeFont(2.8),

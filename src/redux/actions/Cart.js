@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { ToasSuccess } from '../../config/function';
+import { getToken, ToasSuccess } from '../../config/function';
 import { BASE_URL } from '../../config/URL';
 
 export const GET_CART = 'GET_CART';
@@ -8,7 +8,13 @@ export const DELETE_PRODUK_CART = 'DELETE_PRODUK_CART';
 
 export const getCArt = (idUser) => {
     return async (dispatch) => {
-        await Axios.get(BASE_URL + 'list-cart?user_id=' + idUser)
+        await Axios.get(BASE_URL + 'list-cart?user_id=' + idUser, {
+            withCredentials: true,
+            headers: {
+                Accept: 'application/json',
+                Authorization: 'Bearer' + await getToken(),
+            },
+        })
             .then(dataCart => {
                 // console.log(dataCart);
                 dispatch({
@@ -21,7 +27,13 @@ export const getCArt = (idUser) => {
 
 export const addCart = (data) => {
     return async (dispatch) => {
-        await Axios.post(BASE_URL + 'add-to-cart', data)
+        await Axios.post(BASE_URL + 'add-to-cart', data, {
+            withCredentials: true,
+            headers: {
+                Accept: 'application/json',
+                Authorization: 'Bearer' + await getToken(),
+            },
+        })
             .then(responAddCart => {
                 dispatch({
                     type: ADD_CART,
@@ -33,7 +45,13 @@ export const addCart = (data) => {
 
 export const deleteProdukCart = (data, hetDataCart) => {
     return async (dispatch) => {
-        await Axios.post(BASE_URL + 'delete-product-cart', data)
+        await Axios.post(BASE_URL + 'delete-product-cart', data, {
+            withCredentials: true,
+            headers: {
+                Accept: 'application/json',
+                Authorization: 'Bearer' + await getToken(),
+            },
+        })
             .then(responAddCart => {
                 ToasSuccess('Produk berhasil dihapus');
                 // console.log(responAddCart);

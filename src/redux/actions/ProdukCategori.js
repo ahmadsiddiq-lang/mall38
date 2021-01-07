@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import { getToken } from '../../config/function';
 import { BASE_URL } from '../../config/URL';
 
 export const GET_PRODUK_CATEGORI = 'GET_PRODUK_CATEGORI';
@@ -8,6 +9,10 @@ export const getProdukCategori = (id) => {
     return async (dispatch) => {
         await Axios.get(BASE_URL + 'get-product-category?by_category_id=' + id, {
             withCredentials: true,
+            headers: {
+                Accept: 'application/json',
+                Authorization: 'Bearer' + await getToken(),
+            },
         })
             .then(dataProdukCategori => {
                 dispatch({

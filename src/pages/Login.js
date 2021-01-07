@@ -48,15 +48,17 @@ export default function Login({ navigation }) {
             email: email,
             password: password,
         };
-        if (validateEmail(email)) {
-            // if (validatePassword(password)) {
-            if (password !== null) {
-                dispatch(LoginUser(data, handleErrorLogin, handleLoginSuccess));
+        if (value != null) {
+            if (validateEmail(email)) {
+                // if (validatePassword(password)) {
+                if (password !== null) {
+                    dispatch(LoginUser(data, handleErrorLogin, handleLoginSuccess));
+                } else {
+                    ToastAndroid.showWithGravity('Periksa kembali password', ToastAndroid.LONG, ToastAndroid.CENTER);
+                }
             } else {
-                ToastAndroid.showWithGravity('Periksa kembali password', ToastAndroid.LONG, ToastAndroid.CENTER);
+                ToastAndroid.showWithGravity('Format email salah !', ToastAndroid.LONG, ToastAndroid.CENTER);
             }
-        } else {
-            ToastAndroid.showWithGravity('Format email salah !', ToastAndroid.LONG, ToastAndroid.CENTER);
         }
     }, [dispatch, email, password, handleErrorLogin, handleLoginSuccess]);
 
@@ -65,13 +67,14 @@ export default function Login({ navigation }) {
             email: 'info@mall38.com',
             password: 'mall38diloka',
         };
-        dispatch(LoginAdmin(data));
-    }, [dispatch]);
+        dispatch(LoginAdmin(data, storeData));
+    }, [dispatch, storeData]);
 
     // console.log(dataAdmin);
     const storeData = useCallback(async (value) => {
+        const token = value.token;
         try {
-            await AsyncStorage.setItem('token', value);
+            await AsyncStorage.setItem('token', token);
         } catch (e) {
             // saving error
             console.log(e);
@@ -80,10 +83,7 @@ export default function Login({ navigation }) {
 
     useEffect(() => {
         handleLoginAdmin();
-        if (dataAdmin.length) {
-            storeData(dataAdmin.token);
-        }
-    }, [dataAdmin, handleLoginAdmin, storeData]);
+    }, [dataAdmin, handleLoginAdmin]);
 
     return (
         <View style={styles.Container}>

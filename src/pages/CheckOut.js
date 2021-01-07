@@ -166,11 +166,11 @@ export default function CheckOut({ navigation, route }) {
 
     const handleNavToPembayaran = useCallback(async (value) => {
         const bank = metodeBayar.bank;
-        const link = value.actions[1].url;
         hetDataCart();
         handleGetTransaksi();
         if (bank === 'gopay') {
-            navigation.replace('TransaksiInfo');
+            navigation.replace('MyTabbar');
+            const link = value.actions !== undefined && value.actions[1].url;
             openLink(link);
         } else {
             navigation.replace('Pembayaran', {

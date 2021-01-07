@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import { getToken } from '../../config/function';
 import { BASE_URL } from '../../config/URL';
 
 
@@ -7,7 +8,13 @@ export const CLEAR = 'CLEAR';
 
 export const detailOrder = (idOrder) => {
     return async (dispatch) => {
-        await Axios.get(BASE_URL + 'detail-order?by_order_id=' + idOrder)
+        await Axios.get(BASE_URL + 'detail-order?by_order_id=' + idOrder, {
+            withCredentials: true,
+            headers: {
+                Accept: 'application/json',
+                Authorization: 'Bearer' + await getToken(),
+            },
+        })
             .then(respons => {
                 // console.log(respons);
                 dispatch({

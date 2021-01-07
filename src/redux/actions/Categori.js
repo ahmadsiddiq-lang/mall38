@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import { getToken } from '../../config/function';
 import { BASE_URL } from '../../config/URL';
 export const GET_CATEGORI = 'GET_CATEGORI';
 
@@ -6,6 +7,10 @@ export const getCategori = () => {
     return async (dispatch) => {
         await Axios.get(BASE_URL + 'category', {
             withCredentials: true,
+            headers: {
+                Accept: 'application/json',
+                Authorization: 'Bearer' + await getToken(),
+            },
         }).then(dataCategori => {
             dispatch({
                 type: GET_CATEGORI,
