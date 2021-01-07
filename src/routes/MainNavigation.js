@@ -166,6 +166,7 @@ export default function MainNavigation() {
                 <Stack.Screen name="EditAlamat" component={EditAlamat} />
                 <Stack.Screen name="Search" component={Search} />
                 <Stack.Screen name="Auth" component={Auth} />
+                <Stack.Screen name="TransaksiInfo" component={TransaksiInfo} />
             </Stack.Navigator>
         </NavigationContainer>
     );

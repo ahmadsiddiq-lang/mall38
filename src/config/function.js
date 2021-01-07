@@ -140,10 +140,10 @@ export const openLink = (link) => {
         let url = link;
         Linking.openURL(url)
             .then(data => {
-                console.log('Gojek Opened successfully ' + data);
+                console.log('Aplikasi Opened successfully ' + data);
             })
             .catch(() => {
-                Alert.alert('Make sure Gojek installed on your device');
+                Alert.alert('Make sure Aplikasi installed on your device');
             });
     } else {
         Alert.alert('Please enter link to send');

@@ -18,6 +18,7 @@ import ListKurir from '../components/CheckOut/ListKurir';
 import ListMeodeBayar from '../components/CheckOut/ListMeodeBayar';
 import { checkOut } from '../redux/actions/CheckOut';
 import { getTransaksi } from '../redux/actions/Transaksi';
+import { getCArt } from '../redux/actions/Cart';
 
 
 export default function CheckOut({ navigation, route }) {
@@ -156,18 +157,27 @@ export default function CheckOut({ navigation, route }) {
         }
     }, [dispatch]);
 
+    const hetDataCart = useCallback(async () => {
+        const idUser = await getIdUser();
+        if (idUser) {
+            dispatch(getCArt(idUser));
+        }
+    }, [dispatch]);
+
     const handleNavToPembayaran = useCallback(async (value) => {
         const bank = metodeBayar.bank;
         const link = value.actions[1].url;
+        hetDataCart();
         handleGetTransaksi();
         if (bank === 'gopay') {
+            navigation.replace('TransaksiInfo');
             openLink(link);
         } else {
             navigation.replace('Pembayaran', {
                 data: value,
             });
         }
-    }, [navigation, handleGetTransaksi, metodeBayar]);
+    }, [navigation, handleGetTransaksi, metodeBayar, hetDataCart]);
 
     const handleMetodeBayar = useCallback(async () => {
         setButton(true);

@@ -11,7 +11,7 @@ import Headers from '../components/Header/Headers';
 import MetodeBayar from '../components/DetailOrder/MetodeBayar';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
-import { detailOrder } from '../redux/actions/DetailOrder';
+import { detailOrder, clearDetailOrder } from '../redux/actions/DetailOrder';
 import { rupiah, objekEmpty, openWhatsApp } from '../config/function';
 
 export default function DetailOrder({ navigation, route }) {
@@ -28,9 +28,19 @@ export default function DetailOrder({ navigation, route }) {
         }
     }, [dispatch, route]);
 
+    const clearDetailOrders = useCallback(async () => {
+        const idOrer = route.params.orderId;
+        if (idOrer) {
+            dispatch(clearDetailOrder());
+        }
+    }, [dispatch, route]);
+
     useEffect(() => {
         getDataDetailOrder();
-    }, [getDataDetailOrder]);
+        return () => {
+            clearDetailOrders();
+        };
+    }, [getDataDetailOrder, clearDetailOrders]);
 
 
     return (

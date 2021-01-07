@@ -3,6 +3,7 @@ import { BASE_URL } from '../../config/URL';
 
 
 export const DETAIL_ORDER = 'DETAIL_ORDER';
+export const CLEAR = 'CLEAR';
 
 export const detailOrder = (idOrder) => {
     return async (dispatch) => {
@@ -16,5 +17,14 @@ export const detailOrder = (idOrder) => {
             }).catch(err => {
                 console.log(err);
             });
+    };
+};
+
+export const clearDetailOrder = () => {
+    return (dispatch) => {
+        dispatch({
+            type: CLEAR,
+            data: {},
+        });
     };
 };
