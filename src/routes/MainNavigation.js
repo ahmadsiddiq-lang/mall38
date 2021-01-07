@@ -121,6 +121,8 @@ export function MyTabbar() {
                     tabBarBadge: CircleStatus.length,
                     tabBarBadgeStyle: {
                         backgroundColor: '#2a05ff',
+                        fontSize: sizeFont(2.8),
+                        paddingTop: 1,
                     },
                 }}
             />
