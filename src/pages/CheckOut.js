@@ -19,6 +19,7 @@ import ListMeodeBayar from '../components/CheckOut/ListMeodeBayar';
 import { checkOut } from '../redux/actions/CheckOut';
 import { getTransaksi } from '../redux/actions/Transaksi';
 import { getCArt } from '../redux/actions/Cart';
+import { Poppins } from '../assets/fonts';
 
 
 export default function CheckOut({ navigation, route }) {
@@ -297,7 +298,12 @@ export default function CheckOut({ navigation, route }) {
                                             }}>[{dataUser.user.phone}]</Text>
                                             <Text style={{
                                                 fontSize: sizeFont(3.3),
-                                            }}>{dataUser.user.alamat + ', ' + dataUser.user.kecamatan.nama_kecamatan + ', ' + dataUser.user.kabupaten.nama_kabupaten + ', ' + dataUser.user.provinsi.nama_provinsi}</Text>
+                                                fontFamily: Poppins.Italic,
+                                                color: color.fontBlack1,
+                                            }}>{dataUser.user.alamat},</Text>
+                                            <Text style={{
+                                                fontSize: sizeFont(3.3),
+                                            }}>{dataUser.user.kecamatan.nama_kecamatan + ', ' + dataUser.user.kabupaten.nama_kabupaten + ', ' + dataUser.user.provinsi.nama_provinsi}</Text>
                                         </View>
                                         :
                                         <Text style={{
