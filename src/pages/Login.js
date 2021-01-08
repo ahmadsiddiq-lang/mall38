@@ -21,10 +21,6 @@ export default function Login({ navigation }) {
     const [password, setPassword] = useState(null);
     const [eye, setEye] = useState(true);
 
-
-    // const dataUser = useSelector(state => state.dataLogin.dataUser);
-    const dataAdmin = useSelector(state => state.dataLogin.dataAdmin);
-
     const handleErrorLogin = useCallback(async () => {
         ToastAndroid.showWithGravity('Email atau Password Anda salah', ToastAndroid.LONG, ToastAndroid.CENTER);
     }, []);
@@ -61,29 +57,6 @@ export default function Login({ navigation }) {
             }
         }
     }, [dispatch, email, password, handleErrorLogin, handleLoginSuccess]);
-
-    const handleLoginAdmin = useCallback(async () => {
-        const data = {
-            email: 'info@mall38.com',
-            password: 'mall38diloka',
-        };
-        dispatch(LoginAdmin(data, storeData));
-    }, [dispatch, storeData]);
-
-    // console.log(dataAdmin);
-    const storeData = useCallback(async (value) => {
-        const token = value.token;
-        try {
-            await AsyncStorage.setItem('token', token);
-        } catch (e) {
-            // saving error
-            console.log(e);
-        }
-    }, []);
-
-    useEffect(() => {
-        handleLoginAdmin();
-    }, [dataAdmin, handleLoginAdmin]);
 
     return (
         <View style={styles.Container}>
