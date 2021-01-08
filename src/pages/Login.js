@@ -8,10 +8,9 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { useDispatch, useSelector } from 'react-redux';
 import { LoginAdmin, LoginUser } from '../redux/actions/Login';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getDataUser } from '../redux/actions/User';
 import { getCArt } from '../redux/actions/Cart';
-import { validate, validateEmail, validatePassword } from '../config/function';
+import { validateEmail, validatePassword } from '../config/function';
 
 export default function Login({ navigation }) {
 
@@ -20,6 +19,10 @@ export default function Login({ navigation }) {
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
     const [eye, setEye] = useState(true);
+
+
+    // const dataUser = useSelector(state => state.dataLogin.dataUser);
+    const dataAdmin = useSelector(state => state.dataLogin.dataAdmin);
 
     const handleErrorLogin = useCallback(async () => {
         ToastAndroid.showWithGravity('Email atau Password Anda salah', ToastAndroid.LONG, ToastAndroid.CENTER);
@@ -57,6 +60,29 @@ export default function Login({ navigation }) {
             }
         }
     }, [dispatch, email, password, handleErrorLogin, handleLoginSuccess]);
+
+    const handleLoginAdmin = useCallback(async () => {
+        const data = {
+            email: 'info@mall38.com',
+            password: 'mall38diloka',
+        };
+        dispatch(LoginAdmin(data, storeData));
+    }, [dispatch, storeData]);
+
+    // console.log(dataAdmin);
+    const storeData = useCallback(async (value) => {
+        const token = value.token;
+        try {
+            await AsyncStorage.setItem('token', token);
+        } catch (e) {
+            // saving error
+            console.log(e);
+        }
+    }, []);
+
+    useEffect(() => {
+        handleLoginAdmin();
+    }, [dataAdmin, handleLoginAdmin]);
 
     return (
         <View style={styles.Container}>

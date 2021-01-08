@@ -18,6 +18,7 @@ export default function Register({ navigation }) {
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
     const [username, setUsername] = useState(null);
+    const [fullname, setFullName] = useState(null);
     const [eye, setEye] = useState(true);
 
 
@@ -31,13 +32,14 @@ export default function Register({ navigation }) {
 
     const handleRegister = useCallback(async () => {
         const data = {
+            fullname: fullname,
             name: username,
             email: email,
             password: password,
         };
         if (validateEmail(email)) {
             if (validatePassword(password)) {
-                if (password !== null && username !== null) {
+                if (password !== null && username !== null && fullname !== null) {
                     if (password.length >= 6) {
                         dispatch(registerUser(data, handleReponsSucces));
                     } else {
@@ -87,6 +89,23 @@ export default function Register({ navigation }) {
                             <View style={styles.BoxIconUser}>
                                 <FontAwesome5 name="user" color={color.mainColor} size={sizeFont(12)} solid />
                             </View>
+                        </View>
+                        <View style={[styles.BoxInput,
+                        focus === 2 &&
+                        {
+                            borderWidth: 3,
+                            borderColor: color.mainColor,
+                        },
+                        ]}>
+                            <FontAwesome5 name="user" color={color.mainColor} size={sizeFont(5)} solid />
+                            <TextInput
+                                maxLength={30}
+                                onChangeText={(e) => setFullName(e)}
+                                onBlur={() => setFocus(null)}
+                                onFocus={() => setFocus(2)}
+                                style={styles.Input}
+                                placeholder="Full Name"
+                            />
                         </View>
                         <View style={[styles.BoxInput,
                         focus === 2 &&
@@ -203,7 +222,7 @@ const styles = StyleSheet.create({
         fontSize: sizeFont(4),
     },
     BoxContentLogin: {
-        marginTop: sizeHeight(5),
+        marginVertical: sizeHeight(5),
         alignItems: 'flex-end',
     },
     BtnLogin: {

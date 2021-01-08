@@ -94,7 +94,8 @@ export default function Akun({ navigation }) {
                 <View style={styles.BoxUser}>
                     {
                         dataScreen !== undefined &&
-                            dataScreen.photo !== 'https://mall38.com/images/user/NULL' && dataScreen.photo !== undefined ?
+                            dataScreen.photo !== 'https://mall38.com/images/user/NULL' &&
+                            dataScreen.photo !== null && dataScreen.photo !== undefined ?
                             < Image resizeMethod="auto" style={styles.ImageUser} source={{ uri: dataScreen.photo }} />
                             :
                             <FontAwesome5 onPress={() => handleUser()} name="user" color={color.fontWhite} size={sizeFont(13)} solid />

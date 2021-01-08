@@ -52,7 +52,7 @@ export default function MetodeBayar({ dataDetailOrder = {} }) {
                                 style={{
                                     fontSize: sizeFont(3.5),
                                     color: color.mainColor,
-                                }}>E-many</Text>
+                                }}>E-Money</Text>
                         </View>
                         <View style={{
                             paddingHorizontal: sizeWidth(5),
