@@ -1,12 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
 import { Poppins } from '../../assets/fonts';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-export default function InfoPengiriman() {
+export default function InfoPengiriman({ navigation }) {
     return (
         <View style={{
             paddingHorizontal: sizeWidth(5),
@@ -28,10 +28,12 @@ export default function InfoPengiriman() {
                         fontFamily: Poppins.Medium,
                     }}>Info Pengiriman</Text>
                 </View>
-                <Text style={{
-                    fontSize: sizeFont(3.5),
-                    color: color.mainColor,
-                }}>Lihat Detail</Text>
+                <Text
+                    onPress={() => navigation.navigate('InfoPengirimanBarang')}
+                    style={{
+                        fontSize: sizeFont(3.5),
+                        color: color.mainColor,
+                    }}>Lihat Detail</Text>
             </View>
             <View style={{
                 flexDirection: 'row',
@@ -62,5 +64,3 @@ export default function InfoPengiriman() {
         </View>
     );
 }
-
-const styles = StyleSheet.create({});

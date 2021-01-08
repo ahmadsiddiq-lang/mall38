@@ -53,7 +53,9 @@ export default function DetailOrder({ navigation, route }) {
                         dataDetailOrder={dataDetailOrder}
                     />
                 }
-                <InfoPengiriman />
+                <InfoPengiriman
+                    navigation={navigation}
+                />
                 <View style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
