@@ -5,6 +5,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import { ToasSuccess } from '../../config/function';
+import Timeline from 'react-native-timeline-flatlist';
 
 export default function Content() {
 
@@ -12,6 +13,14 @@ export default function Content() {
         Clipboard.setString('0929374298712389');
         ToasSuccess('Berhasil disalin');
     };
+
+    const fakeData = [
+        { time: '09:00', title: 'Event 1', description: 'Event 1 Description' },
+        { time: '10:45', title: 'Event 2', description: 'Event 2 Description' },
+        { time: '12:00', title: 'Event 3', description: 'Event 3 Description' },
+        { time: '14:00', title: 'Event 4', description: 'Event 4 Description' },
+        { time: '16:30', title: 'Event 5', description: 'Event 5 Description' },
+    ];
 
     return (
         <View style={styles.Container}>
@@ -50,7 +59,25 @@ export default function Content() {
                 marginTop: sizeHeight(0.3),
                 marginBottom: sizeHeight(1),
             }}>
-                <ScrollView>
+                <Timeline
+                    circleSize={20}
+                    circleColor={color.mainColor}
+                    lineColor={color.border2}
+                    timeContainerStyle={{
+                        minWidth: 52,
+                    }}
+                    // timeStyle={{ textAlign: 'center', backgroundColor: color.mainColor, color: 'white', padding: 5, borderRadius: 13 }}
+                    descriptionStyle={{ color: 'gray' }}
+                    options={{
+                        style: {
+                            paddingTop: 5,
+                            marginLeft: sizeWidth(5),
+                            marginTop: sizeHeight(2),
+                        },
+                    }}
+                    data={fakeData}
+                />
+                {/* <ScrollView>
                     <View style={{
                         marginHorizontal: sizeWidth(5),
                         marginVertical: sizeHeight(1.5),
@@ -123,7 +150,7 @@ export default function Content() {
                             </View>
                         </View>
                     </View>
-                </ScrollView>
+                </ScrollView> */}
             </View>
         </View>
     );
