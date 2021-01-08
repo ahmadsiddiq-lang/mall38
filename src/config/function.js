@@ -39,8 +39,8 @@ export const groupBy = (array, key) => {
     }, {}); // empty object is the initial value for result object
 };
 
-var countDownDate = new Date('Dec 17, 2020 15:37:25').getTime();
-export const countDown = () => {
+// var countDownDate = new Date('Dec 17, 2020 15:37:25').getTime();
+export const countDown = (countDownDate) => {
 
     // Untuk mendapatkan tanggal dan waktu hari ini
     var now = new Date().getTime();
@@ -50,17 +50,11 @@ export const countDown = () => {
 
     // Perhitungan waktu untuk hari, jam, menit dan detik
     var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var hours = Math.floor((distance / (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    // // Jika hitungan mundur selesai, tulis beberapa teks
-    // if (distance < 0) {
-    //     clearInterval(countDown);
-    // }
-    // Keluarkan hasil dalam elemen dengan id = "demo"
-    // document.getElementById('demo').innerHTML = days + 'd ' + hours + 'h '
-    //     + minutes + 'm ' + seconds + 's ';
+    // console.log(hours);
     const timeFull = {
         days: days,
         hours: hours.toString().length < 2 ? '0' + hours.toString() : hours.toString(),
@@ -70,8 +64,6 @@ export const countDown = () => {
     };
     return timeFull;
 };
-
-// getToken
 
 export const getIdUser = async () => {
     try {

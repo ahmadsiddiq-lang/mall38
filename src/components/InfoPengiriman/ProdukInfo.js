@@ -24,7 +24,7 @@ export default function ProdukInfo() {
                     height: sizeWidth(20),
                     padding: sizeWidth(2),
                 }}>
-                    <Image source={require('../../assets/images/Produk/tas.png')}
+                    <Image source={require('../../assets/images/Produk/tas.jpg')}
                         resizeMethod="auto"
                         style={{
                             width: '100%',

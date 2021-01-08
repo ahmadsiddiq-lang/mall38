@@ -100,10 +100,11 @@ export default function Home({ navigation }) {
     }, [CarouselUp]);
 
     // useEffect(() => {
-    //     var countDownDate = new Date('Dec 30, 2020 00:00:25').getTime();
+    //     var countDownDate = new Date('Jan 8, 2021, 23:59:25').getTime();
     //     // var myDate = '20-12-2020';
     //     // myDate = myDate.split('-');
     //     // var countDownDate = new Date(myDate[2], myDate[1] - 1, myDate[0]);
+    //     console.log(countDownDate);
     //     const x = setInterval(function () {
     //         const time = countDown(countDownDate);
     //         setDateFlash(time);
