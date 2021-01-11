@@ -9,6 +9,9 @@ import { Poppins } from '../assets/fonts';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../redux/actions/Register';
 import { ToasInvalid, ToasSuccess, validateEmail, validatePassword } from '../config/function';
+import { getDataUser } from '../redux/actions/User';
+import { getCArt } from '../redux/actions/Cart';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Register({ navigation }) {
 
@@ -22,12 +25,21 @@ export default function Register({ navigation }) {
     const [eye, setEye] = useState(true);
 
 
-    const handleReponsSucces = useCallback(async () => {
+    const handleReponsSucces = useCallback(async (idUser) => {
         ToasSuccess('Register Success');
-        setTimeout(() => {
-            navigation.replace('MyTabbar');
-        }, 1000);
-    }, [navigation]);
+        try {
+            const id = JSON.stringify(idUser.id);
+            dispatch(getDataUser(id));
+            dispatch(getCArt(id));
+            await AsyncStorage.setItem('idUser', id);
+            setTimeout(() => {
+                navigation.replace('MyTabbar');
+            }, 1000);
+        } catch (e) {
+            // saving error
+            console.log(e);
+        }
+    }, [navigation, dispatch]);
 
 
     const handleRegister = useCallback(async () => {

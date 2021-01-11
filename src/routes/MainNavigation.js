@@ -5,7 +5,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../pages/Home';
 import Product from '../pages/Product';
-import Favorite from '../pages/Favorite';
 import TransaksiInfo from '../pages/TransaksiInfo';
 import ProductCategori from '../pages/ProductCategori';
 import Akun from '../pages/Akun';

@@ -32,7 +32,7 @@ export default function Login({ navigation }) {
         try {
             const id = JSON.stringify(idUser.id);
             dispatch(getDataUser(id));
-            dispatch(getCArt());
+            dispatch(getCArt(id));
             await AsyncStorage.setItem('idUser', id);
             navigation.replace('MyTabbar');
         } catch (e) {

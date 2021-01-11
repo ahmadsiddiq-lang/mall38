@@ -13,8 +13,9 @@ export const registerUser = (data, handleReponsSucces) => {
                 Authorization: 'Bearer' + await getToken(),
             },
         }).then(respons => {
+            console.log(respons.data.data);
             if (respons) {
-                handleReponsSucces();
+                handleReponsSucces(respons.data.data.user);
             }
         }).catch(err => console.log(err));
     };
