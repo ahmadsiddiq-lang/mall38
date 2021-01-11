@@ -6,14 +6,25 @@ import { color } from '../../assets/colors/Index';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import CardProdukVer from '../CardProdukVer';
 
-export default function Rekomendasi({ navigation, dataProduk = [], goToTop }) {
+export default function Rekomendasi({ navigation, dataProduk = [], goToTop, detailProduk }) {
+
+    const filterData = () => {
+        if (detailProduk !== undefined) {
+            const data = dataProduk.filter(item => {
+                if (item.name !== undefined) {
+                    return item.category.name === detailProduk.category.name;
+                }
+            });
+            return data;
+        }
+    };
 
     return (
         <View style={styles.Container}>
             {
                 dataProduk ?
                     dataProduk.length > 0 ?
-                        dataProduk.slice(0, 10).map((item, index) => {
+                        filterData().slice(0, 10).map((item, index) => {
                             return (
                                 <TouchableOpacity
                                     activeOpacity={0.8}

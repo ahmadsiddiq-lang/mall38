@@ -127,6 +127,7 @@ export default function DetailProduk({ navigation, route }) {
                         <Rekomendasi
                             goToTop={goToTop}
                             navigation={navigation}
+                            detailProduk={detailProduk}
                             dataProduk={dataProduk} />
                     </Animated.ScrollView>
                     :

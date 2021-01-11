@@ -11,7 +11,8 @@ import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
 export default function Product({ navigation }) {
     const dispatch = useDispatch();
 
-    const dataProduk = useSelector(state => state.produk.produk);
+    const dataProdukAll = useSelector(state => state.produk.produk);
+    const dataProduk = dataProdukAll;
     const [refreshing, setRefreshing] = React.useState(false);
 
     const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
