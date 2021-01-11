@@ -6,13 +6,17 @@ import { color } from '../../assets/colors/Index';
 import { sizeHeight, sizeWidth } from '../../assets/responsive';
 import { getProdukCategori, clearData } from '../../redux/actions/ProdukCategori';
 
-export default function Categori({ dataCategori, navigation }) {
+export default function Categori({ dataCategori, navigation, setBanner }) {
     const dispatch = useDispatch();
     const data = dataCategori;
 
-    const handleCategori = async (idCategori) => {
+    const handleCategori = async (dataInput) => {
         dispatch(clearData());
+        setBanner(null);
+        const banner = dataInput.image_banner;
+        const idCategori = dataInput.id;
         const x = setTimeout(() => {
+            setBanner(banner);
             if (idCategori) { dispatch(getProdukCategori(idCategori)); }
             return () => {
                 clearTimeout(x);
@@ -35,7 +39,7 @@ export default function Categori({ dataCategori, navigation }) {
                         data &&
                         data.map((item, index) => (
                             <TouchableOpacity
-                                onPress={() => handleCategori(item.id)}
+                                onPress={() => handleCategori(item)}
                                 key={index}
                                 activeOpacity={0.8}
                                 style={styles.BoxImage}>

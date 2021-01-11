@@ -79,6 +79,9 @@ export default function ListProduk({ navigation, dataProdukCategori }) {
                 dataProdukCategori.product ?
                     dataProdukCategori.product.length > 0 ?
                         <FlatList
+                            contentContainerStyle={{
+                                paddingHorizontal: sizeWidth(2.5),
+                            }}
                             numColumns={2}
                             data={formatData(dataProdukCategori.product, 2)}
                             keyExtractor={(_, index) => index.toString()}

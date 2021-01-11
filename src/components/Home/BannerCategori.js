@@ -26,7 +26,7 @@ export default function BannerCategori({ navigation, dataCategori }) {
                                     activeOpacity={0.8}
                                     onPress={() =>
                                         navigation.navigate('ProductCategori', {
-                                            idCategori: item.id,
+                                            category: item,
                                         })
                                     }
                                     key={index} style={styles.BoxImage}>
