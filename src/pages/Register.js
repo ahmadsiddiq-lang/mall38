@@ -8,7 +8,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { Poppins } from '../assets/fonts';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../redux/actions/Register';
-import { ToasInvalid, ToasSuccess, validate, validateEmail, validatePassword } from '../config/function';
+import { ToasInvalid, ToasSuccess, validateEmail, validatePassword } from '../config/function';
 
 export default function Register({ navigation }) {
 
@@ -25,37 +25,41 @@ export default function Register({ navigation }) {
     const handleReponsSucces = useCallback(async () => {
         ToasSuccess('Register Success');
         setTimeout(() => {
-            navigation.goBack();
+            navigation.replace('MyTabbar');
         }, 1000);
     }, [navigation]);
 
 
     const handleRegister = useCallback(async () => {
         const data = {
-            fullname: fullname,
-            name: username,
+            name: fullname,
+            username: username,
             email: email,
             password: password,
         };
-        if (validateEmail(email)) {
-            if (validatePassword(password)) {
-                if (password !== null && username !== null && fullname !== null) {
-                    if (password.length >= 6) {
-                        dispatch(registerUser(data, handleReponsSucces));
+        if (password !== null && username !== null && fullname !== null) {
+            if (validateEmail(email)) {
+                if (validatePassword(password)) {
+                    if (username.length >= 6) {
+                        if (password.length >= 6) {
+                            dispatch(registerUser(data, handleReponsSucces));
+                        } else {
+                            ToasInvalid('Password kurang dari 6');
+                        }
                     } else {
-                        ToasInvalid('Password kurang dari 6');
+                        ToastAndroid.showWithGravity('Username kurang dari 6 karakter', ToastAndroid.LONG, ToastAndroid.CENTER);
                     }
                 } else {
-                    console.log(data);
-                    ToasInvalid('Lengkapi data Anda');
+                    ToastAndroid.showWithGravity('Password 8 karakter dengan huruf besar, kecil dan angka', ToastAndroid.LONG, ToastAndroid.CENTER);
                 }
             } else {
-                ToastAndroid.showWithGravity('Password 8 karakter dengan huruf besar, kecil dan angka', ToastAndroid.LONG, ToastAndroid.CENTER);
+                ToastAndroid.showWithGravity('Format email salah !', ToastAndroid.LONG, ToastAndroid.CENTER);
             }
         } else {
-            ToastAndroid.showWithGravity('Format email salah !', ToastAndroid.LONG, ToastAndroid.CENTER);
+            console.log(data);
+            ToasInvalid('Lengkapi data Anda');
         }
-    }, [email, password, username, dispatch, handleReponsSucces]);
+    }, [email, password, username, dispatch, handleReponsSucces, fullname]);
 
 
     return (
@@ -83,15 +87,8 @@ export default function Register({ navigation }) {
                     flex: 1,
                 }}>
                     <View style={styles.BoxContentInput}>
-                        <View style={{
-                            alignItems: 'center',
-                        }}>
-                            <View style={styles.BoxIconUser}>
-                                <FontAwesome5 name="user" color={color.mainColor} size={sizeFont(12)} solid />
-                            </View>
-                        </View>
                         <View style={[styles.BoxInput,
-                        focus === 2 &&
+                        focus === 3 &&
                         {
                             borderWidth: 3,
                             borderColor: color.mainColor,
@@ -102,7 +99,7 @@ export default function Register({ navigation }) {
                                 maxLength={30}
                                 onChangeText={(e) => setFullName(e)}
                                 onBlur={() => setFocus(null)}
-                                onFocus={() => setFocus(2)}
+                                onFocus={() => setFocus(3)}
                                 style={styles.Input}
                                 placeholder="Full Name"
                             />
