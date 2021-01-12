@@ -4,10 +4,12 @@ import { ActivityIndicator, StatusBar, StyleSheet, TextInput, TouchableOpacity, 
 import { color } from '../assets/colors/Index';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
-// import Rekomendasi from '../components/Search/Rekomendasi';
+import Rekomendasi from '../components/Search/Rekomendasi';
 import ListProduk from '../components/Search/ListProduk';
 import { getProduk } from '../redux/actions/Produk';
 import { useDispatch, useSelector } from 'react-redux';
+import Riwayat from '../components/Search/Riwayat';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Search({ navigation }) {
 
@@ -17,6 +19,7 @@ export default function Search({ navigation }) {
     const [dataProdukSearch, setDataProduk] = useState([]);
     const [statusData, setStatus] = useState(true);
     const [loading, setLoading] = useState(true);
+    // const [dataRiwayat, setRiwayat] = useState(['Tas wanita', 'baju', 'sepatu', 'dompet', 'pakaian pria', 'pakaian wanita']);
     // console.log(dataProduk);
 
     const getProduks = useCallback(async () => {
@@ -41,8 +44,43 @@ export default function Search({ navigation }) {
                 setStatus(true);
                 setDataProduk(data);
             }
+            setRiwayat();
         }
-    }, [dataProduk, dataSearch]);
+    }, [dataProduk, dataSearch, setRiwayat]);
+
+    const setRiwayat = useCallback(async () => {
+        try {
+            const myArray = await AsyncStorage.getItem('riwayat');
+            let data = myArray !== null ? JSON.parse(myArray) : [];
+            data.push(dataSearch);
+            await AsyncStorage.setItem('riwayat', JSON.stringify(data));
+        } catch (error) {
+            // Error saving data
+        }
+    }, [dataSearch]);
+
+    const handleButtonRiwayat = (value) => {
+        setDataSearch(value);
+        const data = dataProduk.filter(item => {
+            if (item.name !== undefined && value.length > 0) {
+                setLoading(false);
+                const x = setTimeout(() => {
+                    setLoading(true);
+                    clearTimeout(x);
+                }, 1000);
+                return item.name.toLowerCase().indexOf(value.toLowerCase()) > -1;
+            }
+        });
+        if (value.length > 0) {
+            if (data.length < 1) {
+                setStatus(false);
+            } else {
+                setStatus(true);
+                setDataProduk(data);
+            }
+            setRiwayat();
+        }
+    };
 
 
     useEffect(() => {
@@ -64,6 +102,7 @@ export default function Search({ navigation }) {
                     />
                 </TouchableOpacity>
                 <TextInput
+                    value={dataSearch}
                     returnKeyType="search"
                     style={styles.Input}
                     placeholder="Cari Produk"
@@ -73,9 +112,10 @@ export default function Search({ navigation }) {
                     autoCapitalize="none"
                 />
             </View>
-            {/* <Rekomendasi
+            <Riwayat
                 navigation={navigation}
-            /> */}
+                handleButtonRiwayat={handleButtonRiwayat}
+            />
             <View style={{
                 flex: 1,
             }}>
