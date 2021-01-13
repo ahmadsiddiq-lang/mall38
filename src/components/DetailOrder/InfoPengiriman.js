@@ -6,7 +6,7 @@ import { Poppins } from '../../assets/fonts';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-export default function InfoPengiriman({ navigation }) {
+export default function InfoPengiriman({ navigation, dataDetailOrder }) {
     return (
         <View style={{
             paddingHorizontal: sizeWidth(5),
@@ -29,7 +29,9 @@ export default function InfoPengiriman({ navigation }) {
                     }}>Info Pengiriman</Text>
                 </View>
                 <Text
-                    onPress={() => navigation.navigate('InfoPengirimanBarang')}
+                    onPress={() => navigation.navigate('InfoPengirimanBarang', {
+                        dataOrder: dataDetailOrder,
+                    })}
                     style={{
                         fontSize: sizeFont(3.5),
                         color: color.mainColor,

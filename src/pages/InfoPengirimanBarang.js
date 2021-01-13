@@ -4,14 +4,20 @@ import Headers from '../components/Header/Headers';
 import Content from '../components/InfoPengiriman/Content';
 import ProdukInfo from '../components/InfoPengiriman/ProdukInfo';
 
-export default function InfoPengiriman({ navigation }) {
+export default function InfoPengiriman({ navigation, route }) {
+
+    const dataOrder = route.params.dataOrder;
+    // console.log(dataOrder);
+
     return (
         <View style={styles.Container}>
             <Headers
                 navigation={navigation}
                 title={'Info Pengiriman'}
             />
-            <ProdukInfo />
+            <ProdukInfo
+                dataOrder={dataOrder}
+            />
             <Content />
         </View>
     );

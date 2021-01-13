@@ -55,6 +55,7 @@ export default function DetailOrder({ navigation, route }) {
                 }
                 <InfoPengiriman
                     navigation={navigation}
+                    dataDetailOrder={dataDetailOrder}
                 />
                 <View style={{
                     flexDirection: 'row',
@@ -72,7 +73,7 @@ export default function DetailOrder({ navigation, route }) {
                         fontFamily: Poppins.Medium,
                         color: color.mainColor,
                         textTransform: 'capitalize',
-                    }}>Pending</Text>
+                    }}>{objekEmpty(dataDetailOrder) && dataDetailOrder.status_pembayaran}</Text>
                 </View>
                 {
                     objekEmpty(dataDetailOrder) &&

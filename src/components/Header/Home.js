@@ -44,6 +44,7 @@ export default function Home({ navigation, headerOpacity }) {
                     <Text style={styles.textInput}>Cari Produk</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
+                    onPress={() => navigation.navigate('Notifikasi')}
                     activeOpacity={0.8}
                     style={{
                         padding: 10,

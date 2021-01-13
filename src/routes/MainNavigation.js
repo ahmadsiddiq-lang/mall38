@@ -22,7 +22,9 @@ import DetailOrder from '../pages/DetailOrder';
 import EditAlamat from '../pages/EditAlamat';
 import Search from '../pages/Search';
 import Auth from '../pages/Auth';
+import Notifikasi from '../pages/Notifikasi';
 import InfoPengirimanBarang from '../pages/InfoPengirimanBarang';
+import ListProduk from '../pages/ListProduk';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIdUser } from '../config/function';
 import { getTransaksi } from '../redux/actions/Transaksi';
@@ -168,6 +170,8 @@ export default function MainNavigation() {
                 <Stack.Screen name="Auth" component={Auth} />
                 <Stack.Screen name="TransaksiInfo" component={TransaksiInfo} />
                 <Stack.Screen name="InfoPengirimanBarang" component={InfoPengirimanBarang} />
+                <Stack.Screen name="Notifikasi" component={Notifikasi} />
+                <Stack.Screen name="ListProduk" component={ListProduk} />
             </Stack.Navigator>
         </NavigationContainer>
     );

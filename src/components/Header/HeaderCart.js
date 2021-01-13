@@ -21,6 +21,7 @@ export default function HeaderCart({ navigation, dataCart }) {
             </TouchableOpacity>
             <View style={styles.BoxBtnRight}>
                 <TouchableOpacity
+                    onPress={() => navigation.navigate('Search')}
                     activeOpacity={0.8}
                     style={styles.Btn}
                 >
