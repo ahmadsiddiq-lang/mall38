@@ -2,7 +2,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Modal, RefreshControl, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../assets/colors/Index';
-import Headers from '../components/Header/Headers';
+import Headers from '../components/CheckOut/Headers';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SCREEN_HEIGHT, SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';

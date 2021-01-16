@@ -129,6 +129,7 @@ export default function Cart({ navigation }) {
         return () => {
             hetDataCart();
             handleUser();
+            setDataCart([]);
         };
     }, [hetDataCart, handleUser]);
 

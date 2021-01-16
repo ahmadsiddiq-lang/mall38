@@ -1,0 +1,59 @@
+import React, { useCallback } from 'react';
+import { StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { color } from '../../assets/colors/Index';
+import { sizeFont, sizeWidth } from '../../assets/responsive';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Poppins } from '../../assets/fonts';
+import { getCArt } from '../../redux/actions/Cart';
+import { getIdUser } from '../../config/function';
+import { useDispatch } from 'react-redux';
+
+export default function Headers({ navigation, title = '', backgroundColor, colorBtnBack, textColo }) {
+
+    const dispatch = useDispatch();
+    const hetDataCart = useCallback(async () => {
+        const idUser = await getIdUser();
+        if (idUser) {
+            dispatch(getCArt(idUser));
+            navigation.navigate('Cart');
+        }
+    }, [navigation, dispatch]);
+
+    return (
+        <View style={[styles.Container, backgroundColor && {
+            backgroundColor: backgroundColor,
+        }]}>
+            <StatusBar translucent={false} backgroundColor={color.mainColor} barStyle="light-content" />
+            <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => hetDataCart()}
+                style={{
+                    paddingVertical: sizeWidth(3.5),
+                    paddingLeft: sizeWidth(5),
+                }}
+            >
+                <Ionicons
+                    name="arrow-back"
+                    size={sizeFont(6.5)}
+                    color={colorBtnBack ? colorBtnBack : color.fontWhite}
+                />
+            </TouchableOpacity>
+            <Text style={{
+                marginLeft: sizeWidth(5),
+                fontSize: sizeFont(4.5),
+                color: textColo ? textColo : color.fontWhite,
+                fontFamily: Poppins.Medium,
+            }}>{title}</Text>
+        </View>
+    );
+}
+
+const styles = StyleSheet.create({
+    Container: {
+        backgroundColor: color.mainColor,
+        flexDirection: 'row',
+        alignItems: 'center',
+        // borderBottomWidth: 1,
+        // borderBottomColor: color.border2,
+    },
+});
