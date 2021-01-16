@@ -7,10 +7,15 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Poppins } from '../../assets/fonts';
 import { rupiah } from '../../config/function';
 // import CheckBox from '@react-native-community/checkbox';
-export default function ListProduk({ item, handlePlus, handleCechboxItem, handleMinu }) {
+export default function ListProduk({ item, handlePlus, handleCechboxItem, handleMinu, navigation }) {
     return (
         <View style={styles.Container}>
-            <View style={styles.BoxImage}>
+            <TouchableOpacity
+                onPress={() => navigation.navigate('DetailProduk', {
+                    idProduk: item.product.id,
+                })}
+                activeOpacity={0.8}
+                style={styles.BoxImage}>
                 {
                     item.product.image ?
                         <Image
@@ -26,7 +31,7 @@ export default function ListProduk({ item, handlePlus, handleCechboxItem, handle
                             source={require('../../assets/images/Produk/imagedefault.png')} />
 
                 }
-            </View>
+            </TouchableOpacity>
             <View style={styles.BoxRight}>
                 <View style={styles.Item}>
                     <View style={{

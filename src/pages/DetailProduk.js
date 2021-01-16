@@ -94,7 +94,11 @@ export default function DetailProduk({ navigation, route }) {
 
     useEffect(() => {
         getDetailProduks();
-    }, [getDetailProduks]);
+        return () => {
+            clearDetailProduks();
+            yOffset.setValue(0);
+        };
+    }, [getDetailProduks, clearDetailProduks, yOffset]);
 
     return (
         <View style={styles.Container}>

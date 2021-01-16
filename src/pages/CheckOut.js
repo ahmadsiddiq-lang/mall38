@@ -24,6 +24,8 @@ import { Poppins } from '../assets/fonts';
 
 export default function CheckOut({ navigation, route }) {
 
+    const dataAll = route.params.data !== undefined ? route.params.data : null;
+
     const dispatch = useDispatch();
     const dataUser = useSelector(state => state.dataUser.dataUser);
     const dataOngkir = useSelector(state => state.dataOngkir.dataOngkir.result);
@@ -31,6 +33,7 @@ export default function CheckOut({ navigation, route }) {
     // const [loadingData, setLoadingData] = useState(false);
     const [dataKurir, setDataKurir] = useState(null);
     const [modalItem, setModalItem] = useState(null);
+    const [dataProduk, setDataProduk] = useState(dataAll);
     const [curentIndex, setCurentIndex] = useState(0);
     const [metodeBayar, setMetodeBayar] = useState({ name: 'BNI', bank: 'bni', image: require('../assets/images/MetodeBayar/bni.png') });
 
@@ -51,8 +54,6 @@ export default function CheckOut({ navigation, route }) {
             setRefreshing(false);
         });
     }, [wait, getOngkirs, setDefaultOngkir]);
-
-    const dataProduk = route.params.data;
     // console.log(dataUser);
 
     const handleUser = useCallback(async () => {
@@ -240,6 +241,7 @@ export default function CheckOut({ navigation, route }) {
             setDataKurir(null);
             setModalItem(null);
             setMetodeBayar({});
+            setDataProduk(null);
         };
     }, []);
 

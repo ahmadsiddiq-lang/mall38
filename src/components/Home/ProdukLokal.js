@@ -37,10 +37,15 @@ export default function ProdukLokal({ navigation, dataProduk }) {
                         resizeMethod="auto"
                         style={styles.ImageLable} source={require('../../assets/images/banner/Produk-Lokal.png')} />
                 </View>
-                <Text style={{
-                    color: color.mainColor,
-                    fontSize: sizeFont(3.5),
-                }}>Lihat semua</Text>
+                <Text
+                    onPress={() => navigation.navigate('ListProduk', {
+                        title: 'Produk Lokal',
+                        dataProduk: dataProduk,
+                    })}
+                    style={{
+                        color: color.mainColor,
+                        fontSize: sizeFont(3.5),
+                    }}>Lihat semua</Text>
             </View>
             <ScrollView
                 showsHorizontalScrollIndicator={false}

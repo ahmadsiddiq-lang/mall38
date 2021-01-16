@@ -92,15 +92,13 @@ const styles = StyleSheet.create({
         borderColor: color.border2,
         borderRadius: 8,
         marginHorizontal: sizeWidth(2),
-        width: sizeWidth(40),
+        width: sizeWidth(45),
         flex: 1,
         paddingBottom: sizeHeight(0.8),
         overflow: 'hidden',
     },
     BoxImage: {
-        // borderWidth: 1,
-        width: sizeWidth(40),
-        height: sizeWidth(25),
+        height: sizeWidth(45),
         overflow: 'hidden',
         borderTopLeftRadius: 8,
         borderTopRightRadius: 8,
@@ -108,7 +106,7 @@ const styles = StyleSheet.create({
     image: {
         resizeMode: 'cover',
         width: '100%',
-        height: sizeWidth(25),
+        height: '100%',
     },
     BoxText: {
         paddingHorizontal: sizeWidth(2),
