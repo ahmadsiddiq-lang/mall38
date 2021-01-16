@@ -53,7 +53,5 @@ const styles = StyleSheet.create({
         backgroundColor: color.mainColor,
         flexDirection: 'row',
         alignItems: 'center',
-        // borderBottomWidth: 1,
-        // borderBottomColor: color.border2,
     },
 });

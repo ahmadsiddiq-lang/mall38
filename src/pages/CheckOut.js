@@ -182,25 +182,29 @@ export default function CheckOut({ navigation, route }) {
     }, [navigation, handleGetTransaksi, metodeBayar, hetDataCart]);
 
     const handleMetodeBayar = useCallback(async () => {
-        setButton(true);
-        hadnleLoading();
-        const idUser = await getIdUser();
-        const amount = handleTotalHargaBayar();
-        const bank = metodeBayar.bank;
-        const produk = await filterdataProduk();
-        console.log(dataUser);
-        if (dataUser.user.alamat !== undefined) {
-            if (dataUser && idUser && dataKurir && amount && bank && produk) {
-                const data = {
-                    user_id: idUser,
-                    courier: dataKurir.name,
-                    service: dataKurir.service,
-                    ongkir: dataKurir.value,
-                    amount: amount,
-                    bank_name: bank,
-                    list_product: produk,
-                };
-                dispatch(checkOut(data, handleNavToPembayaran));
+        if (dataUser.user.kecamatan !== null) {
+            setButton(true);
+            hadnleLoading();
+            const idUser = await getIdUser();
+            const amount = handleTotalHargaBayar();
+            const bank = metodeBayar.bank;
+            const produk = await filterdataProduk();
+            console.log(dataUser);
+            if (dataUser.user.alamat !== undefined) {
+                if (dataUser && idUser && dataKurir && amount && bank && produk) {
+                    const data = {
+                        user_id: idUser,
+                        courier: dataKurir.name,
+                        service: dataKurir.service,
+                        ongkir: dataKurir.value,
+                        amount: amount,
+                        bank_name: bank,
+                        list_product: produk,
+                    };
+                    dispatch(checkOut(data, handleNavToPembayaran));
+                }
+            } else {
+                ToasInvalid('Isi alamat terlebih dahulu !');
             }
         } else {
             ToasInvalid('Isi alamat terlebih dahulu !');
