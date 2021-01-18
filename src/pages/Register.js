@@ -22,6 +22,7 @@ export default function Register({ navigation }) {
     const [password, setPassword] = useState(null);
     const [username, setUsername] = useState(null);
     const [fullname, setFullName] = useState(null);
+    const [kodeReferral, setKodeReferral] = useState(null);
     const [eye, setEye] = useState(true);
 
 
@@ -48,6 +49,7 @@ export default function Register({ navigation }) {
             username: username,
             email: email,
             password: password,
+            refferal_code: kodeReferral,
         };
         if (password !== null && username !== null && fullname !== null) {
             if (validateEmail(email)) {
@@ -71,7 +73,7 @@ export default function Register({ navigation }) {
             console.log(data);
             ToasInvalid('Lengkapi data Anda');
         }
-    }, [email, password, username, dispatch, handleReponsSucces, fullname]);
+    }, [email, password, username, dispatch, handleReponsSucces, fullname, kodeReferral]);
 
 
     return (
@@ -174,6 +176,23 @@ export default function Register({ navigation }) {
                             fontSize: sizeFont(2.6),
                             color: color.fontBlack2,
                         }}>Password 8 karakter dengan huruf besar, kecil dan angka</Text>
+                        <View style={[styles.BoxInput,
+                        focus === 4 &&
+                        {
+                            borderWidth: 3,
+                            borderColor: color.mainColor,
+                        },
+                        ]}>
+                            <FontAwesome5 name="users" color={color.mainColor} size={sizeFont(5)} solid />
+                            <TextInput
+                                maxLength={30}
+                                onChangeText={(e) => setKodeReferral(e)}
+                                onBlur={() => setFocus(null)}
+                                onFocus={() => setFocus(4)}
+                                style={styles.Input}
+                                placeholder="Kode Referal"
+                            />
+                        </View>
                     </View>
                     <View style={styles.BoxContentLogin}>
                         <TouchableOpacity
