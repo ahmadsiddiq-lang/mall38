@@ -15,32 +15,32 @@ export default function FlashSale({ navigation, dataFlash, dateFlashShale, barSt
 
     const fakeData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-    useEffect(() => {
-        // Coundown timer for a given expiry date-time
-        let date =
-            moment()
-                .utcOffset('+05:30')
-                .format('YYYY-MM-DD hh:mm:ss');
+    // useEffect(() => {
+    //     // Coundown timer for a given expiry date-time
+    //     let date =
+    //         moment()
+    //             .utcOffset('+05:30')
+    //             .format('YYYY-MM-DD hh:mm:ss');
 
-        // Getting the current date-time
-        // You can set your own date-time
-        let expirydate = '2021-1-18 23:00:45';
+    //     // Getting the current date-time
+    //     // You can set your own date-time
+    //     let expirydate = '2021-1-18 23:00:45';
 
-        let diffr =
-            moment
-                .duration(moment(expirydate)
-                    .diff(moment(date)));
-        // Difference of the expiry date-time
-        var hours = parseInt(diffr.asHours());
-        var minutes = parseInt(diffr.minutes());
-        var seconds = parseInt(diffr.seconds());
+    //     let diffr =
+    //         moment
+    //             .duration(moment(expirydate)
+    //                 .diff(moment(date)));
+    //     // Difference of the expiry date-time
+    //     var hours = parseInt(diffr.asHours());
+    //     var minutes = parseInt(diffr.minutes());
+    //     var seconds = parseInt(diffr.seconds());
 
-        // Converting in seconds
-        var d = hours * 60 * 60 + minutes * 60 + seconds;
+    //     // Converting in seconds
+    //     var d = hours * 60 * 60 + minutes * 60 + seconds;
 
-        // Settign up the duration of countdown
-        setTotalDuration(d);
-    }, []);
+    //     // Settign up the duration of countdown
+    //     setTotalDuration(d);
+    // }, []);
 
     const renderItem = (item, index) => {
         return (

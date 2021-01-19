@@ -25,6 +25,7 @@ import { Poppins } from '../assets/fonts';
 export default function CheckOut({ navigation, route }) {
 
     const dataAll = route.params.data !== undefined ? route.params.data : null;
+    const dataCheck = route.params.dataCheck !== undefined ? route.params.dataCheck : null;
 
     const dispatch = useDispatch();
     const dataUser = useSelector(state => state.dataUser.dataUser);
@@ -54,7 +55,7 @@ export default function CheckOut({ navigation, route }) {
             setRefreshing(false);
         });
     }, [wait, getOngkirs, setDefaultOngkir]);
-    // console.log(dataUser);
+    // console.log(dataCheck);
 
     const handleUser = useCallback(async () => {
         const idUser = await getIdUser();
@@ -72,11 +73,13 @@ export default function CheckOut({ navigation, route }) {
     }, [dataProduk]);
 
     const handleHargaTotal = useCallback(() => {
-        let total = 0;
-        dataProduk.forEach(element => {
-            total += Number(element.product.price);
-        });
-        return total;
+        if (dataProduk !== null) {
+            let total = 0;
+            dataProduk.forEach(element => {
+                total += Number(element.product.price);
+            });
+            return total;
+        }
     }, [dataProduk]);
 
     const handleTotalHargaBayar = useCallback(() => {
@@ -181,6 +184,22 @@ export default function CheckOut({ navigation, route }) {
         }
     }, [navigation, handleGetTransaksi, metodeBayar, hetDataCart]);
 
+    const handleTotalPv = useCallback(() => {
+        let total = 0;
+        dataProduk.forEach(item => {
+            total += Number(item.product.pv);
+        });
+        return total;
+    }, [dataProduk]);
+
+    const handleTotalBv = useCallback(() => {
+        let total = 0;
+        dataProduk.forEach(item => {
+            total += Number(item.product.bv);
+        });
+        return total;
+    }, [dataProduk]);
+
     const handleMetodeBayar = useCallback(async () => {
         if (dataUser.user.kecamatan !== null) {
             setButton(true);
@@ -189,7 +208,8 @@ export default function CheckOut({ navigation, route }) {
             const amount = handleTotalHargaBayar();
             const bank = metodeBayar.bank;
             const produk = await filterdataProduk();
-            console.log(dataUser);
+            const pv = handleTotalPv();
+            const bv = handleTotalBv();
             if (dataUser.user.alamat !== undefined) {
                 if (dataUser && idUser && dataKurir && amount && bank && produk) {
                     const data = {
@@ -200,8 +220,12 @@ export default function CheckOut({ navigation, route }) {
                         amount: amount,
                         bank_name: bank,
                         list_product: produk,
+                        tpv: pv,
+                        tbv: bv,
+                        paket_mitra_id: dataCheck.paket_mitra_id,
                     };
                     dispatch(checkOut(data, handleNavToPembayaran));
+                    // console.log(data);
                 }
             } else {
                 ToasInvalid('Isi alamat terlebih dahulu !');
@@ -210,7 +234,7 @@ export default function CheckOut({ navigation, route }) {
             ToasInvalid('Isi alamat terlebih dahulu !');
         }
         // handleNavToPembayaran();
-    }, [dataKurir, handleTotalHargaBayar, metodeBayar, filterdataProduk, dispatch, handleNavToPembayaran, dataUser]);
+    }, [dataKurir, handleTotalHargaBayar, metodeBayar, filterdataProduk, dispatch, handleNavToPembayaran, dataUser, handleTotalBv, handleTotalPv, dataCheck]);
 
     const handleMOdalItem = (value) => {
         setKurir(!modalKurir);
@@ -249,8 +273,6 @@ export default function CheckOut({ navigation, route }) {
         };
     }, []);
 
-
-
     return (
         <View style={styles.Container}>
             <StatusBar translucent={false} backgroundColor={color.mainColor} barStyle="light-content" />
@@ -266,6 +288,20 @@ export default function CheckOut({ navigation, route }) {
                         refreshing={refreshing} onRefresh={onRefresh} />
                 }
             >
+                <View style={{
+                    flexDirection: 'row',
+                    backgroundColor: 'rgba(66, 245, 129, 0.1)',
+                    paddingHorizontal: sizeWidth(5),
+                    paddingVertical: sizeHeight(1),
+                }}>
+                    <Ionicons name="information-circle-outline" color={color.bgGreen} size={sizeFont(8)} />
+                    <Text style={{
+                        fontSize: sizeFont(3.5),
+                        marginLeft: sizeWidth(2),
+                        flex: 1,
+                        color: color.fontBlack1,
+                    }}>Anda berkesempatan mendapatan paket mitra {dataCheck.nama_paket} dengan keuntungan {dataCheck.bonus_active} dan bonus pasif {dataCheck.bonus_passive}</Text>
+                </View>
                 <View>
                     <View style={styles.BoxAlamat}>
                         <View style={{
@@ -323,6 +359,7 @@ export default function CheckOut({ navigation, route }) {
                     </View>
                     <View style={styles.ContentItem}>
                         {
+                            dataProduk !== null &&
                             dataProduk.map((item, index) => {
                                 return (
                                     <View key={index}>

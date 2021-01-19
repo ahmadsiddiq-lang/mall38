@@ -14,6 +14,7 @@ export const getDetailProduk = (id) => {
             },
         })
             .then(dataDetailProduk => {
+                console.log(dataDetailProduk);
                 dispatch({
                     type: DETAIL_PRODUK,
                     data: dataDetailProduk.data.data,

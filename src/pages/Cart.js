@@ -2,11 +2,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useState } from 'react';
-import { BackHandler, FlatList, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, BackHandler, FlatList, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { color } from '../assets/colors/Index';
 import { Poppins } from '../assets/fonts';
-import { sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
+import { SCREEN_HEIGHT, SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
 import Deskripsi from '../components/Cart/Deskripsi';
 // import Kurir from '../components/Cart/Kurir';
 // import MetodeBayar from '../components/Cart/MetodeBayar';
@@ -24,6 +24,7 @@ export default function Cart({ navigation }) {
     const dataCart = useSelector(state => state.cart.dataCart);
     const dataUser = useSelector(state => state.dataUser.dataUser);
     const [toggleCheckBox, setToggleCheckBox] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [dataCartState, setDataCart] = useState([]);
     const [fixDataCart, setFixDataCart] = useState([]);
     // console.log(dataCartState);
@@ -187,6 +188,20 @@ export default function Cart({ navigation }) {
                 toggleCheckBox={toggleCheckBox}
                 setToggleCheckBox={setToggleCheckBox}
             />
+            {
+                loading &&
+                <View style={{
+                    position: 'absolute',
+                    width: SCREEN_WIDTH,
+                    height: sizeHeight(90),
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    zIndex: 1,
+                    marginTop: sizeHeight(8),
+                }}>
+                    <ActivityIndicator color={color.mainColor} size="large" />
+                </View>
+            }
             <View style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
@@ -269,6 +284,8 @@ export default function Cart({ navigation }) {
             </View>
             <Deskripsi
                 navigation={navigation}
+                setLoading={setLoading}
+                hetDataCart={hetDataCart}
                 dataUser={dataUser}
                 fixDataCart={fixDataCart} />
         </View>

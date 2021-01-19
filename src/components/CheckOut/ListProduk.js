@@ -54,6 +54,19 @@ export default function ListProduk({ item }) {
                 <View style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
+                }}>
+                    <Text style={{
+                        fontSize: sizeFont(3),
+                        color: color.fontBlack1,
+                    }}>PV {dataProduk.pv}</Text>
+                    <Text style={{
+                        fontSize: sizeFont(3),
+                        color: color.fontBlack1,
+                    }}>BV {dataProduk.bv}</Text>
+                </View>
+                <View style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
                     alignItems: 'center',
                 }}>
                     <Text style={{

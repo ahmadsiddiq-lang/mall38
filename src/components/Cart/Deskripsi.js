@@ -1,42 +1,68 @@
 import React, { useCallback } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useDispatch } from 'react-redux';
 import { color } from '../../assets/colors/Index';
 import { Poppins } from '../../assets/fonts';
 import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
-import { rupiah, ToasInvalid } from '../../config/function';
+import { getIdUser, rupiah, ToasInvalid } from '../../config/function';
+import { chekOut } from '../../redux/actions/Cart';
 
-export default function Deskripsi({ navigation, fixDataCart = [], dataUser }) {
+export default function Deskripsi({ navigation, fixDataCart = [], dataUser, setLoading, hetDataCart }) {
 
-    const TotalHargaProduk = () => {
+    const dispatch = useDispatch();
+    const TotalHargaProduk = useCallback(() => {
         let total = 0;
         fixDataCart.forEach(element => {
             total += (Number(element.product.price) * Number(element.qty));
         });
         return total;
-    };
+    }, [fixDataCart]);
 
     const handleProduk = useCallback(() => {
         const newData = [];
         fixDataCart.forEach((element, index) => {
             const total = (Number(element.product.price) * Number(element.qty));
             const berat = (Number(element.product.berat) * Number(element.qty));
+            const pv = (Number(element.product.pv) * Number(element.qty));
+            const bv = (Number(element.product.bv) * Number(element.qty));
             fixDataCart[index].product.price = total;
             fixDataCart[index].product.berat = berat;
+            fixDataCart[index].product.pv = pv;
+            fixDataCart[index].product.bv = bv;
             newData.push(fixDataCart[index]);
         });
         return newData;
     }, [fixDataCart]);
 
-    const handleNav = () => {
+    const handleNav = useCallback((dataCheck) => {
         if (fixDataCart.length > 0 && dataUser) {
+            setLoading(false);
             navigation.navigate('CheckOut', {
                 data: handleProduk(),
                 dataUser: dataUser,
+                dataCheck: dataCheck,
             });
         } else {
             ToasInvalid('Pilih Produk dahulu !');
         }
-    };
+    }, [dataUser, fixDataCart, handleProduk, navigation, setLoading]);
+
+    const handleInvalid = useCallback((err) => {
+        console.log(err);
+        hetDataCart();
+        setLoading(false);
+    }, [setLoading, hetDataCart]);
+
+    const buttonCheckOut = useCallback(async () => {
+        const idUser = await getIdUser();
+        const data = {
+            user_id: idUser,
+            sub_total_belanja: TotalHargaProduk(),
+        };
+        // console.log(handleProduk());
+        dispatch(chekOut(data, handleNav, handleInvalid));
+        setLoading(true);
+    }, [TotalHargaProduk, dispatch, handleNav, setLoading, handleInvalid]);
 
     return (
         <View style={styles.Container}>
@@ -48,7 +74,7 @@ export default function Deskripsi({ navigation, fixDataCart = [], dataUser }) {
                 marginTop: sizeHeight(3),
             }}>
                 <TouchableOpacity
-                    onPress={() => handleNav()}
+                    onPress={() => buttonCheckOut()}
                     activeOpacity={0.8}
                     style={styles.BtnBuy}
                 >

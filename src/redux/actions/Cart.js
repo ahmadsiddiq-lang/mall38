@@ -63,4 +63,27 @@ export const deleteProdukCart = (data, hetDataCart) => {
     };
 };
 
+export const chekOut = (data, handleNav, handleInvalid) => {
+    return async (dispatch) => {
+        await Axios.post(BASE_URL + 'get-mitra', data, {
+            withCredentials: true,
+            headers: {
+                Accept: 'application/json',
+                Authorization: 'Bearer' + await getToken(),
+            },
+        })
+            .then(response => {
+                // console.log(response.data.data);
+                handleNav(response.data.data);
+                // dispatch({
+                //     type: GET_CART,
+                //     data: response.data.data,
+                // });
+            }).catch(err => {
+                // console.log(err.response);
+                handleInvalid(err.response);
+            });
+    };
+};
+
 
