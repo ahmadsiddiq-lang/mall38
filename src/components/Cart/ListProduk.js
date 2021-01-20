@@ -64,7 +64,7 @@ export default function ListProduk({ item, handlePlus, handleCechboxItem, handle
                             </TouchableOpacity>
                             <Text style={{ fontSize: sizeFont(3.5) }}>{item.qty}</Text>
                             <TouchableOpacity
-                                onPress={() => handlePlus(item.id)}
+                                onPress={() => handlePlus(item.id, item)}
                                 activeOpacity={0.8}
                                 style={{
                                     paddingLeft: sizeWidth(4),

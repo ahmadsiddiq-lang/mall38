@@ -2,11 +2,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, BackHandler, FlatList, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, BackHandler, FlatList, StatusBar, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { color } from '../assets/colors/Index';
 import { Poppins } from '../assets/fonts';
-import { SCREEN_HEIGHT, SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
+import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
 import Deskripsi from '../components/Cart/Deskripsi';
 // import Kurir from '../components/Cart/Kurir';
 // import MetodeBayar from '../components/Cart/MetodeBayar';
@@ -39,13 +39,18 @@ export default function Cart({ navigation }) {
         handleSelectItem();
     };
 
-    const handlePlus = useCallback(async (id) => {
+    const handlePlus = useCallback(async (id, item) => {
+        const stok = item.product.stok;
         const dataFromState = dataCartState;
         const dataIndex = dataFromState.findIndex(cart => cart.id === id);
-        dataFromState[dataIndex].qty = dataFromState[dataIndex].qty + 1;
-        // console.log(dataFromState);
-        setDataCart([...dataFromState]);
-        handleSelectItem();
+        if (stok > 0 && stok > dataFromState[dataIndex].qty) {
+            dataFromState[dataIndex].qty = dataFromState[dataIndex].qty + 1;
+            setDataCart([...dataFromState]);
+            handleSelectItem();
+        } else {
+            ToastAndroid.showWithGravity('Stok Tidak mencukupi', ToastAndroid.SHORT, ToastAndroid.CENTER);
+        }
+        // console.log(stok);
     }, [dataCartState, handleSelectItem]);
 
     const handleMinu = useCallback(async (id) => {
