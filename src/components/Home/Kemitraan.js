@@ -9,7 +9,7 @@ import CardProduk, { CardEnd } from '../CardProduk';
 // import CountDown from 'react-native-countdown-component';
 // import moment from 'moment';
 
-export default function FlashSale({ navigation, dataFlash, barStatus, visibleFlashSale, ShimmerPlaceHolder }) {
+export default function Kemitraan({ navigation, produkMitra, barStatus, visibleFlashSale, ShimmerPlaceHolder }) {
 
     // const [totalDuration, setTotalDuration] = useState(0);
 
@@ -125,8 +125,14 @@ export default function FlashSale({ navigation, dataFlash, barStatus, visibleFla
                 >
                     <View style={styles.ContainerProduk}>
                         {visibleFlashSale ?
-                            dataFlash.slice(0, 10).map(renderItem) : fakeData.map(renderItemShimer)}
-                        <CardEnd />
+                            produkMitra != null &&
+                            produkMitra.slice(0, 10).map(renderItem) : fakeData.map(renderItemShimer)}
+                        <CardEnd
+                            onPressLihatSemua={() => navigation.navigate('ListProduk', {
+                                dataProduk: produkMitra,
+                                title: 'Produk Mitra',
+                            })}
+                        />
                     </View>
                 </ScrollView>
             </View>

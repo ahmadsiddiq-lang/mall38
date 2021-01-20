@@ -5,11 +5,11 @@ import { SCREEN_WIDTH, sizeHeight } from '../assets/responsive';
 import Header from '../components/Header/Home';
 import Carousel from '../components/Home/Carousel';
 // import Categori from '../components/Home/Categori';
-import FlashSale from '../components/Home/FlashSale';
+import Kemitraan from '../components/Home/Kemitraan';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCarousel } from '../redux/actions/Carousel';
 import { getCategori } from '../redux/actions/Categori';
-import { getFlashSale } from '../redux/actions/FlashSale';
+import { getProduk } from '../redux/actions/Produk';
 import { countDown, getIdUser } from '../config/function';
 import { getCArt } from '../redux/actions/Cart';
 import { getDataUser } from '../redux/actions/User';
@@ -31,16 +31,16 @@ export default function Home({ navigation }) {
 
     const dataCarousel = useSelector(state => state.Carousel.Carousel);
     const dataCategori = useSelector(state => state.categori.categori);
-    const dataFlash = useSelector(state => state.flashsale.flashsale);
-    const [dateFlashShale, setDateFlash] = useState('');
+    const dataProduk = useSelector(state => state.produk.produk);
+    const [produkMitra, setProdukMitra] = useState(null);
     const [refreshing, setRefreshing] = React.useState(false);
 
     // shimer
     // const [visibleCategori, setVisibleCategori] = useState(false);
     // const CategoriShemer = React.createRef();
     const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
-    const [visible, setVisible] = useState(false);
-    const [visibleFlashSale, setvisibleFlashSale] = useState(false);
+    const [visible, setVisibleBanner] = useState(false);
+    const [visibleFlashSale, setVisible] = useState(false);
     const CarouselUp = React.createRef();
     const FlashSaleShimer = React.createRef();
 
@@ -67,8 +67,8 @@ export default function Home({ navigation }) {
 
     const getData = useCallback(async () => {
         const idUser = await getIdUser();
-        dispatch(getCarousel(setVisible));
-        dispatch(getFlashSale(setvisibleFlashSale));
+        dispatch(getCarousel(setVisibleBanner));
+        dispatch(getProduk(setVisible));
         dispatch(getCategori());
         dispatch(getDataUser(idUser));
     }, [dispatch]);
@@ -80,6 +80,14 @@ export default function Home({ navigation }) {
         }
     }, [dispatch]);
 
+    const filterProdukMitra = useCallback(() => {
+        if (dataProduk) {
+            const data = dataProduk.filter(item => item.mitra === 0);
+            // console.log(data);
+            setProdukMitra(data);
+        }
+    }, [dataProduk]);
+
 
     useEffect(() => {
         getData();
@@ -89,6 +97,10 @@ export default function Home({ navigation }) {
             hetDataCart();
         };
     }, [getData, hetDataCart]);
+
+    useEffect(() => {
+        filterProdukMitra();
+    }, [filterProdukMitra]);
 
     React.useEffect(() => {
         const facebookAnimated = Animated.stagger(400, [CarouselUp.current.getAnimated(),
@@ -164,10 +176,9 @@ export default function Home({ navigation }) {
                     visibleCategori={visibleCategori}
                     CategoriShemer={CategoriShemer}
                 /> */}
-                <FlashSale
-                    dateFlashShale={dateFlashShale}
+                <Kemitraan
                     navigation={navigation}
-                    dataFlash={dataFlash}
+                    produkMitra={produkMitra}
                     barStatus={'80%'}
                     FlashSaleShimer={FlashSaleShimer}
                     visibleFlashSale={visibleFlashSale}
@@ -183,10 +194,10 @@ export default function Home({ navigation }) {
                 {
                     visibleFlashSale &&
                     <>
-                        <ProdukLokal navigation={navigation} dataProduk={dataFlash} />
-                        <ProdukImpor navigation={navigation} dataProduk={dataFlash} />
+                        <ProdukLokal navigation={navigation} dataProduk={dataProduk} />
+                        <ProdukImpor navigation={navigation} dataProduk={dataProduk} />
                         <BannerCategori navigation={navigation} dataCategori={dataCategori} />
-                        <ProdukBaru navigation={navigation} dataProduk={dataFlash} />
+                        <ProdukBaru navigation={navigation} dataProduk={dataProduk} />
                     </>
                 }
             </Animated.ScrollView>

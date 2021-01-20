@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Animated, StyleSheet, Text, View } from 'react-native';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
+import { color } from '../assets/colors/Index';
 import Headers from '../components/Header/HeaderWithIcon';
 import ListProdukCompenet from '../components/ListProduk/ListProdukCompenet';
 
@@ -25,5 +26,6 @@ export default function ListProduk({ navigation, route }) {
 const styles = StyleSheet.create({
     Container: {
         flex: 1,
+        backgroundColor: color.bgWhite,
     },
 });
