@@ -56,7 +56,11 @@ export default function ProdukLokal({ navigation, dataProduk }) {
                         dataProduk.slice(10, 18).map((item, index) => {
                             return (
                                 <View key={index}>
-                                    <CardProduk navigation={navigation} item={item} />
+                                    <CardProduk
+                                        lableNew={true}
+                                        lableRedy={true}
+                                        navigation={navigation}
+                                        item={item} />
                                 </View>
                             );
                         })}

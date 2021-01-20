@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../assets/colors/Index';
 import { Poppins } from '../assets/fonts';
 import { sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
@@ -8,7 +8,7 @@ import { DefaultTitle } from './DefaultText';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { rupiah } from '../config/function';
 
-export default function CardProduk({ item, navigation, onPressBeli, barStatus = '' }) {
+export default function CardProduk({ item, navigation, barStatus = '', lableNew, lableRedy }) {
     return (
         <View style={[styles.Container, barStatus.length > 0 && { paddingBottom: sizeHeight(5) }]}>
             <TouchableOpacity
@@ -19,10 +19,49 @@ export default function CardProduk({ item, navigation, onPressBeli, barStatus = 
             >
                 <View style={styles.BoxImage}>
                     {
+                        lableNew &&
+                        <ImageBackground
+                            source={require('../assets/images/Produk/Rectangle2.png')}
+                            style={{
+                                position: 'absolute',
+                                right: 10,
+                                width: sizeWidth(8),
+                                height: sizeHeight(4),
+                                zIndex: 1,
+                                alignItems: 'center',
+                            }}>
+                            <Text style={{
+                                fontSize: sizeFont(3),
+                                color: color.fontWhite,
+                                marginTop: sizeHeight(0.5),
+                            }}>NEW</Text>
+                        </ImageBackground>
+                    }
+                    {
                         item !== undefined ?
                             <Image resizeMethod="auto" style={styles.image} source={{ uri: item.image }} />
                             :
                             <Image resizeMethod="auto" style={styles.image} source={require('../assets/images/Produk/imagedefault.png')} />
+                    }
+                    {
+                        lableRedy &&
+                        <ImageBackground
+                            source={require('../assets/images/Produk/Rectangle1.png')}
+                            style={{
+                                position: 'absolute',
+                                left: 0,
+                                bottom: 0,
+                                width: sizeWidth(30),
+                                height: sizeHeight(3.5),
+                                zIndex: 1,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                            }}>
+                            <Text style={{
+                                fontSize: sizeFont(3),
+                                color: color.fontWhite,
+                            }}>Redy to Order</Text>
+                        </ImageBackground>
                     }
                 </View>
                 <View style={styles.BoxText}>

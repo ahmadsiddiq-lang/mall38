@@ -18,7 +18,11 @@ export default function ProdukBaru({ navigation, dataProduk }) {
                     dataProduk.slice(10, 16).map((item, index) => {
                         return (
                             <View key={index} style={styles.BoxCard}>
-                                <CardProdukVer navigation={navigation} item={item} />
+                                <CardProdukVer
+                                    lableNew={true}
+                                    lableRedy={true}
+                                    navigation={navigation}
+                                    item={item} />
                             </View>
                         );
                     })

@@ -53,7 +53,11 @@ export default function ProdukImpor({ navigation, dataProduk }) {
                         dataProduk.slice(20, 28).map((item, index) => {
                             return (
                                 <View key={index}>
-                                    <CardProduk navigation={navigation} item={item} />
+                                    <CardProduk
+                                        lableNew={true}
+                                        lableRedy={true}
+                                        navigation={navigation}
+                                        item={item} />
                                 </View>
                             );
                         })}

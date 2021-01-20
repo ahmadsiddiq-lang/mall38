@@ -1,17 +1,17 @@
 /* eslint-disable radix */
 /* eslint-disable react-native/no-inline-styles */
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
+import React from 'react';
+import { StyleSheet, View, ScrollView, Image } from 'react-native';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import { Poppins } from '../../assets/fonts';
 import { color } from '../../assets/colors/Index';
 import CardProduk, { CardEnd } from '../CardProduk';
-import CountDown from 'react-native-countdown-component';
-import moment from 'moment';
+// import CountDown from 'react-native-countdown-component';
+// import moment from 'moment';
 
-export default function FlashSale({ navigation, dataFlash, dateFlashShale, barStatus, FlashSaleShimer, visibleFlashSale, ShimmerPlaceHolder }) {
+export default function FlashSale({ navigation, dataFlash, barStatus, visibleFlashSale, ShimmerPlaceHolder }) {
 
-    const [totalDuration, setTotalDuration] = useState(0);
+    // const [totalDuration, setTotalDuration] = useState(0);
 
     const fakeData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -48,6 +48,8 @@ export default function FlashSale({ navigation, dataFlash, dateFlashShale, barSt
                 key={index}
             >
                 <CardProduk
+                    lableNew={true}
+                    lableRedy={true}
                     navigation={navigation}
                     item={item}
                     barStatus={barStatus}
@@ -91,9 +93,9 @@ export default function FlashSale({ navigation, dataFlash, dateFlashShale, barSt
                         style={styles.BoxLable}>
                         <Image
                             resizeMethod="auto"
-                            style={styles.ImageLable} source={require('../../assets/images/banner/flash_sale.png')} />
+                            style={styles.ImageLable} source={require('../../assets/images/banner/Produk-Kemitraan.png')} />
                     </ShimmerPlaceHolder>
-                    {
+                    {/* {
                         visibleFlashSale &&
                         <View style={{
                             marginLeft: sizeWidth(5),
@@ -115,7 +117,7 @@ export default function FlashSale({ navigation, dataFlash, dateFlashShale, barSt
                                 showSeparator
                             />
                         </View>
-                    }
+                    } */}
                 </View>
                 <ScrollView
                     showsHorizontalScrollIndicator={false}
@@ -167,7 +169,7 @@ const styles = StyleSheet.create({
     },
     BoxLable: {
         overflow: 'hidden',
-        width: sizeWidth(30),
+        width: sizeWidth(45),
         height: sizeWidth(15),
         marginLeft: sizeWidth(5),
     },
