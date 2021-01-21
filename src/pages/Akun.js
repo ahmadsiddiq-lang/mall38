@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useState } from 'react';
-import { Image, Modal, RefreshControl, ScrollView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
+import { Image, ImageBackground, Modal, RefreshControl, ScrollView, StatusBar, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
 import { getIdUser, objekEmpty } from '../config/function';
 import LinearGradient from 'react-native-linear-gradient';
 import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
@@ -86,7 +86,7 @@ export default function Akun({ navigation }) {
 
     return (
         <View style={styles.Container}>
-            <LinearGradient
+            {/* <LinearGradient
                 colors={[color.mainColor, '#b477e6', '#cfa2f5']}
                 style={styles.Back}
             >
@@ -101,56 +101,97 @@ export default function Akun({ navigation }) {
                             <FontAwesome5 onPress={() => handleUser()} name="user" color={color.fontWhite} size={sizeFont(13)} solid />
                     }
                 </View>
-            </LinearGradient>
-            <ScrollView
-                refreshControl={
-                    <RefreshControl
-                        style={{
-                            zIndex: 999,
-                            marginTop: sizeHeight(15),
-                        }}
-                        colors={['#689F38', color.mainColor]}
-                        refreshing={refreshing} onRefresh={onRefresh} />
-                }
+            </LinearGradient> */}
+            <StatusBar translucent backgroundColor="transparent" />
+            <ImageBackground
+                resizeMethod="auto"
+                source={require('../assets/images/background/Background.png')}
+                style={{
+                    width: SCREEN_WIDTH,
+                    height: sizeHeight(40),
+                }}
             >
-                <View style={styles.Content}>
-                    <Content navigation={navigation} />
+                <View style={{
+                    marginTop: sizeHeight(6.5),
+                    paddingHorizontal: sizeWidth(5),
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                }}>
+                    <View style={{
+                        borderWidth: 3,
+                        borderColor: color.borderWhite,
+                        borderRadius: 100,
+                        width: sizeWidth(20),
+                        height: sizeWidth(20),
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}>
+                        <FontAwesome5 onPress={() => handleUser()} name="user" color={color.fontWhite} size={sizeFont(10)} solid />
+                    </View>
+                    <View style={{
+                        marginLeft: sizeWidth(5),
+                    }}>
+                        <Text style={{
+                            fontSize: sizeFont(4.5),
+                            color: color.fontWhite,
+                            fontFamily: Poppins.Medium,
+                        }}>Ahmad Saja</Text>
+                        <Text style={{
+                            fontSize: sizeFont(3.5),
+                            color: color.fontWhite,
+                        }}>ahmad@gmail.com</Text>
+                    </View>
                 </View>
-                <View style={styles.Footer}>
-                    {
-                        dataScreen !== undefined &&
-                            objekEmpty(dataScreen) ?
-                            <TouchableOpacity
-                                onPress={() => handleLogOut()}
-                                activeOpacity={0.8}
-                                style={styles.Bnt}
-                            >
-                                <Text style={{
-                                    color: color.fontWhite,
-                                    fontSize: sizeFont(4),
-                                    fontFamily: Poppins.Medium,
-                                }}>Keluar</Text>
-                            </TouchableOpacity>
-                            :
-                            <TouchableOpacity
-                                onPress={() => navigation.navigate('Login')}
-                                activeOpacity={0.8}
-                                style={styles.Bnt}
-                            >
-                                <Text style={{
-                                    color: color.fontWhite,
-                                    fontSize: sizeFont(4),
-                                    fontFamily: Poppins.Medium,
-                                }}>Login</Text>
-                            </TouchableOpacity>
+            </ImageBackground>
+            <View style={styles.Content}>
+                <ScrollView
+                    refreshControl={
+                        <RefreshControl
+                            style={{
+                                zIndex: 999,
+                                marginTop: sizeHeight(15),
+                            }}
+                            colors={['#689F38', color.mainColor]}
+                            refreshing={refreshing} onRefresh={onRefresh} />
                     }
-                    <Text style={{
-                        fontSize: sizeFont(3),
-                        color: color.fontBlack1,
-                        marginTop: sizeHeight(3),
-                    }}>Version 1.0</Text>
-                </View>
-            </ScrollView>
+                >
+                    <Content navigation={navigation} />
+                    {/* <View style={styles.Footer}>
+                        {
+                            dataScreen !== undefined &&
+                                objekEmpty(dataScreen) ?
+                                <TouchableOpacity
+                                    onPress={() => handleLogOut()}
+                                    activeOpacity={0.8}
+                                    style={styles.Bnt}
+                                >
+                                    <Text style={{
+                                        color: color.fontWhite,
+                                        fontSize: sizeFont(4),
+                                        fontFamily: Poppins.Medium,
+                                    }}>Keluar</Text>
+                                </TouchableOpacity>
+                                :
+                                <TouchableOpacity
+                                    onPress={() => navigation.navigate('Login')}
+                                    activeOpacity={0.8}
+                                    style={styles.Bnt}
+                                >
+                                    <Text style={{
+                                        color: color.fontWhite,
+                                        fontSize: sizeFont(4),
+                                        fontFamily: Poppins.Medium,
+                                    }}>Login</Text>
+                                </TouchableOpacity>
+                        }
+                        <Text style={{
+                            fontSize: sizeFont(3),
+                            color: color.fontBlack1,
+                            marginTop: sizeHeight(3),
+                        }}>Version 1.0</Text>
+                    </View> */}
+                </ScrollView>
+            </View>
             <Modal
                 animationType="fade"
                 transparent={true}
@@ -200,7 +241,6 @@ export default function Akun({ navigation }) {
 const styles = StyleSheet.create({
     Container: {
         flex: 1,
-        backgroundColor: color.bgWhite,
     },
     Back: {
         width: SCREEN_WIDTH,
@@ -233,7 +273,14 @@ const styles = StyleSheet.create({
     Content: {
         // borderWidth: 1,
         marginTop: sizeHeight(7),
-        paddingHorizontal: sizeWidth(10),
+        height: sizeHeight(68),
+        zIndex: 1,
+        backgroundColor: color.bgWhite,
+        position: 'absolute',
+        bottom: 0,
+        width: SCREEN_WIDTH,
+        borderTopLeftRadius: 50,
+        paddingTop: sizeHeight(5),
     },
     Footer: {
         marginTop: sizeHeight(5),
