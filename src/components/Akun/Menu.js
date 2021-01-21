@@ -6,7 +6,7 @@ import { Poppins } from '../../assets/fonts';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-export default function Menu() {
+export default function Menu({ handleNavEditUser, navigation }) {
     return (
         <View style={styles.Container}>
             <View style={{
@@ -61,6 +61,7 @@ export default function Menu() {
                     <Ionicons name="chevron-forward" size={sizeFont(3.5)} color={color.fontBlack1} />
                 </TouchableOpacity>
                 <TouchableOpacity
+                    onPress={() => handleNavEditUser()}
                     activeOpacity={0.8}
                     style={styles.BtnList}
                 >

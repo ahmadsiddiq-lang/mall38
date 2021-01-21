@@ -1,26 +1,21 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useState } from 'react';
 import { Image, ImageBackground, Modal, RefreshControl, ScrollView, StatusBar, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
-import { getIdUser, objekEmpty } from '../config/function';
-import LinearGradient from 'react-native-linear-gradient';
+import { getIdUser, getToken, objekEmpty } from '../config/function';
 import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
 import { color } from '../assets/colors/Index';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import HeaderAkun from '../components/Header/HeaderAkun';
 import { Poppins } from '../assets/fonts';
 import Content from '../components/Akun/Content';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSelector, useDispatch } from 'react-redux';
-import { getDataUser, clearDataUser } from '../redux/actions/User';
-import { clearAll } from '../redux/actions/Clear';
-import { getTransaksi } from '../redux/actions/Transaksi';
+import { getDataUser, clearDataUser, getWallet } from '../redux/actions/User';
 
 export default function Akun({ navigation }) {
 
     const dispatch = useDispatch();
     const dataUser = useSelector(state => state.dataUser.dataUser);
     const dataAll = dataUser.user;
-
 
     const [dataScreen, setDataUser] = useState(dataAll);
     const [modalVisible, setModalVisible] = useState(false);
@@ -31,13 +26,13 @@ export default function Akun({ navigation }) {
 
     const handleUser = useCallback(async () => {
         const idUser = await getIdUser();
+        // const token = await getToken();
+        // console.log(token);
         if (idUser !== null) {
             dispatch(getDataUser(idUser));
-            if (dataScreen !== undefined) {
-                handleGetTransaksi();
-            }
+            // dispatch(getWallet(idUser));
         }
-    }, [dispatch, dataScreen, handleGetTransaksi]);
+    }, [dispatch]);
 
     const handleClearDataUser = useCallback(async () => {
         const idUser = await getIdUser();
@@ -54,13 +49,6 @@ export default function Akun({ navigation }) {
         setModalVisible(!modalVisible);
     }, [modalVisible]);
 
-    const handleGetTransaksi = useCallback(async () => {
-        const idUser = await getIdUser();
-        if (idUser !== null) {
-            dispatch(getTransaksi(idUser));
-        }
-    }, [dispatch]);
-
     const wait = useCallback((timeout) => {
         return new Promise(resolve => {
             setTimeout(resolve, timeout);
@@ -71,10 +59,20 @@ export default function Akun({ navigation }) {
         setRefreshing(true);
         wait(2000).then(() => {
             handleUser();
-            handleGetTransaksi();
             setRefreshing(false);
         });
-    }, [wait, handleUser, handleGetTransaksi]);
+    }, [wait, handleUser]);
+
+    const handleNavEditUser = useCallback(async () => {
+        const idUser = await getIdUser();
+        if (idUser) {
+            if (dataUser.length > 0 || dataUser.user !== undefined) {
+                navigation.navigate('EditUser', {
+                    data: dataUser,
+                });
+            }
+        }
+    }, [navigation, dataUser]);
 
 
     useEffect(() => {
@@ -86,22 +84,6 @@ export default function Akun({ navigation }) {
 
     return (
         <View style={styles.Container}>
-            {/* <LinearGradient
-                colors={[color.mainColor, '#b477e6', '#cfa2f5']}
-                style={styles.Back}
-            >
-                <HeaderAkun dataScreen={dataScreen} dataUser={dataUser} navigation={navigation} />
-                <View style={styles.BoxUser}>
-                    {
-                        dataScreen !== undefined &&
-                            dataScreen.photo !== 'https://mall38.com/images/user/NULL' &&
-                            dataScreen.photo !== null && dataScreen.photo !== undefined ?
-                            < Image resizeMethod="auto" style={styles.ImageUser} source={{ uri: dataScreen.photo }} />
-                            :
-                            <FontAwesome5 onPress={() => handleUser()} name="user" color={color.fontWhite} size={sizeFont(13)} solid />
-                    }
-                </View>
-            </LinearGradient> */}
             <StatusBar translucent backgroundColor="transparent" />
             <ImageBackground
                 resizeMethod="auto"
@@ -126,7 +108,14 @@ export default function Akun({ navigation }) {
                         alignItems: 'center',
                         justifyContent: 'center',
                     }}>
-                        <FontAwesome5 onPress={() => handleUser()} name="user" color={color.fontWhite} size={sizeFont(10)} solid />
+                        {
+                            dataScreen !== undefined &&
+                                dataScreen.photo !== 'https://mall38.com/images/user/NULL' &&
+                                dataScreen.photo !== null && dataScreen.photo !== undefined ?
+                                < Image resizeMethod="auto" style={styles.ImageUser} source={{ uri: dataScreen.photo }} />
+                                :
+                                <FontAwesome5 onPress={() => handleUser()} name="user" color={color.fontWhite} size={sizeFont(10)} solid />
+                        }
                     </View>
                     <View style={{
                         marginLeft: sizeWidth(5),
@@ -135,11 +124,13 @@ export default function Akun({ navigation }) {
                             fontSize: sizeFont(4.5),
                             color: color.fontWhite,
                             fontFamily: Poppins.Medium,
-                        }}>Ahmad Saja</Text>
+                        }}>{dataScreen !== undefined &&
+                            objekEmpty(dataScreen) && dataScreen.name}</Text>
                         <Text style={{
                             fontSize: sizeFont(3.5),
                             color: color.fontWhite,
-                        }}>ahmad@gmail.com</Text>
+                        }}>{dataScreen !== undefined &&
+                            objekEmpty(dataScreen) && dataScreen.email}</Text>
                     </View>
                 </View>
             </ImageBackground>
@@ -155,7 +146,10 @@ export default function Akun({ navigation }) {
                             refreshing={refreshing} onRefresh={onRefresh} />
                     }
                 >
-                    <Content navigation={navigation} />
+                    <Content
+                        navigation={navigation}
+                        handleNavEditUser={handleNavEditUser}
+                    />
                     <View style={styles.Footer}>
                         <TouchableOpacity
                             onPress={() => handleLogOut()}

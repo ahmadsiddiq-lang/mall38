@@ -53,3 +53,23 @@ export const updateProfile = (data, handleUser) => {
             });
     };
 };
+
+export const getWallet = (idUser) => {
+    return async (dispatch) => {
+        await Axios.get(BASE_URL + 'get-wallet?user_id=' + idUser, {
+            withCredentials: true,
+            headers: {
+                Accept: 'application/json',
+                Authorization: 'Bearer' + await getToken(),
+            },
+        }).then(respon => {
+            console.log(respon);
+            // dispatch({
+            //     type: CLEAR_USER,
+            //     data: {},
+            // });
+        }).catch(err => {
+            console.log(err);
+        });
+    };
+};

@@ -13,7 +13,7 @@ import { Stop } from 'react-native-svg';
 import { Path } from 'react-native-svg';
 import Menu from './Menu';
 
-export default function Content() {
+export default function Content({ navigation, handleNavEditUser }) {
 
     const data = [50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80];
 
@@ -171,7 +171,10 @@ export default function Content() {
                 backgroundColor: color.bgBlack4,
                 marginVertical: sizeHeight(2),
             }} />
-            <Menu />
+            <Menu
+                handleNavEditUser={handleNavEditUser}
+                navigation={navigation}
+            />
         </View>
     );
 }
