@@ -156,40 +156,24 @@ export default function Akun({ navigation }) {
                     }
                 >
                     <Content navigation={navigation} />
-                    {/* <View style={styles.Footer}>
-                        {
-                            dataScreen !== undefined &&
-                                objekEmpty(dataScreen) ?
-                                <TouchableOpacity
-                                    onPress={() => handleLogOut()}
-                                    activeOpacity={0.8}
-                                    style={styles.Bnt}
-                                >
-                                    <Text style={{
-                                        color: color.fontWhite,
-                                        fontSize: sizeFont(4),
-                                        fontFamily: Poppins.Medium,
-                                    }}>Keluar</Text>
-                                </TouchableOpacity>
-                                :
-                                <TouchableOpacity
-                                    onPress={() => navigation.navigate('Login')}
-                                    activeOpacity={0.8}
-                                    style={styles.Bnt}
-                                >
-                                    <Text style={{
-                                        color: color.fontWhite,
-                                        fontSize: sizeFont(4),
-                                        fontFamily: Poppins.Medium,
-                                    }}>Login</Text>
-                                </TouchableOpacity>
-                        }
+                    <View style={styles.Footer}>
+                        <TouchableOpacity
+                            onPress={() => handleLogOut()}
+                            activeOpacity={0.8}
+                            style={styles.Bnt}
+                        >
+                            <Text style={{
+                                color: color.fontWhite,
+                                fontSize: sizeFont(4),
+                                fontFamily: Poppins.Medium,
+                            }}>Keluar</Text>
+                        </TouchableOpacity>
                         <Text style={{
                             fontSize: sizeFont(3),
                             color: color.fontBlack1,
                             marginTop: sizeHeight(3),
                         }}>Version 1.0</Text>
-                    </View> */}
+                    </View>
                 </ScrollView>
             </View>
             <Modal
@@ -288,8 +272,8 @@ const styles = StyleSheet.create({
     },
     Bnt: {
         backgroundColor: color.mainColor,
-        width: sizeWidth(70),
-        paddingVertical: sizeHeight(0.8),
+        width: sizeWidth(90),
+        paddingVertical: sizeHeight(0.5),
         alignItems: 'center',
         borderRadius: 8,
     },
