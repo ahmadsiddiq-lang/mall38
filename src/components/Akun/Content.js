@@ -37,11 +37,16 @@ export default function Content({ navigation, handleNavEditUser }) {
                 marginTop: sizeHeight(2),
                 flexDirection: 'row',
             }}>
-                <View style={{
-                    flex: 1,
-                    marginRight: sizeWidth(5),
-                    backgroundColor: color.bgBlack4,
-                }}>
+                <TouchableOpacity
+                    onPress={() => navigation.navigate('Bonus', {
+                        title: 'Bonus Active',
+                    })}
+                    activeOpacity={0.8}
+                    style={{
+                        flex: 1,
+                        marginRight: sizeWidth(5),
+                        backgroundColor: color.bgBlack4,
+                    }}>
                     <View style={{
                         padding: sizeWidth(2),
                     }}>
@@ -71,17 +76,22 @@ export default function Content({ navigation, handleNavEditUser }) {
                             <Line />
                         </AreaChart>
                     </View>
-                </View>
+                </TouchableOpacity>
                 <View>
-                    <View style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        flex: 1,
-                        backgroundColor: color.bgBlack4,
-                        marginBottom: sizeHeight(1),
-                        paddingHorizontal: sizeWidth(3),
-                        justifyContent: 'space-between',
-                    }}>
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('Bonus', {
+                            title: 'Bonus Pasif',
+                        })}
+                        activeOpacity={0.8}
+                        style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            flex: 1,
+                            backgroundColor: color.bgBlack4,
+                            marginBottom: sizeHeight(1),
+                            paddingHorizontal: sizeWidth(3),
+                            justifyContent: 'space-between',
+                        }}>
                         <View>
                             <Text style={{
                                 fontSize: sizeFont(4),
@@ -98,7 +108,7 @@ export default function Content({ navigation, handleNavEditUser }) {
                             height: sizeWidth(10),
                             marginLeft: sizeWidth(5),
                         }} source={require('../../assets/images/pageAkun/Bonus-Passive.png')} />
-                    </View>
+                    </TouchableOpacity>
                     <View style={{
                         flexDirection: 'row',
                         alignItems: 'center',
