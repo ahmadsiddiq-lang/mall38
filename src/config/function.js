@@ -8,10 +8,12 @@ import { Alert, Easing, Linking } from 'react-native';
 
 // convert to rupiah
 export const rupiah = (number) => {
-    var reverse = number.toString().split('').reverse().join(''),
-        thousand = reverse.match(/\d{1,3}/g);
-    thousand = thousand.join('.').split('').reverse().join('');
-    return thousand;
+    if (number !== undefined) {
+        var reverse = number.toString().split('').reverse().join(''),
+            thousand = reverse.match(/\d{1,3}/g);
+        thousand = thousand.join('.').split('').reverse().join('');
+        return thousand;
+    }
 };
 
 // hitung diskon

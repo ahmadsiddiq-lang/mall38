@@ -9,7 +9,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import ListProduk from '../components/CheckOut/ListProduk';
 import Kurir from '../components/CheckOut/Kurir';
 import MetodeBayar from '../components/CheckOut/MetodeBayar';
-import { getIdUser, openLink, ToasInvalid } from '../config/function';
+import { getIdUser, objekEmpty, openLink, ToasInvalid } from '../config/function';
 import { getDataUser } from '../redux/actions/User';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOngkir } from '../redux/actions/getOngkir';
@@ -288,20 +288,23 @@ export default function CheckOut({ navigation, route }) {
                         refreshing={refreshing} onRefresh={onRefresh} />
                 }
             >
-                <View style={{
-                    flexDirection: 'row',
-                    backgroundColor: 'rgba(66, 245, 129, 0.1)',
-                    paddingHorizontal: sizeWidth(5),
-                    paddingVertical: sizeHeight(1),
-                }}>
-                    <Ionicons name="information-circle-outline" color={color.bgGreen} size={sizeFont(8)} />
-                    <Text style={{
-                        fontSize: sizeFont(3.5),
-                        marginLeft: sizeWidth(2),
-                        flex: 1,
-                        color: color.fontBlack1,
-                    }}>Anda berkesempatan mendapatan paket mitra {dataCheck.nama_paket} dengan keuntungan {dataCheck.bonus_active} dan bonus pasif {dataCheck.bonus_passive}</Text>
-                </View>
+                {
+                    objekEmpty(dataCheck) &&
+                    <View style={{
+                        flexDirection: 'row',
+                        backgroundColor: 'rgba(66, 245, 129, 0.1)',
+                        paddingHorizontal: sizeWidth(5),
+                        paddingVertical: sizeHeight(1),
+                    }}>
+                        <Ionicons name="information-circle-outline" color={color.bgGreen} size={sizeFont(8)} />
+                        <Text style={{
+                            fontSize: sizeFont(3.5),
+                            marginLeft: sizeWidth(2),
+                            flex: 1,
+                            color: color.fontBlack1,
+                        }}>Anda berkesempatan mendapatan paket mitra {dataCheck.nama_paket} dengan keuntungan {dataCheck.bonus_active}% dan bonus pasif {dataCheck.bonus_passive}%</Text>
+                    </View>
+                }
                 <View>
                     <View style={styles.BoxAlamat}>
                         <View style={{

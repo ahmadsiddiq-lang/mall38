@@ -51,6 +51,7 @@ export default function Deskripsi({ navigation, fixDataCart = [], dataUser, setL
         console.log(err);
         hetDataCart();
         setLoading(false);
+        ToasInvalid('Chekout Gagal');
     }, [setLoading, hetDataCart]);
 
     const buttonCheckOut = useCallback(async () => {

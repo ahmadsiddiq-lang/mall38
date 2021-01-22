@@ -16,8 +16,8 @@ export default function Content({ navigation, handleNavEditUser }) {
     const dataWallet = useSelector(state => state.dataUser.dataWallet);
     const dataHistoryWallet = useSelector(state => state.dataUser.dataHistoryWallet);
 
-    const newDataWallet = objekEmpty(dataWallet) > 0 ? dataWallet : null;
-    const newDataHistoryWallet = objekEmpty(dataHistoryWallet) > 0 ? dataHistoryWallet.history : null;
+    const newDataWallet = objekEmpty(dataWallet) ? dataWallet : null;
+    const newDataHistoryWallet = objekEmpty(dataHistoryWallet) ? dataHistoryWallet.history : null;
 
 
     const BonusActive = () => {
@@ -38,7 +38,8 @@ export default function Content({ navigation, handleNavEditUser }) {
             return total;
         }
     };
-    // console.log(BonusActive());
+    console.log(newDataWallet === undefined);
+    console.log(newDataWallet);
 
     const data = [50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80];
 
@@ -131,7 +132,7 @@ export default function Content({ navigation, handleNavEditUser }) {
                             <Text style={{
                                 fontSize: sizeFont(3.3),
                                 color: color.fontBlack1,
-                            }}>Bonus Pasif</Text>
+                            }}>Bonus Passive</Text>
                         </View>
                         <Image resizeMethod="auto" style={{
                             resizeMode: 'contain',
