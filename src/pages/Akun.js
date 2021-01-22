@@ -9,7 +9,7 @@ import { Poppins } from '../assets/fonts';
 import Content from '../components/Akun/Content';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSelector, useDispatch } from 'react-redux';
-import { getDataUser, clearDataUser, getWallet } from '../redux/actions/User';
+import { getDataUser, clearDataUser, getWallet, getHostoryWallet } from '../redux/actions/User';
 
 export default function Akun({ navigation }) {
 
@@ -30,7 +30,8 @@ export default function Akun({ navigation }) {
         // console.log(token);
         if (idUser !== null) {
             dispatch(getDataUser(idUser));
-            // dispatch(getWallet(idUser));
+            dispatch(getWallet(idUser));
+            dispatch(getHostoryWallet(idUser));
         }
     }, [dispatch]);
 
@@ -74,6 +75,12 @@ export default function Akun({ navigation }) {
         }
     }, [navigation, dataUser]);
 
+    const setStateAllDataUser = useCallback(async () => {
+        if (dataScreen === undefined) {
+            setDataUser(dataAll);
+        }
+    }, [dataScreen, dataAll]);
+
 
     useEffect(() => {
         handleUser();
@@ -81,6 +88,13 @@ export default function Akun({ navigation }) {
             handleUser();
         };
     }, [handleUser]);
+
+    useEffect(() => {
+        setStateAllDataUser();
+        return () => {
+            setStateAllDataUser();
+        };
+    }, [setStateAllDataUser]);
 
     return (
         <View style={styles.Container}>

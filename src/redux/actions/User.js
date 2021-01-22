@@ -4,6 +4,8 @@ import { BASE_URL } from '../../config/URL';
 
 export const GET_USER = 'GET_USER';
 export const CLEAR_USER = 'GET_USER';
+export const GET_WALLET = 'GET_WALLET';
+export const GET_HOSTORY_WALLET = 'GET_HOSTORY_WALLET';
 
 export const getDataUser = (id, setLoadingData) => {
     return async (dispatch) => {
@@ -62,14 +64,46 @@ export const getWallet = (idUser) => {
                 Accept: 'application/json',
                 Authorization: 'Bearer' + await getToken(),
             },
-        }).then(respon => {
-            console.log(respon);
-            // dispatch({
-            //     type: CLEAR_USER,
-            //     data: {},
-            // });
+        }).then(respons => {
+            // console.log(respons);
+            dispatch({
+                type: GET_WALLET,
+                data: respons.data.data,
+            });
         }).catch(err => {
-            console.log(err);
+            console.log(err.response);
+            if (err.response.status === 500) {
+                dispatch({
+                    type: GET_WALLET,
+                    data: {},
+                });
+            }
+        });
+    };
+};
+
+export const getHostoryWallet = (idUser) => {
+    return async (dispatch) => {
+        await Axios.get(BASE_URL + 'get-wallet-history?user_id=' + idUser, {
+            withCredentials: true,
+            headers: {
+                Accept: 'application/json',
+                Authorization: 'Bearer' + await getToken(),
+            },
+        }).then(respons => {
+            // console.log(respons);
+            dispatch({
+                type: GET_HOSTORY_WALLET,
+                data: respons.data.data,
+            });
+        }).catch(err => {
+            console.log(err.response);
+            if (err.response.status === 500) {
+                dispatch({
+                    type: GET_HOSTORY_WALLET,
+                    data: [],
+                });
+            }
         });
     };
 };

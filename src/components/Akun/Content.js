@@ -3,17 +3,42 @@ import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Poppins } from '../../assets/fonts';
-import { AreaChart, Grid, LineChart } from 'react-native-svg-charts';
+import { AreaChart } from 'react-native-svg-charts';
 import * as shape from 'd3-shape';
-import { Defs } from 'react-native-svg';
-import { LinearGradient } from 'react-native-svg';
-import { Stop } from 'react-native-svg';
 import { Path } from 'react-native-svg';
 import Menu from './Menu';
+import { useSelector } from 'react-redux';
+import { objekEmpty, rupiah } from '../../config/function';
 
 export default function Content({ navigation, handleNavEditUser }) {
+
+    const dataWallet = useSelector(state => state.dataUser.dataWallet);
+    const dataHistoryWallet = useSelector(state => state.dataUser.dataHistoryWallet);
+
+    const newDataWallet = objekEmpty(dataWallet) > 0 ? dataWallet : null;
+    const newDataHistoryWallet = objekEmpty(dataHistoryWallet) > 0 ? dataHistoryWallet.history : null;
+
+
+    const BonusActive = () => {
+        if (newDataHistoryWallet != null) {
+            let total = 0;
+            newDataHistoryWallet.forEach(element => {
+                total += element.bonus_active;
+            });
+            return total;
+        }
+    };
+    const BonusPasif = () => {
+        if (newDataHistoryWallet != null) {
+            let total = 0;
+            newDataHistoryWallet.forEach(element => {
+                total += element.bonus_passive;
+            });
+            return total;
+        }
+    };
+    // console.log(BonusActive());
 
     const data = [50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80];
 
@@ -39,7 +64,10 @@ export default function Content({ navigation, handleNavEditUser }) {
             }}>
                 <TouchableOpacity
                     onPress={() => navigation.navigate('Bonus', {
+                        pageStatus: 1,
                         title: 'Bonus Active',
+                        dataWallet: newDataWallet,
+                        dataHistoryWallet: newDataHistoryWallet,
                     })}
                     activeOpacity={0.8}
                     style={{
@@ -59,7 +87,7 @@ export default function Content({ navigation, handleNavEditUser }) {
                         <Text style={{
                             fontSize: sizeFont(4),
                             marginTop: sizeHeight(0.5),
-                        }}>Rp. 50.500</Text>
+                        }}>Rp. {newDataWallet != null ? rupiah(BonusActive()) : 0}</Text>
                         <Text style={{
                             fontSize: sizeFont(3.3),
                             color: color.fontBlack1,
@@ -80,7 +108,10 @@ export default function Content({ navigation, handleNavEditUser }) {
                 <View>
                     <TouchableOpacity
                         onPress={() => navigation.navigate('Bonus', {
+                            pageStatus: 0,
                             title: 'Bonus Pasif',
+                            dataWallet: newDataWallet,
+                            dataHistoryWallet: newDataHistoryWallet,
                         })}
                         activeOpacity={0.8}
                         style={{
@@ -96,7 +127,7 @@ export default function Content({ navigation, handleNavEditUser }) {
                             <Text style={{
                                 fontSize: sizeFont(4),
                                 marginTop: sizeHeight(0.5),
-                            }}>Rp. 50.500</Text>
+                            }}>Rp. {newDataWallet != null ? rupiah(BonusPasif()) : 0}</Text>
                             <Text style={{
                                 fontSize: sizeFont(3.3),
                                 color: color.fontBlack1,
@@ -121,7 +152,7 @@ export default function Content({ navigation, handleNavEditUser }) {
                             <Text style={{
                                 fontSize: sizeFont(4),
                                 marginTop: sizeHeight(0.5),
-                            }}>4.500</Text>
+                            }}>{newDataWallet != null ? newDataWallet.tpv : 0}</Text>
                             <Text style={{
                                 fontSize: sizeFont(3.3),
                                 color: color.fontBlack1,
@@ -156,7 +187,7 @@ export default function Content({ navigation, handleNavEditUser }) {
                     <Text style={{
                         fontSize: sizeFont(4),
                         color: color.mainColor,
-                    }}>Rp. 50.000.000</Text>
+                    }}>Rp. 5.000.000</Text>
                 </View>
                 <View style={{
                     height: 8,
@@ -167,7 +198,7 @@ export default function Content({ navigation, handleNavEditUser }) {
                 }}>
                     <View style={{
                         height: '100%',
-                        width: '80%',
+                        width: '0%',
                         backgroundColor: color.mainColor,
                     }} />
                 </View>

@@ -17,7 +17,6 @@ export default function Transaksi({ navigation }) {
     const [dataTransaksi, setDataTransaksi] = useState(null);
     const [refreshing, setRefreshing] = React.useState(false);
 
-
     // console.log(dataAll);
     const handleGetTransaksi = useCallback(async () => {
         const idUser = await getIdUser();
@@ -27,15 +26,17 @@ export default function Transaksi({ navigation }) {
     }, [dispatch]);
 
     const handleTabbarFilter = (value) => {
-        if (value === 'Semua') {
-            setDataTransaksi(dataAll);
-            handleGetTransaksi();
-        } else if (value === 'delivery') {
-            const data = dataAll.filter(item => item.status_pengiriman === value);
-            setDataTransaksi(data);
-        } else {
-            const data = dataAll.filter(item => item.status_pembayaran === value);
-            setDataTransaksi(data);
+        if (dataAll !== undefined) {
+            if (value === 'Semua') {
+                setDataTransaksi(dataAll);
+                handleGetTransaksi();
+            } else if (value === 'delivery') {
+                const data = dataAll.filter(item => item.status_pengiriman === value);
+                setDataTransaksi(data);
+            } else {
+                const data = dataAll.filter(item => item.status_pembayaran === value);
+                setDataTransaksi(data);
+            }
         }
     };
 
@@ -55,10 +56,16 @@ export default function Transaksi({ navigation }) {
 
     useEffect(() => {
         handleGetTransaksi();
+        return () => {
+            handleGetTransaksi();
+        };
     }, [handleGetTransaksi]);
 
     useEffect(() => {
         setDataTransaksi(dataAll);
+        return () => {
+            setDataTransaksi(null);
+        };
     }, [dataAll]);
 
     return (

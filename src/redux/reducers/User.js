@@ -1,7 +1,9 @@
-import { GET_USER, CLEAR_USER } from '../actions/User';
+import { GET_USER, CLEAR_USER, GET_WALLET, GET_HOSTORY_WALLET } from '../actions/User';
 
 const initioalState = {
     dataUser: [],
+    dataWallet: {},
+    dataHistoryWallet: {},
 };
 
 const getDataUserReducer = (state = initioalState, action) => {
@@ -15,6 +17,16 @@ const getDataUserReducer = (state = initioalState, action) => {
             return {
                 ...state,
                 dataUser: action.data,
+            };
+        case GET_WALLET:
+            return {
+                ...state,
+                dataWallet: action.data,
+            };
+        case GET_HOSTORY_WALLET:
+            return {
+                ...state,
+                dataHistoryWallet: action.data,
             };
 
         default:

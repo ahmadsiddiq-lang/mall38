@@ -6,8 +6,35 @@ import { color } from '../../assets/colors/Index';
 import { Poppins } from '../../assets/fonts';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useSelector } from 'react-redux';
+import { rupiah } from '../../config/function';
 
-export default function Saldo() {
+export default function Saldo({ dataWallet, dataHistoryWallet }) {
+
+
+    const BonusMasuk = () => {
+        if (dataHistoryWallet != null) {
+            let total = 0;
+            dataHistoryWallet.forEach(element => {
+                total += element.in;
+            });
+            return total;
+        }
+    };
+    const BonusKeluar = () => {
+        if (dataHistoryWallet != null) {
+            let total = 0;
+            dataHistoryWallet.forEach(element => {
+                total += element.out;
+            });
+            return total;
+        }
+    };
+
+
+    // console.log(BonusPasif());
+
+
     return (
         <LinearGradient colors={[color.bgWhite, color.bgWhite, '#c19fd6']}>
             <View style={{
@@ -29,7 +56,7 @@ export default function Saldo() {
                         fontSize: sizeFont(4),
                         fontFamily: Poppins.Medium,
                         color: color.fontWhite,
-                    }}>Rp. 4.700.000</Text>
+                    }}>Rp. {dataWallet !== null ? rupiah(dataWallet.tbonus) : '0'}</Text>
                 </View>
                 <View style={{
                     paddingHorizontal: sizeWidth(5),
@@ -102,7 +129,7 @@ export default function Saldo() {
                     <Text style={{
                         fontSize: sizeFont(4),
                         color: color.mainColor,
-                    }}>Rp. 570.000</Text>
+                    }}>{dataHistoryWallet != null ? BonusMasuk() : '0'}</Text>
                 </View>
                 <View style={{
                     flexDirection: 'row',
@@ -116,7 +143,7 @@ export default function Saldo() {
                     <Text style={{
                         fontSize: sizeFont(4),
                         color: color.mainColor,
-                    }}>Rp. 570.000</Text>
+                    }}>{dataHistoryWallet != null ? BonusKeluar() : '0'}</Text>
                 </View>
             </View>
         </LinearGradient>
