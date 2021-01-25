@@ -1,6 +1,8 @@
+/* eslint-disable no-alert */
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useRef } from 'react';
-import { ActivityIndicator, Animated, BackHandler, StatusBar, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Animated, BackHandler, Share, StatusBar, StyleSheet, View } from 'react-native';
+import base64 from 'react-native-base64';
 import { useDispatch, useSelector } from 'react-redux';
 import { color } from '../assets/colors/Index';
 import Banner from '../components/DetailProduk/Banner';
@@ -28,14 +30,18 @@ export default function DetailProduk({ navigation, route }) {
     const detailProduk = useSelector(state => state.detailProduk.detailProduk);
     // const responAddCart = useSelector(state => state.cart.responAddCart);
 
-    console.log(detailProduk);
+    // console.log(route);
 
     const getDetailProduks = useCallback(() => {
+        const idProdukDeep = route.params.idProdukDeep;
         const idProduk = route.params.idProduk;
         if (idProduk) {
             dispatch(getDetailProduk(idProduk));
+        } else {
+            const decode = base64.decode(idProdukDeep.toString());
+            dispatch(getDetailProduk(decode));
         }
-    }, [dispatch, route.params.idProduk]);
+    }, [dispatch, route]);
 
     const goToTop = useCallback((idProduk) => {
         refScroll.current.scrollTo({ x: 0, y: 0, animated: true });
@@ -85,6 +91,49 @@ export default function DetailProduk({ navigation, route }) {
         return true;
     }, [navigation, clearDetailProduks]);
 
+    const onShare = async () => {
+        const idProduk = route.params.idProduk;
+        if (idProduk) {
+            const encoded = base64.encode(idProduk.toString());
+            try {
+                const result = await Share.share({
+                    message:
+                        'https://mall38.com/product/data-produk/' + encoded,
+                });
+                if (result.action === Share.sharedAction) {
+                    if (result.activityType) {
+                        // shared with activity type of result.activityType
+                    } else {
+                        // shared
+                    }
+                } else if (result.action === Share.dismissedAction) {
+                    // dismissed
+                }
+            } catch (error) {
+                alert(error.message);
+            }
+        } else {
+            const idProdukDeep = route.params.idProdukDeep;
+            try {
+                const result = await Share.share({
+                    message:
+                        'https://mall38.com/product/data-produk/' + idProdukDeep,
+                });
+                if (result.action === Share.sharedAction) {
+                    if (result.activityType) {
+                        // shared with activity type of result.activityType
+                    } else {
+                        // shared
+                    }
+                } else if (result.action === Share.dismissedAction) {
+                    // dismissed
+                }
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+    };
+
     useEffect(() => {
         BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
         return () => {
@@ -106,6 +155,7 @@ export default function DetailProduk({ navigation, route }) {
             <Headers
                 headerOpacity={headerOpacity}
                 navigation={navigation}
+                onShare={onShare}
                 clearDetailProduks={clearDetailProduks} />
 
             {

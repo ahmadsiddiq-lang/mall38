@@ -29,6 +29,7 @@ import Bonus from '../pages/Bonus';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIdUser } from '../config/function';
 import { getTransaksi } from '../redux/actions/Transaksi';
+import { linking } from '../config/Linking';
 
 const Tab = createBottomTabNavigator();
 
@@ -153,7 +154,7 @@ const Stack = createStackNavigator();
 
 export default function MainNavigation() {
     return (
-        <NavigationContainer>
+        <NavigationContainer linking={linking}>
             <StatusBar translucent={false} backgroundColor={color.mainColor} barStyle="light-content" />
             <Stack.Navigator initialRouteName="Auth" headerMode="none">
                 <Stack.Screen name="MyTabbar" component={MyTabbar} />

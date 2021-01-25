@@ -64,7 +64,12 @@ export default function ProdukLokal({ navigation, dataProduk }) {
                                 </View>
                             );
                         })}
-                    <CardEnd />
+                    <CardEnd
+                        onPressLihatSemua={() => navigation.navigate('ListProduk', {
+                            title: 'Produk Lokal',
+                            dataProduk: dataProduk,
+                        })}
+                    />
                 </View>
             </ScrollView>
         </View>

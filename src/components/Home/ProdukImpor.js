@@ -39,10 +39,15 @@ export default function ProdukImpor({ navigation, dataProduk }) {
                         resizeMethod="auto"
                         style={styles.ImageLable} source={require('../../assets/images/banner/Produk-Import.png')} />
                 </View>
-                <Text style={{
-                    color: color.mainColor,
-                    fontSize: sizeFont(3.5),
-                }}>Lihat semua</Text>
+                <Text
+                    onPress={() => navigation.navigate('ListProduk', {
+                        title: 'Produk Import',
+                        dataProduk: dataProduk,
+                    })}
+                    style={{
+                        color: color.mainColor,
+                        fontSize: sizeFont(3.5),
+                    }}>Lihat semua</Text>
             </View>
             <ScrollView
                 showsHorizontalScrollIndicator={false}
@@ -61,7 +66,12 @@ export default function ProdukImpor({ navigation, dataProduk }) {
                                 </View>
                             );
                         })}
-                    <CardEnd />
+                    <CardEnd
+                        onPressLihatSemua={() => navigation.navigate('ListProduk', {
+                            title: 'Produk Import',
+                            dataProduk: dataProduk,
+                        })}
+                    />
                 </View>
             </ScrollView>
         </View>

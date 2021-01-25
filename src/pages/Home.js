@@ -33,6 +33,8 @@ export default function Home({ navigation }) {
     const dataCategori = useSelector(state => state.categori.categori);
     const dataProduk = useSelector(state => state.produk.produk);
     const [produkMitra, setProdukMitra] = useState(null);
+    const [produkLokal, setProdukLokal] = useState(null);
+    const [produkImport, setProdukImport] = useState(null);
     const [refreshing, setRefreshing] = React.useState(false);
 
     // shimer
@@ -50,6 +52,8 @@ export default function Home({ navigation }) {
         outputRange: [0, 1],
         extrapolate: 'clamp',
     });
+
+    // console.log(dataProduk);
 
     const wait = useCallback((timeout) => {
         return new Promise(resolve => {
@@ -82,9 +86,25 @@ export default function Home({ navigation }) {
 
     const filterProdukMitra = useCallback(() => {
         if (dataProduk) {
-            const data = dataProduk.filter(item => item.mitra === 0);
+            const data = dataProduk.filter(item => item.mitra === 1);
             // console.log(data);
             setProdukMitra(data);
+        }
+    }, [dataProduk]);
+
+    const filterProdukLokal = useCallback(() => {
+        if (dataProduk) {
+            const data = dataProduk.filter(item => item.product_type === 'Lokal');
+            // console.log(data);
+            setProdukLokal(data);
+        }
+    }, [dataProduk]);
+
+    const filterProdukImport = useCallback(() => {
+        if (dataProduk) {
+            const data = dataProduk.filter(item => item.product_type === 'Import');
+            // console.log(data);
+            setProdukImport(data);
         }
     }, [dataProduk]);
 
@@ -100,7 +120,14 @@ export default function Home({ navigation }) {
 
     useEffect(() => {
         filterProdukMitra();
-    }, [filterProdukMitra]);
+        filterProdukLokal();
+        filterProdukImport();
+        return () => {
+            setProdukMitra(null);
+            setProdukLokal(null);
+            setProdukImport(null);
+        };
+    }, [filterProdukMitra, filterProdukLokal, filterProdukImport]);
 
     React.useEffect(() => {
         const facebookAnimated = Animated.stagger(400, [CarouselUp.current.getAnimated(),
@@ -194,8 +221,8 @@ export default function Home({ navigation }) {
                 {
                     visibleFlashSale &&
                     <>
-                        <ProdukLokal navigation={navigation} dataProduk={dataProduk} />
-                        <ProdukImpor navigation={navigation} dataProduk={dataProduk} />
+                        <ProdukLokal navigation={navigation} dataProduk={produkLokal} />
+                        <ProdukImpor navigation={navigation} dataProduk={produkImport} />
                         <BannerCategori navigation={navigation} dataCategori={dataCategori} />
                         <ProdukBaru navigation={navigation} dataProduk={dataProduk} />
                     </>

@@ -6,7 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { color } from '../../assets/colors/Index';
 import { useSelector } from 'react-redux';
 import { getIdUser } from '../../config/function';
-export default function HeaderDetailProduk({ navigation, clearDetailProduks, headerOpacity }) {
+export default function HeaderDetailProduk({ navigation, clearDetailProduks, headerOpacity, onShare }) {
 
     const dataCart = useSelector(state => state.cart.dataCart);
 
@@ -49,6 +49,7 @@ export default function HeaderDetailProduk({ navigation, clearDetailProduks, hea
                 </TouchableOpacity>
                 <View style={styles.BoxBtnRight}>
                     <TouchableOpacity
+                        onPress={() => onShare()}
                         activeOpacity={0.8}
                         style={styles.Btn}
                     >

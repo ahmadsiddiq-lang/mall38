@@ -38,7 +38,6 @@ export default function ProductCategori({ navigation, route }) {
         getProdukCategoris();
         return () => {
             setBanner(null);
-            getProdukCategoris();
         };
     }, [getProdukCategoris]);
 

@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     },
     BoxImageBanner: {
         width: SCREEN_WIDTH,
-        height: sizeHeight(45),
+        height: sizeHeight(55),
         // borderLeftWidth: 4,
         // borderRightWidth: 4,
         // borderBottomWidth: 4,

@@ -55,7 +55,7 @@ export default function CheckOut({ navigation, route }) {
             setRefreshing(false);
         });
     }, [wait, getOngkirs, setDefaultOngkir]);
-    // console.log(dataCheck);
+    // console.log(dataUser);
 
     const handleUser = useCallback(async () => {
         const idUser = await getIdUser();
@@ -289,21 +289,38 @@ export default function CheckOut({ navigation, route }) {
                 }
             >
                 {
-                    objekEmpty(dataCheck) &&
-                    <View style={{
-                        flexDirection: 'row',
-                        backgroundColor: 'rgba(66, 245, 129, 0.1)',
-                        paddingHorizontal: sizeWidth(5),
-                        paddingVertical: sizeHeight(1),
-                    }}>
-                        <Ionicons name="information-circle-outline" color={color.bgGreen} size={sizeFont(8)} />
-                        <Text style={{
-                            fontSize: sizeFont(3.5),
-                            marginLeft: sizeWidth(2),
-                            flex: 1,
-                            color: color.fontBlack1,
-                        }}>Anda berkesempatan mendapatan paket mitra {dataCheck.nama_paket} dengan keuntungan {dataCheck.bonus_active}% dan bonus pasif {dataCheck.bonus_passive}%</Text>
-                    </View>
+                    dataUser &&
+                        dataUser.user.paket_mitra === null ?
+                        objekEmpty(dataCheck) &&
+                        <View style={{
+                            flexDirection: 'row',
+                            backgroundColor: 'rgba(66, 245, 129, 0.1)',
+                            paddingHorizontal: sizeWidth(5),
+                            paddingVertical: sizeHeight(1),
+                        }}>
+                            <Ionicons name="information-circle-outline" color={color.bgGreen} size={sizeFont(8)} />
+                            <Text style={{
+                                fontSize: sizeFont(3.5),
+                                marginLeft: sizeWidth(2),
+                                flex: 1,
+                                color: color.fontBlack1,
+                            }}>Anda berkesempatan mendapatan paket mitra {dataCheck.nama_paket} dengan keuntungan {dataCheck.bonus_active}% dan bonus pasif {dataCheck.bonus_passive}%</Text>
+                        </View>
+                        :
+                        <View style={{
+                            flexDirection: 'row',
+                            backgroundColor: 'rgba(66, 245, 129, 0.1)',
+                            paddingHorizontal: sizeWidth(5),
+                            paddingVertical: sizeHeight(1),
+                        }}>
+                            <Ionicons name="information-circle-outline" color={color.bgGreen} size={sizeFont(8)} />
+                            <Text style={{
+                                fontSize: sizeFont(3.5),
+                                marginLeft: sizeWidth(2),
+                                flex: 1,
+                                color: color.fontBlack1,
+                            }}>Anda saat ini terdaftar sebagai mitra {dataCheck.nama_paket} dengan keuntungan {dataCheck.bonus_active}% dan bonus pasif {dataCheck.bonus_passive}%</Text>
+                        </View>
                 }
                 <View>
                     <View style={styles.BoxAlamat}>

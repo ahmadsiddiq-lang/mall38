@@ -22,7 +22,7 @@ export default function Akun({ navigation }) {
     const [refreshing, setRefreshing] = React.useState(false);
 
 
-    console.log(dataScreen);
+    // console.log(dataScreen);
 
     const handleUser = useCallback(async () => {
         const idUser = await getIdUser();
