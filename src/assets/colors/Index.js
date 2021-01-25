@@ -1,5 +1,7 @@
 export const color = {
     mainColor: '#975CC8',
+    mainColor1: '#d1b5e8',
+    mainColor2: '#e1cbf2',
     fontBody1: '#757575',
     fontBody2: '#d4d4d4',
     fontWhite: '#ffff',

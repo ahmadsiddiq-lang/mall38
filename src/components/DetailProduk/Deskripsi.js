@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
 import { Poppins } from '../../assets/fonts';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
@@ -53,6 +53,149 @@ export default function Deskripsi({ detailProduk }) {
                         flex: 2,
                         textAlign: 'right',
                     }} >Rp. {rupiah(detailProduk.price)}</Text>
+                </View>
+                <View style={{
+                    marginTop: sizeHeight(1),
+                }}>
+                    <View style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                    }}>
+                        <Text style={{
+                            fontSize: sizeFont(3.5),
+                        }}>BV</Text>
+                        <Text style={{
+                            fontSize: sizeFont(3.5),
+                            fontFamily: Poppins.Medium,
+                        }}>{rupiah(detailProduk.bv)}</Text>
+                    </View>
+                    <View style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                    }}>
+                        <Text style={{
+                            fontSize: sizeFont(3.5),
+                        }}>PV</Text>
+                        <Text style={{
+                            fontSize: sizeFont(3.5),
+                            fontFamily: Poppins.Medium,
+                        }}>{rupiah(detailProduk.pv)}</Text>
+                    </View>
+                </View>
+                <View style={{
+                    borderWidth: 2,
+                    borderColor: color.mainColor,
+                    borderRadius: 8,
+                    overflow: 'hidden',
+                    marginTop: sizeHeight(2),
+                }}>
+                    <View style={{
+                        backgroundColor: color.mainColor,
+                        paddingHorizontal: sizeWidth(3),
+                        paddingVertical: sizeHeight(0.5),
+                    }}>
+                        <Text style={{
+                            fontSize: sizeFont(3.5),
+                            color: color.fontWhite,
+                        }}>Bonus Active</Text>
+                    </View>
+                    <View style={{
+                        backgroundColor: color.mainColor2,
+                        paddingHorizontal: sizeWidth(3),
+                        paddingVertical: sizeHeight(0.5),
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                    }}>
+                        <View style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                        }}>
+                            <Image style={{
+                                resizeMode: 'contain',
+                                width: sizeWidth(8),
+                                height: sizeWidth(8),
+                            }} source={require('../../assets/images/detailProduk/Exclusive.png')} />
+                            <Text style={{
+                                marginLeft: sizeWidth(3),
+                                marginTop: sizeHeight(1),
+                                fontSize: sizeFont(3.5),
+                            }}>Exclusive</Text>
+                        </View>
+                        <Text style={{
+                            marginTop: sizeHeight(1),
+                            fontSize: sizeFont(3.5),
+                            marginLeft: sizeWidth(6),
+                        }}>{detailProduk.exclusive_persen}</Text>
+                        <Text style={{
+                            marginTop: sizeHeight(1),
+                            fontSize: sizeFont(3.5),
+                        }}>{rupiah(detailProduk.exclusive)}</Text>
+                    </View>
+                    <View style={{
+                        paddingHorizontal: sizeWidth(3),
+                        paddingVertical: sizeHeight(0.5),
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                    }}>
+                        <View style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                        }}>
+                            <Image style={{
+                                resizeMode: 'contain',
+                                width: sizeWidth(8),
+                                height: sizeWidth(8),
+                            }} source={require('../../assets/images/detailProduk/Premium.png')} />
+                            <Text style={{
+                                marginLeft: sizeWidth(3),
+                                marginTop: sizeHeight(1),
+                                fontSize: sizeFont(3.5),
+                            }}>Premium</Text>
+                        </View>
+                        <Text style={{
+                            marginTop: sizeHeight(1),
+                            fontSize: sizeFont(3.5),
+                            marginLeft: sizeWidth(6),
+                        }}>{detailProduk.premium_persen}</Text>
+                        <Text style={{
+                            marginTop: sizeHeight(1),
+                            fontSize: sizeFont(3.5),
+                        }}>{rupiah(detailProduk.premium)}</Text>
+                    </View>
+                    <View style={{
+                        backgroundColor: color.mainColor2,
+                        paddingHorizontal: sizeWidth(3),
+                        paddingVertical: sizeHeight(0.5),
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                    }}>
+                        <View style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                        }}>
+                            <Image style={{
+                                resizeMode: 'contain',
+                                width: sizeWidth(8),
+                                height: sizeWidth(8),
+                            }} source={require('../../assets/images/detailProduk/Dropshipper.png')} />
+                            <Text style={{
+                                marginLeft: sizeWidth(3),
+                                marginTop: sizeHeight(1),
+                                fontSize: sizeFont(3.5),
+                            }}>Dropshipper</Text>
+                        </View>
+                        <Text style={{
+                            marginTop: sizeHeight(1),
+                            fontSize: sizeFont(3.5),
+                        }}>{detailProduk.dropshipper_persen}</Text>
+                        <Text style={{
+                            marginTop: sizeHeight(1),
+                            fontSize: sizeFont(3.5),
+                        }}>{rupiah(detailProduk.dropshipper)}</Text>
+                    </View>
                 </View>
             </View>
             <View style={styles.BoxText}>

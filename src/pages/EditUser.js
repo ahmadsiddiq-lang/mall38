@@ -108,7 +108,6 @@ export default function EditUser({ navigation, route }) {
     const handleCamera = () => {
         launchCamera(options, (response) => {
             console.log('Response = ', response);
-            setModalVisible(!modalVisible);
 
             if (response.didCancel) {
                 console.log('User cancelled image picker');
@@ -116,6 +115,7 @@ export default function EditUser({ navigation, route }) {
                 console.log('ImagePicker Error: ', response.error);
             } else {
                 const source = response;
+                // setModalVisible(!modalVisible);
                 // You can also display the image using data:
                 // const source = { uri: 'data:image/jpeg;base64,' + response.data };
                 setImage(source);
@@ -126,7 +126,6 @@ export default function EditUser({ navigation, route }) {
     const handleLibrary = () => {
         launchImageLibrary(options, (response) => {
             console.log('Response = ', response);
-            setModalVisible(!modalVisible);
 
             if (response.didCancel) {
                 console.log('User cancelled image picker');
@@ -134,6 +133,7 @@ export default function EditUser({ navigation, route }) {
                 console.log('ImagePicker Error: ', response.error);
             } else {
                 const source = response;
+                // setModalVisible(!modalVisible);
                 // You can also display the image using data:
                 // const source = { uri: 'data:image/jpeg;base64,' + response.data };
                 setImage(source);
@@ -155,7 +155,8 @@ export default function EditUser({ navigation, route }) {
                 <View style={styles.Banner}>
                     <TouchableOpacity
                         onPress={() => {
-                            setModalVisible(true);
+                            // setModalVisible(true);
+                            handleCamera();
                         }}
                         activeOpacity={0.8}
                         style={styles.BoxImage}>
@@ -317,7 +318,7 @@ export default function EditUser({ navigation, route }) {
                     </TouchableOpacity>
                 </View>
             </ScrollView>
-            <Modal
+            {/* <Modal
                 animationType="slide"
                 transparent={true}
                 visible={modalVisible}
@@ -356,7 +357,7 @@ export default function EditUser({ navigation, route }) {
                         <Ionicons name="close-circle-outline" size={sizeFont(12)} color={color.fontWhite} />
                     </TouchableOpacity>
                 </View>
-            </Modal>
+            </Modal> */}
         </View>
     );
 }

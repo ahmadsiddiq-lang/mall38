@@ -28,7 +28,7 @@ export default function DetailProduk({ navigation, route }) {
     const detailProduk = useSelector(state => state.detailProduk.detailProduk);
     // const responAddCart = useSelector(state => state.cart.responAddCart);
 
-    // console.log(detailProduk);
+    console.log(detailProduk);
 
     const getDetailProduks = useCallback(() => {
         const idProduk = route.params.idProduk;
