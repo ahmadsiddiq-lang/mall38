@@ -1,28 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { Image, ScrollView, StyleSheet, TouchableOpacity, View, Text } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
-import { sizeHeight, sizeWidth } from '../../assets/responsive';
-import { getProdukCategori, clearData } from '../../redux/actions/ProdukCategori';
+import { sizeWidth } from '../../assets/responsive';
 
-export default function Categori({ dataCategori, navigation, setBanner }) {
-    const dispatch = useDispatch();
+export default function Categori({ dataCategori, navigation }) {
     const data = dataCategori;
-
-    const handleCategori = async (dataInput) => {
-        dispatch(clearData());
-        setBanner(null);
-        const banner = dataInput.image_banner;
-        const idCategori = dataInput.id;
-        const x = setTimeout(() => {
-            setBanner(banner);
-            if (idCategori) { dispatch(getProdukCategori(idCategori)); }
-            return () => {
-                clearTimeout(x);
-            };
-        }, 1000);
-    };
 
     return (
         <View style={styles.Container}>
@@ -38,7 +21,11 @@ export default function Categori({ dataCategori, navigation, setBanner }) {
                         data &&
                         data.map((item, index) => (
                             <TouchableOpacity
-                                onPress={() => handleCategori(item)}
+                                onPress={() =>
+                                    navigation.navigate('ProductCategori', {
+                                        category: item,
+                                    })
+                                }
                                 key={index}
                                 activeOpacity={0.8}
                                 style={styles.BoxImage}>

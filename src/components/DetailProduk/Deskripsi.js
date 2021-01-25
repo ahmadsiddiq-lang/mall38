@@ -7,6 +7,7 @@ import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import { rupiah } from '../../config/function';
 import { DefaultText } from '../DefaultText';
 import Star from '../Star';
+import { WebView } from 'react-native-webview';
 
 export default function Deskripsi({ detailProduk }) {
     return (
@@ -299,7 +300,17 @@ export default function Deskripsi({ detailProduk }) {
                 </View>
                 <View style={{
                     marginTop: sizeHeight(1),
+                    // position:'absolute',
                 }}>
+                    {/* <WebView
+                        originWhitelist={['*']}
+                        source={{ html: detailProduk.short_desc }}
+                        style={{
+                            width: sizeWidth(90),
+                            height: sizeHeight(15),
+                            borderWidth: 1,
+                        }}
+                    /> */}
                     <DefaultText>Pas banget buat di pake harian di rumah atau di luar rumah ini bahannya tebel gak terawang tapi gak gerah. Apalagi kalau cuacanya pas lagi dingin, dipakenya tuh enak banget di badan</DefaultText>
                 </View>
             </View>
