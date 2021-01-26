@@ -33,6 +33,7 @@ export default function Riwayat({ navigation, handleButtonRiwayat }) {
     const hapusRiwayat = async () => {
         try {
             await AsyncStorage.removeItem('riwayat');
+            setRiwayat([]);
         } catch (err) {
             //
         }

@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, StatusBar, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Keyboard, StatusBar, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 import { color } from '../assets/colors/Index';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
@@ -10,6 +10,7 @@ import { getProduk } from '../redux/actions/Produk';
 import { useDispatch, useSelector } from 'react-redux';
 import Riwayat from '../components/Search/Riwayat';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Poppins } from '../assets/fonts';
 
 export default function Search({ navigation }) {
 
@@ -85,6 +86,9 @@ export default function Search({ navigation }) {
 
     useEffect(() => {
         getProduks();
+        return () => {
+            getProduks();
+        };
     }, [getProduks]);
 
     return (
@@ -101,16 +105,34 @@ export default function Search({ navigation }) {
                         size={sizeFont(6.5)}
                     />
                 </TouchableOpacity>
-                <TextInput
-                    value={dataSearch}
-                    returnKeyType="search"
-                    style={styles.Input}
-                    placeholder="Cari Produk"
-                    onSubmitEditing={() => handleSearch()}
-                    onChangeText={(e) => setDataSearch(e)}
-                    autoFocus={true}
-                    autoCapitalize="none"
-                />
+                <View style={styles.BoxInput}>
+                    <TextInput
+                        value={dataSearch}
+                        returnKeyType="search"
+                        style={styles.Input}
+                        placeholder="Cari Produk"
+                        onSubmitEditing={() => handleSearch()}
+                        onChangeText={(e) => setDataSearch(e)}
+                        autoFocus={true}
+                        autoCapitalize="none"
+                    />
+                    <TouchableOpacity
+                        activeOpacity={0.8}
+                        onPress={() => {
+                            Keyboard.dismiss();
+                            handleSearch();
+                        }}
+                        style={{
+                            paddingRight: sizeWidth(3),
+                        }}
+                    >
+                        <Ionicons
+                            name="search"
+                            color={color.mainColor}
+                            size={sizeFont(6.5)}
+                        />
+                    </TouchableOpacity>
+                </View>
             </View>
             <Riwayat
                 navigation={navigation}
@@ -153,13 +175,20 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
-    Input: {
-        backgroundColor: color.bgWhite,
+    BoxInput: {
+        flexDirection: 'row',
         flex: 1,
+        alignItems: 'center',
+        backgroundColor: color.bgWhite,
         marginLeft: sizeWidth(5),
         borderRadius: 8,
+
+    },
+    Input: {
+        flex: 1,
         paddingHorizontal: sizeWidth(3),
         paddingVertical: sizeHeight(0.8),
         fontSize: sizeFont(3.5),
+        fontFamily: Poppins.Regular,
     },
 });

@@ -86,10 +86,17 @@ export default function DetailProduk({ navigation, route }) {
     }, [dispatch]);
 
     const handleBackButtonClick = useCallback(() => {
-        navigation.goBack();
-        clearDetailProduks();
+        const idProdukDeep = route.params.idProdukDeep;
+        if (idProdukDeep) {
+            navigation.navigate('MyTabbar');
+            clearDetailProduks();
+            // return true;
+        } else {
+            navigation.goBack();
+            clearDetailProduks();
+        }
         return true;
-    }, [navigation, clearDetailProduks]);
+    }, [navigation, clearDetailProduks, route]);
 
     const onShare = async () => {
         const idProduk = route.params.idProduk;

@@ -4,7 +4,7 @@ import { BASE_URL } from '../../config/URL';
 
 export const REGISTER = 'REGISTER';
 
-export const registerUser = (data, handleReponsSucces) => {
+export const registerUser = (data, handleReponsSucces, handleRequesError) => {
     return async (dispatch) => {
         await Axios.post(BASE_URL + 'user-register', data, {
             withCredentials: true,
@@ -16,6 +16,9 @@ export const registerUser = (data, handleReponsSucces) => {
             if (respons) {
                 handleReponsSucces(respons.data.data.user);
             }
-        }).catch(err => console.log(err));
+        }).catch(err => {
+            // console.log(err.response)
+            handleRequesError(err.response);
+        });
     };
 };

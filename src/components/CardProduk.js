@@ -46,13 +46,14 @@ export default function CardProduk({ item, navigation, barStatus = '', lableNew,
                     {
                         lableRedy &&
                         <ImageBackground
+                            resizeMode="contain"
                             source={require('../assets/images/Produk/Rectangle1.png')}
                             style={{
                                 position: 'absolute',
                                 left: 0,
                                 bottom: 0,
                                 width: sizeWidth(30),
-                                height: sizeHeight(3.5),
+                                // height: sizeHeight(3.5),
                                 zIndex: 1,
                                 alignItems: 'center',
                                 justifyContent: 'center',
@@ -69,7 +70,7 @@ export default function CardProduk({ item, navigation, barStatus = '', lableNew,
                     <Text style={{
                         fontSize: sizeFont(3.3),
                         color: color.fontBlack1,
-                    }}>{item && item.category.name}</Text>
+                    }}>{item.category !== undefined && item.category.name}</Text>
                     <Text style={{
                         fontSize: sizeFont(3.5),
                         fontFamily: Poppins.Medium,

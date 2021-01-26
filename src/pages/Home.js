@@ -123,7 +123,7 @@ export default function Home({ navigation }) {
         filterProdukLokal();
         filterProdukImport();
         return () => {
-            setProdukMitra(null);
+            filterProdukMitra();
             setProdukLokal(null);
             setProdukImport(null);
         };
@@ -222,8 +222,8 @@ export default function Home({ navigation }) {
                     visibleFlashSale &&
                     <>
                         <ProdukLokal navigation={navigation} dataProduk={produkLokal} />
-                        <ProdukImpor navigation={navigation} dataProduk={produkImport} />
                         <BannerCategori navigation={navigation} dataCategori={dataCategori} />
+                        <ProdukImpor navigation={navigation} dataProduk={produkImport} />
                         <ProdukBaru navigation={navigation} dataProduk={dataProduk} />
                     </>
                 }

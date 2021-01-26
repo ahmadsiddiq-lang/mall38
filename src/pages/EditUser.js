@@ -39,15 +39,6 @@ export default function EditUser({ navigation, route }) {
     const [dataKabupaten, setDataKabupaten] = useState(null);
     const [dataKecamatan, setDataKecamatan] = useState(null);
     const [image, setImage] = useState(null);
-    const options = {
-        title: 'Select Avatar',
-        storageOptions: {
-            skipBackup: true,
-            path: 'images',
-        },
-        saveToPhotos: true,
-        quality: 0.5,
-    };
 
     const filterData = useCallback((idProv) => {
         const dataKab = dataUser.kabupaten.filter(item => item.provinsi_id === idProv);
@@ -105,41 +96,34 @@ export default function EditUser({ navigation, route }) {
 
     }, [name, phone, ktp, alamat, kodePos, provinsi, kecamatan, kabupaten, image, dispatch, handleUser]);
 
+    const options = {
+        mediaType: 'photo',
+        saveToPhotos: true,
+        quality: 0.5,
+    };
     const handleCamera = () => {
         launchCamera(options, (response) => {
-            console.log('Response = ', response);
-
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            } else {
-                const source = response;
-                // setModalVisible(!modalVisible);
-                // You can also display the image using data:
-                // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-                setImage(source);
-            }
+            setImage(response);
         });
     };
 
-    const handleLibrary = () => {
-        launchImageLibrary(options, (response) => {
-            console.log('Response = ', response);
+    // const handleLibrary = () => {
+    //     launchImageLibrary(options, (response) => {
+    //         console.log('Response = ', response);
 
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            } else {
-                const source = response;
-                // setModalVisible(!modalVisible);
-                // You can also display the image using data:
-                // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-                setImage(source);
-            }
-        });
-    };
+    //         if (response.didCancel) {
+    //             console.log('User cancelled image picker');
+    //         } else if (response.error) {
+    //             console.log('ImagePicker Error: ', response.error);
+    //         } else {
+    //             const source = response;
+    //             // setModalVisible(!modalVisible);
+    //             // You can also display the image using data:
+    //             // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+    //             setImage(source);
+    //         }
+    //     });
+    // };
 
     useEffect(() => {
         filterData(provinsi);

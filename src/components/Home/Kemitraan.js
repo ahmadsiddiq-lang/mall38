@@ -124,8 +124,8 @@ export default function Kemitraan({ navigation, produkMitra, barStatus, visibleF
                     horizontal
                 >
                     <View style={styles.ContainerProduk}>
-                        {visibleFlashSale ?
-                            produkMitra != null &&
+                        {produkMitra != null &&
+                            visibleFlashSale ?
                             produkMitra.slice(0, 10).map(renderItem) : fakeData.map(renderItemShimer)}
                         <CardEnd
                             onPressLihatSemua={() => navigation.navigate('ListProduk', {

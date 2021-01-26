@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useState } from 'react';
-import { Modal, RefreshControl, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { BackHandler, Modal, RefreshControl, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../assets/colors/Index';
 import Headers from '../components/CheckOut/Headers';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -272,6 +272,18 @@ export default function CheckOut({ navigation, route }) {
             setDataProduk(null);
         };
     }, []);
+
+    const handleBackButtonClick = useCallback(() => {
+        hetDataCart();
+        // navigation.goBack();
+    }, [hetDataCart]);
+
+    useEffect(() => {
+        BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
+        return () => {
+            BackHandler.removeEventListener('hardwareBackPress', handleBackButtonClick);
+        };
+    }, [handleBackButtonClick]);
 
     return (
         <View style={styles.Container}>

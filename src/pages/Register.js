@@ -42,6 +42,17 @@ export default function Register({ navigation }) {
         }
     }, [navigation, dispatch]);
 
+    const handleRequesError = (err) => {
+        const error = err.data;
+        // console.log(error.message);
+        if (error.message === 'Refferal code tidak ditemukan') {
+            ToasInvalid(error.message);
+        } else if (error.errors.username !== undefined) {
+            ToasInvalid('Username sudah ada');
+            // ToasInvalid(error.message);
+        }
+    };
+
 
     const handleRegister = useCallback(async () => {
         const data = {
@@ -56,7 +67,7 @@ export default function Register({ navigation }) {
                 if (validatePassword(password)) {
                     if (username.length >= 6) {
                         if (password.length >= 6) {
-                            dispatch(registerUser(data, handleReponsSucces));
+                            dispatch(registerUser(data, handleReponsSucces, handleRequesError));
                         } else {
                             ToasInvalid('Password kurang dari 6');
                         }
