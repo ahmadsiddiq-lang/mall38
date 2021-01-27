@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useCallback, useState, useRef } from 'react';
 import { Animated, RefreshControl, StatusBar, StyleSheet, View } from 'react-native';
-import { SCREEN_WIDTH, sizeHeight } from '../assets/responsive';
+import { SCREEN_WIDTH, sizeHeight, sizeWidth } from '../assets/responsive';
 import Header from '../components/Header/Home';
 import Carousel from '../components/Home/Carousel';
 // import Categori from '../components/Home/Categori';
@@ -86,7 +86,7 @@ export default function Home({ navigation }) {
 
     const filterProdukMitra = useCallback(() => {
         if (dataProduk) {
-            const data = dataProduk.filter(item => item.mitra === 1);
+            const data = dataProduk.filter(item => item.mitra === 0);
             // console.log(data);
             setProdukMitra(data);
         }
@@ -187,14 +187,9 @@ export default function Home({ navigation }) {
                 <ShimmerPlaceHolder
                     ref={CarouselUp}
                     visible={visible}
-                    style={{
-                        width: SCREEN_WIDTH,
-                        height: sizeHeight(39),
-                    }}
+                    style={styles.BoxCarousel}
                 >
-                    <View style={styles.BoxCarousel}>
-                        <Carousel dataCarousel={dataCarousel} />
-                    </View>
+                    <Carousel dataCarousel={dataCarousel} />
                 </ShimmerPlaceHolder>
                 {/* <Categori
                     navigation={navigation}
@@ -247,6 +242,7 @@ const styles = StyleSheet.create({
         zIndex: 1,
     },
     BoxCarousel: {
-        // backgroundColor: color.mainColor,
+        width: SCREEN_WIDTH,
+        height: sizeWidth(68),
     },
 });

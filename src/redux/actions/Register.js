@@ -5,6 +5,7 @@ import { BASE_URL } from '../../config/URL';
 export const REGISTER = 'REGISTER';
 
 export const registerUser = (data, handleReponsSucces, handleRequesError) => {
+    console.log(data);
     return async (dispatch) => {
         await Axios.post(BASE_URL + 'user-register', data, {
             withCredentials: true,

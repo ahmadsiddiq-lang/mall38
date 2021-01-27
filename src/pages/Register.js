@@ -44,11 +44,14 @@ export default function Register({ navigation }) {
 
     const handleRequesError = (err) => {
         const error = err.data;
-        // console.log(error.message);
+        console.log(error);
         if (error.message === 'Refferal code tidak ditemukan') {
             ToasInvalid(error.message);
         } else if (error.errors.username !== undefined) {
             ToasInvalid('Username sudah ada');
+            // ToasInvalid(error.message);
+        } else if (error.errors.email !== undefined) {
+            ToasInvalid('Email sudah ada');
             // ToasInvalid(error.message);
         }
     };

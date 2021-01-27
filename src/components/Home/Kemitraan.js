@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     ContainerProduk: {
         flexDirection: 'row',
         marginHorizontal: sizeWidth(3),
-        marginVertical: sizeHeight(2),
+        marginBottom: sizeHeight(1),
     },
     BoxLable: {
         overflow: 'hidden',

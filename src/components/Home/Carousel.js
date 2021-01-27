@@ -54,7 +54,7 @@ export default function Carousel({ navigation, dataCarousel = [] }) {
                                     activeOpacity={0.8}
                                     style={styles.BoxImage}
                                 >
-                                    <Image resizeMethod="resize" style={styles.Image} source={{ uri: item.image }} />
+                                    <Image resizeMethod="auto" style={styles.Image} source={{ uri: item.image }} />
                                 </TouchableOpacity>
                             );
                             // }
@@ -86,13 +86,13 @@ const styles = StyleSheet.create({
     },
     Image: {
         resizeMode: 'stretch',
-        width: '100%',
+        width: SCREEN_WIDTH,
         height: '100%',
     },
     BoxImage: {
         overflow: 'hidden',
-        width: SCREEN_WIDTH,
-        height: sizeHeight(39),
+        // width: SCREEN_WIDTH,
+        // height: sizeHeight(39),
         // borderWidth: 1,
     },
     CircleDiv: {
