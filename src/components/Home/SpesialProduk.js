@@ -8,9 +8,30 @@ import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../../assets/resp
 export default function SpesialProduk({
     visibleProduk,
     ShimmerPlaceHolder,
+    handleSearch,
+    navigation,
 }) {
 
     // const visibleProduk = false;
+
+    const dataCategori = [
+        {
+            image: require('../../assets/images/banner/mukena.png'),
+            title: 'Mukena',
+        },
+        {
+            image: require('../../assets/images/banner/Hijab.png'),
+            title: 'Jilbab',
+        },
+        {
+            image: require('../../assets/images/banner/Tas.png'),
+            title: 'Tas',
+        },
+        {
+            image: require('../../assets/images/banner/Sepatu.png'),
+            title: 'Sepatu',
+        },
+    ];
 
     const ComponentShimer = () => {
         return (
@@ -94,90 +115,40 @@ export default function SpesialProduk({
                             flexWrap: 'wrap',
                             flexDirection: 'row',
                         }}>
-                            <TouchableOpacity
-                                activeOpacity={0.8}
-                                style={styles.BoxItem}
-                            >
-                                <View style={styles.BoxImage}>
-                                    <Image
-                                        resizeMethod="auto"
-                                        source={require('../../assets/images/banner/mukena.png')}
-                                        style={styles.Image}
-                                    />
-                                </View>
-                                <View style={{
-                                    backgroundColor: color.mainColor,
-                                    alignItems: 'center',
-                                }}>
-                                    <Text style={{
-                                        fontSize: sizeFont(3.5),
-                                        color: color.fontWhite,
-                                    }}>Mukena</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                activeOpacity={0.8}
-                                style={styles.BoxItem}
-                            >
-                                <View style={styles.BoxImage}>
-                                    <Image
-                                        resizeMethod="auto"
-                                        source={require('../../assets/images/banner/Hijab.png')}
-                                        style={styles.Image}
-                                    />
-                                </View>
-                                <View style={{
-                                    backgroundColor: color.mainColor,
-                                    alignItems: 'center',
-                                }}>
-                                    <Text style={{
-                                        fontSize: sizeFont(3.5),
-                                        color: color.fontWhite,
-                                    }}>Jilbab</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                activeOpacity={0.8}
-                                style={styles.BoxItem}
-                            >
-                                <View style={styles.BoxImage}>
-                                    <Image
-                                        resizeMethod="auto"
-                                        source={require('../../assets/images/banner/Tas.png')}
-                                        style={styles.Image}
-                                    />
-                                </View>
-                                <View style={{
-                                    backgroundColor: color.mainColor,
-                                    alignItems: 'center',
-                                }}>
-                                    <Text style={{
-                                        fontSize: sizeFont(3.5),
-                                        color: color.fontWhite,
-                                    }}>Tas</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                activeOpacity={0.8}
-                                style={styles.BoxItem}
-                            >
-                                <View style={styles.BoxImage}>
-                                    <Image
-                                        resizeMethod="auto"
-                                        source={require('../../assets/images/banner/Sepatu.png')}
-                                        style={styles.Image}
-                                    />
-                                </View>
-                                <View style={{
-                                    backgroundColor: color.mainColor,
-                                    alignItems: 'center',
-                                }}>
-                                    <Text style={{
-                                        fontSize: sizeFont(3.5),
-                                        color: color.fontWhite,
-                                    }}>Sepatu</Text>
-                                </View>
-                            </TouchableOpacity>
+                            {
+                                dataCategori.map((item, index) => {
+                                    return (
+                                        <TouchableOpacity
+                                            onPress={() => {
+                                                navigation.navigate('ListProduk', {
+                                                    title: 'Produk Spesial',
+                                                    dataProduk: handleSearch(item.title),
+                                                });
+                                            }}
+                                            key={index}
+                                            activeOpacity={0.8}
+                                            style={styles.BoxItem}
+                                        >
+                                            <View style={styles.BoxImage}>
+                                                <Image
+                                                    resizeMethod="auto"
+                                                    source={item.image}
+                                                    style={styles.Image}
+                                                />
+                                            </View>
+                                            <View style={{
+                                                backgroundColor: color.mainColor,
+                                                alignItems: 'center',
+                                            }}>
+                                                <Text style={{
+                                                    fontSize: sizeFont(3.5),
+                                                    color: color.fontWhite,
+                                                }}>{item.title}</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                    );
+                                })
+                            }
                         </View>
                     </ImageBackground>
                     :

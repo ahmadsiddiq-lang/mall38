@@ -155,7 +155,7 @@ export default function ProdukLokal({ navigation, dataProduk, ProdukBaruShimerRe
                             }
                             <CardEnd
                                 onPressLihatSemua={() => navigation.navigate('ListProduk', {
-                                    title: 'Produk Lokal',
+                                    title: 'Produk Baru',
                                     dataProduk: dataProduk,
                                 })}
                             />

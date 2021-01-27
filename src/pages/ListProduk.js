@@ -1,7 +1,9 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { useState } from 'react';
 import { Animated, StyleSheet, Text, View } from 'react-native';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
 import { color } from '../assets/colors/Index';
+import { sizeFont } from '../assets/responsive';
 import Headers from '../components/Header/HeaderWithIcon';
 import ListProdukCompenet from '../components/ListProduk/ListProdukCompenet';
 
@@ -15,10 +17,24 @@ export default function ListProduk({ navigation, route }) {
     return (
         <View style={styles.Container}>
             <Headers navigation={navigation} title={title} />
-            <ListProdukCompenet
-                navigation={navigation}
-                dataProduk={dataProduk}
-            />
+            {
+                dataProduk !== null ?
+                    <ListProdukCompenet
+                        navigation={navigation}
+                        dataProduk={dataProduk}
+                    />
+                    :
+                    <View style={{
+                        flex: 1,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}>
+                        <Text style={{
+                            fontSize: sizeFont(3.5),
+                            color: color.fontBlack1,
+                        }}>Produk belum tersedia</Text>
+                    </View>
+            }
         </View>
     );
 }

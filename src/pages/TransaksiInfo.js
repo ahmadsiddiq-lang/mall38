@@ -13,7 +13,8 @@ import { getTransaksi } from '../redux/actions/Transaksi';
 export default function Transaksi({ navigation }) {
 
     const dispatch = useDispatch();
-    const dataAll = useSelector(state => state.dataTransaksi.dataTransaksi.order);
+    const dataNewOrder = useSelector(state => state.dataTransaksi.dataTransaksi.order);
+    const dataAll = dataNewOrder;
     const [dataTransaksi, setDataTransaksi] = useState(null);
     const [refreshing, setRefreshing] = React.useState(false);
 
@@ -26,7 +27,7 @@ export default function Transaksi({ navigation }) {
     }, [dispatch]);
 
     const handleTabbarFilter = (value) => {
-        if (dataAll !== undefined) {
+        if (dataNewOrder !== undefined) {
             if (value === 'Semua') {
                 setDataTransaksi(dataAll);
                 handleGetTransaksi();
@@ -62,7 +63,7 @@ export default function Transaksi({ navigation }) {
     }, [handleGetTransaksi]);
 
     useEffect(() => {
-        setDataTransaksi(dataAll);
+        setDataTransaksi(dataAll.reverse());
         return () => {
             setDataTransaksi(null);
         };

@@ -1,21 +1,21 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useCallback, useState, useRef } from 'react';
 import { Animated, RefreshControl, StatusBar, StyleSheet, View } from 'react-native';
-import { SCREEN_WIDTH, sizeHeight, sizeWidth } from '../assets/responsive';
+import { SCREEN_WIDTH, sizeHeight } from '../assets/responsive';
 import Header from '../components/Header/Home';
 import Carousel from '../components/Home/Carousel';
 // import Categori from '../components/Home/Categori';
-import Kemitraan from '../components/Home/Kemitraan';
+// import Kemitraan from '../components/Home/Kemitraan';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCarousel } from '../redux/actions/Carousel';
 import { getCategori } from '../redux/actions/Categori';
 import { getProduk } from '../redux/actions/Produk';
-import { countDown, getIdUser } from '../config/function';
+import { getIdUser } from '../config/function';
 import { getCArt } from '../redux/actions/Cart';
 import { getDataUser } from '../redux/actions/User';
 import PromoMenarik from '../components/Home/PromoMenarik';
-import ProdukLokal from '../components/Home/ProdukLokal';
-import ProdukImpor from '../components/Home/ProdukImpor';
+// import ProdukLokal from '../components/Home/ProdukLokal';
+// import ProdukImpor from '../components/Home/ProdukImpor';
 import BannerCategori from '../components/Home/BannerCategori';
 import ProdukBaru from '../components/Home/ProdukBaru';
 import LinearGradient from 'react-native-linear-gradient';
@@ -23,6 +23,7 @@ import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
 import { color } from '../assets/colors/Index';
 import SpesialProduk from '../components/Home/SpesialProduk';
 import ProdukList from '../components/Home/ProdukList';
+import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 // import { countDown } from '../config/function';
 
@@ -110,6 +111,17 @@ export default function Home({ navigation }) {
         }
     }, [dataProduk]);
 
+    const handleSearch = useCallback((search = '') => {
+        const data = dataProduk.filter(item => {
+            if (item.name !== undefined && search.length > 0) {
+                return item.name.toLowerCase().indexOf(search.toLowerCase()) > -1;
+            }
+        });
+        // console.log(data);
+        const newData = data.length > 0 ? data : null;
+        return newData;
+    }, [dataProduk]);
+
 
     useEffect(() => {
         getData();
@@ -178,6 +190,7 @@ export default function Home({ navigation }) {
                     navigation={navigation}
                     dataProduk={dataProduk} />
                 <SpesialProduk
+                    handleSearch={handleSearch}
                     visibleProduk={visibleProduk}
                     ShimmerPlaceHolder={ShimmerPlaceHolder}
                     ProdukBaruShimerRef={ProdukBaruShimerRef}
@@ -232,6 +245,6 @@ const styles = StyleSheet.create({
     },
     BoxCarousel: {
         width: SCREEN_WIDTH,
-        height: sizeWidth(68),
+        height: hp(40),
     },
 });
