@@ -1,6 +1,7 @@
 import React from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
+import { Poppins } from '../../assets/fonts';
 import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 
 export default function BannerCategori({ navigation, dataCategori }) {
@@ -9,11 +10,11 @@ export default function BannerCategori({ navigation, dataCategori }) {
 
     return (
         <View style={styles.Container}>
-            <View style={styles.BoxLable}>
-                <Image
-                    resizeMethod="auto"
-                    style={styles.ImageLable} source={require('../../assets/images/banner/Cari-Kategori-Apa.png')} />
-            </View>
+            <Text style={{
+                fontSize: sizeFont(4),
+                fontFamily: Poppins.Medium,
+                marginLeft: sizeWidth(5),
+            }}>Kategori Produk Apa ?</Text>
             <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}

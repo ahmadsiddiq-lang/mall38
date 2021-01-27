@@ -9,7 +9,7 @@ import CardProduk, { CardEnd } from '../CardProduk';
 // import CountDown from 'react-native-countdown-component';
 // import moment from 'moment';
 
-export default function Kemitraan({ navigation, produkMitra, barStatus, visibleFlashSale, ShimmerPlaceHolder }) {
+export default function Kemitraan({ navigation, dataProduk, barStatus, visibleFlashSale, ShimmerPlaceHolder }) {
 
     // const [totalDuration, setTotalDuration] = useState(0);
 
@@ -57,14 +57,15 @@ export default function Kemitraan({ navigation, produkMitra, barStatus, visibleF
             </View>
         );
     };
-    const renderItemShimer = (item, index) => {
+    const renderItemShimer = (_, index) => {
         return (
             <View
                 key={index}
                 style={styles.CardProduk}
             >
-                <ShimmerPlaceHolder
+                <View
                     style={{
+                        borderWidth: 1,
                         borderColor: color.border2,
                         borderRadius: 8,
                         marginHorizontal: sizeWidth(2.5),
@@ -73,7 +74,44 @@ export default function Kemitraan({ navigation, produkMitra, barStatus, visibleF
                         flex: 1,
                         overflow: 'hidden',
                     }}
-                />
+                >
+                    <View style={{
+                        alignItems: 'center',
+                        padding: sizeWidth(2),
+                    }}>
+                        <ShimmerPlaceHolder
+                            style={{
+                                width: sizeWidth(25),
+                                height: sizeWidth(25),
+                                borderRadius: 100,
+                            }}
+                        />
+                        <ShimmerPlaceHolder
+                            style={{
+                                width: sizeWidth(35),
+                                height: sizeWidth(3),
+                                borderRadius: 100,
+                                marginTop: sizeHeight(2),
+                            }}
+                        />
+                        <ShimmerPlaceHolder
+                            style={{
+                                width: sizeWidth(35),
+                                height: sizeWidth(3),
+                                borderRadius: 100,
+                                marginTop: sizeHeight(2),
+                            }}
+                        />
+                        <ShimmerPlaceHolder
+                            style={{
+                                width: sizeWidth(35),
+                                height: sizeWidth(3),
+                                borderRadius: 100,
+                                marginTop: sizeHeight(2),
+                            }}
+                        />
+                    </View>
+                </View>
             </View>
         );
     };
@@ -124,12 +162,12 @@ export default function Kemitraan({ navigation, produkMitra, barStatus, visibleF
                     horizontal
                 >
                     <View style={styles.ContainerProduk}>
-                        {produkMitra != null &&
+                        {dataProduk != null &&
                             visibleFlashSale ?
-                            produkMitra.slice(0, 10).map(renderItem) : fakeData.map(renderItemShimer)}
+                            dataProduk.slice(0, 10).map(renderItem) : fakeData.map(renderItemShimer)}
                         <CardEnd
                             onPressLihatSemua={() => navigation.navigate('ListProduk', {
-                                dataProduk: produkMitra,
+                                dataProduk: dataProduk,
                                 title: 'Produk Mitra',
                             })}
                         />

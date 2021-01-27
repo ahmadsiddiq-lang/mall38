@@ -16,14 +16,24 @@ export default function Carousel({ navigation, dataCarousel = [] }) {
 
     const [indexOf, setIndexOf] = useState(0);
 
+    //setIndex
+    const handleSetIndex = (e) => {
+        const viewSize = e.nativeEvent.layoutMeasurement.width;
+        const contentOffset = e.nativeEvent.contentOffset.x;
+        const selectedIndex = Math.floor(contentOffset / viewSize);
+        setIndexOf(selectedIndex);
+        // console.log(selectedIndex);
+    };
+
     useEffect(() => {
         const lenghtData = data.length;
+        const selectIndex = indexOf < lenghtData - 1 ? indexOf + 1 : 0;
         const interval = setInterval(() => {
-            setIndexOf(indexOf === lenghtData - 1 ? 0 : indexOf + 1);
+            setIndexOf(selectIndex);
             scrollRef.current.scrollTo({
                 animatde: true,
                 y: 0,
-                x: SCREEN_WIDTH * indexOf,
+                x: SCREEN_WIDTH * selectIndex,
             });
         }, 3000);
         return () => {
@@ -38,7 +48,7 @@ export default function Carousel({ navigation, dataCarousel = [] }) {
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 pagingEnabled={true}
-                // onMomentumScrollEnd={handleSetIndex()}
+                onMomentumScrollEnd={handleSetIndex}
                 ref={scrollRef}
             >
                 <View style={{

@@ -60,8 +60,7 @@ const styles = StyleSheet.create({
     BoxImage: {
         marginHorizontal: sizeWidth(2.5),
         width: sizeWidth(75),
-        height: sizeWidth(30),
-        borderRadius: 8,
+        height: sizeWidth(25),
         overflow: 'hidden',
     },
     Image: {

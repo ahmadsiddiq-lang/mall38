@@ -21,6 +21,8 @@ import ProdukBaru from '../components/Home/ProdukBaru';
 import LinearGradient from 'react-native-linear-gradient';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
 import { color } from '../assets/colors/Index';
+import SpesialProduk from '../components/Home/SpesialProduk';
+import ProdukList from '../components/Home/ProdukList';
 
 // import { countDown } from '../config/function';
 
@@ -32,9 +34,10 @@ export default function Home({ navigation }) {
     const dataCarousel = useSelector(state => state.Carousel.Carousel);
     const dataCategori = useSelector(state => state.categori.categori);
     const dataProduk = useSelector(state => state.produk.produk);
-    const [produkMitra, setProdukMitra] = useState(null);
-    const [produkLokal, setProdukLokal] = useState(null);
-    const [produkImport, setProdukImport] = useState(null);
+    // const [produkMitra, setProdukMitra] = useState(null);
+    // const [produkLokal, setProdukLokal] = useState(null);
+    // const [produkImport, setProdukImport] = useState(null);
+    const [produkList, setProdukList] = useState([]);
     const [refreshing, setRefreshing] = React.useState(false);
 
     // shimer
@@ -42,9 +45,9 @@ export default function Home({ navigation }) {
     // const CategoriShemer = React.createRef();
     const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
     const [visible, setVisibleBanner] = useState(false);
-    const [visibleFlashSale, setVisible] = useState(false);
+    const [visibleProduk, setVisible] = useState(false);
     const CarouselUp = React.createRef();
-    const FlashSaleShimer = React.createRef();
+    const ProdukBaruShimerRef = React.createRef();
 
     const yOffset = useRef(new Animated.Value(0)).current;
     const headerOpacity = yOffset.interpolate({
@@ -86,9 +89,8 @@ export default function Home({ navigation }) {
 
     const filterProdukMitra = useCallback(() => {
         if (dataProduk) {
-            const data = dataProduk.filter(item => item.mitra === 0);
-            // console.log(data);
-            setProdukMitra(data);
+            const data = dataProduk.filter(item => item.mitra === 1);
+            setProdukList(data);
         }
     }, [dataProduk]);
 
@@ -96,7 +98,7 @@ export default function Home({ navigation }) {
         if (dataProduk) {
             const data = dataProduk.filter(item => item.product_type === 'Lokal');
             // console.log(data);
-            setProdukLokal(data);
+            setProdukList(data);
         }
     }, [dataProduk]);
 
@@ -104,7 +106,7 @@ export default function Home({ navigation }) {
         if (dataProduk) {
             const data = dataProduk.filter(item => item.product_type === 'Import');
             // console.log(data);
-            setProdukImport(data);
+            setProdukList(data);
         }
     }, [dataProduk]);
 
@@ -119,43 +121,21 @@ export default function Home({ navigation }) {
     }, [getData, hetDataCart]);
 
     useEffect(() => {
-        filterProdukMitra();
         filterProdukLokal();
-        filterProdukImport();
         return () => {
-            filterProdukMitra();
-            setProdukLokal(null);
-            setProdukImport(null);
+            setProdukList(null);
         };
     }, [filterProdukMitra, filterProdukLokal, filterProdukImport]);
+
 
     React.useEffect(() => {
         const facebookAnimated = Animated.stagger(400, [CarouselUp.current.getAnimated(),
             // Animated.parallel([
-            //     CarouselUp.current.getAnimated(),
-            // ])
+            //     ProdukBaruShimerRef.current.getAnimated(),
+            // ]),
         ]);
         Animated.loop(facebookAnimated).start();
-    }, [CarouselUp]);
-
-    // useEffect(() => {
-    //     var countDownDate = new Date('Jan 8, 2021, 23:59:25').getTime();
-    //     // var myDate = '20-12-2020';
-    //     // myDate = myDate.split('-');
-    //     // var countDownDate = new Date(myDate[2], myDate[1] - 1, myDate[0]);
-    //     console.log(countDownDate);
-    //     const x = setInterval(function () {
-    //         const time = countDown(countDownDate);
-    //         setDateFlash(time);
-    //         if (time.distance < 0) {
-    //             clearInterval(x);
-    //         }
-    //     }, 1000);
-    //     return () => {
-    //         clearInterval(x);
-    //     };
-    // }, []);
-
+    }, [CarouselUp, ProdukBaruShimerRef]);
 
     return (
         <View style={styles.Container}>
@@ -191,35 +171,44 @@ export default function Home({ navigation }) {
                 >
                     <Carousel dataCarousel={dataCarousel} />
                 </ShimmerPlaceHolder>
-                {/* <Categori
-                    navigation={navigation}
-                    dataCategori={dataCategori}
+                <ProdukBaru
                     ShimmerPlaceHolder={ShimmerPlaceHolder}
-                    visibleCategori={visibleCategori}
-                    CategoriShemer={CategoriShemer}
-                /> */}
-                <Kemitraan
+                    visibleProduk={visibleProduk}
+                    ProdukBaruShimerRef={ProdukBaruShimerRef}
+                    navigation={navigation}
+                    dataProduk={dataProduk} />
+                <SpesialProduk
+                    visibleProduk={visibleProduk}
+                    ShimmerPlaceHolder={ShimmerPlaceHolder}
+                    ProdukBaruShimerRef={ProdukBaruShimerRef}
+                    navigation={navigation} />
+                {/* <Kemitraan
                     navigation={navigation}
                     produkMitra={produkMitra}
                     barStatus={'80%'}
-                    FlashSaleShimer={FlashSaleShimer}
-                    visibleFlashSale={visibleFlashSale}
+                    FlashSaleShimer={ProdukBaruShimerRef}
+                    visibleFlashSale={visibleProduk}
                     ShimmerPlaceHolder={ShimmerPlaceHolder}
-                />
-                <PromoMenarik
-                    navigation={navigation}
-                    dataCarousel={dataCarousel}
-                    ShimmerPlaceHolder={ShimmerPlaceHolder}
-                    visible={visible}
-                    CarouselUp={CarouselUp}
-                />
+                /> */}
                 {
-                    visibleFlashSale &&
+                    visibleProduk &&
                     <>
-                        <ProdukLokal navigation={navigation} dataProduk={produkLokal} />
                         <BannerCategori navigation={navigation} dataCategori={dataCategori} />
-                        <ProdukImpor navigation={navigation} dataProduk={produkImport} />
-                        <ProdukBaru navigation={navigation} dataProduk={dataProduk} />
+                        <PromoMenarik
+                            navigation={navigation}
+                            dataCarousel={dataCarousel}
+                            ShimmerPlaceHolder={ShimmerPlaceHolder}
+                            visible={visible}
+                            CarouselUp={CarouselUp}
+                        />
+                        <ProdukList
+                            filterProdukMitra={filterProdukMitra}
+                            filterProdukImport={filterProdukImport}
+                            filterProdukLokal={filterProdukLokal}
+                            navigation={navigation}
+                            dataProduk={produkList} />
+                        {/* <ProdukImpor navigation={navigation} dataProduk={produkImport} /> */}
+                        {/* <ProdukBaru navigation={navigation} dataProduk={dataProduk} /> */}
                     </>
                 }
             </Animated.ScrollView>
