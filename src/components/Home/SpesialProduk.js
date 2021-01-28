@@ -22,7 +22,7 @@ export default function SpesialProduk({
         },
         {
             image: require('../../assets/images/banner/Hijab.png'),
-            title: 'Jilbab',
+            title: 'Hijab',
         },
         {
             image: require('../../assets/images/banner/Tas.png'),

@@ -141,7 +141,16 @@ export default function ProdukList({
                             height: sizeHeight(35),
                             width: SCREEN_WIDTH,
                         }}>
-                            <ActivityIndicator size="large" color={color.mainColor} />
+                            {/* <ActivityIndicator size="large" color={color.mainColor} /> */}
+                            <Image
+                                style={{
+                                    resizeMode: 'contain',
+                                    width: sizeWidth(30),
+                                    height: sizeWidth(30),
+                                }}
+                                resizeMethod="auto"
+                                source={require('../../assets/images/loading/loading.gif')}
+                            />
                         </View>
                 }
             </View>
