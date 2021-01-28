@@ -1,16 +1,19 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useState } from 'react';
-import { Image, ScrollView, StatusBar, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
+import { Image, Modal, ScrollView, StatusBar, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import { color } from '../assets/colors/Index';
 import { Poppins } from '../assets/fonts';
-import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
+import { SCREEN_HEIGHT, SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { useDispatch, useSelector } from 'react-redux';
 import { LoginAdmin, LoginUser } from '../redux/actions/Login';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getDataUser } from '../redux/actions/User';
 import { getCArt } from '../redux/actions/Cart';
-import { validateEmail, validatePassword } from '../config/function';
+import { ToasInvalid, ToasSuccess, validateEmail, validatePassword } from '../config/function';
+import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { TouchableHighlight } from 'react-native-gesture-handler';
+import { resendOTP } from '../redux/actions/Register';
 
 export default function Login({ navigation }) {
 
@@ -19,6 +22,8 @@ export default function Login({ navigation }) {
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
     const [eye, setEye] = useState(true);
+    const [modalEmail, setModalEmail] = useState(false);
+    const [emailAkun, setEmailAkun] = useState(null);
 
 
     // const dataUser = useSelector(state => state.dataLogin.dataUser);
@@ -79,6 +84,38 @@ export default function Login({ navigation }) {
             console.log(e);
         }
     }, []);
+
+    const resendSuccess = useCallback(() => {
+        setModalEmail(!modalEmail);
+        ToasSuccess('Success !');
+        const x = setTimeout(() => {
+            navigation.navigate('SetOTP', {
+                email: emailAkun,
+            });
+            return () => {
+                clearTimeout(x);
+            };
+        }, 500);
+    }, [modalEmail, navigation, emailAkun]);
+
+    const resendError = useCallback(() => {
+        ToastAndroid.showWithGravity('Email tidak ditemukan',
+            ToastAndroid.SHORT,
+            ToastAndroid.CENTER
+        );
+    }, []);
+
+    const handleActiveAkun = useCallback(() => {
+        console.log(emailAkun);
+        if (validateEmail(emailAkun)) {
+            dispatch(resendOTP(emailAkun, resendSuccess, resendError));
+        } else {
+            ToastAndroid.showWithGravity('Email tidak valid',
+                ToastAndroid.SHORT,
+                ToastAndroid.CENTER
+            );
+        }
+    }, [emailAkun, dispatch, resendSuccess, resendError]);
 
     useEffect(() => {
         handleLoginAdmin();
@@ -160,7 +197,6 @@ export default function Login({ navigation }) {
                                         fontSize: sizeFont(4.5),
                                         color: color.fontWhite,
                                         fontFamily: Poppins.Bold,
-                                        flex: 1,
                                         textAlign: 'center',
                                     }}>Login</Text>
                                 </TouchableOpacity>
@@ -176,6 +212,15 @@ export default function Login({ navigation }) {
                         fontFamily: Poppins.Italic,
                         marginRight: sizeWidth(3),
                     }}>Forgot password ?</Text>
+                    <Text
+                        onPress={() => setModalEmail(!modalEmail)}
+                        style={{
+                            fontSize: sizeFont(4),
+                            color: color.fontWhite,
+                            marginTop: sizeHeight(2),
+                            fontFamily: Poppins.Italic,
+                            marginRight: sizeWidth(3),
+                        }}>Activasi Akun ?</Text>
                     <TouchableOpacity
                         onPress={() => navigation.navigate('Register')}
                         activeOpacity={0.8}
@@ -189,6 +234,69 @@ export default function Login({ navigation }) {
                     </TouchableOpacity>
                 </View>
             </ScrollView>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalEmail}
+                onRequestClose={() => {
+                    //   Alert.alert("Modal has been closed.");
+                    setModalEmail(!modalEmail);
+                }}
+            >
+                <View style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    paddingHorizontal: sizeWidth(5),
+                }}>
+                    <TouchableOpacity
+                        onPress={() => setModalEmail(!modalEmail)}
+                        activeOpacity={0.8}
+                        style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            bottom: 0,
+                            right: 0,
+                            backgroundColor: 'rgba(0,0,0,0.3)',
+                        }}
+                    />
+                    <View style={{
+                        backgroundColor: color.bgWhite,
+                        borderRadius: 8,
+                        paddingHorizontal: sizeWidth(5),
+                        paddingBottom: hp(2),
+                    }}>
+                        <View style={styles.BoxInput}>
+                            <TextInput
+                                keyboardType="email-address"
+                                autoCapitalize="none"
+                                onChangeText={(e) => setEmailAkun(e)}
+                                placeholder="Masukkan email"
+                                style={{
+                                    fontFamily: Poppins.Regular,
+                                    flex: 1,
+                                }}
+                            />
+                        </View>
+                        <View style={{
+                            alignItems: 'flex-end',
+                        }}>
+                            <TouchableOpacity
+                                onPress={() => handleActiveAkun()}
+                                activeOpacity={0.8}
+                                style={[styles.BtnLogin, { alignItems: 'center' }]}
+                            >
+                                <Text style={{
+                                    fontSize: sizeFont(3.5),
+                                    color: color.fontWhite,
+                                    textAlign: 'center',
+                                    fontFamily: Poppins.Medium,
+                                }}>Send</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
         </View >
     );
 }
@@ -199,7 +307,7 @@ const styles = StyleSheet.create({
         backgroundColor: color.mainColor,
     },
     BackgroundWhite: {
-        height: sizeHeight(70),
+        height: hp(70),
         // height: 550,
         backgroundColor: color.bgWhite,
         borderBottomLeftRadius: sizeWidth(200) / 2,
@@ -239,6 +347,7 @@ const styles = StyleSheet.create({
         marginLeft: sizeWidth(2),
         flex: 1,
         fontSize: sizeFont(4),
+        fontFamily: Poppins.Regular,
     },
     BoxIconUser: {
         borderWidth: 3,
@@ -258,8 +367,6 @@ const styles = StyleSheet.create({
     BtnLogin: {
         backgroundColor: color.mainColor,
         width: sizeWidth(40),
-        flexDirection: 'row',
-        justifyContent: 'space-between',
         paddingVertical: sizeHeight(0.5),
         borderRadius: 8,
         alignItems: 'center',

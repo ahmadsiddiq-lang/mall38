@@ -16,7 +16,7 @@ export default function SpesialProduk({
 
     const dataCategori = [
         {
-            image: require('../../assets/images/banner/mukena.png'),
+            image: require('../../assets/images/banner/Mukena.png'),
             title: 'Mukena',
         },
         {

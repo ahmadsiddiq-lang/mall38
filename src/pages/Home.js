@@ -245,6 +245,6 @@ const styles = StyleSheet.create({
     },
     BoxCarousel: {
         width: SCREEN_WIDTH,
-        height: hp(40),
+        height: hp(35),
     },
 });

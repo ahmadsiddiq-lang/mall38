@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useState } from 'react';
 import { Image, Modal, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
@@ -12,7 +13,7 @@ import { useDispatch } from 'react-redux';
 import { getDataUser, updateProfile } from '../redux/actions/User';
 import { getIdUser } from '../config/function';
 import FormData from 'form-data';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+// import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
 export default function EditUser({ navigation, route }) {
@@ -25,7 +26,7 @@ export default function EditUser({ navigation, route }) {
 
     const dispatch = useDispatch();
 
-    const [modalVisible, setModalVisible] = useState(false);
+    // const [modalVisible, setModalVisible] = useState(false);
 
     const [name, setName] = useState(dataUser.user.name);
     const [phone, setPhone] = useState(phoneData);
@@ -103,7 +104,19 @@ export default function EditUser({ navigation, route }) {
     };
     const handleCamera = () => {
         launchCamera(options, (response) => {
-            setImage(response);
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else {
+                const source = response;
+                // setModalVisible(!modalVisible);
+                // You can also display the image using data:
+                // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+                setImage(source);
+                console.log('Response = ', source);
+                alert(source.uri);
+            }
         });
     };
 

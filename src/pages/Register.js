@@ -34,13 +34,15 @@ export default function Register({ navigation }) {
             dispatch(getCArt(id));
             await AsyncStorage.setItem('idUser', id);
             setTimeout(() => {
-                navigation.replace('MyTabbar');
+                navigation.replace('SetOTP', {
+                    email: email,
+                });
             }, 1000);
         } catch (e) {
             // saving error
             console.log(e);
         }
-    }, [navigation, dispatch]);
+    }, [navigation, dispatch, email]);
 
     const handleRequesError = (err) => {
         const error = err.data;
@@ -262,6 +264,7 @@ const styles = StyleSheet.create({
         marginLeft: sizeWidth(2),
         flex: 1,
         fontSize: sizeFont(4),
+        fontFamily: Poppins.Regular,
     },
     BoxContentLogin: {
         marginVertical: sizeHeight(5),
