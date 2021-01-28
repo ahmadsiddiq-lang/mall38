@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import { Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { color } from '../../assets/colors/Index';
 import { Poppins } from '../../assets/fonts';
 import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
@@ -104,7 +105,7 @@ export default function SpesialProduk({
                         source={require('../../assets/images/banner/Banner-Produk-Spesial.png')}
                         style={{
                             width: SCREEN_WIDTH,
-                            height: sizeHeight(30),
+                            height: heightPercentageToDP(32),
                             alignItems: 'flex-end',
                             marginTop: sizeHeight(1),
                         }}

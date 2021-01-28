@@ -27,6 +27,7 @@ import InfoPengirimanBarang from '../pages/InfoPengirimanBarang';
 import ListProduk from '../pages/ListProduk';
 import Bonus from '../pages/Bonus';
 import SetOTP from '../pages/SetOTP';
+import ForgotePassword from '../pages/ForgotePassword';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIdUser } from '../config/function';
 import { getTransaksi } from '../redux/actions/Transaksi';
@@ -177,6 +178,7 @@ export default function MainNavigation() {
                 <Stack.Screen name="ListProduk" component={ListProduk} />
                 <Stack.Screen name="Bonus" component={Bonus} />
                 <Stack.Screen name="SetOTP" component={SetOTP} />
+                <Stack.Screen name="ForgotePassword" component={ForgotePassword} />
             </Stack.Navigator>
         </NavigationContainer>
     );

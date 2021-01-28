@@ -107,3 +107,22 @@ export const getHostoryWallet = (idUser) => {
         });
     };
 };
+
+export const forgotePassword = (data, handleSuccess, handleInvalid) => {
+    return async (dispatch) => {
+        await Axios.post(BASE_URL + 'update-password', data, {
+            withCredentials: true,
+            headers: {
+                Accept: 'application/json',
+                Authorization: 'Bearer' + await getToken(),
+            },
+        })
+            .then(response => {
+                console.log(response.data);
+                handleSuccess();
+            }).catch(err => {
+                console.log(err.response);
+                handleInvalid();
+            });
+    };
+};

@@ -59,3 +59,21 @@ export const resendOTP = (email, resendSuccess, resendError) => {
         });
     };
 };
+
+export const getOtpForgote = (email, resendSuccess, resendError) => {
+    return async (dispatch) => {
+        await Axios.get(BASE_URL + 'forgot-password?email=' + email, {
+            withCredentials: true,
+            headers: {
+                Accept: 'application/json',
+                Authorization: 'Bearer' + await getToken(),
+            },
+        }).then(response => {
+            console.log(response);
+            resendSuccess(response.data.data);
+        }).catch(err => {
+            console.log(err.response);
+            resendError(err.response.data);
+        });
+    };
+};

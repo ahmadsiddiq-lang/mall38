@@ -13,7 +13,7 @@ import { getCArt } from '../redux/actions/Cart';
 import { ToasInvalid, ToasSuccess, validateEmail, validatePassword } from '../config/function';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { TouchableHighlight } from 'react-native-gesture-handler';
-import { resendOTP } from '../redux/actions/Register';
+import { getOtpForgote, resendOTP } from '../redux/actions/Register';
 
 export default function Login({ navigation }) {
 
@@ -24,6 +24,7 @@ export default function Login({ navigation }) {
     const [eye, setEye] = useState(true);
     const [modalEmail, setModalEmail] = useState(false);
     const [emailAkun, setEmailAkun] = useState(null);
+    const [idModal, setIdModal] = useState(null);
 
 
     // const dataUser = useSelector(state => state.dataLogin.dataUser);
@@ -89,14 +90,20 @@ export default function Login({ navigation }) {
         setModalEmail(!modalEmail);
         ToasSuccess('Success !');
         const x = setTimeout(() => {
-            navigation.navigate('SetOTP', {
-                email: emailAkun,
-            });
+            if (idModal === 0) {
+                navigation.navigate('ForgotePassword', {
+                    email: emailAkun,
+                });
+            } else {
+                navigation.navigate('SetOTP', {
+                    email: emailAkun,
+                });
+            }
             return () => {
                 clearTimeout(x);
             };
         }, 500);
-    }, [modalEmail, navigation, emailAkun]);
+    }, [modalEmail, navigation, emailAkun, idModal]);
 
     const resendError = useCallback(() => {
         ToastAndroid.showWithGravity('Email tidak ditemukan',
@@ -108,14 +115,20 @@ export default function Login({ navigation }) {
     const handleActiveAkun = useCallback(() => {
         console.log(emailAkun);
         if (validateEmail(emailAkun)) {
-            dispatch(resendOTP(emailAkun, resendSuccess, resendError));
+            if (idModal === 0) {
+                console.log('forgote');
+                dispatch(getOtpForgote(emailAkun, resendSuccess, resendError));
+            } else {
+                console.log('resend OTP');
+                dispatch(resendOTP(emailAkun, resendSuccess, resendError));
+            }
         } else {
             ToastAndroid.showWithGravity('Email tidak valid',
                 ToastAndroid.SHORT,
                 ToastAndroid.CENTER
             );
         }
-    }, [emailAkun, dispatch, resendSuccess, resendError]);
+    }, [emailAkun, dispatch, resendSuccess, resendError, idModal]);
 
     useEffect(() => {
         handleLoginAdmin();
@@ -152,7 +165,7 @@ export default function Login({ navigation }) {
                                 <View style={[styles.BoxInput,
                                 focus === 0 &&
                                 {
-                                    borderWidth: 3,
+                                    borderWidth: 1,
                                     borderColor: color.mainColor,
                                 },
                                 ]}>
@@ -170,7 +183,7 @@ export default function Login({ navigation }) {
                                 <View style={[styles.BoxInput,
                                 focus === 1 &&
                                 {
-                                    borderWidth: 3,
+                                    borderWidth: 1,
                                     borderColor: color.mainColor,
                                 },
                                 ]}>
@@ -205,15 +218,23 @@ export default function Login({ navigation }) {
                     </View>
                 </View>
                 <View style={styles.BoxRegister}>
-                    <Text style={{
-                        fontSize: sizeFont(4),
-                        color: color.fontWhite,
-                        marginTop: sizeHeight(2),
-                        fontFamily: Poppins.Italic,
-                        marginRight: sizeWidth(3),
-                    }}>Forgot password ?</Text>
                     <Text
-                        onPress={() => setModalEmail(!modalEmail)}
+                        onPress={() => {
+                            setIdModal(0);
+                            setModalEmail(!modalEmail);
+                        }}
+                        style={{
+                            fontSize: sizeFont(4),
+                            color: color.fontWhite,
+                            marginTop: sizeHeight(2),
+                            fontFamily: Poppins.Italic,
+                            marginRight: sizeWidth(3),
+                        }}>Forgot password ?</Text>
+                    <Text
+                        onPress={() => {
+                            setIdModal(1);
+                            setModalEmail(!modalEmail);
+                        }}
                         style={{
                             fontSize: sizeFont(4),
                             color: color.fontWhite,
@@ -264,8 +285,18 @@ export default function Login({ navigation }) {
                         backgroundColor: color.bgWhite,
                         borderRadius: 8,
                         paddingHorizontal: sizeWidth(5),
-                        paddingBottom: hp(2),
+                        paddingVertical: hp(2),
                     }}>
+                        {
+                            idModal === 0 ?
+                                <Text style={{
+                                    fontSize: sizeFont(3.5),
+                                }}>Forgote Password</Text>
+                                :
+                                <Text style={{
+                                    fontSize: sizeFont(3.5),
+                                }}>Activasi Akun</Text>
+                        }
                         <View style={styles.BoxInput}>
                             <TextInput
                                 keyboardType="email-address"
