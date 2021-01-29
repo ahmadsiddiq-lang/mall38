@@ -269,6 +269,7 @@ export default function Login({ navigation }) {
                             onPress={() => navigation.navigate('Register')}
                             style={{
                                 color: color.mainColor,
+                                fontFamily: Poppins.Bold,
                             }}
                         > Daftar</Text>
                     </Text>

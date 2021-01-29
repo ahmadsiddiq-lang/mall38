@@ -1,8 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useState } from 'react';
-import { Image, ScrollView, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
+import { Image, ImageBackground, ScrollView, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import { color } from '../assets/colors/Index';
-import { sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
+import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
 import HeaderRegister from '../components/Header/HeaderRegister';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { Poppins } from '../assets/fonts';
@@ -12,6 +12,9 @@ import { ToasInvalid, ToasSuccess, validateEmail, validatePassword } from '../co
 import { getDataUser } from '../redux/actions/User';
 import { getCArt } from '../redux/actions/Cart';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import CheckBox from '@react-native-community/checkbox';
 
 export default function Register({ navigation }) {
 
@@ -24,6 +27,7 @@ export default function Register({ navigation }) {
     const [fullname, setFullName] = useState(null);
     const [kodeReferral, setKodeReferral] = useState(null);
     const [eye, setEye] = useState(true);
+    const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
 
     const handleReponsSucces = useCallback(async (idUser) => {
@@ -72,7 +76,11 @@ export default function Register({ navigation }) {
                 if (validatePassword(password)) {
                     if (username.length >= 6) {
                         if (password.length >= 6) {
-                            dispatch(registerUser(data, handleReponsSucces, handleRequesError));
+                            if (toggleCheckBox) {
+                                dispatch(registerUser(data, handleReponsSucces, handleRequesError));
+                            } else {
+                                ToastAndroid.showWithGravity('Setujui syarat & ketentuan', ToastAndroid.LONG, ToastAndroid.CENTER);
+                            }
                         } else {
                             ToasInvalid('Password kurang dari 6');
                         }
@@ -89,42 +97,56 @@ export default function Register({ navigation }) {
             console.log(data);
             ToasInvalid('Lengkapi data Anda');
         }
-    }, [email, password, username, dispatch, handleReponsSucces, fullname, kodeReferral]);
+    }, [email, password, username, dispatch, handleReponsSucces, fullname, kodeReferral, toggleCheckBox]);
 
 
     return (
         <View style={styles.Container}>
-            <HeaderRegister navigation={navigation} title="Register" />
+            {/* <HeaderRegister navigation={navigation} title="Register" /> */}
+            <ImageBackground
+                resizeMethod="auto"
+                source={require('../assets/images/Login/BG_Register.png')}
+                style={{
+                    width: SCREEN_WIDTH,
+                    height: hp(20),
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginTop: -30,
+                }}>
+                <TouchableOpacity
+                    onPress={() => navigation.goBack()}
+                    activeOpacity={0.8}
+                    style={{
+                        paddingLeft: sizeWidth(5),
+                        paddingVertical: sizeHeight(1),
+                        paddingRight: sizeWidth(3),
+                    }}
+                >
+                    <Ionicons
+                        name="arrow-back"
+                        color={color.fontWhite}
+                        size={sizeFont(6.5)}
+                    />
+                </TouchableOpacity>
+                <Text style={{
+                    fontSize: sizeFont(4.5),
+                    fontFamily: Poppins.Medium,
+                    color: color.fontWhite,
+                }}>Register</Text>
+            </ImageBackground>
             <ScrollView
                 showsVerticalScrollIndicator={false}
             >
-                <View style={{
-                    alignItems: 'center',
-                }}>
-                    <View style={styles.BoxImage}>
-                        <Image
-                            style={{
-                                resizeMode: 'contain',
-                                width: '100%',
-                                height: '100%',
-                            }}
-                            resizeMethod="auto"
-                            source={require('../assets/images/logo/logo.png')} />
-                    </View>
-                </View>
-                <View style={{
-                    justifyContent: 'center',
-                    flex: 1,
-                }}>
+                <View>
                     <View style={styles.BoxContentInput}>
                         <View style={[styles.BoxInput,
                         focus === 3 &&
                         {
-                            borderWidth: 3,
+                            borderWidth: 1,
                             borderColor: color.mainColor,
                         },
                         ]}>
-                            <FontAwesome5 name="user" color={color.mainColor} size={sizeFont(5)} solid />
+                            <FontAwesome5 name="user" color={color.mainColor} size={sizeFont(4.5)} solid />
                             <TextInput
                                 maxLength={30}
                                 onChangeText={(e) => setFullName(e)}
@@ -137,11 +159,11 @@ export default function Register({ navigation }) {
                         <View style={[styles.BoxInput,
                         focus === 2 &&
                         {
-                            borderWidth: 3,
+                            borderWidth: 1,
                             borderColor: color.mainColor,
                         },
                         ]}>
-                            <FontAwesome5 name="user" color={color.mainColor} size={sizeFont(5)} solid />
+                            <FontAwesome5 name="user" color={color.mainColor} size={sizeFont(4.5)} solid />
                             <TextInput
                                 maxLength={30}
                                 onChangeText={(e) => setUsername(e)}
@@ -154,11 +176,11 @@ export default function Register({ navigation }) {
                         <View style={[styles.BoxInput,
                         focus === 0 &&
                         {
-                            borderWidth: 3,
+                            borderWidth: 1,
                             borderColor: color.mainColor,
                         },
                         ]}>
-                            <FontAwesome5 name="at" color={color.mainColor} size={sizeFont(5)} solid />
+                            <FontAwesome5 name="envelope" color={color.mainColor} size={sizeFont(4.5)} solid />
                             <TextInput
                                 maxLength={30}
                                 onChangeText={(e) => setEmail(e)}
@@ -172,11 +194,11 @@ export default function Register({ navigation }) {
                         <View style={[styles.BoxInput,
                         focus === 1 &&
                         {
-                            borderWidth: 3,
+                            borderWidth: 1,
                             borderColor: color.mainColor,
                         },
                         ]}>
-                            <FontAwesome5 name="key" color={color.mainColor} size={sizeFont(5)} solid />
+                            <FontAwesome5 name="unlock-alt" color={color.mainColor} size={sizeFont(4.5)} solid />
                             <TextInput
                                 maxLength={20}
                                 onChangeText={(e) => setPassword(e)}
@@ -186,20 +208,22 @@ export default function Register({ navigation }) {
                                 style={styles.Input}
                                 placeholder="Password"
                             />
-                            <FontAwesome5 onPress={() => setEye(!eye)} name={eye ? 'eye-slash' : 'eye'} color={color.mainColor} size={sizeFont(4)} solid />
+                            <FontAwesome5 onPress={() => setEye(!eye)} name={eye ? 'eye-slash' : 'eye'} color={color.mainColor} size={sizeFont(3)} solid />
                         </View>
                         <Text style={{
                             fontSize: sizeFont(2.6),
                             color: color.fontBlack2,
-                        }}>Password 8 karakter dengan huruf besar, kecil dan angka</Text>
+                            marginLeft: sizeWidth(2),
+                            marginTop: -10,
+                        }}>* Password 8 karakter dengan huruf besar, kecil dan angka</Text>
                         <View style={[styles.BoxInput,
                         focus === 4 &&
                         {
-                            borderWidth: 3,
+                            borderWidth: 1,
                             borderColor: color.mainColor,
                         },
                         ]}>
-                            <FontAwesome5 name="users" color={color.mainColor} size={sizeFont(5)} solid />
+                            <FontAwesome5 name="users" color={color.mainColor} size={sizeFont(4.5)} solid />
                             <TextInput
                                 maxLength={30}
                                 onChangeText={(e) => setKodeReferral(e)}
@@ -210,9 +234,28 @@ export default function Register({ navigation }) {
                             />
                         </View>
                     </View>
+                    <View style={{
+                        paddingHorizontal: sizeWidth(5),
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                    }}>
+                        <CheckBox
+                            tintColors={{ true: color.mainColor, false: color.mainColor1 }}
+                            disabled={false}
+                            value={toggleCheckBox}
+                            onValueChange={(newValue) => setToggleCheckBox(newValue)}
+                        />
+                        <Text style={{
+                            fontSize: sizeFont(3),
+                            marginLeft: sizeWidth(2),
+                            color: color.mainColor,
+                        }}>Saya menyetujui syarat & ketentuan yang berlaku</Text>
+                    </View>
                     <View style={styles.BoxContentLogin}>
                         <TouchableOpacity
-                            onPress={() => handleRegister()}
+                            onPress={() =>
+                                handleRegister()
+                            }
                             activeOpacity={0.8}
                             style={styles.BtnLogin}
                         >
@@ -220,11 +263,24 @@ export default function Register({ navigation }) {
                                 fontSize: sizeFont(4.5),
                                 color: color.fontWhite,
                                 fontFamily: Poppins.Bold,
-                                flex: 1,
                                 textAlign: 'center',
                             }}>Register</Text>
                         </TouchableOpacity>
                     </View>
+                    <Text style={{
+                        textAlign: 'center',
+                        fontSize: sizeFont(3.3),
+                        marginTop: hp(5),
+                        marginRight: sizeWidth(3),
+                    }}>Sudah mempunyai akun ?
+                        <Text
+                            onPress={() => navigation.navigate('Login')}
+                            style={{
+                                color: color.mainColor,
+                                fontFamily: Poppins.Medium,
+                            }}
+                        > Login</Text>
+                    </Text>
                 </View>
             </ScrollView>
         </View>
@@ -235,7 +291,6 @@ const styles = StyleSheet.create({
     Container: {
         flex: 1,
         backgroundColor: color.bgWhite,
-        alignItems: 'center',
     },
     BoxImage: {
         width: sizeWidth(60),
@@ -243,40 +298,34 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     BoxContentInput: {
-        borderWidth: 3,
-        borderColor: color.mainColor,
-        borderRadius: 8,
-        width: sizeWidth(80),
-        padding: sizeHeight(3),
-        // marginTop: sizeHeight(1),
+        paddingHorizontal: sizeWidth(5),
+        marginTop: sizeHeight(2),
     },
     BoxInput: {
         flexDirection: 'row',
         alignItems: 'center',
         borderWidth: 1,
-        paddingHorizontal: sizeHeight(1),
+        paddingHorizontal: sizeHeight(2),
         borderColor: color.border2,
-        borderRadius: 8,
+        borderRadius: 30,
         marginVertical: sizeHeight(2),
     },
     Input: {
         // borderWidth: 1,
         marginLeft: sizeWidth(2),
         flex: 1,
-        fontSize: sizeFont(4),
+        fontSize: sizeFont(3.5),
         fontFamily: Poppins.Regular,
     },
     BoxContentLogin: {
-        marginVertical: sizeHeight(5),
-        alignItems: 'flex-end',
+        marginTop: hp(2),
+        alignItems: 'center',
     },
     BtnLogin: {
         backgroundColor: color.mainColor,
         width: sizeWidth(40),
-        flexDirection: 'row',
-        justifyContent: 'space-between',
         paddingVertical: sizeHeight(0.5),
-        borderRadius: 8,
+        borderRadius: 30,
         alignItems: 'center',
     },
 });
