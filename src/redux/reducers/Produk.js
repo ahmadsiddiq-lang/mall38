@@ -1,7 +1,8 @@
-import { GET_PRODUK } from '../actions/Produk';
+import { CLEAR_TRACKING, GET_PRODUK, GET_TRACKING } from '../actions/Produk';
 
 const inisialState = {
     produk: [],
+    dataTracking: [],
 };
 
 const getProduk = (state = inisialState, action) => {
@@ -10,6 +11,16 @@ const getProduk = (state = inisialState, action) => {
             return {
                 ...state,
                 produk: action.data,
+            };
+        case GET_TRACKING:
+            return {
+                ...state,
+                dataTracking: action.data,
+            };
+        case CLEAR_TRACKING:
+            return {
+                ...state,
+                dataTracking: action.data,
             };
 
         default:

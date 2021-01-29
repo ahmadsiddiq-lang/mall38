@@ -63,7 +63,9 @@ export default function Transaksi({ navigation }) {
     }, [handleGetTransaksi]);
 
     useEffect(() => {
-        setDataTransaksi(dataAll.reverse());
+        if (dataAll) {
+            setDataTransaksi(dataAll.reverse());
+        }
         return () => {
             setDataTransaksi(null);
         };

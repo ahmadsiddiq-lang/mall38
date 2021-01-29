@@ -5,8 +5,11 @@ import { color } from '../../assets/colors/Index';
 import { Poppins } from '../../assets/fonts';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+// import { detailOrder } from '../../redux/actions/DetailOrder';
 
 export default function InfoPengiriman({ navigation, dataDetailOrder }) {
+
+    // console.log(dataDetailOrder);
     return (
         <View style={{
             paddingHorizontal: sizeWidth(5),
@@ -56,11 +59,20 @@ export default function InfoPengiriman({ navigation, dataDetailOrder }) {
                         fontSize: sizeFont(3.3),
                         color: color.mainColor,
                         fontFamily: Poppins.Italic,
-                    }}>Paket akan dikirim melaui JNE</Text>
-                    <Text style={{
-                        fontSize: sizeFont(3),
-                        color: color.fontBlack1,
-                    }}>31 Des 2020</Text>
+                    }}>Paket akan dikirim melaui {dataDetailOrder.courier}</Text>
+                    <View style={{
+                        flexDirection: 'row',
+                    }}>
+                        <Text style={{
+                            fontSize: sizeFont(3),
+                            color: color.fontBlack1,
+                        }}>Status pengiriman : </Text>
+                        <Text style={{
+                            fontSize: sizeFont(3),
+                            color: color.mainColor,
+                            fontFamily: Poppins.Medium,
+                        }}>{dataDetailOrder.status_pengiriman}</Text>
+                    </View>
                 </View>
             </View>
         </View>

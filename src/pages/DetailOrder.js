@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect } from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../assets/colors/Index';
 import { Poppins } from '../assets/fonts';
 import { sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
@@ -46,98 +46,114 @@ export default function DetailOrder({ navigation, route }) {
     return (
         <View style={styles.Container}>
             <Headers navigation={navigation} title={'Detail Pesanan'} />
-            <ScrollView>
-                {
-                    objekEmpty(dataDetailOrder) &&
-                    <Alamat
-                        dataDetailOrder={dataDetailOrder}
-                    />
-                }
-                <InfoPengiriman
-                    navigation={navigation}
-                    dataDetailOrder={dataDetailOrder}
-                />
-                <View style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    backgroundColor: color.bgWhite,
-                    paddingVertical: sizeHeight(1),
-                    paddingHorizontal: sizeWidth(5),
-                }}>
-                    <Text style={{
-                        fontSize: sizeFont(3),
-                        color: color.fontBlack1,
-                    }}>Status pembayaran</Text>
-                    <Text style={{
-                        fontSize: sizeFont(3.5),
-                        fontFamily: Poppins.Medium,
-                        color: color.mainColor,
-                        textTransform: 'capitalize',
-                    }}>{objekEmpty(dataDetailOrder) && dataDetailOrder.status_pembayaran}</Text>
-                </View>
-                {
-                    objekEmpty(dataDetailOrder) &&
-                    dataDetailOrder.order_product.map((item, index) => {
-                        return (
-                            <View
-                                key={index}
-                                style={styles.BoxCard}>
-                                <CardProduk
-                                    navigation={navigation}
-                                    item={item}
-                                />
-                            </View>
-                        );
-                    })
-                }
-                <View style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    paddingHorizontal: sizeWidth(5),
-                    backgroundColor: color.bgWhite,
-                }}>
-                    <Text style={{
-                        fontSize: sizeFont(3.3),
-                        color: color.fontBlack1,
-                    }}>Ongkir</Text>
-                    <Text style={{
-                        fontSize: sizeFont(3.5),
-                        fontFamily: Poppins.Medium,
-                        color: color.mainColor,
-                    }}>  Rp. {
+            {
+                objekEmpty(dataDetailOrder) ?
+                    <ScrollView>
+                        <Alamat
+                            dataDetailOrder={dataDetailOrder}
+                        />
+                        <InfoPengiriman
+                            navigation={navigation}
+                            dataDetailOrder={dataDetailOrder}
+                        />
+                        <View style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            backgroundColor: color.bgWhite,
+                            paddingVertical: sizeHeight(1),
+                            paddingHorizontal: sizeWidth(5),
+                        }}>
+                            <Text style={{
+                                fontSize: sizeFont(3),
+                                color: color.fontBlack1,
+                            }}>Status pembayaran</Text>
+                            <Text style={{
+                                fontSize: sizeFont(3.5),
+                                fontFamily: Poppins.Medium,
+                                color: color.mainColor,
+                                textTransform: 'capitalize',
+                            }}>{objekEmpty(dataDetailOrder) && dataDetailOrder.status_pembayaran}</Text>
+                        </View>
+                        {
                             objekEmpty(dataDetailOrder) &&
-                            rupiah(dataDetailOrder.ongkir)}</Text>
-                </View>
-                <View style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    paddingHorizontal: sizeWidth(5),
-                    backgroundColor: color.bgWhite,
-                    paddingBottom: sizeHeight(1),
-                    marginBottom: sizeHeight(1),
-                }}>
+                            dataDetailOrder.order_product.map((item, index) => {
+                                return (
+                                    <View
+                                        key={index}
+                                        style={styles.BoxCard}>
+                                        <CardProduk
+                                            navigation={navigation}
+                                            item={item}
+                                        />
+                                    </View>
+                                );
+                            })
+                        }
+                        <View style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            paddingHorizontal: sizeWidth(5),
+                            backgroundColor: color.bgWhite,
+                        }}>
+                            <Text style={{
+                                fontSize: sizeFont(3.3),
+                                color: color.fontBlack1,
+                            }}>Ongkir</Text>
+                            <Text style={{
+                                fontSize: sizeFont(3.5),
+                                fontFamily: Poppins.Medium,
+                                color: color.mainColor,
+                            }}>  Rp. {
+                                    objekEmpty(dataDetailOrder) &&
+                                    rupiah(dataDetailOrder.ongkir)}</Text>
+                        </View>
+                        <View style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            paddingHorizontal: sizeWidth(5),
+                            backgroundColor: color.bgWhite,
+                            paddingBottom: sizeHeight(1),
+                            marginBottom: sizeHeight(1),
+                        }}>
+                            <Text style={{
+                                fontSize: sizeFont(3.3),
+                                color: color.fontBlack1,
+                            }}>{objekEmpty(dataDetailOrder) && dataDetailOrder.order_product.length} produk</Text>
+                            <Text style={{
+                                fontSize: sizeFont(3.3),
+                            }}>Total Pesanan :
                     <Text style={{
-                        fontSize: sizeFont(3.3),
-                        color: color.fontBlack1,
-                    }}>{objekEmpty(dataDetailOrder) && dataDetailOrder.order_product.length} produk</Text>
-                    <Text style={{
-                        fontSize: sizeFont(3.3),
-                    }}>Total Pesanan :
-                    <Text style={{
-                            fontSize: sizeFont(4),
-                            fontFamily: Poppins.Medium,
-                            color: color.mainColor,
-                        }}>  Rp. {objekEmpty(dataDetailOrder) &&
-                            rupiah(dataDetailOrder.total_pembayaran)}</Text>
-                    </Text>
-                </View>
-                {
-                    objekEmpty(dataDetailOrder) &&
-                    <MetodeBayar
-                        dataDetailOrder={dataDetailOrder}
-                    />
-                }
-            </ScrollView>
+                                    fontSize: sizeFont(4),
+                                    fontFamily: Poppins.Medium,
+                                    color: color.mainColor,
+                                }}>  Rp. {objekEmpty(dataDetailOrder) &&
+                                    rupiah(dataDetailOrder.total_pembayaran)}</Text>
+                            </Text>
+                        </View>
+                        {
+                            objekEmpty(dataDetailOrder) &&
+                            <MetodeBayar
+                                dataDetailOrder={dataDetailOrder}
+                            />
+                        }
+                    </ScrollView>
+                    :
+                    <View style={{
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flex: 1,
+                    }}>
+                        <Image
+                            resizeMethod="auto"
+                            source={require('../assets/images/loading/loading.gif')}
+                            style={{
+                                resizeMode: 'contain',
+                                width: '35%',
+                                height: '35%',
+                            }}
+                        />
+                    </View>
+            }
             <View style={{
                 paddingVertical: sizeHeight(2),
                 paddingHorizontal: sizeWidth(5),

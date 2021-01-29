@@ -40,7 +40,7 @@ export default function ProdukInfo({ dataOrder }) {
                                 }}
                             />
                             :
-                            <Image source={require('../../assets/images/Produk/tas.jpg')}
+                            <Image source={require('../../assets/images/Produk/imagedefault.png')}
                                 resizeMethod="auto"
                                 style={{
                                     width: '100%',
