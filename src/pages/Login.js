@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useState } from 'react';
-import { Image, Modal, ScrollView, StatusBar, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
+import { Image, ImageBackground, Modal, ScrollView, StatusBar, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import { color } from '../assets/colors/Index';
 import { Poppins } from '../assets/fonts';
 import { SCREEN_HEIGHT, SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
@@ -136,123 +136,142 @@ export default function Login({ navigation }) {
 
     return (
         <View style={styles.Container}>
-            <StatusBar translucent={false} backgroundColor={color.bgWhite} barStyle="dark-content" />
+            <StatusBar translucent={false} backgroundColor={color.mainColor} barStyle="light-content" />
+            <View style={{
+
+            }}>
+                <ImageBackground
+                    resizeMethod="resize"
+                    source={require('../assets/images/Login/BG_Login.png')}
+                    style={{
+                        width: SCREEN_WIDTH,
+                        height: hp(35),
+                        marginTop: -50,
+                    }}
+                >
+                    <View style={{
+                        height: hp(9),
+                        paddingHorizontal: sizeWidth(10),
+                        marginTop: hp(13),
+                    }}>
+                        <Image
+                            resizeMethod="auto"
+                            source={require('../assets/images/Login/Logo.png')}
+                            style={{
+                                resizeMode: 'contain',
+                                width: '100%',
+                                height: '100%',
+                            }}
+                        />
+                    </View>
+                </ImageBackground>
+            </View>
             <ScrollView>
                 <View style={{
-                    alignItems: 'center',
-                    overflow: 'hidden',
+                    paddingHorizontal: sizeWidth(8),
                 }}>
-                    <View style={styles.BackgroundWhite}>
-                        <View style={styles.Content}>
-                            <View style={styles.BoxImage}>
-                                <Image
-                                    style={{
-                                        resizeMode: 'contain',
-                                        width: '100%',
-                                        height: '100%',
-                                    }}
-                                    resizeMethod="auto"
-                                    source={require('../assets/images/logo/logo.png')} />
-                            </View>
-                            <View style={styles.BoxContentInput}>
-                                <View style={{
-                                    alignItems: 'center',
-                                }}>
-                                    <View style={styles.BoxIconUser}>
-                                        <FontAwesome5 name="user" color={color.mainColor} size={sizeFont(12)} solid />
-                                    </View>
-                                </View>
-                                <View style={[styles.BoxInput,
-                                focus === 0 &&
-                                {
-                                    borderWidth: 1,
-                                    borderColor: color.mainColor,
-                                },
-                                ]}>
-                                    <FontAwesome5 name="at" color={color.mainColor} size={sizeFont(5)} solid />
-                                    <TextInput
-                                        keyboardType="email-address"
-                                        onChangeText={(e) => setEmail(e)}
-                                        onFocus={() => setFocus(0)}
-                                        onBlur={() => setFocus(null)}
-                                        placeholder="Email"
-                                        style={styles.Input}
-                                        autoCapitalize="none"
-                                    />
-                                </View>
-                                <View style={[styles.BoxInput,
-                                focus === 1 &&
-                                {
-                                    borderWidth: 1,
-                                    borderColor: color.mainColor,
-                                },
-                                ]}>
-                                    <FontAwesome5 name="key" color={color.mainColor} size={sizeFont(5)} solid />
-                                    <TextInput
-                                        onChangeText={(e) => setPassword(e)}
-                                        secureTextEntry={eye}
-                                        onBlur={() => setFocus(null)}
-                                        onFocus={() => setFocus(1)}
-                                        style={styles.Input}
-                                        placeholder="Password"
-                                        onSubmitEditing={() => handleLogin()}
-                                    />
-                                    <FontAwesome5 onPress={() => setEye(!eye)} name={eye ? 'eye-slash' : 'eye'} color={color.mainColor} size={sizeFont(4)} solid />
-                                </View>
-                            </View>
-                            <View style={styles.BoxContentLogin}>
-                                <TouchableOpacity
-                                    onPress={() => handleLogin()}
-                                    activeOpacity={0.8}
-                                    style={styles.BtnLogin}
-                                >
-                                    <Text style={{
-                                        fontSize: sizeFont(4.5),
-                                        color: color.fontWhite,
-                                        fontFamily: Poppins.Bold,
-                                        textAlign: 'center',
-                                    }}>Login</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </View>
+                    <Text style={{
+                        fontSize: sizeFont(15),
+                        fontFamily: Poppins.Medium,
+                        color: '#3a0d61',
+                    }}>Hello</Text>
+                    <Text style={{
+                        marginTop: -20,
+                        fontSize: sizeFont(3.3),
+                    }}>Log In untuk memulai belanja</Text>
                 </View>
-                <View style={styles.BoxRegister}>
+                <View style={{
+                    paddingHorizontal: sizeWidth(10),
+                    marginTop: hp(3),
+                }}>
+                    <View style={[styles.BoxInput,
+                    focus === 0 &&
+                    {
+                        borderWidth: 1,
+                        borderColor: color.mainColor,
+                    },
+                    ]}>
+                        <FontAwesome5 name="envelope" color={color.mainColor} size={sizeFont(4.5)} solid />
+                        <TextInput
+                            keyboardType="email-address"
+                            onChangeText={(e) => setEmail(e)}
+                            onFocus={() => setFocus(0)}
+                            onBlur={() => setFocus(null)}
+                            placeholder="Email"
+                            style={styles.Input}
+                            autoCapitalize="none"
+                        />
+                    </View>
+                    <View style={[styles.BoxInput,
+                    focus === 1 &&
+                    {
+                        borderWidth: 1,
+                        borderColor: color.mainColor,
+                    },
+                    ]}>
+                        <FontAwesome5 name="unlock-alt" color={color.mainColor} size={sizeFont(4.5)} solid />
+                        <TextInput
+                            onChangeText={(e) => setPassword(e)}
+                            secureTextEntry={eye}
+                            onBlur={() => setFocus(null)}
+                            onFocus={() => setFocus(1)}
+                            style={styles.Input}
+                            placeholder="Password"
+                            onSubmitEditing={() => handleLogin()}
+                        />
+                        <FontAwesome5 onPress={() => setEye(!eye)} name={eye ? 'eye-slash' : 'eye'} color={color.mainColor} size={sizeFont(3.5)} solid />
+                    </View>
                     <Text
                         onPress={() => {
                             setIdModal(0);
                             setModalEmail(!modalEmail);
                         }}
                         style={{
-                            fontSize: sizeFont(4),
-                            color: color.fontWhite,
-                            marginTop: sizeHeight(2),
-                            fontFamily: Poppins.Italic,
+                            textAlign: 'right',
+                            fontSize: sizeFont(3.3),
+                            color: color.mainColor,
+                            marginTop: sizeHeight(1),
                             marginRight: sizeWidth(3),
-                        }}>Forgot password ?</Text>
+                        }}>Lupa Password ?</Text>
+                    <View style={styles.BoxContentLogin}>
+                        <TouchableOpacity
+                            onPress={() => handleLogin()}
+                            activeOpacity={0.8}
+                            style={styles.BtnLogin}
+                        >
+                            <Text style={{
+                                fontSize: sizeFont(4.5),
+                                color: color.fontWhite,
+                                fontFamily: Poppins.Bold,
+                                textAlign: 'center',
+                            }}>Login</Text>
+                        </TouchableOpacity>
+                    </View>
                     <Text
                         onPress={() => {
                             setIdModal(1);
                             setModalEmail(!modalEmail);
                         }}
                         style={{
-                            fontSize: sizeFont(4),
-                            color: color.fontWhite,
-                            marginTop: sizeHeight(2),
-                            fontFamily: Poppins.Italic,
-                            marginRight: sizeWidth(3),
-                        }}>Activasi Akun ?</Text>
-                    <TouchableOpacity
-                        onPress={() => navigation.navigate('Register')}
-                        activeOpacity={0.8}
-                        style={styles.BtnRegister}
-                    >
-                        <Text style={{
-                            fontSize: sizeFont(4),
+                            textAlign: 'center',
+                            fontSize: sizeFont(3.3),
                             color: color.mainColor,
-                            fontFamily: Poppins.Bold,
-                        }}>Register</Text>
-                    </TouchableOpacity>
+                            marginTop: hp(5),
+                            marginRight: sizeWidth(3),
+                        }}>Activasi Akun</Text>
+                    <Text style={{
+                        textAlign: 'center',
+                        fontSize: sizeFont(3.3),
+                        marginTop: hp(1),
+                        marginRight: sizeWidth(3),
+                    }}>Belum mempunyai akun ?
+                        <Text
+                            onPress={() => navigation.navigate('Register')}
+                            style={{
+                                color: color.mainColor,
+                            }}
+                        > Daftar</Text>
+                    </Text>
                 </View>
             </ScrollView>
             <Modal
@@ -335,7 +354,7 @@ export default function Login({ navigation }) {
 const styles = StyleSheet.create({
     Container: {
         flex: 1,
-        backgroundColor: color.mainColor,
+        backgroundColor: color.bgWhite,
     },
     BackgroundWhite: {
         height: hp(70),
@@ -368,16 +387,16 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         borderWidth: 1,
-        paddingHorizontal: sizeHeight(1),
+        paddingHorizontal: sizeHeight(2),
         borderColor: color.border2,
-        borderRadius: 8,
+        borderRadius: 30,
         marginVertical: sizeHeight(2),
     },
     Input: {
         // borderWidth: 1,
         marginLeft: sizeWidth(2),
         flex: 1,
-        fontSize: sizeFont(4),
+        fontSize: sizeFont(3.5),
         fontFamily: Poppins.Regular,
     },
     BoxIconUser: {
@@ -393,13 +412,14 @@ const styles = StyleSheet.create({
         backgroundColor: color.bgWhite,
     },
     BoxContentLogin: {
-        marginTop: sizeHeight(5),
+        marginTop: hp(2),
+        alignItems: 'center',
     },
     BtnLogin: {
         backgroundColor: color.mainColor,
         width: sizeWidth(40),
         paddingVertical: sizeHeight(0.5),
-        borderRadius: 8,
+        borderRadius: 30,
         alignItems: 'center',
     },
     BoxRegister: {
