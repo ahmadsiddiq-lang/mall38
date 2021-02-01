@@ -138,33 +138,36 @@ export default function Login({ navigation }) {
         <View style={styles.Container}>
             <StatusBar translucent={false} backgroundColor={color.mainColor} barStyle="light-content" />
             <View style={{
-
+                width: SCREEN_WIDTH,
+                height: hp(30),
             }}>
-                <ImageBackground
+                <Image
                     resizeMethod="resize"
                     source={require('../assets/images/Login/BG_Login.png')}
                     style={{
-                        width: SCREEN_WIDTH,
-                        height: hp(35),
-                        marginTop: -50,
+                        resizeMode: 'stretch',
+                        width: '100%',
+                        height: '100%',
+                        position: 'absolute',
+                        zIndex: 1,
                     }}
-                >
-                    <View style={{
-                        height: hp(9),
-                        paddingHorizontal: sizeWidth(10),
-                        marginTop: hp(13),
-                    }}>
-                        <Image
-                            resizeMethod="auto"
-                            source={require('../assets/images/Login/Logo.png')}
-                            style={{
-                                resizeMode: 'contain',
-                                width: '100%',
-                                height: '100%',
-                            }}
-                        />
-                    </View>
-                </ImageBackground>
+                />
+                <View style={{
+                    height: hp(9),
+                    paddingHorizontal: sizeWidth(10),
+                    marginTop: hp(8),
+                }}>
+                    <Image
+                        resizeMethod="auto"
+                        source={require('../assets/images/Login/Logo.png')}
+                        style={{
+                            resizeMode: 'contain',
+                            width: '100%',
+                            height: '100%',
+                            zIndex: 2,
+                        }}
+                    />
+                </View>
             </View>
             <ScrollView>
                 <View style={{
@@ -187,7 +190,7 @@ export default function Login({ navigation }) {
                     <View style={[styles.BoxInput,
                     focus === 0 &&
                     {
-                        borderWidth: 1,
+                        borderWidth: 0.5,
                         borderColor: color.mainColor,
                     },
                     ]}>
@@ -205,7 +208,7 @@ export default function Login({ navigation }) {
                     <View style={[styles.BoxInput,
                     focus === 1 &&
                     {
-                        borderWidth: 1,
+                        borderWidth: 0.5,
                         borderColor: color.mainColor,
                     },
                     ]}>
@@ -387,11 +390,13 @@ const styles = StyleSheet.create({
     BoxInput: {
         flexDirection: 'row',
         alignItems: 'center',
-        borderWidth: 1,
+        borderWidth: 0.5,
         paddingHorizontal: sizeHeight(2),
         borderColor: color.border2,
         borderRadius: 30,
         marginVertical: sizeHeight(2),
+        elevation: 3,
+        backgroundColor: color.bgWhite,
     },
     Input: {
         // borderWidth: 1,
@@ -422,18 +427,6 @@ const styles = StyleSheet.create({
         paddingVertical: sizeHeight(0.5),
         borderRadius: 30,
         alignItems: 'center',
-    },
-    BoxRegister: {
-        // borderWidth: 1,
-        alignItems: 'flex-end',
-    },
-    BtnRegister: {
-        backgroundColor: color.bgWhite,
-        marginTop: sizeHeight(2),
-        width: sizeWidth(28),
-        paddingVertical: sizeHeight(0.5),
-        borderTopLeftRadius: 100,
-        borderBottomLeftRadius: 100,
-        paddingLeft: sizeWidth(5),
+        elevation: 5,
     },
 });

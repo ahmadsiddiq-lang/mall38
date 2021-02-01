@@ -102,17 +102,23 @@ export default function Register({ navigation }) {
 
     return (
         <View style={styles.Container}>
-            {/* <HeaderRegister navigation={navigation} title="Register" /> */}
-            <ImageBackground
-                resizeMethod="auto"
-                source={require('../assets/images/Login/BG_Register.png')}
-                style={{
-                    width: SCREEN_WIDTH,
-                    height: hp(20),
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    marginTop: -30,
-                }}>
+            <View style={{
+                width: SCREEN_WIDTH,
+                height: hp(15),
+                flexDirection: 'row',
+                alignItems: 'center',
+            }}>
+                <Image
+                    resizeMethod="resize"
+                    source={require('../assets/images/Login/BG_Login.png')}
+                    style={{
+                        resizeMode: 'stretch',
+                        width: '100%',
+                        height: '100%',
+                        position: 'absolute',
+                        zIndex: 1,
+                    }}
+                />
                 <TouchableOpacity
                     onPress={() => navigation.goBack()}
                     activeOpacity={0.8}
@@ -120,6 +126,7 @@ export default function Register({ navigation }) {
                         paddingLeft: sizeWidth(5),
                         paddingVertical: sizeHeight(1),
                         paddingRight: sizeWidth(3),
+                        zIndex: 2,
                     }}
                 >
                     <Ionicons
@@ -132,8 +139,9 @@ export default function Register({ navigation }) {
                     fontSize: sizeFont(4.5),
                     fontFamily: Poppins.Medium,
                     color: color.fontWhite,
+                    zIndex: 2,
                 }}>Register</Text>
-            </ImageBackground>
+            </View>
             <ScrollView
                 showsVerticalScrollIndicator={false}
             >
@@ -142,7 +150,7 @@ export default function Register({ navigation }) {
                         <View style={[styles.BoxInput,
                         focus === 3 &&
                         {
-                            borderWidth: 1,
+                            borderWidth: 0.5,
                             borderColor: color.mainColor,
                         },
                         ]}>
@@ -159,7 +167,7 @@ export default function Register({ navigation }) {
                         <View style={[styles.BoxInput,
                         focus === 2 &&
                         {
-                            borderWidth: 1,
+                            borderWidth: 0.5,
                             borderColor: color.mainColor,
                         },
                         ]}>
@@ -176,7 +184,7 @@ export default function Register({ navigation }) {
                         <View style={[styles.BoxInput,
                         focus === 0 &&
                         {
-                            borderWidth: 1,
+                            borderWidth: 0.5,
                             borderColor: color.mainColor,
                         },
                         ]}>
@@ -194,7 +202,7 @@ export default function Register({ navigation }) {
                         <View style={[styles.BoxInput,
                         focus === 1 &&
                         {
-                            borderWidth: 1,
+                            borderWidth: 0.5,
                             borderColor: color.mainColor,
                         },
                         ]}>
@@ -219,7 +227,7 @@ export default function Register({ navigation }) {
                         <View style={[styles.BoxInput,
                         focus === 4 &&
                         {
-                            borderWidth: 1,
+                            borderWidth: 0.5,
                             borderColor: color.mainColor,
                         },
                         ]}>
@@ -270,7 +278,7 @@ export default function Register({ navigation }) {
                     <Text style={{
                         textAlign: 'center',
                         fontSize: sizeFont(3.3),
-                        marginTop: hp(5),
+                        marginTop: hp(2),
                         marginRight: sizeWidth(3),
                     }}>Sudah mempunyai akun ?
                         <Text
@@ -304,11 +312,13 @@ const styles = StyleSheet.create({
     BoxInput: {
         flexDirection: 'row',
         alignItems: 'center',
-        borderWidth: 1,
+        borderWidth: 0.5,
         paddingHorizontal: sizeHeight(2),
         borderColor: color.border2,
         borderRadius: 30,
         marginVertical: sizeHeight(2),
+        elevation: 3,
+        backgroundColor: color.bgWhite,
     },
     Input: {
         // borderWidth: 1,
@@ -327,5 +337,6 @@ const styles = StyleSheet.create({
         paddingVertical: sizeHeight(0.5),
         borderRadius: 30,
         alignItems: 'center',
+        elevation: 5,
     },
 });

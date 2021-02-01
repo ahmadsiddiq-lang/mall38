@@ -2,9 +2,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useCallback, useEffect } from 'react';
 import { ActivityIndicator, Image, StatusBar, Text, View } from 'react-native';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { useDispatch } from 'react-redux';
 import { color } from '../assets/colors/Index';
-import { sizeHeight, sizeWidth } from '../assets/responsive';
+import { SCREEN_WIDTH, sizeHeight, sizeWidth } from '../assets/responsive';
 import { getIdUser } from '../config/function';
 import { LoginAdmin } from '../redux/actions/Login';
 
@@ -62,24 +63,41 @@ export default function Auth({ navigation }) {
         <View style={{
             flex: 1,
             backgroundColor: color.bgWhite,
-            alignItems: 'center',
-            justifyContent: 'center',
         }}>
-            <StatusBar backgroundColor={color.bgWhite} />
+            <StatusBar backgroundColor={color.mainColor} />
             <View
                 style={{
-                    width: sizeWidth(70),
-                    height: sizeHeight(10),
-                    marginBottom: sizeHeight(20),
+                    width: SCREEN_WIDTH,
+                    height: heightPercentageToDP(75),
                 }}
             >
-                <Image resizeMethod="auto" source={require('../assets/images/logo/logo.png')} style={{
+                <Image resizeMethod="auto" source={require('../assets/images/Splash/Background.png')} style={{
                     width: '100%',
                     height: '100%',
-                    resizeMode: 'contain',
+                    resizeMode: 'stretch',
+                    position: 'absolute',
                 }} />
-                <ActivityIndicator size="large" color={color.mainColor} style={{
-                    marginTop: sizeHeight(10),
+                <View style={{
+                    flex: 1,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}>
+                    <Image resizeMethod="auto" source={require('../assets/images/Splash/Logo.png')} style={{
+                        width: '50%',
+                        height: '35%',
+                        resizeMode: 'contain',
+                    }} />
+                </View>
+            </View>
+            <View style={{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+            }}>
+                <Image resizeMethod="auto" source={require('../assets/images/loading/loadingSplash.gif')} style={{
+                    width: '50%',
+                    height: '55%',
+                    resizeMode: 'contain',
                 }} />
             </View>
         </View>
