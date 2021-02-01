@@ -9,7 +9,7 @@ import { getIdUser } from '../../config/function';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 export default function HeaderDetailProduk({ navigation, clearDetailProduks, headerOpacity, onShare }) {
 
-    const [modalVisible, setModalVisible] = useState(true);
+    const [modalVisible, setModalVisible] = useState(false);
     const dataCart = useSelector(state => state.cart.dataCart);
 
     const handleTocart = useCallback(async () => {

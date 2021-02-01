@@ -395,7 +395,7 @@ const styles = StyleSheet.create({
         borderColor: color.border2,
         borderRadius: 30,
         marginVertical: sizeHeight(2),
-        elevation: 3,
+        elevation: 2,
         backgroundColor: color.bgWhite,
     },
     Input: {
