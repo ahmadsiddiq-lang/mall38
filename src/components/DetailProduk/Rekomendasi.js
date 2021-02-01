@@ -2,6 +2,7 @@
 import React from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { color } from '../../assets/colors/Index';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import CardProdukVer from '../CardProdukVer';
@@ -72,6 +73,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: sizeWidth(2.5),
         backgroundColor: color.bgWhite,
         marginTop: sizeHeight(1),
-        paddingBottom: sizeHeight(6),
+        paddingBottom: heightPercentageToDP(8),
     },
 });
