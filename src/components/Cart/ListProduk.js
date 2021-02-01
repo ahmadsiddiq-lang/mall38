@@ -93,7 +93,9 @@ export default function ListProduk({ item, handlePlus, handleCechboxItem, handle
 
 const styles = StyleSheet.create({
     Container: {
-        borderWidth: 2,
+        borderWidth: 1,
+        elevation: 2,
+        backgroundColor: color.bgWhite,
         borderColor: color.border3,
         borderRadius: 8,
         overflow: 'hidden',

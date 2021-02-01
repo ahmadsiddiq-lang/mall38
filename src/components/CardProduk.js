@@ -128,7 +128,9 @@ export const CardEnd = ({ onPressLihatSemua }) => {
 
 const styles = StyleSheet.create({
     Container: {
-        borderWidth: 1,
+        borderWidth: 0.5,
+        elevation: 2,
+        backgroundColor: color.bgWhite,
         borderColor: color.border2,
         borderRadius: 8,
         marginHorizontal: sizeWidth(2),

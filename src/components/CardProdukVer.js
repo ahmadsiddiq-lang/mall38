@@ -117,14 +117,15 @@ export const CardEnd = ({ onPressLihatSemua }) => {
 
 const styles = StyleSheet.create({
     Container: {
-        borderWidth: 1,
+        borderWidth: 0.5,
+        elevation: 2,
+        backgroundColor: color.bgWhite,
         borderColor: color.border3,
         borderRadius: 8,
         marginHorizontal: sizeWidth(1),
         flex: 1,
         marginVertical: sizeHeight(1),
         // paddingBottom: sizeHeight(6),
-        backgroundColor: color.bgWhite,
         overflow: 'hidden',
         justifyContent: 'space-between',
     },
