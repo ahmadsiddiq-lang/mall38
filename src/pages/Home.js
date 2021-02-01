@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useCallback, useState, useRef } from 'react';
 import { Animated, RefreshControl, StatusBar, StyleSheet, View } from 'react-native';
 import { SCREEN_WIDTH, sizeHeight } from '../assets/responsive';
@@ -152,9 +151,12 @@ export default function Home({ navigation }) {
     return (
         <View style={styles.Container}>
             <StatusBar translucent={true} backgroundColor="transparent" barStyle="light-content" />
-            <View style={styles.BoxHedaer}>
-                <Header navigation={navigation} headerOpacity={headerOpacity} />
-            </View>
+            {
+                visible &&
+                <View style={styles.BoxHedaer}>
+                    <Header navigation={navigation} headerOpacity={headerOpacity} />
+                </View>
+            }
             <Animated.ScrollView
                 onScroll={Animated.event(
                     [
