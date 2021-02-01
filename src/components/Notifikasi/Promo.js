@@ -1,14 +1,17 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { color } from '../../assets/colors/Index';
 import { sizeFont, sizeWidth } from '../../assets/responsive';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-export default function Promo() {
+export default function Promo({ navigation }) {
     return (
-        <View style={styles.Container}>
+        <TouchableOpacity
+            onPress={() => navigation.navigate('Promo')}
+            activeOpacity={0.8}
+            style={styles.Container}>
             <View style={{
                 flexDirection: 'row',
                 alignItems: 'center',
@@ -36,7 +39,7 @@ export default function Promo() {
                 }}>Promo produk</Text>
             </View>
             <Ionicons name="chevron-forward" size={sizeFont(4)} color={color.mainColor} />
-        </View>
+        </TouchableOpacity>
     );
 }
 

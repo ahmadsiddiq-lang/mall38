@@ -15,7 +15,9 @@ export default function Notifikasi({ navigation }) {
     return (
         <View style={styles.Container}>
             <Headers navigation={navigation} title={'Notifikasi'} />
-            <Promo />
+            <Promo
+                navigation={navigation}
+            />
             <View style={{
                 backgroundColor: color.bgWhite,
                 flex: 1,
