@@ -1,13 +1,15 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useCallback } from 'react';
-import { Animated, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { Animated, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { color } from '../../assets/colors/Index';
 import { useSelector } from 'react-redux';
 import { getIdUser } from '../../config/function';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 export default function HeaderDetailProduk({ navigation, clearDetailProduks, headerOpacity, onShare }) {
 
+    const [modalVisible, setModalVisible] = useState(true);
     const dataCart = useSelector(state => state.cart.dataCart);
 
     const handleTocart = useCallback(async () => {
@@ -77,6 +79,7 @@ export default function HeaderDetailProduk({ navigation, clearDetailProduks, hea
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity
+                        onPress={() => setModalVisible(!modalVisible)}
                         activeOpacity={0.8}
                         style={styles.Btn}
                     >
@@ -89,6 +92,52 @@ export default function HeaderDetailProduk({ navigation, clearDetailProduks, hea
 
                 </View>
             </View>
+            <Modal
+                animationType="fade"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                    setModalVisible(!modalVisible);
+                }}
+            >
+                <TouchableOpacity
+                    onPress={() => setModalVisible(!modalVisible)}
+                    style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        bottom: 0,
+                        right: 0,
+                    }}
+                />
+                <View style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    position: 'absolute',
+                    right: sizeWidth(5),
+                    marginTop: heightPercentageToDP(8),
+                    backgroundColor: 'rgba(0,0,0,0.3)',
+                    padding: sizeWidth(2),
+                    borderRadius: 8,
+                }}>
+                    <Ionicons
+                        name="alert-circle"
+                        size={sizeFont(6.5)}
+                        color={color.bgWhite}
+                    />
+                    <TouchableOpacity
+                        onPress={() => {
+                            setModalVisible(!modalVisible);
+                        }}
+                    >
+                        <Text style={{
+                            fontSize: sizeFont(3.5),
+                            marginLeft: sizeWidth(2),
+                            color: color.fontWhite,
+                        }}>Laporkan Produk</Text>
+                    </TouchableOpacity>
+                </View>
+            </Modal>
         </View>
     );
 }
