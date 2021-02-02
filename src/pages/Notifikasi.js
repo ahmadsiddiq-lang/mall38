@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { color } from '../assets/colors/Index';
@@ -8,10 +8,10 @@ import Headers from '../components/Header/Headers';
 import Promo from '../components/Notifikasi/Promo';
 import Produk from '../components/Notifikasi/Produk';
 
+
 export default function Notifikasi({ navigation }) {
 
     const [produk, setProduk] = useState(null);
-
     return (
         <View style={styles.Container}>
             <Headers navigation={navigation} title={'Notifikasi'} />

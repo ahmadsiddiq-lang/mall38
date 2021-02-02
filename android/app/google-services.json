@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "286230879003",
+    "project_id": "mall38",
+    "storage_bucket": "mall38.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:286230879003:android:182031d1745fcecfa651be",
+        "android_client_info": {
+          "package_name": "com.mall38"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "286230879003-cia6q3ud0sfjfri8igfufsjgvdv8ubuc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mall38",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "286230879003-1h419b01a7rvqpu1tkc5t61llms1bkbg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArCC7g6wzV3MLSrK0-daXq5xG-tOozY2A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "286230879003-1h419b01a7rvqpu1tkc5t61llms1bkbg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

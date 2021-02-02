@@ -10,6 +10,7 @@ import Content from '../components/Akun/Content';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSelector, useDispatch } from 'react-redux';
 import { getDataUser, clearDataUser, getWallet, getHostoryWallet } from '../redux/actions/User';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 
 export default function Akun({ navigation }) {
 
@@ -265,7 +266,7 @@ const styles = StyleSheet.create({
     Content: {
         // borderWidth: 1,
         marginTop: sizeHeight(7),
-        height: sizeHeight(68),
+        height: heightPercentageToDP(70),
         zIndex: 1,
         backgroundColor: color.bgWhite,
         position: 'absolute',

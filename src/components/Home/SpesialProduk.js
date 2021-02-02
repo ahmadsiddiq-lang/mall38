@@ -105,7 +105,7 @@ export default function SpesialProduk({
                         source={require('../../assets/images/banner/Banner-Produk-Spesial.png')}
                         style={{
                             width: SCREEN_WIDTH,
-                            height: heightPercentageToDP(32),
+                            height: 230,
                             alignItems: 'flex-end',
                             marginTop: sizeHeight(1),
                         }}
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     },
     BoxItem: {
         width: '50%',
-        height: '50%',
+        height: '50.5%',
     },
     BoxImage: {
         // flex: 1,

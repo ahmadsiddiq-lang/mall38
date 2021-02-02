@@ -23,6 +23,8 @@ import { color } from '../assets/colors/Index';
 import SpesialProduk from '../components/Home/SpesialProduk';
 import ProdukList from '../components/Home/ProdukList';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { fcmService } from '../config/FCMService';
+import { localNotificationService } from '../config/LocalNotificationService';
 
 // import { countDown } from '../config/function';
 
@@ -147,6 +149,41 @@ export default function Home({ navigation }) {
         ]);
         Animated.loop(facebookAnimated).start();
     }, [CarouselUp, ProdukBaruShimerRef]);
+
+    useEffect(() => {
+        fcmService.registerAppWithFCM();
+        fcmService.register(onRegister, onNotification, onOpenNotification);
+        // localNotificationService.configure(onOpenNotification);
+
+        function onRegister(token) {
+            console.log('[App] onRegister: ', token);
+        }
+        function onNotification(notify) {
+            console.log('[App] onNotification: ', notify);
+            const options = {
+                sound: 'default',
+                playSound: true,
+            };
+            localNotificationService.showNotification(
+                0,
+                notify.title,
+                notify.body,
+                notify,
+                options,
+            );
+        }
+        function onOpenNotification(notify) {
+            console.log('[App] onOpenNotification: ', notify);
+            alert('Open Notification: ' + notify);
+        }
+
+        return () => {
+            console.log('[App] unRegister');
+            fcmService.unRegister();
+            localNotificationService.unregister();
+        };
+    }, []);
+
 
     return (
         <View style={styles.Container}>
