@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
     textInput: {
         color: color.mainColor,
         marginLeft: sizeWidth(2),
+        fontSize: sizeFont(3.3),
     },
     BoxSearch: {
         flexDirection: 'row',
@@ -102,7 +103,7 @@ const styles = StyleSheet.create({
         flex: 1,
         borderRadius: 8,
         paddingHorizontal: sizeWidth(2),
-        paddingVertical: sizeHeight(0.8),
+        paddingVertical: sizeHeight(1),
     },
     Circle: {
         position: 'absolute',

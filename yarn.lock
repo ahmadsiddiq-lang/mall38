@@ -6110,10 +6110,10 @@ react-native-linear-gradient@^2.5.6:
   resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.5.6.tgz#96215cbc5ec7a01247a20890888aa75b834d44a0"
   integrity sha512-HDwEaXcQIuXXCV70O+bK1rizFong3wj+5Q/jSyifKFLg0VWF95xh8XQgfzXwtq0NggL9vNjPKXa016KuFu+VFg==
 
-react-native-push-notification@^7.2.0:
-  version "7.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-7.2.0.tgz#f8c12896159bab91266332f8928679544a9463d4"
-  integrity sha512-MRyuRJrnYCK1qrSwSaUKRrlDgYQZLlnvnzOIPtAGOWpuOnUeGMX5ClnTPfU4gGqyJn5DyQFwD3WVRPUHJxT4Fw==
+react-native-push-notification@3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-3.1.1.tgz#99ce426e78e95788c298f73750cc4e68db04d7ab"
+  integrity sha512-4+4yQXNPqh5IVvpSBmR4Cy/UeMjTcfE8KIJgEuT7pME97WK+aGPn6W3ybhOoXC1n+ZWKfrAlsHydLE4xfBZDJg==
 
 react-native-reanimated@^1.13.2:
   version "1.13.2"

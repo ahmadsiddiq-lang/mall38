@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StatusBar } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../pages/Home';
@@ -29,15 +29,22 @@ import Bonus from '../pages/Bonus';
 import SetOTP from '../pages/SetOTP';
 import Promo from '../pages/Promo';
 import ForgotePassword from '../pages/ForgotePassword';
+import SaldoBonus from '../components/Akun/Pages/SaldoBonus';
+import RekeningBank from '../components/Akun/Pages/RekeningBank';
+import UbahPin from '../components/Akun/Pages/UbahPin';
+import Tentang from '../components/Akun/Pages/Tentang';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIdUser } from '../config/function';
 import { getTransaksi } from '../redux/actions/Transaksi';
 import { linking } from '../config/Linking';
+import { fcmService } from '../config/FCMService';
+import { localNotificationService } from '../config/LocalNotificationService';
 
 const Tab = createBottomTabNavigator();
 
 export function MyTabbar() {
 
+    const navigation = useNavigation();
     const dispatch = useDispatch();
 
     const dataTransaksi = useSelector(state => state.dataTransaksi.dataTransaksi.order);
@@ -72,6 +79,41 @@ export function MyTabbar() {
             handleCircle();
         };
     }, [handleCircle]);
+
+    React.useEffect(() => {
+        fcmService.registerAppWithFCM();
+        fcmService.register(onRegister, onNotification, onOpenNotification);
+        localNotificationService.configure(onOpenNotification);
+
+        function onRegister(token) {
+            console.log('[App] onRegister: ', token);
+        }
+        function onNotification(notify) {
+            console.log('[App] onNotification: ', notify);
+            const options = {
+                sound: 'default',
+                playSound: true,
+            };
+            localNotificationService.showNotification(
+                0,
+                notify.title,
+                notify.body,
+                notify,
+                options,
+            );
+        }
+        function onOpenNotification(notify) {
+            console.log('[App] onOpenNotification: ', notify);
+            // alert('Open Notification: ' + notify);
+            navigation.navigate('Notifikasi');
+        }
+
+        return () => {
+            console.log('[App] unRegister');
+            fcmService.unRegister();
+            localNotificationService.unregister();
+        };
+    }, [navigation]);
 
     return (
         <Tab.Navigator
@@ -181,6 +223,10 @@ export default function MainNavigation() {
                 <Stack.Screen name="SetOTP" component={SetOTP} />
                 <Stack.Screen name="ForgotePassword" component={ForgotePassword} />
                 <Stack.Screen name="Promo" component={Promo} />
+                <Stack.Screen name="SaldoBonus" component={SaldoBonus} />
+                <Stack.Screen name="RekeningBank" component={RekeningBank} />
+                <Stack.Screen name="UbahPin" component={UbahPin} />
+                <Stack.Screen name="Tentang" component={Tentang} />
             </Stack.Navigator>
         </NavigationContainer>
     );

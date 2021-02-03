@@ -17,6 +17,7 @@ export default function Menu({ handleNavEditUser, navigation }) {
                     fontFamily: Poppins.Medium,
                 }}>Akun</Text>
                 <TouchableOpacity
+                    onPress={() => navigation.navigate('SaldoBonus')}
                     activeOpacity={0.8}
                     style={styles.BtnList}
                 >
@@ -39,6 +40,7 @@ export default function Menu({ handleNavEditUser, navigation }) {
                     <Ionicons name="chevron-forward" size={sizeFont(3.5)} color={color.fontBlack1} />
                 </TouchableOpacity>
                 <TouchableOpacity
+                    onPress={() => navigation.navigate('RekeningBank')}
                     activeOpacity={0.8}
                     style={styles.BtnList}
                 >
@@ -93,6 +95,7 @@ export default function Menu({ handleNavEditUser, navigation }) {
                     fontFamily: Poppins.Medium,
                 }}>Keamanan</Text>
                 <TouchableOpacity
+                    onPress={() => navigation.navigate('UbahPin')}
                     activeOpacity={0.8}
                     style={styles.BtnList}
                 >
@@ -124,6 +127,10 @@ export default function Menu({ handleNavEditUser, navigation }) {
                     fontFamily: Poppins.Medium,
                 }}>Tentang</Text>
                 <TouchableOpacity
+                    onPress={() => navigation.navigate('Tentang', {
+                        title: 'Panduan',
+                        body: 'Panduan',
+                    })}
                     activeOpacity={0.8}
                     style={styles.BtnList}
                 >
@@ -146,6 +153,10 @@ export default function Menu({ handleNavEditUser, navigation }) {
                     <Ionicons name="chevron-forward" size={sizeFont(3.5)} color={color.fontBlack1} />
                 </TouchableOpacity>
                 <TouchableOpacity
+                    onPress={() => navigation.navigate('Tentang', {
+                        title: 'Syarat dan Ketentuan',
+                        body: 'Syarat dan Ketentuan',
+                    })}
                     activeOpacity={0.8}
                     style={styles.BtnList}
                 >
@@ -168,6 +179,10 @@ export default function Menu({ handleNavEditUser, navigation }) {
                     <Ionicons name="chevron-forward" size={sizeFont(3.5)} color={color.fontBlack1} />
                 </TouchableOpacity>
                 <TouchableOpacity
+                    onPress={() => navigation.navigate('Tentang', {
+                        title: 'Kebijakan Privasi',
+                        body: 'Kebijakan Privasi',
+                    })}
                     activeOpacity={0.8}
                     style={styles.BtnList}
                 >

@@ -68,10 +68,17 @@ export default function ListProduk({ navigation, dataProduk, onRefresh, refreshi
             <View>
                 {
                     loading ?
-                        <ActivityIndicator
-                            size={'large'}
-                            color={color.mainColor}
-                        />
+                        <View
+                            style={{
+                                height: heightPercentageToDP(20),
+                                alignItems: 'center',
+                            }}
+                        >
+                            <ActivityIndicator
+                                size={'large'}
+                                color={color.mainColor}
+                            />
+                        </View>
                         :
                         <View
                             style={{

@@ -152,8 +152,9 @@ export default function EditUser({ navigation, route }) {
                 <View style={styles.Banner}>
                     <TouchableOpacity
                         onPress={() => {
-                            // setModalVisible(true);
-                            handleCamera();
+                            launchCamera(options, (response) => {
+                                setImage(response);
+                            });
                         }}
                         activeOpacity={0.8}
                         style={styles.BoxImage}>

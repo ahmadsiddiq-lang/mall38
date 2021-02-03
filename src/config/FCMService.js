@@ -42,6 +42,7 @@ class FCMService {
                 if (fcmToken) {
                     onRegister(fcmToken);
                     messaging().subscribeToTopic('all');
+                    console.log(fcmToken);
                 } else {
                     console.log('[FCMService] user does not have a device token');
                 }

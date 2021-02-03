@@ -1,11 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useCallback, useEffect } from 'react';
-import { ActivityIndicator, Image, StatusBar, Text, View } from 'react-native';
+import { Image, StatusBar, View } from 'react-native';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { useDispatch } from 'react-redux';
 import { color } from '../assets/colors/Index';
-import { SCREEN_WIDTH, sizeHeight, sizeWidth } from '../assets/responsive';
+import { SCREEN_WIDTH } from '../assets/responsive';
 import { getIdUser } from '../config/function';
 import { LoginAdmin } from '../redux/actions/Login';
 

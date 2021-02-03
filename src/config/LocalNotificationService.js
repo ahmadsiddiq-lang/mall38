@@ -61,6 +61,7 @@ class LocalNotificationService {
             vibrate: options.vibrate || true,
             vibration: options.vibrate || 300,
             priority: options.priority || 'hight',
+            visibility: options.visibility || 'public',
             importance: options.importance || 'hight',
             data: data,
         };

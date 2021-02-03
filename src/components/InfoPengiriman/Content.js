@@ -249,7 +249,10 @@ export default function Content({ dataOrder, dataTracking }) {
                                                 minWidth: 52,
                                             }}
                                             // timeStyle={{ textAlign: 'center', backgroundColor: color.mainColor, color: 'white', padding: 5, borderRadius: 13 }}
-                                            descriptionStyle={{ color: 'gray' }}
+                                            descriptionStyle={{
+                                                color: 'gray',
+                                                fontSize: sizeFont(3.3),
+                                            }}
                                             options={{
                                                 style: {
                                                     marginLeft: sizeWidth(5),
@@ -257,6 +260,10 @@ export default function Content({ dataOrder, dataTracking }) {
                                             }}
                                             data={dataTrack}
                                             titleStyle={{
+                                                fontSize: sizeFont(3.3),
+                                                color: color.mainColor,
+                                            }}
+                                            timeStyle={{
                                                 fontSize: sizeFont(3.5),
                                                 color: color.mainColor,
                                             }}

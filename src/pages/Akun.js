@@ -1,8 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useState } from 'react';
 import { Image, ImageBackground, Modal, RefreshControl, ScrollView, StatusBar, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
-import { getIdUser, getToken, objekEmpty } from '../config/function';
-import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
+import { getIdUser, objekEmpty } from '../config/function';
+import { SCREEN_WIDTH, sizeFont, sizeWidth } from '../assets/responsive';
 import { color } from '../assets/colors/Index';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { Poppins } from '../assets/fonts';
@@ -105,11 +105,11 @@ export default function Akun({ navigation }) {
                 source={require('../assets/images/background/Background.png')}
                 style={{
                     width: SCREEN_WIDTH,
-                    height: sizeHeight(40),
+                    height: heightPercentageToDP(40),
                 }}
             >
                 <View style={{
-                    marginTop: sizeHeight(6.5),
+                    marginTop: heightPercentageToDP(6.5),
                     paddingHorizontal: sizeWidth(5),
                     flexDirection: 'row',
                     alignItems: 'center',
@@ -155,7 +155,7 @@ export default function Akun({ navigation }) {
                         <RefreshControl
                             style={{
                                 zIndex: 999,
-                                marginTop: sizeHeight(15),
+                                marginTop: heightPercentageToDP(15),
                             }}
                             colors={['#689F38', color.mainColor]}
                             refreshing={refreshing} onRefresh={onRefresh} />
@@ -180,7 +180,7 @@ export default function Akun({ navigation }) {
                         <Text style={{
                             fontSize: sizeFont(3),
                             color: color.fontBlack1,
-                            marginTop: sizeHeight(3),
+                            marginTop: heightPercentageToDP(3),
                         }}>Version 1.0</Text>
                     </View>
                 </ScrollView>
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     },
     Back: {
         width: SCREEN_WIDTH,
-        height: sizeHeight(20),
+        height: heightPercentageToDP(20),
         backgroundColor: color.mainColor,
         borderBottomLeftRadius: 50,
         borderBottomRightRadius: 50,
@@ -265,24 +265,24 @@ const styles = StyleSheet.create({
     },
     Content: {
         // borderWidth: 1,
-        marginTop: sizeHeight(7),
-        height: heightPercentageToDP(70),
+        marginTop: heightPercentageToDP(7),
+        height: heightPercentageToDP(73),
         zIndex: 1,
         backgroundColor: color.bgWhite,
         position: 'absolute',
         bottom: 0,
         width: SCREEN_WIDTH,
         borderTopLeftRadius: 50,
-        paddingTop: sizeHeight(5),
+        paddingTop: heightPercentageToDP(5),
     },
     Footer: {
-        marginTop: sizeHeight(5),
+        marginTop: heightPercentageToDP(5),
         alignItems: 'center',
     },
     Bnt: {
         backgroundColor: color.mainColor,
         width: sizeWidth(90),
-        paddingVertical: sizeHeight(0.5),
+        paddingVertical: heightPercentageToDP(0.5),
         alignItems: 'center',
         borderRadius: 8,
     },
@@ -299,9 +299,9 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
     openButton: {
-        marginTop: sizeHeight(2),
+        marginTop: heightPercentageToDP(2),
         borderRadius: 20,
-        paddingVertical: sizeHeight(0.6),
+        paddingVertical: heightPercentageToDP(0.6),
         elevation: 2,
         alignItems: 'center',
         marginHorizontal: sizeWidth(2),
