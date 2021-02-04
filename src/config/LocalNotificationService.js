@@ -43,7 +43,7 @@ class LocalNotificationService {
             ...this.buildAndroidNotification(id, title, message, data, options),
             title: title || '',
             message: message || '',
-            playSound: options.playSound || false,
+            playSound: options.playSound || true,
             soundName: options.soundName || 'default',
             userInteraction: false,
             // color: c.primary,
@@ -62,7 +62,7 @@ class LocalNotificationService {
             vibration: options.vibrate || 300,
             priority: options.priority || 'hight',
             visibility: options.visibility || 'public',
-            importance: options.importance || 'hight',
+            importance: options.importance || 'urgent',
             data: data,
         };
     };
