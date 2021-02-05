@@ -126,3 +126,37 @@ export const forgotePassword = (data, handleSuccess, handleInvalid) => {
             });
     };
 };
+
+export const checkPassword = (data, setErr) => {
+    return async () => {
+        await Axios.post(BASE_URL + 'check-password-user', data, {
+            withCredentials: true,
+            headers: {
+                Accept: 'application/json',
+                Authorization: 'Bearer' + await getToken(),
+            },
+        }).then(response => {
+            console.log(response.data);
+            setErr(1);
+        }).catch(err => {
+            console.log(err.response);
+            setErr(0);
+        });
+    };
+};
+export const updatePssword = (data, handleSuccess) => {
+    return async () => {
+        await Axios.post(BASE_URL + 'update-password-user', data, {
+            withCredentials: true,
+            headers: {
+                Accept: 'application/json',
+                Authorization: 'Bearer' + await getToken(),
+            },
+        }).then(response => {
+            console.log(response.data);
+            handleSuccess();
+        }).catch(err => {
+            console.log(err.response);
+        });
+    };
+};
