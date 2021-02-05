@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useState } from 'react';
-import { ActivityIndicator, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, ScrollView, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { useDispatch } from 'react-redux';
 import { color } from '../../../assets/colors/Index';
@@ -76,123 +76,125 @@ export default function UbahPin({ navigation }) {
                 navigation={navigation}
                 title={'Ubah Password'}
             />
-            <View style={{
-                flex: 1,
-                paddingTop: heightPercentageToDP(5),
-                zIndex: -999,
-            }}>
+            <ScrollView>
                 <View style={{
-                    paddingHorizontal: sizeWidth(5),
-                    marginBottom: heightPercentageToDP(2),
+                    flex: 1,
+                    paddingTop: heightPercentageToDP(5),
+                    zIndex: -999,
                 }}>
-                    <Text style={{
-                        fontSize: sizeFont(3.5),
+                    <View style={{
+                        paddingHorizontal: sizeWidth(5),
                         marginBottom: heightPercentageToDP(2),
-                    }}>Password lama</Text>
-                    <TextInput
-                        onChangeText={(e) => setPasswordLama(e)}
-                        secureTextEntry={true}
-                        onFocus={() => {
-                            setIndexOf(0);
-                        }}
-                        onBlur={() => {
-                            handlePassLama();
-                            setIndexOf(null);
-                        }}
-                        style={[styles.Input,
-                        indexOf === 0 && {
-                            borderColor: color.mainColor,
-                        },
-                        ]}
-                    />
-                    {
-                        err !== null &&
-                        <Text style={{
-                            fontSize: sizeFont(3),
-                            color: err === 0 ? 'red' : 'green',
-                        }}>{err === 0 ? 'Password tidak valid' : 'Password benar'}</Text>
-                    }
-                </View>
-                <View style={{
-                    paddingHorizontal: sizeWidth(5),
-                    marginBottom: heightPercentageToDP(2),
-                }}>
-                    <Text style={{
-                        fontSize: sizeFont(3.5),
-                        marginBottom: heightPercentageToDP(2),
-                    }}>Password baru</Text>
-                    <TextInput
-                        onChangeText={(e) => setPasswordBaru(e)}
-                        secureTextEntry={true}
-                        onFocus={() => setIndexOf(1)}
-                        onBlur={() => setIndexOf(null)}
-                        style={[styles.Input,
-                        indexOf === 1 && {
-                            borderColor: color.mainColor,
-                        },
-                        ]}
-                    />
-                    <Text style={{
-                        fontSize: sizeFont(3),
-                        color: color.fontBlack2,
-                        marginTop: heightPercentageToDP(1),
-                    }}>* Password 8 karakter dengan huruf besar, kecil dan angka</Text>
-                </View>
-                <View style={{
-                    paddingHorizontal: sizeWidth(5),
-                    marginBottom: heightPercentageToDP(2),
-                }}>
-                    <Text style={{
-                        fontSize: sizeFont(3.5),
-                        marginBottom: heightPercentageToDP(2),
-                    }}>Konfirmasi password baru</Text>
-                    <TextInput
-                        onChangeText={(e) => setPasswordKonfir(e)}
-                        secureTextEntry={true}
-                        onFocus={() => setIndexOf(2)}
-                        onBlur={() => setIndexOf(null)}
-                        style={[styles.Input,
-                        indexOf === 2 && {
-                            borderColor: color.mainColor,
-                        },
-                        ]}
-                    />
-                    {
-                        errKonfir !== null &&
-                        <>
-                            {
-                                errKonfir === 0 ?
-                                    <Text style={{
-                                        fontSize: sizeFont(3),
-                                        color: 'red',
-                                    }}>Password tidak sama</Text>
-                                    :
-                                    <Text style={{
-                                        fontSize: sizeFont(3),
-                                        color: 'red',
-                                    }}>Password tidak valid</Text>
-                            }
-                        </>
-                    }
-                </View>
-                <View style={{
-                    alignItems: 'flex-end',
-                    paddingHorizontal: sizeWidth(5),
-                    marginTop: heightPercentageToDP(4),
-                }}>
-                    <TouchableOpacity
-                        onPress={() => handleUpdatePass()}
-                        activeOpacity={0.8}
-                        style={styles.Btn}
-                    >
+                    }}>
                         <Text style={{
                             fontSize: sizeFont(3.5),
-                            color: color.fontWhite,
-                            fontFamily: Poppins.Medium,
-                        }}>Ubah Password</Text>
-                    </TouchableOpacity>
+                            marginBottom: heightPercentageToDP(2),
+                        }}>Password lama</Text>
+                        <TextInput
+                            onChangeText={(e) => setPasswordLama(e)}
+                            secureTextEntry={true}
+                            onFocus={() => {
+                                setIndexOf(0);
+                            }}
+                            onBlur={() => {
+                                handlePassLama();
+                                setIndexOf(null);
+                            }}
+                            style={[styles.Input,
+                            indexOf === 0 && {
+                                borderColor: color.mainColor,
+                            },
+                            ]}
+                        />
+                        {
+                            err !== null &&
+                            <Text style={{
+                                fontSize: sizeFont(3),
+                                color: err === 0 ? 'red' : 'green',
+                            }}>{err === 0 ? 'Password tidak valid' : 'Password benar'}</Text>
+                        }
+                    </View>
+                    <View style={{
+                        paddingHorizontal: sizeWidth(5),
+                        marginBottom: heightPercentageToDP(2),
+                    }}>
+                        <Text style={{
+                            fontSize: sizeFont(3.5),
+                            marginBottom: heightPercentageToDP(2),
+                        }}>Password baru</Text>
+                        <TextInput
+                            onChangeText={(e) => setPasswordBaru(e)}
+                            secureTextEntry={true}
+                            onFocus={() => setIndexOf(1)}
+                            onBlur={() => setIndexOf(null)}
+                            style={[styles.Input,
+                            indexOf === 1 && {
+                                borderColor: color.mainColor,
+                            },
+                            ]}
+                        />
+                        <Text style={{
+                            fontSize: sizeFont(3),
+                            color: color.fontBlack2,
+                            marginTop: heightPercentageToDP(1),
+                        }}>* Password 8 karakter dengan huruf besar, kecil dan angka</Text>
+                    </View>
+                    <View style={{
+                        paddingHorizontal: sizeWidth(5),
+                        marginBottom: heightPercentageToDP(2),
+                    }}>
+                        <Text style={{
+                            fontSize: sizeFont(3.5),
+                            marginBottom: heightPercentageToDP(2),
+                        }}>Konfirmasi password baru</Text>
+                        <TextInput
+                            onChangeText={(e) => setPasswordKonfir(e)}
+                            secureTextEntry={true}
+                            onFocus={() => setIndexOf(2)}
+                            onBlur={() => setIndexOf(null)}
+                            style={[styles.Input,
+                            indexOf === 2 && {
+                                borderColor: color.mainColor,
+                            },
+                            ]}
+                        />
+                        {
+                            errKonfir !== null &&
+                            <>
+                                {
+                                    errKonfir === 0 ?
+                                        <Text style={{
+                                            fontSize: sizeFont(3),
+                                            color: 'red',
+                                        }}>Password tidak sama</Text>
+                                        :
+                                        <Text style={{
+                                            fontSize: sizeFont(3),
+                                            color: 'red',
+                                        }}>Password tidak valid</Text>
+                                }
+                            </>
+                        }
+                    </View>
+                    <View style={{
+                        alignItems: 'flex-end',
+                        paddingHorizontal: sizeWidth(5),
+                        marginTop: heightPercentageToDP(4),
+                    }}>
+                        <TouchableOpacity
+                            onPress={() => handleUpdatePass()}
+                            activeOpacity={0.8}
+                            style={styles.Btn}
+                        >
+                            <Text style={{
+                                fontSize: sizeFont(3.5),
+                                color: color.fontWhite,
+                                fontFamily: Poppins.Medium,
+                            }}>Ubah Password</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-            </View>
+            </ScrollView>
             {
                 loading &&
                 <View style={{
