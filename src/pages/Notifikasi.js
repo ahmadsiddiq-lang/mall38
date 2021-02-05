@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { color } from '../assets/colors/Index';
 import { sizeFont, sizeWidth } from '../assets/responsive';
@@ -28,15 +28,24 @@ export default function Notifikasi({ navigation }) {
                     marginVertical: hp(2),
                 }}>Status Pesanan</Text>
                 {
-                    produk !== null ?
+                    produk === null ?
                         <View style={{
                             flex: 1,
                             justifyContent: 'center',
                             alignItems: 'center',
                         }}>
+                            <Image
+                                source={require('../assets/images/Notif/Notifikasi.png')}
+                                style={{
+                                    resizeMode: 'contain',
+                                    width: '40%',
+                                    height: '40%',
+                                }}
+                            />
                             <Text style={{
-                                fontSize: sizeFont(4),
+                                fontSize: sizeFont(3.5),
                                 color: color.fontBlack1,
+                                marginBottom: hp(15),
                             }}>Belum ada notifikasi pesanan</Text>
                         </View>
                         :
