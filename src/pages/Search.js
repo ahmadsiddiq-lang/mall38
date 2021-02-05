@@ -53,8 +53,9 @@ export default function Search({ navigation }) {
         try {
             const myArray = await AsyncStorage.getItem('riwayat');
             let data = myArray !== null ? JSON.parse(myArray) : [];
-            data.push(dataSearch);
-            await AsyncStorage.setItem('riwayat', JSON.stringify(data));
+            const newData = data.filter(item => item !== dataSearch);
+            newData.push(dataSearch);
+            await AsyncStorage.setItem('riwayat', JSON.stringify(newData));
         } catch (error) {
             // Error saving data
         }
@@ -79,7 +80,7 @@ export default function Search({ navigation }) {
                 setStatus(true);
                 setDataProduk(data);
             }
-            setRiwayat();
+            // setRiwayat();
         }
     };
 
