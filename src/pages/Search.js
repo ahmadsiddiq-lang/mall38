@@ -114,7 +114,7 @@ export default function Search({ navigation }) {
                         placeholder="Cari Produk"
                         onSubmitEditing={() => handleSearch()}
                         onChangeText={(e) => setDataSearch(e)}
-                        autoFocus={true}
+                        // autoFocus={true}
                         autoCapitalize="none"
                     />
                     <TouchableOpacity
@@ -139,26 +139,37 @@ export default function Search({ navigation }) {
                 navigation={navigation}
                 handleButtonRiwayat={handleButtonRiwayat}
             />
-            <View style={{
-                flex: 1,
-            }}>
-                {
-                    loading ?
-                        <ListProduk
+            {
+                dataProdukSearch.length > 0 ?
+                    <View style={{
+                        flex: 1,
+                    }}>
+                        {
+                            loading ?
+                                <ListProduk
+                                    navigation={navigation}
+                                    dataProdukSearch={dataProdukSearch}
+                                    statusData={statusData}
+                                />
+                                :
+                                <View style={{
+                                    flex: 1,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}>
+                                    <ActivityIndicator color={color.mainColor} size="large" />
+                                </View>
+                        }
+                    </View>
+                    :
+                    <View style={{
+                        flex: 1,
+                    }}>
+                        <Rekomendasi
                             navigation={navigation}
-                            dataProdukSearch={dataProdukSearch}
-                            statusData={statusData}
                         />
-                        :
-                        <View style={{
-                            flex: 1,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}>
-                            <ActivityIndicator color={color.mainColor} size="large" />
-                        </View>
-                }
-            </View>
+                    </View>
+            }
         </View>
     );
 }
