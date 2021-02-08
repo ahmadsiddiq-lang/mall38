@@ -71,7 +71,7 @@ export const getWallet = (idUser) => {
                 data: respons.data.data,
             });
         }).catch(err => {
-            console.log(err.response);
+            // console.log(err.response);
             if (err.response.status === 500) {
                 dispatch({
                     type: GET_WALLET,
@@ -97,7 +97,7 @@ export const getHostoryWallet = (idUser) => {
                 data: respons.data.data,
             });
         }).catch(err => {
-            console.log(err.response);
+            // console.log(err.response);
             if (err.response.status === 500) {
                 dispatch({
                     type: GET_HOSTORY_WALLET,

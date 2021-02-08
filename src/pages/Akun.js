@@ -108,21 +108,27 @@ export default function Akun({ navigation }) {
                     height: heightPercentageToDP(40),
                 }}
             >
-                <View style={{
-                    marginTop: heightPercentageToDP(6.5),
-                    paddingHorizontal: sizeWidth(5),
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                }}>
-                    <View style={{
-                        borderWidth: 3,
-                        borderColor: color.borderWhite,
-                        borderRadius: 100,
-                        width: sizeWidth(20),
-                        height: sizeWidth(20),
+                <TouchableOpacity
+                    onPress={() => handleNavEditUser()}
+                    activeOpacity={0.9}
+                    style={{
+                        marginTop: heightPercentageToDP(6.5),
+                        paddingHorizontal: sizeWidth(5),
+                        flexDirection: 'row',
                         alignItems: 'center',
-                        justifyContent: 'center',
                     }}>
+                    <TouchableOpacity
+                        onPress={() => handleNavEditUser()}
+                        activeOpacity={1}
+                        style={{
+                            borderWidth: 3,
+                            borderColor: color.borderWhite,
+                            borderRadius: 100,
+                            width: sizeWidth(20),
+                            height: sizeWidth(20),
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }}>
                         {
                             dataScreen !== undefined &&
                                 dataScreen.photo !== 'https://mall38.com/images/user/NULL' &&
@@ -131,14 +137,15 @@ export default function Akun({ navigation }) {
                                 :
                                 <FontAwesome5 onPress={() => handleUser()} name="user" color={color.fontWhite} size={sizeFont(10)} solid />
                         }
-                    </View>
+                    </TouchableOpacity>
                     <View style={{
                         marginLeft: sizeWidth(5),
                     }}>
                         <Text style={{
-                            fontSize: sizeFont(4.5),
+                            fontSize: sizeFont(4.8),
                             color: color.fontWhite,
                             fontFamily: Poppins.Medium,
+                            textTransform: 'capitalize',
                         }}>{dataScreen !== undefined &&
                             objekEmpty(dataScreen) && dataScreen.name}</Text>
                         <Text style={{
@@ -146,8 +153,13 @@ export default function Akun({ navigation }) {
                             color: color.fontWhite,
                         }}>{dataScreen !== undefined &&
                             objekEmpty(dataScreen) && dataScreen.email}</Text>
+                        <Text style={{
+                            fontSize: sizeFont(3.5),
+                            color: color.fontWhite,
+                        }}>{dataScreen !== undefined &&
+                            objekEmpty(dataScreen) && dataScreen.paket_mitra !== null && dataScreen.paket_mitra.nama_paket}</Text>
                     </View>
-                </View>
+                </TouchableOpacity>
             </ImageBackground>
             <View style={styles.Content}>
                 <ScrollView

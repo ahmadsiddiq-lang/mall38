@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux';
 import { getDataUser, updateProfile } from '../redux/actions/User';
 import { getIdUser } from '../config/function';
 import FormData from 'form-data';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 // import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
@@ -115,7 +116,7 @@ export default function EditUser({ navigation, route }) {
                 // const source = { uri: 'data:image/jpeg;base64,' + response.data };
                 setImage(source);
                 console.log('Response = ', source);
-                alert(source.uri);
+                alert(source);
             }
         });
     };
@@ -137,6 +138,7 @@ export default function EditUser({ navigation, route }) {
     //         }
     //     });
     // };
+    // console.log(dataUser);
 
     useEffect(() => {
         filterData(provinsi);
@@ -151,11 +153,7 @@ export default function EditUser({ navigation, route }) {
             <ScrollView>
                 <View style={styles.Banner}>
                     <TouchableOpacity
-                        onPress={() => {
-                            launchCamera(options, (response) => {
-                                setImage(response);
-                            });
-                        }}
+                        onPress={() => handleCamera()}
                         activeOpacity={0.8}
                         style={styles.BoxImage}>
                         {
@@ -175,6 +173,7 @@ export default function EditUser({ navigation, route }) {
                         }
                     </TouchableOpacity>
                     <TouchableOpacity
+                        onPress={() => handleCamera()}
                         activeOpacity={0.8}
                         style={{
                             backgroundColor: color.mainColor,
@@ -193,6 +192,22 @@ export default function EditUser({ navigation, route }) {
                     flex: 1,
                     marginBottom: sizeHeight(3),
                 }}>
+                    <View style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        paddingHorizontal: sizeWidth(5),
+                        paddingVertical: heightPercentageToDP(2),
+                        borderBottomWidth: 1,
+                        borderBottomColor: color.border2,
+                    }}>
+                        <Text style={{
+                            fontSize: sizeFont(3.5),
+                        }}>Refferal code</Text>
+                        <Text style={{
+                            fontSize: sizeFont(3.8),
+                            fontFamily: Poppins.Medium,
+                        }}>{dataUser.user.refferal_code}</Text>
+                    </View>
                     <TextInput
                         style={styles.Input}
                         placeholder="Username"

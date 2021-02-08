@@ -36,6 +36,8 @@ export default function HeaderDetailProduk({ navigation, clearDetailProduks, hea
                 width: SCREEN_WIDTH,
                 height: '100%',
                 opacity: headerOpacity,
+                borderBottomWidth: 0.5,
+                borderColor: color.border2,
             }} />
             <View style={styles.Content}>
                 <TouchableOpacity
