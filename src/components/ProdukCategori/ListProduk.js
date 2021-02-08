@@ -1,13 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useState } from 'react';
-import { ActivityIndicator, FlatList, Text, View, StyleSheet } from 'react-native';
+import { ActivityIndicator, FlatList, Text, View, StyleSheet, Image } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { color } from '../../assets/colors/Index';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import { getIdUser } from '../../config/function';
 import { addCart } from '../../redux/actions/Cart';
 import CardProdukVer from '../CardProdukVer';
-export default function ListProduk({ navigation, dataProdukCategori }) {
+export default function ListProduk({ navigation, dataProdukCategori, bannerCategry }) {
 
     const [loading, setloading] = useState(false);
     const [page, setPage] = useState(10);
@@ -34,8 +34,6 @@ export default function ListProduk({ navigation, dataProdukCategori }) {
             data.push({ 'key': 'blank', 'empty': true });
             totalLastRows++;
         }
-        // return data;
-        // console.log(data);
         return data;
 
     };
@@ -56,6 +54,27 @@ export default function ListProduk({ navigation, dataProdukCategori }) {
         }
     }, [dispatch, navigation]);
 
+    const listHeaderComponen = () => {
+        return (
+            <View style={{
+                width: sizeWidth(95),
+                height: sizeHeight(15),
+            }}>
+                {
+                    bannerCategry !== null &&
+                    <Image
+                        resizeMethod="auto"
+                        source={{ uri: bannerCategry }}
+                        style={{
+                            resizeMode: 'contain',
+                            width: '100%',
+                            height: '100%',
+                        }}
+                    />
+                }
+            </View>
+        );
+    };
 
     const listFooterComponent = () => {
         return (
@@ -82,6 +101,7 @@ export default function ListProduk({ navigation, dataProdukCategori }) {
                             contentContainerStyle={{
                                 paddingHorizontal: sizeWidth(2.5),
                             }}
+                            ListHeaderComponent={listHeaderComponen}
                             numColumns={2}
                             data={formatData(dataProdukCategori.product, 2)}
                             keyExtractor={(_, index) => index.toString()}
