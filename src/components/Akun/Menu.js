@@ -17,7 +17,7 @@ export default function Menu({ handleNavEditUser, navigation }) {
                     fontSize: sizeFont(3.5),
                     fontFamily: Poppins.Medium,
                 }}>Akun</Text>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                     onPress={() => navigation.navigate('SaldoBonus')}
                     activeOpacity={0.8}
                     style={styles.BtnList}
@@ -62,7 +62,7 @@ export default function Menu({ handleNavEditUser, navigation }) {
                         }}>Rekening Bank</Text>
                     </View>
                     <Ionicons name="chevron-forward" size={sizeFont(3.5)} color={color.fontBlack1} />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <TouchableOpacity
                     onPress={() => handleNavEditUser()}
                     activeOpacity={0.8}
