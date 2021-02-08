@@ -101,11 +101,11 @@ export default function Akun({ navigation }) {
         <View style={styles.Container}>
             <StatusBar translucent backgroundColor="transparent" />
             <ImageBackground
-                resizeMethod="auto"
+                resizeMethod="resize"
                 source={require('../assets/images/background/Background.png')}
                 style={{
                     width: SCREEN_WIDTH,
-                    height: heightPercentageToDP(40),
+                    height: heightPercentageToDP(20),
                 }}
             >
                 <TouchableOpacity
@@ -116,6 +116,7 @@ export default function Akun({ navigation }) {
                         paddingHorizontal: sizeWidth(5),
                         flexDirection: 'row',
                         alignItems: 'center',
+                        overflow: 'hidden',
                     }}>
                     <TouchableOpacity
                         onPress={() => handleNavEditUser()}
@@ -246,6 +247,7 @@ export default function Akun({ navigation }) {
 const styles = StyleSheet.create({
     Container: {
         flex: 1,
+        backgroundColor: color.mainColor,
     },
     Back: {
         width: SCREEN_WIDTH,
@@ -277,12 +279,12 @@ const styles = StyleSheet.create({
     },
     Content: {
         // borderWidth: 1,
-        marginTop: heightPercentageToDP(7),
         height: heightPercentageToDP(73),
         zIndex: 1,
         backgroundColor: color.bgWhite,
-        position: 'absolute',
-        bottom: 0,
+        flex: 1,
+        // position: 'absolute',
+        // bottom: 0,
         width: SCREEN_WIDTH,
         borderTopLeftRadius: 50,
         paddingTop: heightPercentageToDP(5),
