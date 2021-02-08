@@ -105,7 +105,7 @@ export default function DetailProduk({ navigation, route }) {
             try {
                 const result = await Share.share({
                     message:
-                        'https://mall38.com/product/data-produk/' + encoded + ' Hi, Apakah produk ini masih ada ?',
+                        'https://mall38.com/product/data-produk/' + encoded,
                 });
                 if (result.action === Share.sharedAction) {
                     if (result.activityType) {

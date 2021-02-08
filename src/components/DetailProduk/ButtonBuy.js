@@ -9,7 +9,7 @@ import { getIdUser, openWhatsApp } from '../../config/function';
 import base64 from 'react-native-base64';
 
 
-export default function ButtonBuy({ navigation, handleAddTocat, detailProduk, handleBuy }) {
+export default function ButtonBuy({ handleAddTocat, detailProduk, handleBuy }) {
 
 
     const handleToWa = useCallback(async () => {
@@ -19,7 +19,7 @@ export default function ButtonBuy({ navigation, handleAddTocat, detailProduk, ha
         // console.log(encoded);
         console.log('https://mall38.com/product/data-produk/' + encoded);
         if (idUser) {
-            openWhatsApp('https://mall38.com/product/data-produk/' + encoded);
+            openWhatsApp('https://mall38.com/product/data-produk/' + encoded + ' Hi, Apakah produk ini masih ada ?');
         }
     }, [detailProduk]);
 

@@ -99,7 +99,7 @@ export default function EditUser({ navigation, route }) {
     }, [name, phone, ktp, alamat, kodePos, provinsi, kecamatan, kabupaten, image, dispatch, handleUser]);
 
     const handleCamera = () => {
-        const options = {
+        let options = {
             mediaType: 'photo',
             saveToPhotos: true,
             quality: 0.5,

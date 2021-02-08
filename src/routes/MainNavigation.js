@@ -32,7 +32,7 @@ import ForgotePassword from '../pages/ForgotePassword';
 import SaldoBonus from '../components/Akun/Pages/SaldoBonus';
 import RekeningBank from '../components/Akun/Pages/RekeningBank';
 import UbahPin from '../components/Akun/Pages/UbahPin';
-import Tentang from '../components/Akun/Pages/Tentang';
+import Panduan from '../components/Akun/Pages/Panduan';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIdUser } from '../config/function';
 import { getTransaksi } from '../redux/actions/Transaksi';
@@ -226,7 +226,7 @@ export default function MainNavigation() {
                 <Stack.Screen name="SaldoBonus" component={SaldoBonus} />
                 <Stack.Screen name="RekeningBank" component={RekeningBank} />
                 <Stack.Screen name="UbahPin" component={UbahPin} />
-                <Stack.Screen name="Tentang" component={Tentang} />
+                <Stack.Screen name="Panduan" component={Panduan} />
             </Stack.Navigator>
         </NavigationContainer>
     );

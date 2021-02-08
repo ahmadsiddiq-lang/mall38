@@ -7,6 +7,7 @@ import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function Menu({ handleNavEditUser, navigation }) {
+
     return (
         <View style={styles.Container}>
             <View style={{
@@ -127,10 +128,7 @@ export default function Menu({ handleNavEditUser, navigation }) {
                     fontFamily: Poppins.Medium,
                 }}>Tentang</Text>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('Tentang', {
-                        title: 'Panduan',
-                        body: 'Panduan',
-                    })}
+                    onPress={() => navigation.navigate('Panduan')}
                     activeOpacity={0.8}
                     style={styles.BtnList}
                 >

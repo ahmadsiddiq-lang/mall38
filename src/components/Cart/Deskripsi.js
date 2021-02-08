@@ -43,6 +43,7 @@ export default function Deskripsi({ navigation, fixDataCart = [], dataUser, setL
                 dataCheck: dataCheck,
             });
         } else {
+            setLoading(false);
             ToasInvalid('Pilih Produk dahulu !');
         }
     }, [dataUser, fixDataCart, handleProduk, navigation, setLoading]);

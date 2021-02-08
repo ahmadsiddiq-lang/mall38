@@ -51,22 +51,29 @@ export default function UbahPin({ navigation }) {
     }, [navigation]);
 
     const handleUpdatePass = useCallback(async () => {
-        if (err > 0) {
-            if (validatePassword(passwordBaru)) {
-                if (passwordBaru === passwordKonfir) {
-                    const idUser = await getIdUser();
-                    const data = {
-                        user_id: idUser,
-                        new_password: passwordBaru,
-                    };
-                    setLoading(true);
-                    dispatch(updatePssword(data, handleSuccess));
+        if (err !== null) {
+            if (err > 0) {
+                if (validatePassword(passwordBaru)) {
+                    if (passwordBaru === passwordKonfir) {
+                        const idUser = await getIdUser();
+                        const data = {
+                            user_id: idUser,
+                            new_password: passwordBaru,
+                        };
+                        setLoading(true);
+                        dispatch(updatePssword(data, handleSuccess));
+                    } else {
+                        setErrKonfir(0);
+                    }
                 } else {
-                    setErrKonfir(0);
+                    setErrKonfir(1);
                 }
-            } else {
-                setErrKonfir(1);
             }
+        } else {
+            ToastAndroid.showWithGravity('Isi data password !',
+                ToastAndroid.CENTER,
+                ToastAndroid.SHORT
+            );
         }
     }, [err, passwordBaru, passwordKonfir, dispatch, handleSuccess]);
 

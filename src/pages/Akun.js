@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
     Bnt: {
         backgroundColor: color.mainColor,
         width: sizeWidth(90),
-        paddingVertical: heightPercentageToDP(0.5),
+        paddingVertical: heightPercentageToDP(1),
         alignItems: 'center',
         borderRadius: 8,
     },
