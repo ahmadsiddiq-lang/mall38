@@ -151,10 +151,7 @@ export default function Menu({ handleNavEditUser, navigation }) {
                     <Ionicons name="chevron-forward" size={sizeFont(3.5)} color={color.fontBlack1} />
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('Tentang', {
-                        title: 'Syarat dan Ketentuan',
-                        body: 'Syarat dan Ketentuan',
-                    })}
+                    onPress={() => navigation.navigate('Syarat')}
                     activeOpacity={0.8}
                     style={styles.BtnList}
                 >
