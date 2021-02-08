@@ -14,7 +14,7 @@ export default function History({ dataHistoryWallet, pageStatus }) {
         if (dataHistoryWallet != null) {
             let total = 0;
             dataHistoryWallet.forEach(element => {
-                total += element.bv;
+                total += element.bonus_passive;
             });
             return total;
         }
@@ -39,7 +39,7 @@ export default function History({ dataHistoryWallet, pageStatus }) {
                         fontSize: sizeFont(3.5),
                         fontFamily: Poppins.Medium,
                         color: color.mainColor,
-                    }}>Total BV: {dataHistoryWallet !== null ? rupiah(TotalBV()) : '0'}</Text>
+                    }}>Total Bonus Pasive: {dataHistoryWallet !== null ? rupiah(TotalBV()) : '0'}</Text>
                 }
             </View>
             <ScrollView>
@@ -48,68 +48,7 @@ export default function History({ dataHistoryWallet, pageStatus }) {
                 }}>
                     {
                         dataHistoryWallet != null ?
-                            dataHistoryWallet.map((item, index) => {
-                                return (
-                                    <View
-                                        key={index}
-                                        style={{
-                                            flexDirection: 'row',
-                                            justifyContent: 'space-between',
-                                            alignItems: 'flex-end',
-                                            borderBottomWidth: 1,
-                                            borderBottomColor: color.border2,
-                                            paddingBottom: sizeHeight(1.5),
-                                            marginBottom: sizeHeight(1.5),
-                                        }}>
-                                        <View style={{
-                                            flexDirection: 'row',
-                                            alignItems: 'center',
-                                        }}>
-                                            <Image
-                                                source={require('../../assets/images/pageAkun/Wallet.png')}
-                                                style={{
-                                                    resizeMode: 'contain',
-                                                    width: sizeWidth(5),
-                                                    height: sizeWidth(5),
-                                                }}
-                                            />
-                                            {
-                                                pageStatus === 1 ?
-                                                    <View style={{
-                                                        marginLeft: sizeWidth(3),
-                                                    }}>
-                                                        <Text style={{
-                                                            fontSize: sizeFont(3.3),
-                                                            color: color.fontBlack,
-                                                        }}>Bonus Active {item.from}</Text>
-                                                        <Text style={{
-                                                            fontSize: sizeFont(3),
-                                                            color: color.fontBlack1,
-                                                        }}>{item.tanggal_pembayaran}</Text>
-                                                    </View>
-                                                    :
-                                                    <View style={{
-                                                        marginLeft: sizeWidth(3),
-                                                    }}>
-                                                        <Text style={{
-                                                            fontSize: sizeFont(3.3),
-                                                            color: color.fontBlack,
-                                                        }}>Bonus Pasive</Text>
-                                                        <Text style={{
-                                                            fontSize: sizeFont(3),
-                                                            color: color.fontBlack1,
-                                                        }}>{item.tanggal_pembayaran}</Text>
-                                                    </View>
-                                            }
-                                        </View>
-                                        <Text style={{
-                                            fontSize: sizeFont(3.5),
-                                            fontFamily: Poppins.Medium,
-                                            color: color.mainColor,
-                                        }}>{pageStatus === 1 ? '+Rp. ' + rupiah(item.bonus_active) : 'BV: ' + item.bv}</Text>
-                                    </View>
-                                );
-                            })
+                            dataHistoryWallet.map((item, index) => cardHostory({ item, index, pageStatus }))
                             :
                             <View style={{
                                 flex: 1,
@@ -128,6 +67,104 @@ export default function History({ dataHistoryWallet, pageStatus }) {
         </View>
     );
 }
+
+const cardHostory = ({ item, index, pageStatus }) => {
+    if (pageStatus === 1) {
+        if (item.bonus_active > 0) {
+            return (
+                <View
+                    key={index}
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'flex-end',
+                        borderBottomWidth: 1,
+                        borderBottomColor: color.border2,
+                        paddingBottom: sizeHeight(1.5),
+                        marginBottom: sizeHeight(1.5),
+                    }}>
+                    <View style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                    }}>
+                        <Image
+                            source={require('../../assets/images/pageAkun/Wallet.png')}
+                            style={{
+                                resizeMode: 'contain',
+                                width: sizeWidth(5),
+                                height: sizeWidth(5),
+                            }}
+                        />
+                        <View style={{
+                            marginLeft: sizeWidth(3),
+                        }}>
+                            <Text style={{
+                                fontSize: sizeFont(3.3),
+                                color: color.fontBlack,
+                            }}>Bonus Active</Text>
+                            <Text style={{
+                                fontSize: sizeFont(3),
+                                color: color.fontBlack1,
+                            }}>{item.tanggal_pembayaran}</Text>
+                        </View>
+                    </View>
+                    <Text style={{
+                        fontSize: sizeFont(3.5),
+                        fontFamily: Poppins.Medium,
+                        color: color.mainColor,
+                    }}>{rupiah(item.bonus_active)}</Text>
+                </View>
+            );
+        }
+    } else {
+        if (item.bonus_passive > 0) {
+            return (
+                <View
+                    key={index}
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'flex-end',
+                        borderBottomWidth: 1,
+                        borderBottomColor: color.border2,
+                        paddingBottom: sizeHeight(1.5),
+                        marginBottom: sizeHeight(1.5),
+                    }}>
+                    <View style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                    }}>
+                        <Image
+                            source={require('../../assets/images/pageAkun/Wallet.png')}
+                            style={{
+                                resizeMode: 'contain',
+                                width: sizeWidth(5),
+                                height: sizeWidth(5),
+                            }}
+                        />
+                        <View style={{
+                            marginLeft: sizeWidth(3),
+                        }}>
+                            <Text style={{
+                                fontSize: sizeFont(3.3),
+                                color: color.fontBlack,
+                            }}>Bonus Active {item.from}</Text>
+                            <Text style={{
+                                fontSize: sizeFont(3),
+                                color: color.fontBlack1,
+                            }}>{item.tanggal_pembayaran}</Text>
+                        </View>
+                    </View>
+                    <Text style={{
+                        fontSize: sizeFont(3.5),
+                        fontFamily: Poppins.Medium,
+                        color: color.mainColor,
+                    }}>{rupiah(item.bonus_passive)}</Text>
+                </View>
+            );
+        }
+    }
+};
 
 const styles = StyleSheet.create({
     Container: {
