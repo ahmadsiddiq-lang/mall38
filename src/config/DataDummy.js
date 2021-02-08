@@ -180,3 +180,130 @@ export const SyaratDanKetentuan = [
         },
     },
 ];
+
+export const kebijakanProvasi = [
+    {
+        title: 'Kami sangat memperhatikan keamanan dan privasi petanggan kami dan kami hanya akan mengumpulkan informasi pribadi Anda.',
+        body: [
+            {
+                text: 'Perlindungan data adalah masalah kepercayaan dan privasi Anda sangat penting bagi kami. Kami hanya akan menggunakan nama Anda dan informasi yang berhubungan dengan Anda sebagaimana yang dinyatakan dalam Kebijakan Privasi berikut. Kami hanya akan mengumpulkan informasi yang kami perlukan dan kami hanya akan mengumpulkan informasi yang relevan dengan transaksi kami dengan Anda.',
+            },
+            {
+                text: 'Kami hanya akan menyimpan informasi privasi Anda sepanjang kami diwajibkan oleh hukum atau selama informasi tersebut masih relevan dengan tujuan awal pengumpulan informasi tersebut.',
+            },
+            {
+                text: 'Anda dapat mengunjungi situs kami dan menjelajahinya tanpa harus memberikan informasi pribadi. Selama kunjungan Anda ke situs kami, identitas Anda akan tetap terjaga dan kami tidak akan bisa mengidentifikasi Anda kecuali Anda memiliki akun dalam situs kami dan log masuk dengan menggunakan username dan password Anda.',
+            },
+        ],
+    },
+    {
+        title: 'Pengimputan Informasi Pribadi',
+        body: [
+            {
+                text: 'Mall38.com tidak menjual, membagi atau memperjualbelikan informasi pribadi pelanggan yang dikumpulkan secara online melalui pihak ketiga.',
+            },
+            {
+                text: 'Informasi pribadi yang dikumpulkan online hanya akan dibagi di dalam perusahaan kami hanya untuk kepentingan internal.',
+            },
+            {
+                text: 'Ketika Anda membuat akun Mall38.com, informasi pribadi yang kami kumpulkan dapat termasuk:',
+            },
+            {
+                text: 'Nama, Alamat Pengiriman, Alamat Email, Nomor,Telepon, Tanggal Lahir, Jenis Kelamin',
+            },
+            {
+                text: 'Informasi pribadi yang kami kumpulkan dari Anda akan digunakan untuk hal-hal seperti: ',
+            },
+            {
+                text: '>> Untuk mengirimkan produk yang telah Anda beli di Mall38.com',
+            },
+            {
+                text: '>> Untuk menginformasikan Anda tentang pengiriman barang dan bantuan customer service',
+            },
+            {
+                text: '>> Untuk memberikan informasi produk yang relevan bagi Anda',
+            },
+            {
+                text: '>> Untuk memproses pesanan Anda dan memberikan layanan dan informasi yang ditawarkan situs kami dan yang telah Anda minta',
+            },
+            {
+                text: 'Kemudian, kami akan menggunakan informasi yang Anda sediakan untuk mendaftarkan akun Anda; memverifikasi dan menjalankan transaksi finasial yang berhubungan dengan pembayaran online yang Anda lakukan; mengaudit pengunduhan data dari situs kami; memperbaiki tata letak dan/atau konten laman situs kami dan menyesuaikannya untuk para pengguna laman; mengidentifikasi pengunjung dalam situs kami; menjalankan penelitian demografis pengguna kami; mengirimkan informasi; mengirimkan informasi yang kami anggap penting bagi Anda atau informasi yang telah Anda minta dari kami, seperti informasi tentang produk dan layanan kami, apabila Anda telah menyatakan bahwa Anda tidak keberatan menerima informasi-informasi seperti ini.',
+            },
+            {
+                text: 'Kami dapat memberikan nama dan alamat Anda kepada pihak ketiga untuk tujuan pengiriman produk kepada Anda (contohnya kepada kurir atau supplier kami).',
+            },
+            {
+                text: 'Ketika Anda mendaftarkan diri sebagai pengguna di situs Mall38.com, kami akan menggunakan informasi pribadi Anda untuk mengirimkan Anda informasi pemasaran dan/atau promosional sewaktu-waktu. Anda dapat berhenti berlangganan dari informasi marketing kami dengan menggunakan fungsi berhenti langganan yang terdapat dalam material pemasaran elektronis kami.',
+            },
+            {
+                text: 'Pembayaran yang Anda buat melalu situs akan diproses oleh agen kami. Anda hanya boleh memberikan informasi pembayaran kepada kami atau agen kami atau informasi situs yang akurat dan tidak menyesatkan dan Anda harus memberitahukan informasi dan perubahan-perubahan terbaru pada kami.',
+            },
+            {
+                text: 'Rincian pesanan Anda dapat kami simpan namun untuk alasan keamanan, kami tidak dapat mengaksesnya secara langsung. Namun, Anda dapat mengakses informasi ini dengan masuk ke dalam akun Mall38.com Anda. Di sini Anda dapat melihat rincian dari pesanan yang telah dilakukan, pesanan yang masih terbuka dan pesanan yang segera akan dikirimkan dan mendaftarkan rincian alamat, rincian bank dan newsletter yang Anda langgani. Anda harus memperlakukan akses data personal ini secara rahasia dan tidak memberikannya kepada pihak ketiga yang tidak salt Kami tidak bertanggungjawab atas penyalahgunaan password kecuali penyalahgunaan ini adalah kesalahan kami.',
+            },
+        ],
+    },
+    {
+        title: 'Memperbarui Informasi Pribadi Anda',
+        body: [
+            {
+                text: 'Anda dapat memperbarui informasi pribadi Anda kapan saja dengan mengakses akun Mall38.com Anda di laman situs',
+            },
+        ],
+    },
+    {
+        title: 'Keamanan Informasi Pribadi Anda',
+        body: [
+            {
+                text: 'Mall38.com memastikan bahwa semua informasi yang dikumpulkan akan disimpan dengan aman. Kami melindungi semua informasi pribadi Anda dengan:',
+            },
+            {
+                text: 'Membatasi akses terhadap informasi pribadi. Mengikuti kemajuan teknologi pengamanan untuk mencegah akses komputer tidak sah. Menghancurkan data pribadi Anda yang tidak dibutuhkan lagi untuk kepentingan dokumentasi kami',
+            },
+            {
+                text: 'Mall38.com menggunakan teknologi enkripsi 128 — bit SSL (Secure Sockets Layer) untuk memproses perincian finansial. Enkripsi 128 —bit SSL membutuhkan waktu sekurang-kurangnya satu triliun tahun untuk dipecahkan, dan merupakan standar dalam industri.',
+            },
+        ],
+    },
+    {
+        title: 'Pembukaan Informasi Pribadi',
+        body: [
+            {
+                text: 'Kami tidak akan membagi informasi Anda dengan organisasi lainnya, selain perusahaan-perusahaan yang berhubungan dan pihak ketiga yang berhubungan langsung dengan pengiriman produk yang Anda beli dari situs Mall38.com. Dalam keadaan tertentu, Mall38.com mungkin akan dibutuhkan untuk membuka informasi pribadi Anda, seperti misalnya ketika ada alasan atau keadaan dimana pembukaan informasi diperlukan untuk mencegah ancaman terhadap nyawa atau keselamatan, atau untuk kebutuhan penegakan hukum. Mall38.com berkomitmen untuk mematuhi Undang-undang yang berlaku di Negara Indonesia.',
+            },
+            {
+                text: 'Kami juga dapat menggunakan informasi kontak Anda untuk mengirim newsletter dari kami dan perusahan kami lainnya.',
+            },
+        ],
+    },
+    {
+        title: 'Pengumpulan Data Komputer',
+        body: [
+            {
+                text: 'Ketika Anda mengunjungi Mall38.com, server perusahaan kami akan secara otomatis merekam informasi yang browser Anda kirim ketika Anda mengunjungi sebuah situs. Data ini dapat termasuk: ',
+            },
+            {
+                text: 'IP address komputer Anda, Tipe browser, Laman situs yang Anda kunjungi sebelum Anda mengunjungi situs kami, Laman di Mall38.com yang Anda kunjungi, Waktu yang dihabiskan di laman- laman tersebut, barang dan informasi yang Anda cari di situs kami, jam dan tanggal akses, dan statistik lainnya.',
+            },
+            {
+                text: 'Informasi ini dikumpulkan untuk analisa dan evaluasi dalam rangka membantu kami terus memperbaiki situs kami dan layanan serta produk yang kami sediakan. Data ini tidak akan digunakan dengan asosiasi dengan informasi pribadi lainnya.',
+            },
+        ],
+    },
+    {
+        title: 'Perubahan pada Kebijakan Privasi',
+        body: [
+            {
+                text: 'Mall38.com memiliki hak untuk mengganti dan mengubah Pernyataan Privasi pada waktu kapan saja. Semua perubahan kebijakan akan diumumkan di situs kami.',
+            },
+        ],
+    },
+    {
+        title: 'Kepuasan Pelanggan',
+        body: [
+            {
+                text: 'Bila Anda merasa tidak puas dengan bagaimana kami menangani keluhan atau aduan Anda, jangan ragu-ragu untuk menghubungi kami.',
+            },
+        ],
+    },
+];

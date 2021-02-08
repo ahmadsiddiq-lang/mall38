@@ -174,10 +174,7 @@ export default function Menu({ handleNavEditUser, navigation }) {
                     <Ionicons name="chevron-forward" size={sizeFont(3.5)} color={color.fontBlack1} />
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('Tentang', {
-                        title: 'Kebijakan Privasi',
-                        body: 'Kebijakan Privasi',
-                    })}
+                    onPress={() => navigation.navigate('Kebijakan')}
                     activeOpacity={0.8}
                     style={styles.BtnList}
                 >

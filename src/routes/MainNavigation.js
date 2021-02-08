@@ -34,6 +34,7 @@ import RekeningBank from '../components/Akun/Pages/RekeningBank';
 import UbahPin from '../components/Akun/Pages/UbahPin';
 import Panduan from '../components/Akun/Pages/Panduan';
 import Syarat from '../components/Akun/Pages/Syarat';
+import Kebijakan from '../components/Akun/Pages/Kebijakan';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIdUser } from '../config/function';
 import { getTransaksi } from '../redux/actions/Transaksi';
@@ -229,6 +230,7 @@ export default function MainNavigation() {
                 <Stack.Screen name="UbahPin" component={UbahPin} />
                 <Stack.Screen name="Panduan" component={Panduan} />
                 <Stack.Screen name="Syarat" component={Syarat} />
+                <Stack.Screen name="Kebijakan" component={Kebijakan} />
             </Stack.Navigator>
         </NavigationContainer>
     );
