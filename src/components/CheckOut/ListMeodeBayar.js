@@ -32,13 +32,13 @@ export default function ListMeodeBayar({ curentIndex, handlePilihMetodeBayar }) 
                     { name: 'Alfamart', bank: 'alfamart', image: require('../../assets/images/MetodeBayar/alfamart.png') },
                 ],
         },
-        {
-            title: 'Credit Card',
-            metode_bayar:
-                [
-                    { name: 'Credit Card', bank: 'indomaret', image: require('../../assets/images/MetodeBayar/credit.png') },
-                ],
-        },
+        // {
+        //     title: 'Credit Card',
+        //     metode_bayar:
+        //         [
+        //             { name: 'Credit Card', bank: 'indomaret', image: require('../../assets/images/MetodeBayar/credit.png') },
+        //         ],
+        // },
     ];
 
 
