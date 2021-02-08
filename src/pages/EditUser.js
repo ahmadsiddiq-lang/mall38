@@ -98,26 +98,32 @@ export default function EditUser({ navigation, route }) {
 
     }, [name, phone, ktp, alamat, kodePos, provinsi, kecamatan, kabupaten, image, dispatch, handleUser]);
 
-    const options = {
-        mediaType: 'photo',
-        saveToPhotos: true,
-        quality: 0.5,
-    };
     const handleCamera = () => {
+        const options = {
+            mediaType: 'photo',
+            saveToPhotos: true,
+            quality: 0.5,
+            cameraType: 'front',
+            storageOption: {
+                skipBackup: true,
+                path: 'images',
+            },
+            includeBase64: true,
+            maxWidth: 300,
+            maxHeight: 300,
+        };
         launchCamera(options, (response) => {
             if (response.didCancel) {
                 console.log('User cancelled image picker');
-            } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            } else {
-                const source = response;
-                // setModalVisible(!modalVisible);
-                // You can also display the image using data:
-                // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-                setImage(source);
-                console.log('Response = ', source);
-                alert(source);
+                return;
             }
+            // setModalVisible(!modalVisible);
+            // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+            const source = response;
+            if (source) {
+                setImage(source);
+            }
+            console.log('Response = ', source);
         });
     };
 
