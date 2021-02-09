@@ -37,7 +37,7 @@ export const clearDataUser = () => {
     };
 };
 
-export const updateProfile = (data, handleUser) => {
+export const updateProfile = (data, handleUser, inValid) => {
     return async (dispatch) => {
         await Axios.post(BASE_URL + 'post-update-profile', data, {
             withCredentials: true,
@@ -48,9 +48,8 @@ export const updateProfile = (data, handleUser) => {
         })
             .then(respon => {
                 handleUser();
-                ToasSuccess('Update Berhasil');
             }).catch(err => {
-                ToasInvalid('Update Gagal');
+                inValid();
                 console.log(err);
             });
     };

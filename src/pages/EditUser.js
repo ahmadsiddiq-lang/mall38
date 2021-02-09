@@ -1,7 +1,6 @@
-/* eslint-disable no-alert */
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useState } from 'react';
-import { Image, Modal, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Headers from '../components/Header/Headers';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { color } from '../assets/colors/Index';
@@ -11,10 +10,10 @@ import { Poppins } from '../assets/fonts';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { useDispatch } from 'react-redux';
 import { getDataUser, updateProfile } from '../redux/actions/User';
-import { getIdUser } from '../config/function';
+import { getIdUser, ToasSuccess, ToasInvalid } from '../config/function';
 import FormData from 'form-data';
-import { heightPercentageToDP } from 'react-native-responsive-screen';
-// import Ionicons from 'react-native-vector-icons/Ionicons';
+import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import Clipboard from '@react-native-community/clipboard';
 
 
 export default function EditUser({ navigation, route }) {
@@ -41,6 +40,7 @@ export default function EditUser({ navigation, route }) {
     const [dataKabupaten, setDataKabupaten] = useState(null);
     const [dataKecamatan, setDataKecamatan] = useState(null);
     const [image, setImage] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const filterData = useCallback((idProv) => {
         const dataKab = dataUser.kabupaten.filter(item => item.provinsi_id === idProv);
@@ -70,9 +70,22 @@ export default function EditUser({ navigation, route }) {
     const handleUser = useCallback(async () => {
         const idUser = await getIdUser();
         if (idUser !== null) {
+            ToasSuccess('Update Berhasil');
+            setLoading(false);
             dispatch(getDataUser(idUser));
+            const x = setTimeout(() => {
+                navigation.navigate('MyTabbar');
+                return () => {
+                    clearTimeout(x);
+                };
+            }, 2500);
         }
-    }, [dispatch]);
+    }, [dispatch, navigation]);
+
+    const inValid = () => {
+        ToasInvalid('Update Gagal');
+        setLoading(false);
+    };
 
     const handleUpdate = useCallback(async () => {
         const idUser = await getIdUser();
@@ -93,25 +106,26 @@ export default function EditUser({ navigation, route }) {
         data.append('kecamatan_id', kecamatan);
 
         if (data) {
-            dispatch(updateProfile(data, handleUser));
+            setLoading(true);
+            dispatch(updateProfile(data, handleUser, inValid));
         }
 
     }, [name, phone, ktp, alamat, kodePos, provinsi, kecamatan, kabupaten, image, dispatch, handleUser]);
 
+    let options = {
+        mediaType: 'photo',
+        saveToPhotos: true,
+        quality: 0.5,
+        cameraType: 'front',
+        storageOption: {
+            skipBackup: true,
+            path: 'images',
+        },
+        includeBase64: true,
+        maxWidth: 300,
+        maxHeight: 300,
+    };
     const handleCamera = () => {
-        let options = {
-            mediaType: 'photo',
-            saveToPhotos: true,
-            quality: 0.5,
-            cameraType: 'front',
-            storageOption: {
-                skipBackup: true,
-                path: 'images',
-            },
-            includeBase64: true,
-            maxWidth: 300,
-            maxHeight: 300,
-        };
         launchCamera(options, (response) => {
             if (response.didCancel) {
                 console.log('User cancelled image picker');
@@ -127,24 +141,27 @@ export default function EditUser({ navigation, route }) {
         });
     };
 
-    // const handleLibrary = () => {
-    //     launchImageLibrary(options, (response) => {
-    //         console.log('Response = ', response);
-
-    //         if (response.didCancel) {
-    //             console.log('User cancelled image picker');
-    //         } else if (response.error) {
-    //             console.log('ImagePicker Error: ', response.error);
-    //         } else {
-    //             const source = response;
-    //             // setModalVisible(!modalVisible);
-    //             // You can also display the image using data:
-    //             // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-    //             setImage(source);
-    //         }
-    //     });
-    // };
+    const handleLibrary = () => {
+        launchImageLibrary(options, (response) => {
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+                return;
+            }
+            // setModalVisible(!modalVisible);
+            // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+            const source = response;
+            if (source) {
+                setImage(source);
+            }
+            console.log('Response = ', source);
+        });
+    };
     // console.log(dataUser);
+
+    const SalinAccount = () => {
+        Clipboard.setString(dataUser.user.refferal_code);
+        ToasSuccess('Berhasil disalin');
+    };
 
     useEffect(() => {
         filterData(provinsi);
@@ -156,10 +173,25 @@ export default function EditUser({ navigation, route }) {
                 navigation={navigation}
                 title={'Edit Profile'}
             />
+            {
+                loading &&
+                <View style={{
+                    position: 'absolute',
+                    // backgroundColor: 'black',
+                    top: 0,
+                    left: 0,
+                    bottom: 0,
+                    right: 0,
+                    zIndex: 999,
+                    justifyContent: 'center',
+                }}>
+                    <ActivityIndicator size="large" color={color.mainColor} />
+                </View>
+            }
             <ScrollView>
                 <View style={styles.Banner}>
                     <TouchableOpacity
-                        onPress={() => handleCamera()}
+                        onPress={() => handleLibrary()}
                         activeOpacity={0.8}
                         style={styles.BoxImage}>
                         {
@@ -179,7 +211,7 @@ export default function EditUser({ navigation, route }) {
                         }
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => handleCamera()}
+                        onPress={() => handleLibrary()}
                         activeOpacity={0.8}
                         style={{
                             backgroundColor: color.mainColor,
@@ -194,7 +226,6 @@ export default function EditUser({ navigation, route }) {
                     </TouchableOpacity>
                 </View>
                 <View style={{
-                    // marginTop: sizeHeight(3),
                     flex: 1,
                     marginBottom: sizeHeight(3),
                 }}>
@@ -202,33 +233,53 @@ export default function EditUser({ navigation, route }) {
                         flexDirection: 'row',
                         justifyContent: 'space-between',
                         paddingHorizontal: sizeWidth(5),
-                        paddingVertical: heightPercentageToDP(2),
+                        paddingVertical: hp(2),
                         borderBottomWidth: 1,
                         borderBottomColor: color.border2,
                     }}>
                         <Text style={{
                             fontSize: sizeFont(3.5),
                         }}>Refferal code</Text>
-                        <Text style={{
-                            fontSize: sizeFont(3.8),
-                            fontFamily: Poppins.Medium,
-                        }}>{dataUser.user.refferal_code}</Text>
+                        <Text
+                            onPress={() => SalinAccount()}
+                            style={{
+                                fontSize: sizeFont(3.8),
+                                fontFamily: Poppins.Medium,
+                            }}>{dataUser.user.refferal_code}</Text>
                     </View>
+                    <Text style={{
+                        fontSize: sizeFont(3.3),
+                        marginLeft: sizeWidth(5),
+                        color: color.fontBlack1,
+                        marginTop: hp(1),
+                    }}>Nama</Text>
                     <TextInput
                         style={styles.Input}
                         placeholder="Username"
                         value={name}
                         onChangeText={(e) => setName(e)}
                     />
+                    <Text style={{
+                        fontSize: sizeFont(3.3),
+                        marginLeft: sizeWidth(5),
+                        color: color.fontBlack1,
+                        marginTop: hp(1),
+                    }}>Nomor telephone / Hp</Text>
                     <TextInput
                         style={styles.Input}
                         placeholder="Phone"
                         value={phone}
                         onChangeText={(e) => setPhone(e)}
                     />
+                    <Text style={{
+                        fontSize: sizeFont(3.3),
+                        marginLeft: sizeWidth(5),
+                        color: color.fontBlack1,
+                        marginTop: hp(1),
+                    }}>No. KTP</Text>
                     <TextInput
                         style={styles.Input}
-                        placeholder="KTP"
+                        placeholder="No. KTP"
                         value={ktp}
                         onChangeText={(e) => setKtp(e)}
                     />
@@ -238,6 +289,12 @@ export default function EditUser({ navigation, route }) {
                         value={kodePos}
                         onChangeText={(e) => setKodePos(e)}
                     />
+                    <Text style={{
+                        fontSize: sizeFont(3.3),
+                        marginLeft: sizeWidth(5),
+                        color: color.fontBlack1,
+                        marginTop: hp(1),
+                    }}>Alamat</Text>
                     <TextInput
                         style={styles.Input}
                         placeholder="Alamat"
@@ -337,46 +394,6 @@ export default function EditUser({ navigation, route }) {
                     </TouchableOpacity>
                 </View>
             </ScrollView>
-            {/* <Modal
-                animationType="slide"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => {
-                    // Alert.alert("Modal has been closed.");
-                }}
-            >
-                <View style={styles.BoxPickImage}>
-                    <View style={styles.modalView}>
-                        <TouchableOpacity
-                            activeOpacity={0.8}
-                            style={styles.BoxPickImageItem}
-                            onPress={() => {
-                                handleLibrary();
-                            }}
-                        >
-                            <Image style={styles.ImagePick} resizeMethod="auto" source={require('../assets/images/pickImage/imagedefault.png')} />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            activeOpacity={0.8}
-                            style={styles.BoxPickImageItem}
-                            onPress={() => {
-                                handleCamera();
-                            }}
-                        >
-                            <Image style={styles.ImagePick} resizeMethod="auto" source={require('../assets/images/pickImage/camera.jpg')} />
-                        </TouchableOpacity>
-                    </View>
-                    <TouchableOpacity
-                        onPress={() => {
-                            setModalVisible(!modalVisible);
-                        }}
-                        activeOpacity={0.8}
-                        style={styles.BtnCancle}
-                    >
-                        <Ionicons name="close-circle-outline" size={sizeFont(12)} color={color.fontWhite} />
-                    </TouchableOpacity>
-                </View>
-            </Modal> */}
         </View>
     );
 }
@@ -411,7 +428,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: color.border2,
         paddingHorizontal: sizeWidth(5),
-        fontSize: sizeFont(3.5),
+        fontSize: sizeFont(3.7),
         marginVertical: sizeHeight(0.5),
     },
     DropDown: {

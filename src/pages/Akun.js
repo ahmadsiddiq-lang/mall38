@@ -15,10 +15,11 @@ import { heightPercentageToDP } from 'react-native-responsive-screen';
 export default function Akun({ navigation }) {
 
     const dispatch = useDispatch();
+    const dataScreen = useSelector(state => state.dataUser.dataUser.user);
     const dataUser = useSelector(state => state.dataUser.dataUser);
-    const dataAll = dataUser.user;
+    // const dataAll = dataUser.user;
 
-    const [dataScreen, setDataUser] = useState(dataAll);
+    // const [dataScreen, setDataUser] = useState(dataAll);
     const [modalVisible, setModalVisible] = useState(false);
     const [refreshing, setRefreshing] = React.useState(false);
 
@@ -42,7 +43,7 @@ export default function Akun({ navigation }) {
             dispatch(clearDataUser());
             await AsyncStorage.clear();
             setModalVisible(!modalVisible);
-            setDataUser(undefined);
+            // setDataUser(undefined);
             navigation.replace('Login');
         }
     }, [dispatch, modalVisible, navigation]);
@@ -76,11 +77,11 @@ export default function Akun({ navigation }) {
         }
     }, [navigation, dataUser]);
 
-    const setStateAllDataUser = useCallback(async () => {
-        if (dataScreen === undefined) {
-            setDataUser(dataAll);
-        }
-    }, [dataScreen, dataAll]);
+    // const setStateAllDataUser = useCallback(async () => {
+    //     if (dataScreen === undefined) {
+    //         setDataUser(dataAll);
+    //     }
+    // }, [dataScreen, dataAll]);
 
 
     useEffect(() => {
@@ -90,12 +91,12 @@ export default function Akun({ navigation }) {
         };
     }, [handleUser]);
 
-    useEffect(() => {
-        setStateAllDataUser();
-        return () => {
-            setStateAllDataUser();
-        };
-    }, [setStateAllDataUser]);
+    // useEffect(() => {
+    //     setStateAllDataUser();
+    //     return () => {
+    //         setStateAllDataUser();
+    //     };
+    // }, [setStateAllDataUser]);
 
     return (
         <View style={styles.Container}>
@@ -157,7 +158,7 @@ export default function Akun({ navigation }) {
                         <Text style={{
                             fontSize: sizeFont(3.5),
                             color: color.fontWhite,
-                        }}>{dataScreen !== undefined &&
+                        }}>{dataScreen.paket_mitra !== undefined &&
                             objekEmpty(dataScreen) && dataScreen.paket_mitra !== null && dataScreen.paket_mitra.nama_paket}</Text>
                     </View>
                 </TouchableOpacity>
