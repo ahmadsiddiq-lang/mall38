@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, Linking, StyleSheet, Text, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
 import { Poppins } from '../../assets/fonts';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
@@ -8,8 +8,24 @@ import { rupiah } from '../../config/function';
 import { DefaultText } from '../DefaultText';
 import Star from '../Star';
 import { WebView } from 'react-native-webview';
+import base64 from 'react-native-base64';
 
 export default function Deskripsi({ detailProduk }) {
+
+
+    const description = detailProduk.description !== undefined ? detailProduk.description : null;
+    // console.log(detailProduk);
+
+    const LinkDetail = (item) => {
+        if (item.id) {
+            const id = base64.encode(item.id.toString());
+            const toUpper = item.name.toLowerCase();
+            const name = toUpper.replace(/\s/g, '-');
+            Linking.openURL(`https://mall38.com/product/${name}/${id}`);
+
+        }
+    };
+
     return (
         <View>
             <View style={styles.BoxText}>
@@ -199,110 +215,112 @@ export default function Deskripsi({ detailProduk }) {
                     </View>
                 </View>
             </View>
-            <View style={styles.BoxText}>
-                <Text style={{
-                    fontSize: sizeFont(4),
-                    fontFamily: Poppins.Medium,
-                    marginBottom: sizeHeight(1),
-                }}>Deskripsi</Text>
-                <View style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginBottom: sizeHeight(1),
-                }}>
-                    <Text style={{
-                        fontSize: sizeFont(3.3),
-                        fontFamily: Poppins.Medium,
-                        color: color.fontBlack1,
-                        flex: 1,
-                    }}>Bahan</Text>
-                    <Text style={{
-                        fontSize: sizeFont(3.3),
-                        fontFamily: Poppins.Medium,
-                        flex: 3,
-                        textAlign: 'right',
-                    }}>PU</Text>
-                </View>
-                <View style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginBottom: sizeHeight(1),
-                }}>
-                    <Text style={{
-                        fontSize: sizeFont(3.3),
-                        fontFamily: Poppins.Medium,
-                        color: color.fontBlack1,
-                        flex: 1,
-                    }}>Ukuran</Text>
-                    <Text style={{
-                        fontSize: sizeFont(3.3),
-                        fontFamily: Poppins.Medium,
-                        flex: 3,
-                        textAlign: 'right',
-                    }}>P20XL9XT15CM</Text>
-                </View>
-                <View style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginBottom: sizeHeight(1),
-                }}>
-                    <Text style={{
-                        fontSize: sizeFont(3.3),
-                        fontFamily: Poppins.Medium,
-                        color: color.fontBlack1,
-                        flex: 2,
-                    }}>warna</Text>
-                    <Text style={{
-                        fontSize: sizeFont(3.3),
-                        fontFamily: Poppins.Medium,
-                        flex: 3,
-                        textAlign: 'right',
-                        // color: color.fontBlack1,
-                    }}>yellow, black, green, white, purple, blue</Text>
-                </View>
-                <View style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginBottom: sizeHeight(1),
-                }}>
-                    <Text style={{
-                        fontSize: sizeFont(3.3),
-                        fontFamily: Poppins.Medium,
-                        color: color.fontBlack1,
-                        flex: 2,
-                    }}>Stok</Text>
-                    <Text style={{
-                        fontSize: sizeFont(3.3),
-                        fontFamily: Poppins.Medium,
-                        flex: 3,
-                        textAlign: 'right',
-                        // color: color.fontBlack1,
-                    }}>{detailProduk.stok}</Text>
-                </View>
-                <View style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginBottom: sizeHeight(1),
-                }}>
-                    <Text style={{
-                        fontSize: sizeFont(3.3),
-                        fontFamily: Poppins.Medium,
-                        color: color.fontBlack1,
-                        flex: 2,
-                    }}>Berat</Text>
-                    <Text style={{
-                        fontSize: sizeFont(3.3),
-                        fontFamily: Poppins.Medium,
-                        flex: 3,
-                        textAlign: 'right',
-                        // color: color.fontBlack1,
-                    }}>{detailProduk.berat}</Text>
-                </View>
-                <View style={{
-                    marginTop: sizeHeight(1),
-                    // position:'absolute',
-                }}>
-                    {/* <WebView
+            {
+                description !== null ?
+                    <View style={styles.BoxText}>
+                        <Text style={{
+                            fontSize: sizeFont(4),
+                            fontFamily: Poppins.Medium,
+                            marginBottom: sizeHeight(1),
+                        }}>Deskripsi</Text>
+                        <View style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            marginBottom: sizeHeight(1),
+                        }}>
+                            <Text style={{
+                                fontSize: sizeFont(3.3),
+                                fontFamily: Poppins.Medium,
+                                color: color.fontBlack1,
+                                flex: 1,
+                            }}>Bahan</Text>
+                            <Text style={{
+                                fontSize: sizeFont(3.3),
+                                fontFamily: Poppins.Medium,
+                                flex: 3,
+                                textAlign: 'right',
+                            }}>PU</Text>
+                        </View>
+                        <View style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            marginBottom: sizeHeight(1),
+                        }}>
+                            <Text style={{
+                                fontSize: sizeFont(3.3),
+                                fontFamily: Poppins.Medium,
+                                color: color.fontBlack1,
+                                flex: 1,
+                            }}>Ukuran</Text>
+                            <Text style={{
+                                fontSize: sizeFont(3.3),
+                                fontFamily: Poppins.Medium,
+                                flex: 3,
+                                textAlign: 'right',
+                            }}>P20XL9XT15CM</Text>
+                        </View>
+                        <View style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            marginBottom: sizeHeight(1),
+                        }}>
+                            <Text style={{
+                                fontSize: sizeFont(3.3),
+                                fontFamily: Poppins.Medium,
+                                color: color.fontBlack1,
+                                flex: 2,
+                            }}>warna</Text>
+                            <Text style={{
+                                fontSize: sizeFont(3.3),
+                                fontFamily: Poppins.Medium,
+                                flex: 3,
+                                textAlign: 'right',
+                                // color: color.fontBlack1,
+                            }}>yellow, black, green, white, purple, blue</Text>
+                        </View>
+                        <View style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            marginBottom: sizeHeight(1),
+                        }}>
+                            <Text style={{
+                                fontSize: sizeFont(3.3),
+                                fontFamily: Poppins.Medium,
+                                color: color.fontBlack1,
+                                flex: 2,
+                            }}>Stok</Text>
+                            <Text style={{
+                                fontSize: sizeFont(3.3),
+                                fontFamily: Poppins.Medium,
+                                flex: 3,
+                                textAlign: 'right',
+                                // color: color.fontBlack1,
+                            }}>{detailProduk.stok}</Text>
+                        </View>
+                        <View style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            marginBottom: sizeHeight(1),
+                        }}>
+                            <Text style={{
+                                fontSize: sizeFont(3.3),
+                                fontFamily: Poppins.Medium,
+                                color: color.fontBlack1,
+                                flex: 2,
+                            }}>Berat</Text>
+                            <Text style={{
+                                fontSize: sizeFont(3.3),
+                                fontFamily: Poppins.Medium,
+                                flex: 3,
+                                textAlign: 'right',
+                                // color: color.fontBlack1,
+                            }}>{detailProduk.berat}</Text>
+                        </View>
+                        <View style={{
+                            marginTop: sizeHeight(1),
+                            // position:'absolute',
+                        }}>
+                            {/* <WebView
                         originWhitelist={['*']}
                         source={{ html: detailProduk.short_desc }}
                         style={{
@@ -311,9 +329,21 @@ export default function Deskripsi({ detailProduk }) {
                             borderWidth: 1,
                         }}
                     /> */}
-                    <DefaultText>Pas banget buat di pake harian di rumah atau di luar rumah ini bahannya tebel gak terawang tapi gak gerah. Apalagi kalau cuacanya pas lagi dingin, dipakenya tuh enak banget di badan</DefaultText>
-                </View>
-            </View>
+                            <DefaultText>{description}</DefaultText>
+                        </View>
+                    </View>
+                    :
+                    <View style={styles.BoxText}>
+                        <Text
+                            onPress={() => LinkDetail(detailProduk)}
+                            style={{
+                                fontSize: sizeFont(3.5),
+                                fontFamily: Poppins.Medium,
+                                textAlign: 'center',
+                                color: color.mainColor,
+                            }}>Lihat Detail</Text>
+                    </View>
+            }
         </View>
     );
 }
