@@ -255,7 +255,6 @@ export default function EditUser({ navigation, route }) {
                     }}>Nama</Text>
                     <TextInput
                         style={styles.Input}
-                        placeholder="Username"
                         value={name}
                         onChangeText={(e) => setName(e)}
                     />
@@ -267,7 +266,6 @@ export default function EditUser({ navigation, route }) {
                     }}>Nomor telephone / Hp</Text>
                     <TextInput
                         style={styles.Input}
-                        placeholder="Phone"
                         value={phone}
                         onChangeText={(e) => setPhone(e)}
                     />
@@ -279,13 +277,17 @@ export default function EditUser({ navigation, route }) {
                     }}>No. KTP</Text>
                     <TextInput
                         style={styles.Input}
-                        placeholder="No. KTP"
                         value={ktp}
                         onChangeText={(e) => setKtp(e)}
                     />
+                    <Text style={{
+                        fontSize: sizeFont(3.3),
+                        marginLeft: sizeWidth(5),
+                        color: color.fontBlack1,
+                        marginTop: hp(1),
+                    }}>Kode POS</Text>
                     <TextInput
                         style={styles.Input}
-                        placeholder="Kode POS"
                         value={kodePos}
                         onChangeText={(e) => setKodePos(e)}
                     />
@@ -297,7 +299,6 @@ export default function EditUser({ navigation, route }) {
                     }}>Alamat</Text>
                     <TextInput
                         style={styles.Input}
-                        placeholder="Alamat"
                         value={alamat}
                         onChangeText={(e) => setAlamat(e)}
                     />

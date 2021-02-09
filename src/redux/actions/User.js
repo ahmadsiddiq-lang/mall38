@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { getToken, ToasInvalid, ToasSuccess } from '../../config/function';
+import { getToken } from '../../config/function';
 import { BASE_URL } from '../../config/URL';
 
 export const GET_USER = 'GET_USER';

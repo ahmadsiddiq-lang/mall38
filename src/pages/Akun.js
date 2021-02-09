@@ -17,14 +17,15 @@ export default function Akun({ navigation }) {
     const dispatch = useDispatch();
     const dataScreen = useSelector(state => state.dataUser.dataUser.user);
     const dataUser = useSelector(state => state.dataUser.dataUser);
-    // const dataAll = dataUser.user;
+    // const paket_mitra = dataScreen.paket_mitra !== undefined ? 'masuk' : null;
 
     // const [dataScreen, setDataUser] = useState(dataAll);
     const [modalVisible, setModalVisible] = useState(false);
     const [refreshing, setRefreshing] = React.useState(false);
+    const [paket_mitra, setPacketMitra] = React.useState(null);
 
 
-    // console.log(dataScreen);
+    // console.log(paket_mitra);
 
     const handleUser = useCallback(async () => {
         const idUser = await getIdUser();
@@ -82,6 +83,18 @@ export default function Akun({ navigation }) {
     //         setDataUser(dataAll);
     //     }
     // }, [dataScreen, dataAll]);
+    const setDataPactketMita = useCallback(async () => {
+        if (dataScreen.paket_mitra !== undefined) {
+            setPacketMitra(dataScreen.paket_mitra.nama_paket);
+        }
+    }, [dataScreen]);
+
+    useEffect(() => {
+        setDataPactketMita();
+        return () => {
+            setPacketMitra(null);
+        };
+    }, [setDataPactketMita]);
 
 
     useEffect(() => {
@@ -100,7 +113,7 @@ export default function Akun({ navigation }) {
 
     return (
         <View style={styles.Container}>
-            <StatusBar translucent backgroundColor="transparent" />
+            <StatusBar translucent={false} backgroundColor={color.mainColor} />
             <ImageBackground
                 resizeMethod="resize"
                 source={require('../assets/images/background/Background.png')}
@@ -158,8 +171,7 @@ export default function Akun({ navigation }) {
                         <Text style={{
                             fontSize: sizeFont(3.5),
                             color: color.fontWhite,
-                        }}>{dataScreen.paket_mitra !== undefined &&
-                            objekEmpty(dataScreen) && dataScreen.paket_mitra !== null && dataScreen.paket_mitra.nama_paket}</Text>
+                        }}>{paket_mitra !== null && paket_mitra}</Text>
                     </View>
                 </TouchableOpacity>
             </ImageBackground>

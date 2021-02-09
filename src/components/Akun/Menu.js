@@ -39,7 +39,7 @@ export default function Menu({ handleNavEditUser, navigation }) {
                         }}>Saldo Bonus</Text>
                     </View>
                     <Ionicons name="chevron-forward" size={sizeFont(3.5)} color={color.fontBlack1} />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <TouchableOpacity
                     onPress={() => navigation.navigate('RekeningBank')}
                     activeOpacity={0.8}
@@ -62,7 +62,7 @@ export default function Menu({ handleNavEditUser, navigation }) {
                         }}>Rekening Bank</Text>
                     </View>
                     <Ionicons name="chevron-forward" size={sizeFont(3.5)} color={color.fontBlack1} />
-                </TouchableOpacity> */}
+                </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => handleNavEditUser()}
                     activeOpacity={0.8}
