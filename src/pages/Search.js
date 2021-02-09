@@ -19,8 +19,8 @@ export default function Search({ navigation }) {
     const [dataSearch, setDataSearch] = useState('');
     const [dataProdukSearch, setDataProduk] = useState([]);
     const [statusData, setStatus] = useState(true);
+    const [statusRekomet, setStatusRekomen] = useState(false);
     const [loading, setLoading] = useState(true);
-    // const [dataRiwayat, setRiwayat] = useState(['Tas wanita', 'baju', 'sepatu', 'dompet', 'pakaian pria', 'pakaian wanita']);
     // console.log(dataProduk);
 
     const getProduks = useCallback(async () => {
@@ -46,6 +46,7 @@ export default function Search({ navigation }) {
                 setDataProduk(data);
             }
             setRiwayat();
+            setStatusRekomen(true);
         }
     }, [dataProduk, dataSearch, setRiwayat]);
 
@@ -63,25 +64,26 @@ export default function Search({ navigation }) {
 
     const handleButtonRiwayat = (value) => {
         setDataSearch(value);
-        const data = dataProduk.filter(item => {
-            if (item.name !== undefined && value.length > 0) {
-                setLoading(false);
-                const x = setTimeout(() => {
-                    setLoading(true);
-                    clearTimeout(x);
-                }, 1000);
-                return item.name.toLowerCase().indexOf(value.toLowerCase()) > -1;
-            }
-        });
-        if (value.length > 0) {
-            if (data.length < 1) {
-                setStatus(false);
-            } else {
-                setStatus(true);
-                setDataProduk(data);
-            }
-            // setRiwayat();
-        }
+        handleSearch();
+        // const data = dataProduk.filter(item => {
+        //     if (item.name !== undefined && value.length > 0) {
+        //         setLoading(false);
+        //         const x = setTimeout(() => {
+        //             setLoading(true);
+        //             clearTimeout(x);
+        //         }, 1000);
+        //         return item.name.toLowerCase().indexOf(value.toLowerCase()) > -1;
+        //     }
+        // });
+        // if (value.length > 0) {
+        //     if (data.length < 1) {
+        //         setStatus(false);
+        //     } else {
+        //         setStatus(true);
+        //         setDataProduk(data);
+        //     }
+        //     // setRiwayat();
+        // }
     };
 
 
@@ -140,7 +142,7 @@ export default function Search({ navigation }) {
                 handleButtonRiwayat={handleButtonRiwayat}
             />
             {
-                dataProdukSearch.length > 0 ?
+                statusRekomet ?
                     <View style={{
                         flex: 1,
                     }}>

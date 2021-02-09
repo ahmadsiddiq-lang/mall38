@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { color } from '../../assets/colors/Index';
 import { Poppins } from '../../assets/fonts';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
@@ -84,7 +85,7 @@ export default function ListProduk({ navigation, dataProdukSearch = [], statusDa
                     <View style={{
                         alignItems: 'center',
                         justifyContent: 'center',
-                        flex: 1,
+                        height: heightPercentageToDP(20),
                     }}>
                         <Text style={{
                             alignItems: 'center',
