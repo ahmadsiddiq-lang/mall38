@@ -41,6 +41,7 @@ import { getTransaksi } from '../redux/actions/Transaksi';
 import { linking } from '../config/Linking';
 import { fcmService } from '../config/FCMService';
 import { localNotificationService } from '../config/LocalNotificationService';
+import { setEdge } from '../redux/actions/edgeOrder';
 
 const Tab = createBottomTabNavigator();
 
@@ -50,7 +51,8 @@ export function MyTabbar() {
     const dispatch = useDispatch();
 
     const dataTransaksi = useSelector(state => state.dataTransaksi.dataTransaksi.order);
-    const [CircleStatus, setCircleStatus] = React.useState([]);
+    const edgeOrder = useSelector(state => state.edgeOrder.edgeOrder);
+
     const handleGetTransaksi = React.useCallback(async () => {
         const idUser = await getIdUser();
         if (idUser !== null) {
@@ -63,10 +65,10 @@ export function MyTabbar() {
         if (idUser !== null && dataTransaksi !== undefined) {
             const data = dataTransaksi.filter(item => item.status_pembayaran === 'pending');
             if (data.length > 0) {
-                setCircleStatus(data);
+                dispatch(setEdge(data));
             }
         }
-    }, [dataTransaksi]);
+    }, [dataTransaksi, dispatch]);
 
     React.useEffect(() => {
         handleGetTransaksi();
@@ -169,7 +171,7 @@ export function MyTabbar() {
                             />
                         );
                     },
-                    tabBarBadge: CircleStatus.length > 0 ? CircleStatus.length : null,
+                    tabBarBadge: edgeOrder.length > 0 ? edgeOrder.length : null,
                     tabBarBadgeStyle: {
                         backgroundColor: '#2a05ff',
                         fontSize: sizeFont(2.8),

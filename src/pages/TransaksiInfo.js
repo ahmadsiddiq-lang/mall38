@@ -8,6 +8,7 @@ import Header from '../components/Header/Home';
 import CardProduk from '../components/TransaksiInfo/CardProduk';
 import TopBar from '../components/TransaksiInfo/TopBar';
 import { getIdUser } from '../config/function';
+import { setEdge } from '../redux/actions/edgeOrder';
 import { getTransaksi } from '../redux/actions/Transaksi';
 
 export default function Transaksi({ navigation }) {
@@ -55,12 +56,25 @@ export default function Transaksi({ navigation }) {
         });
     }, [wait, handleGetTransaksi]);
 
+
+    const handleCircle = React.useCallback(async () => {
+        const idUser = await getIdUser();
+        if (idUser !== null && dataTransaksi !== undefined) {
+            const data = dataTransaksi.filter(item => item.status_pembayaran === 'pending');
+            if (data.length > 0) {
+                dispatch(setEdge(data));
+            }
+        }
+    }, [dataTransaksi, dispatch]);
+
     useEffect(() => {
         handleGetTransaksi();
+        handleCircle();
         return () => {
             handleGetTransaksi();
+            handleCircle();
         };
-    }, [handleGetTransaksi]);
+    }, [handleGetTransaksi, handleCircle]);
 
     useEffect(() => {
         if (dataAll) {

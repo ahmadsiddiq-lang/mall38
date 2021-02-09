@@ -64,7 +64,7 @@ export default function Auth({ navigation }) {
             flex: 1,
             backgroundColor: color.bgWhite,
         }}>
-            <StatusBar backgroundColor={color.mainColor} />
+            <StatusBar translucent={true} backgroundColor={'transparent'} showHideTransition={true} />
             <View
                 style={{
                     width: SCREEN_WIDTH,

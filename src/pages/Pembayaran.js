@@ -1,12 +1,41 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
-import { StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
+import React, { useCallback, useEffect } from 'react';
+import { BackHandler, Image, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../assets/colors/Index';
 import { Poppins } from '../assets/fonts';
 import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
-import Headers from '../components/Header/Headers';
 import Clipboard from '@react-native-community/clipboard';
 import { rupiah, ToasSuccess } from '../config/function';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
+
+const Header = ({ handleBackButtonClick }) => {
+    return (
+        <View style={styles.Header}>
+            <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => handleBackButtonClick()}
+                style={{
+                    paddingVertical: sizeWidth(3.5),
+                    paddingLeft: sizeWidth(5),
+                }}
+            >
+                <Ionicons
+                    name="arrow-back"
+                    size={sizeFont(6.5)}
+                    color={color.fontWhite}
+                />
+            </TouchableOpacity>
+            <Text style={{
+                marginLeft: sizeWidth(5),
+                fontSize: sizeFont(4.5),
+                color: color.fontWhite,
+                fontFamily: Poppins.Medium,
+            }}>Pembayaran</Text>
+        </View>
+    );
+};
 
 
 export default function Pembayaran({ navigation, route }) {
@@ -24,9 +53,24 @@ export default function Pembayaran({ navigation, route }) {
         return dataPembayaran.payment_type === 'cstore';
     };
 
+    const handleBackButtonClick = useCallback(() => {
+        navigation.replace('MyTabbar');
+        return true;
+    }, [navigation]);
+
+    useEffect(() => {
+        BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
+        return () => {
+            BackHandler.removeEventListener('hardwareBackPress', handleBackButtonClick);
+        };
+    }, [handleBackButtonClick]);
+
     return (
         <View style={styles.Container}>
-            <Headers navigation={navigation} title={'Pembayaran'} />
+            <StatusBar backgroundColor={color.mainColor} />
+            <Header
+                handleBackButtonClick={handleBackButtonClick}
+                navigation={navigation} />
             <View style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
@@ -128,6 +172,33 @@ export default function Pembayaran({ navigation, route }) {
                  </Text>
             </View>
             <View style={{
+                backgroundColor: color.bgWhite,
+                alignItems: 'center',
+                flex: 1,
+                marginTop: hp(1),
+            }}>
+                <View style={{
+                    width: sizeWidth(55),
+                    height: sizeWidth(55),
+                    marginRight: sizeWidth(10),
+                }}>
+                    <Image
+                        source={require('../assets/images/loading/Payment.gif')}
+                        style={{
+                            resizeMode: 'contain',
+                            width: '100%',
+                            height: '100%',
+                        }}
+                    />
+                </View>
+                <Text style={{
+                    fontSize: sizeFont(3.5),
+                    textAlign: 'center',
+                    marginHorizontal: sizeWidth(5),
+                    color: color.fontBlack1,
+                }}>Silahkan melakukan pembayaran sesuai dengan metode yang Anda pilih</Text>
+            </View>
+            <View style={{
                 position: 'absolute',
                 bottom: 0,
                 width: SCREEN_WIDTH,
@@ -159,5 +230,10 @@ export default function Pembayaran({ navigation, route }) {
 const styles = StyleSheet.create({
     Container: {
         flex: 1,
+    },
+    Header: {
+        backgroundColor: color.mainColor,
+        flexDirection: 'row',
+        alignItems: 'center',
     },
 });

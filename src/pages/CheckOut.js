@@ -20,12 +20,14 @@ import { checkOut } from '../redux/actions/CheckOut';
 import { getTransaksi } from '../redux/actions/Transaksi';
 import { getCArt } from '../redux/actions/Cart';
 import { Poppins } from '../assets/fonts';
+import { setEdge } from '../redux/actions/edgeOrder';
 
 
 export default function CheckOut({ navigation, route }) {
 
     const dataAll = route.params.data !== undefined ? route.params.data : null;
     const dataCheck = route.params.dataCheck !== undefined ? route.params.dataCheck : null;
+    const dataTransaksi = useSelector(state => state.dataTransaksi.dataTransaksi.order);
 
     const dispatch = useDispatch();
     const dataUser = useSelector(state => state.dataUser.dataUser);
@@ -160,7 +162,18 @@ export default function CheckOut({ navigation, route }) {
         if (idUser !== null) {
             dispatch(getTransaksi(idUser));
         }
-    }, [dispatch]);
+        handleCircle();
+    }, [dispatch, handleCircle]);
+
+    const handleCircle = React.useCallback(async () => {
+        const idUser = await getIdUser();
+        if (idUser !== null && dataTransaksi !== undefined) {
+            const data = dataTransaksi.filter(item => item.status_pembayaran === 'pending');
+            if (data.length > 0) {
+                dispatch(setEdge(data));
+            }
+        }
+    }, [dataTransaksi, dispatch]);
 
     const hetDataCart = useCallback(async () => {
         const idUser = await getIdUser();

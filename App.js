@@ -18,6 +18,7 @@ import { combineReducers, applyMiddleware, createStore } from 'redux';
 import reducerOngkir from './src/redux/reducers/getOngkir';
 import getTransaksiReducer from './src/redux/reducers/transaksi';
 import detailOrderReducer from './src/redux/reducers/detailOrder';
+import edgeOrderReducer from './src/redux/reducers/edgeOrder';
 
 const RootReducer = combineReducers({
   Carousel: CarouselReducer,
@@ -32,6 +33,7 @@ const RootReducer = combineReducers({
   dataOngkir: reducerOngkir,
   dataTransaksi: getTransaksiReducer,
   detailOrder: detailOrderReducer,
+  edgeOrder: edgeOrderReducer,
 });
 
 const store = createStore(RootReducer, applyMiddleware(thunk));
