@@ -1,11 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useState } from 'react';
-import { Image, Linking, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
-import base64 from 'react-native-base64';
+import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
 import { SCREEN_WIDTH, sizeHeight, sizeWidth } from '../../assets/responsive';
 
-export default function Carousel({ navigation, dataCarousel = [] }) {
+export default function Carousel({ navigation, dataCarousel = [], LinkBanner }) {
 
     const scrollRef = React.useRef();
 
@@ -24,14 +23,6 @@ export default function Carousel({ navigation, dataCarousel = [] }) {
         const selectedIndex = Math.floor(contentOffset / viewSize);
         setIndexOf(selectedIndex);
         // console.log(selectedIndex);
-    };
-
-    const LinkBanner = (item) => {
-        // console.log(item);
-        if (item.id && item.title) {
-            const id = base64.encode(item.id.toString());
-            Linking.openURL(`https://mall38.com/detail-banner/${item.title}/${id}`);
-        }
     };
 
     useEffect(() => {

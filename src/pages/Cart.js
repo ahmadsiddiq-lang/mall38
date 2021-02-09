@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, BackHandler, FlatList, StatusBar, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, BackHandler, FlatList, Image, StatusBar, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { color } from '../assets/colors/Index';
 import { Poppins } from '../assets/fonts';
@@ -17,6 +17,7 @@ import { deleteProdukCart, getCArt } from '../redux/actions/Cart';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getDataUser } from '../redux/actions/User';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 
 
 export default function Cart({ navigation }) {
@@ -272,20 +273,29 @@ export default function Cart({ navigation }) {
                         flex: 1,
                         justifyContent: 'center',
                         alignItems: 'center',
+                        marginBottom: heightPercentageToDP(20),
                     }}>
-                        <Ionicons name="cart" size={sizeFont(30)} color={color.fontBlack3} />
+                        <View style={{
+                            width: sizeWidth(50),
+                            height: sizeWidth(50),
+                        }}>
+                            <Image
+                                source={require('../assets/images/cart/Cart_empty.png')}
+                                style={{
+                                    resizeMode: 'contain',
+                                    width: '100%',
+                                    height: '100%',
+                                }}
+                            />
+                        </View>
                         <Text style={{
                             fontSize: sizeFont(4),
-                            color: color.fontBlack3,
-                        }}>Keranjang Kosong</Text>
+                            color: color.fontBlack2,
+                            textAlign: 'center',
+                            marginHorizontal: sizeWidth(7),
+                        }}>wah keranjang belanjamu masih kosong, yuk telusuri promo menarik dari Mall 38</Text>
                     </View>
                 }
-                <View style={{
-                    marginTop: sizeHeight(4),
-                }}>
-                    {/* <Kurir />
-                        <MetodeBayar /> */}
-                </View>
             </View>
             <Deskripsi
                 navigation={navigation}

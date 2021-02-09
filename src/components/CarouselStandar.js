@@ -1,8 +1,8 @@
 import React from 'react';
-import { Image, ScrollView, StyleSheet, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { sizeHeight, sizeWidth } from '../assets/responsive';
 
-export default function CarouselStandar({ dataCarousel, ShimmerPlaceHolder, visible, CarouselUp }) {
+export default function CarouselStandar({ dataCarousel, ShimmerPlaceHolder, visible, CarouselUp, LinkBanner }) {
 
     const fakeData = [1, 2];
 
@@ -21,11 +21,13 @@ export default function CarouselStandar({ dataCarousel, ShimmerPlaceHolder, visi
                         visible ?
                             data.map((item, index) => {
                                 return (
-                                    <View key={index} style={styles.BoxImage}>
+                                    <TouchableOpacity
+                                        onPress={() => LinkBanner(item)}
+                                        key={index} style={styles.BoxImage}>
                                         <Image resizeMethod="auto"
                                             style={styles.Image}
                                             source={{ uri: item.image }} />
-                                    </View>
+                                    </TouchableOpacity>
                                 );
                             })
                             :

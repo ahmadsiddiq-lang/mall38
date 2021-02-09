@@ -5,7 +5,7 @@ import { Poppins } from '../../assets/fonts';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import CarouselStandar from '../CarouselStandar';
 
-export default function PromoMenarik({ dataCarousel, navigation, ShimmerPlaceHolder, visible, CarouselUp }) {
+export default function PromoMenarik({ dataCarousel, LinkBanner, ShimmerPlaceHolder, visible, CarouselUp }) {
     return (
         <View style={styles.Container}>
             <View style={styles.Head}>
@@ -14,16 +14,10 @@ export default function PromoMenarik({ dataCarousel, navigation, ShimmerPlaceHol
                     fontFamily: Poppins.Medium,
                     marginLeft: sizeWidth(5),
                 }}>Promo Menarik</Text>
-                {
-                    visible &&
-                    <Text style={{
-                        color: color.mainColor,
-                        fontSize: sizeFont(3.5),
-                    }}>Lihat semua</Text>
-                }
             </View>
             <View>
                 <CarouselStandar
+                    LinkBanner={LinkBanner}
                     ShimmerPlaceHolder={ShimmerPlaceHolder}
                     visible={visible}
                     CarouselUp={CarouselUp}

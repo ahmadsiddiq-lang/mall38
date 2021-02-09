@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useState, useRef } from 'react';
-import { Animated, RefreshControl, StatusBar, StyleSheet, View } from 'react-native';
+import { Animated, Linking, RefreshControl, StatusBar, StyleSheet, View } from 'react-native';
 import { SCREEN_WIDTH, sizeHeight } from '../assets/responsive';
 import Header from '../components/Header/Home';
 import Carousel from '../components/Home/Carousel';
@@ -23,6 +23,7 @@ import { color } from '../assets/colors/Index';
 import SpesialProduk from '../components/Home/SpesialProduk';
 import ProdukList from '../components/Home/ProdukList';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import base64 from 'react-native-base64';
 // import { countDown } from '../config/function';
 
 export default function Home({ navigation }) {
@@ -120,6 +121,14 @@ export default function Home({ navigation }) {
         return newData;
     }, [dataProduk]);
 
+    const LinkBanner = (item) => {
+        // console.log(item);
+        if (item.id && item.title) {
+            const id = base64.encode(item.id.toString());
+            Linking.openURL(`https://mall38.com/detail-banner/${item.title}/${id}`);
+        }
+    };
+
 
     useEffect(() => {
         getData();
@@ -182,7 +191,9 @@ export default function Home({ navigation }) {
                     visible={visible}
                     style={styles.BoxCarousel}
                 >
-                    <Carousel dataCarousel={dataCarousel} />
+                    <Carousel
+                        LinkBanner={LinkBanner}
+                        dataCarousel={dataCarousel} />
                 </ShimmerPlaceHolder>
                 <ProdukBaru
                     ShimmerPlaceHolder={ShimmerPlaceHolder}
@@ -207,8 +218,11 @@ export default function Home({ navigation }) {
                 {
                     visibleProduk &&
                     <>
-                        <BannerCategori navigation={navigation} dataCategori={dataCategori} />
+                        <BannerCategori
+                            navigation={navigation}
+                            dataCategori={dataCategori} />
                         <PromoMenarik
+                            LinkBanner={LinkBanner}
                             navigation={navigation}
                             dataCarousel={dataCarousel}
                             ShimmerPlaceHolder={ShimmerPlaceHolder}
