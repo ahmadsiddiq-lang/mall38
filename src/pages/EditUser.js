@@ -247,61 +247,46 @@ export default function EditUser({ navigation, route }) {
                                 fontFamily: Poppins.Medium,
                             }}>{dataUser.user.refferal_code}</Text>
                     </View>
-                    <Text style={{
-                        fontSize: sizeFont(3.3),
-                        marginLeft: sizeWidth(5),
-                        color: color.fontBlack1,
-                        marginTop: hp(1),
-                    }}>Nama</Text>
-                    <TextInput
-                        style={styles.Input}
-                        value={name}
-                        onChangeText={(e) => setName(e)}
-                    />
-                    <Text style={{
-                        fontSize: sizeFont(3.3),
-                        marginLeft: sizeWidth(5),
-                        color: color.fontBlack1,
-                        marginTop: hp(1),
-                    }}>Nomor telephone / Hp</Text>
-                    <TextInput
-                        style={styles.Input}
-                        value={phone}
-                        onChangeText={(e) => setPhone(e)}
-                    />
-                    <Text style={{
-                        fontSize: sizeFont(3.3),
-                        marginLeft: sizeWidth(5),
-                        color: color.fontBlack1,
-                        marginTop: hp(1),
-                    }}>No. KTP</Text>
-                    <TextInput
-                        style={styles.Input}
-                        value={ktp}
-                        onChangeText={(e) => setKtp(e)}
-                    />
-                    <Text style={{
-                        fontSize: sizeFont(3.3),
-                        marginLeft: sizeWidth(5),
-                        color: color.fontBlack1,
-                        marginTop: hp(1),
-                    }}>Kode POS</Text>
-                    <TextInput
-                        style={styles.Input}
-                        value={kodePos}
-                        onChangeText={(e) => setKodePos(e)}
-                    />
-                    <Text style={{
-                        fontSize: sizeFont(3.3),
-                        marginLeft: sizeWidth(5),
-                        color: color.fontBlack1,
-                        marginTop: hp(1),
-                    }}>Alamat</Text>
-                    <TextInput
-                        style={styles.Input}
-                        value={alamat}
-                        onChangeText={(e) => setAlamat(e)}
-                    />
+                    <View style={styles.BoxInput}>
+                        <Text style={styles.titleInput}>Nama</Text>
+                        <TextInput
+                            style={styles.Input}
+                            value={name}
+                            onChangeText={(e) => setName(e)}
+                        />
+                    </View>
+                    <View style={styles.BoxInput}>
+                        <Text style={styles.titleInput}>Nomor telephone / Hp</Text>
+                        <TextInput
+                            style={styles.Input}
+                            value={phone}
+                            onChangeText={(e) => setPhone(e)}
+                        />
+                    </View>
+                    <View style={styles.BoxInput}>
+                        <Text style={styles.titleInput}>No. KTP</Text>
+                        <TextInput
+                            style={styles.Input}
+                            value={ktp}
+                            onChangeText={(e) => setKtp(e)}
+                        />
+                    </View>
+                    <View style={styles.BoxInput}>
+                        <Text style={styles.titleInput}>Kode POS</Text>
+                        <TextInput
+                            style={styles.Input}
+                            value={kodePos}
+                            onChangeText={(e) => setKodePos(e)}
+                        />
+                    </View>
+                    <View style={styles.BoxInput}>
+                        <Text style={styles.titleInput}>Alamat</Text>
+                        <TextInput
+                            style={styles.Input}
+                            value={alamat}
+                            onChangeText={(e) => setAlamat(e)}
+                        />
+                    </View>
                     <View style={styles.BoxDropdown}>
                         <Text style={{
                             fontSize: sizeFont(3.5),
@@ -425,12 +410,26 @@ const styles = StyleSheet.create({
         width: sizeWidth(27),
         height: sizeWidth(27),
     },
-    Input: {
+    BoxInput: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         borderBottomWidth: 1,
         borderBottomColor: color.border2,
+        alignItems: 'center',
+    },
+    titleInput: {
+        fontSize: sizeFont(3.3),
+        marginLeft: sizeWidth(5),
+        color: color.fontBlack1,
+        marginTop: hp(1),
+        flex: 1,
+    },
+    Input: {
         paddingHorizontal: sizeWidth(5),
         fontSize: sizeFont(3.7),
         marginVertical: sizeHeight(0.5),
+        flex: 2,
+        textAlign: 'right',
     },
     DropDown: {
         width: '100%',

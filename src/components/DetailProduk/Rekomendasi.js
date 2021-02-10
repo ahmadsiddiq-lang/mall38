@@ -16,7 +16,7 @@ export default function Rekomendasi({ navigation, dataProduk = [], goToTop, deta
                     return item.category.name === detailProduk.category.name;
                 }
             });
-            return data;
+            return data.slice(0, 10);
         }
     };
 
@@ -25,7 +25,7 @@ export default function Rekomendasi({ navigation, dataProduk = [], goToTop, deta
             {
                 dataProduk ?
                     dataProduk.length > 0 ?
-                        filterData().slice(0, 10).map((item, index) => {
+                        filterData().map((item, index) => {
                             return (
                                 <TouchableOpacity
                                     activeOpacity={0.8}
