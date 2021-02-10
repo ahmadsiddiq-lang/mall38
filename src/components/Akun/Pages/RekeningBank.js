@@ -72,7 +72,11 @@ export default function RekeningBank({ navigation }) {
     useEffect(() => {
         handleGetRekening();
         return () => {
-            handleGetRekening();
+            setNamaBank(null);
+            setNoRekening(null);
+            setLoading(true);
+            setModal(false);
+            setButtonLoading(false);
         };
     }, [handleGetRekening]);
 

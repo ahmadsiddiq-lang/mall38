@@ -84,8 +84,10 @@ export default function Akun({ navigation }) {
     //     }
     // }, [dataScreen, dataAll]);
     const setDataPactketMita = useCallback(async () => {
-        if (dataScreen.paket_mitra !== undefined) {
-            setPacketMitra(dataScreen.paket_mitra.nama_paket);
+        if (dataScreen.paket_mitra !== null) {
+            if (dataScreen.paket_mitra !== undefined) {
+                setPacketMitra(dataScreen.paket_mitra.nama_paket);
+            }
         }
     }, [dataScreen]);
 
@@ -119,14 +121,14 @@ export default function Akun({ navigation }) {
                 source={require('../assets/images/background/Background.png')}
                 style={{
                     width: SCREEN_WIDTH,
-                    height: heightPercentageToDP(20),
+                    height: heightPercentageToDP(18),
                 }}
             >
                 <TouchableOpacity
                     onPress={() => handleNavEditUser()}
                     activeOpacity={0.9}
                     style={{
-                        marginTop: heightPercentageToDP(6.5),
+                        marginTop: heightPercentageToDP(4),
                         paddingHorizontal: sizeWidth(5),
                         flexDirection: 'row',
                         alignItems: 'center',

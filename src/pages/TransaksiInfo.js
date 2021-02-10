@@ -59,7 +59,7 @@ export default function Transaksi({ navigation }) {
 
     const handleCircle = React.useCallback(async () => {
         const idUser = await getIdUser();
-        if (idUser !== null && dataTransaksi !== undefined) {
+        if (idUser !== null && dataTransaksi !== null) {
             const data = dataTransaksi.filter(item => item.status_pembayaran === 'pending');
             if (data.length > 0) {
                 dispatch(setEdge(data));
