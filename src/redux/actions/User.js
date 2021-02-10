@@ -6,6 +6,7 @@ export const GET_USER = 'GET_USER';
 export const CLEAR_USER = 'GET_USER';
 export const GET_WALLET = 'GET_WALLET';
 export const GET_HOSTORY_WALLET = 'GET_HOSTORY_WALLET';
+export const GET_REKENING = 'GET_REKENING';
 
 export const getDataUser = (id, setLoadingData) => {
     return async (dispatch) => {
@@ -143,6 +144,8 @@ export const checkPassword = (data, setErr) => {
         });
     };
 };
+
+
 export const updatePssword = (data, handleSuccess) => {
     return async () => {
         await Axios.post(BASE_URL + 'update-password-user', data, {
@@ -152,10 +155,50 @@ export const updatePssword = (data, handleSuccess) => {
                 Authorization: 'Bearer' + await getToken(),
             },
         }).then(response => {
+            // console.log(response.data);
+            handleSuccess();
+        }).catch(err => {
+            console.log(err.response);
+        });
+    };
+};
+
+
+export const getRekening = (idUser, setLoading) => {
+    return async (dispatch) => {
+        await Axios.get(BASE_URL + 'user-bank-info?user_id=' + idUser, {
+            withCredentials: true,
+            headers: {
+                Accept: 'application/json',
+                Authorization: 'Bearer' + await getToken(),
+            },
+        }).then(response => {
+            // console.log(response.data);
+            dispatch({
+                type: GET_REKENING,
+                data: response.data.data,
+            });
+            setLoading(false);
+        }).catch(err => {
+            console.log(err.response);
+        });
+    };
+};
+
+export const updateDataBank = (data, handleSuccess, handleInvalid) => {
+    return async () => {
+        await Axios.post(BASE_URL + 'user-bank-post', data, {
+            withCredentials: true,
+            headers: {
+                Accept: 'application/json',
+                Authorization: 'Bearer' + await getToken(),
+            },
+        }).then((response) => {
             console.log(response.data);
             handleSuccess();
         }).catch(err => {
             console.log(err.response);
+            handleInvalid();
         });
     };
 };

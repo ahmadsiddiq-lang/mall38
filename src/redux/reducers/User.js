@@ -1,9 +1,10 @@
-import { GET_USER, CLEAR_USER, GET_WALLET, GET_HOSTORY_WALLET } from '../actions/User';
+import { GET_USER, CLEAR_USER, GET_WALLET, GET_HOSTORY_WALLET, GET_REKENING } from '../actions/User';
 
 const initioalState = {
     dataUser: [],
     dataWallet: {},
     dataHistoryWallet: {},
+    noRekening: [],
 };
 
 const getDataUserReducer = (state = initioalState, action) => {
@@ -27,6 +28,11 @@ const getDataUserReducer = (state = initioalState, action) => {
             return {
                 ...state,
                 dataHistoryWallet: action.data,
+            };
+        case GET_REKENING:
+            return {
+                ...state,
+                noRekening: action.data,
             };
 
         default:

@@ -34,6 +34,7 @@ const RootReducer = combineReducers({
   dataTransaksi: getTransaksiReducer,
   detailOrder: detailOrderReducer,
   edgeOrder: edgeOrderReducer,
+  noRekening: getDataUserReducer,
 });
 
 const store = createStore(RootReducer, applyMiddleware(thunk));
