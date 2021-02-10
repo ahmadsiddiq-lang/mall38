@@ -115,20 +115,20 @@ export default function Akun({ navigation }) {
 
     return (
         <View style={styles.Container}>
-            <StatusBar translucent={false} backgroundColor={color.mainColor} />
+            <StatusBar translucent={true} backgroundColor="transparent" />
             <ImageBackground
                 resizeMethod="resize"
                 source={require('../assets/images/background/Background.png')}
                 style={{
                     width: SCREEN_WIDTH,
-                    height: heightPercentageToDP(18),
+                    height: heightPercentageToDP(20),
                 }}
             >
                 <TouchableOpacity
                     onPress={() => handleNavEditUser()}
                     activeOpacity={0.9}
                     style={{
-                        marginTop: heightPercentageToDP(4),
+                        marginTop: heightPercentageToDP(5),
                         paddingHorizontal: sizeWidth(5),
                         flexDirection: 'row',
                         alignItems: 'center',
