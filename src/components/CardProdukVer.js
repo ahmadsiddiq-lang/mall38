@@ -45,23 +45,31 @@ export default function CardProdukVer({ item, navigation, lableNew, lableRedy, o
                     }
                     {
                         lableRedy &&
-                        <ImageBackground
-                            source={require('../assets/images/Produk/Rectangle1.png')}
-                            style={{
-                                position: 'absolute',
-                                left: 0,
-                                bottom: 0,
-                                width: sizeWidth(30),
-                                height: sizeHeight(3.5),
-                                zIndex: 1,
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                            }}>
+                        <View style={{
+                            width: '100%',
+                            zIndex: 1,
+                            position: 'absolute',
+                            left: 0,
+                            bottom: 0,
+                        }}>
+                            <Image
+                                source={require('../assets/images/Produk/Rectangle1.png')}
+                                style={{
+                                    resizeMode: 'contain',
+                                    position: 'absolute',
+                                    left: 0,
+                                    bottom: 0,
+                                    width: sizeWidth(30),
+                                    height: sizeHeight(3.5),
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                }} />
                             <Text style={{
                                 fontSize: sizeFont(3),
                                 color: color.fontWhite,
+                                zIndex: 1,
                             }}>Redy to Order</Text>
-                        </ImageBackground>
+                        </View>
                     }
                 </View>
                 <View style={styles.BoxText}>
