@@ -183,7 +183,7 @@ export const SyaratDanKetentuan = [
 
 export const kebijakanProvasi = [
     {
-        title: 'Kami sangat memperhatikan keamanan dan privasi petanggan kami dan kami hanya akan mengumpulkan informasi pribadi Anda.',
+        title: 'Kami sangat memperhatikan keamanan dan privasi pelanggan kami dan kami hanya akan mengumpulkan informasi pribadi Anda.',
         body: [
             {
                 text: 'Perlindungan data adalah masalah kepercayaan dan privasi Anda sangat penting bagi kami. Kami hanya akan menggunakan nama Anda dan informasi yang berhubungan dengan Anda sebagaimana yang dinyatakan dalam Kebijakan Privasi berikut. Kami hanya akan mengumpulkan informasi yang kami perlukan dan kami hanya akan mengumpulkan informasi yang relevan dengan transaksi kami dengan Anda.',
@@ -197,7 +197,7 @@ export const kebijakanProvasi = [
         ],
     },
     {
-        title: 'Pengimputan Informasi Pribadi',
+        title: 'Penginputan Informasi Pribadi',
         body: [
             {
                 text: 'Mall38.com tidak menjual, membagi atau memperjualbelikan informasi pribadi pelanggan yang dikumpulkan secara online melalui pihak ketiga.',

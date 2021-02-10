@@ -38,7 +38,9 @@ export default function ListKurir({ dataOngkir, setDataOngkirnew }) {
                                                     key={subIndex}
                                                     activeOpacity={0.8}
                                                     style={styles.BoxList}>
-                                                    <View>
+                                                    <View style={{
+                                                        flex: 2,
+                                                    }}>
                                                         <Text style={{
                                                             fontSize: sizeFont(3.3),
                                                             fontFamily: Poppins.Medium,
@@ -51,12 +53,13 @@ export default function ListKurir({ dataOngkir, setDataOngkirnew }) {
                                                             <Text style={{
                                                                 fontSize: sizeFont(3.3),
                                                                 color: color.fontBlack1,
-                                                            }}>Akan diterima dalam {subItem.cost[0].etd.replace('HARI', '')} Hari</Text>
+                                                            }}>Akan diterima dalam {subItem.cost[0].etd.replace('HARI', '')} Hari Setelah paket dikirim</Text>
                                                         </View>
                                                     </View>
                                                     <View style={{
                                                         alignItems: 'flex-end',
                                                         justifyContent: 'center',
+                                                        flex: 1,
                                                     }}>
                                                         <Text style={{
                                                             fontSize: sizeFont(3.5),

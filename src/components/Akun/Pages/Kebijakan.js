@@ -57,7 +57,7 @@ export default function Kebijakan({ navigation }) {
         <View style={styles.Container}>
             <Headers
                 navigation={navigation}
-                title={'Kebijakan Provasi'}
+                title={'Kebijakan Privasi'}
             />
             <View>
                 <FlatList
