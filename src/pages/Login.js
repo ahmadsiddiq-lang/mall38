@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useState } from 'react';
-import { Image, ImageBackground, Modal, ScrollView, StatusBar, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Image, ImageBackground, Modal, ScrollView, StatusBar, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import { color } from '../assets/colors/Index';
 import { Poppins } from '../assets/fonts';
 import { SCREEN_HEIGHT, SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
@@ -25,12 +25,14 @@ export default function Login({ navigation }) {
     const [modalEmail, setModalEmail] = useState(false);
     const [emailAkun, setEmailAkun] = useState(null);
     const [idModal, setIdModal] = useState(null);
+    const [loading, setLoading] = useState(false);
 
 
     // const dataUser = useSelector(state => state.dataLogin.dataUser);
     const dataAdmin = useSelector(state => state.dataLogin.dataAdmin);
 
     const handleErrorLogin = useCallback(async () => {
+        setLoading(false);
         ToastAndroid.showWithGravity('Email atau Password Anda salah', ToastAndroid.LONG, ToastAndroid.CENTER);
     }, []);
 
@@ -39,6 +41,7 @@ export default function Login({ navigation }) {
             const id = JSON.stringify(idUser.id);
             dispatch(getDataUser(id));
             dispatch(getCArt(id));
+            setLoading(false);
             await AsyncStorage.setItem('idUser', id);
             navigation.replace('MyTabbar');
         } catch (e) {
@@ -57,6 +60,7 @@ export default function Login({ navigation }) {
             if (validateEmail(email)) {
                 // if (validatePassword(password)) {
                 if (password !== null) {
+                    setLoading(true);
                     dispatch(LoginUser(data, handleErrorLogin, handleLoginSuccess));
                 } else {
                     ToastAndroid.showWithGravity('Periksa kembali password', ToastAndroid.LONG, ToastAndroid.CENTER);
@@ -113,7 +117,7 @@ export default function Login({ navigation }) {
     }, []);
 
     const handleActiveAkun = useCallback(() => {
-        console.log(emailAkun);
+        // console.log(emailAkun);
         if (validateEmail(emailAkun)) {
             if (idModal === 0) {
                 console.log('forgote');
@@ -237,6 +241,15 @@ export default function Login({ navigation }) {
                             marginRight: sizeWidth(3),
                         }}>Lupa Password ?</Text>
                     <View style={styles.BoxContentLogin}>
+                        {
+                            loading &&
+                            <View style={{
+                                position: 'absolute',
+                                bottom: hp(8),
+                            }}>
+                                <ActivityIndicator size="small" color={color.mainColor} />
+                            </View>
+                        }
                         <TouchableOpacity
                             onPress={() => handleLogin()}
                             activeOpacity={0.8}
