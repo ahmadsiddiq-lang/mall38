@@ -7,6 +7,8 @@ export const CLEAR_USER = 'GET_USER';
 export const GET_WALLET = 'GET_WALLET';
 export const GET_HOSTORY_WALLET = 'GET_HOSTORY_WALLET';
 export const GET_REKENING = 'GET_REKENING';
+export const CLEAR_WALLET = 'CLEAR_WALLET';
+export const CLEAR_HISTORY_WALLET = 'CLEAR_HISTORY_WALLET';
 
 export const getDataUser = (id, setLoadingData) => {
     return async (dispatch) => {
@@ -33,6 +35,24 @@ export const clearDataUser = () => {
     return async (dispatch) => {
         dispatch({
             type: CLEAR_USER,
+            data: {},
+        });
+    };
+};
+
+export const clearDataWallet = () => {
+    return async (dispatch) => {
+        dispatch({
+            type: CLEAR_WALLET,
+            data: {},
+        });
+    };
+};
+
+export const clearHistoryWallet = () => {
+    return async (dispatch) => {
+        dispatch({
+            type: CLEAR_HISTORY_WALLET,
             data: {},
         });
     };

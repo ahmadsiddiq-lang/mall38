@@ -1,4 +1,4 @@
-import { GET_TRANSAKSI } from '../actions/Transaksi';
+import { CLEAR_TRANSAKSI, GET_TRANSAKSI } from '../actions/Transaksi';
 
 const initiolState = {
     dataTransaksi: [],
@@ -7,6 +7,11 @@ const initiolState = {
 const getTransaksiReducer = (state = initiolState, action) => {
     switch (action.type) {
         case GET_TRANSAKSI:
+            return {
+                ...state,
+                dataTransaksi: action.data,
+            };
+        case CLEAR_TRANSAKSI:
             return {
                 ...state,
                 dataTransaksi: action.data,

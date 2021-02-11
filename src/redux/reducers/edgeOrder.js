@@ -1,4 +1,4 @@
-import { SET_EDGE } from '../actions/edgeOrder';
+import { CLEAR_EDGE, SET_EDGE } from '../actions/edgeOrder';
 
 const initioalState = {
     edgeOrder: [],
@@ -7,6 +7,11 @@ const initioalState = {
 const edgeOrderReducer = (state = initioalState, action) => {
     switch (action.type) {
         case SET_EDGE:
+            return {
+                ...state,
+                edgeOrder: action.data,
+            };
+        case CLEAR_EDGE:
             return {
                 ...state,
                 edgeOrder: action.data,

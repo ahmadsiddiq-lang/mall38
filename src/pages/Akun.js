@@ -9,17 +9,17 @@ import { Poppins } from '../assets/fonts';
 import Content from '../components/Akun/Content';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSelector, useDispatch } from 'react-redux';
-import { getDataUser, clearDataUser, getWallet, getHostoryWallet } from '../redux/actions/User';
+import { getDataUser, clearDataUser, getWallet, getHostoryWallet, clearDataWallet, clearHistoryWallet } from '../redux/actions/User';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
+import { clearTransaksi } from '../redux/actions/Transaksi';
+import { clearEdge } from '../redux/actions/edgeOrder';
 
 export default function Akun({ navigation }) {
 
     const dispatch = useDispatch();
     const dataScreen = useSelector(state => state.dataUser.dataUser.user);
     const dataUser = useSelector(state => state.dataUser.dataUser);
-    // const paket_mitra = dataScreen.paket_mitra !== undefined ? 'masuk' : null;
 
-    // const [dataScreen, setDataUser] = useState(dataAll);
     const [modalVisible, setModalVisible] = useState(false);
     const [refreshing, setRefreshing] = React.useState(false);
     const [paket_mitra, setPacketMitra] = React.useState(null);
@@ -29,8 +29,6 @@ export default function Akun({ navigation }) {
 
     const handleUser = useCallback(async () => {
         const idUser = await getIdUser();
-        // const token = await getToken();
-        // console.log(token);
         if (idUser !== null) {
             dispatch(getDataUser(idUser));
             dispatch(getWallet(idUser));
@@ -41,10 +39,13 @@ export default function Akun({ navigation }) {
     const handleClearDataUser = useCallback(async () => {
         const idUser = await getIdUser();
         if (idUser !== null) {
+            dispatch(clearEdge());
             dispatch(clearDataUser());
+            dispatch(clearDataWallet());
+            dispatch(clearHistoryWallet());
+            dispatch(clearTransaksi());
             await AsyncStorage.clear();
             setModalVisible(!modalVisible);
-            // setDataUser(undefined);
             navigation.replace('Login');
         }
     }, [dispatch, modalVisible, navigation]);
@@ -78,11 +79,6 @@ export default function Akun({ navigation }) {
         }
     }, [navigation, dataUser]);
 
-    // const setStateAllDataUser = useCallback(async () => {
-    //     if (dataScreen === undefined) {
-    //         setDataUser(dataAll);
-    //     }
-    // }, [dataScreen, dataAll]);
     const setDataPactketMita = useCallback(async () => {
         if (dataScreen.paket_mitra !== null) {
             if (dataScreen.paket_mitra !== undefined) {
@@ -105,13 +101,6 @@ export default function Akun({ navigation }) {
             handleUser();
         };
     }, [handleUser]);
-
-    // useEffect(() => {
-    //     setStateAllDataUser();
-    //     return () => {
-    //         setStateAllDataUser();
-    //     };
-    // }, [setStateAllDataUser]);
 
     return (
         <View style={styles.Container}>

@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../../assets/colors/Index';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
@@ -18,6 +18,20 @@ export default function Content({ navigation, handleNavEditUser }) {
 
     const newDataWallet = objekEmpty(dataWallet) ? dataWallet : null;
     const newDataHistoryWallet = objekEmpty(dataHistoryWallet) ? dataHistoryWallet.history : null;
+
+    const [bonus_aktive, setBonusAktive] = useState([]);
+
+    const pushBonusAktive = useCallback(() => {
+        if (newDataHistoryWallet != null) {
+            let data = [];
+            newDataHistoryWallet.forEach(element => {
+                if (element.bonus_active > 0) {
+                    data.push(element.bonus_active);
+                }
+            });
+            setBonusAktive(data);
+        }
+    }, [newDataHistoryWallet]);
 
 
     const BonusActive = () => {
@@ -39,9 +53,16 @@ export default function Content({ navigation, handleNavEditUser }) {
         }
     };
     // console.log(newDataWallet === undefined);
-    // console.log(newDataWallet);
+    // console.log(bonus_aktive);
 
-    const data = [50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80];
+    useEffect(() => {
+        pushBonusAktive();
+        return () => {
+            setBonusAktive([]);
+        };
+    }, [pushBonusAktive]);
+
+    // const data = [50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80];
 
     const Line = ({ line }) => (
         <Path
@@ -97,7 +118,7 @@ export default function Content({ navigation, handleNavEditUser }) {
                     <View>
                         <AreaChart
                             style={{ height: sizeHeight(8) }}
-                            data={data}
+                            data={bonus_aktive}
                             contentInset={{ top: 5, bottom: 5 }}
                             curve={shape.curveNatural}
                             svg={{ fill: 'rgba(134, 65, 244, 0.2)' }}
