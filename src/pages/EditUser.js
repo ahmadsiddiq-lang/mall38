@@ -250,6 +250,7 @@ export default function EditUser({ navigation, route }) {
                     <View style={styles.BoxInput}>
                         <Text style={styles.titleInput}>Nama</Text>
                         <TextInput
+                            maxLength={16}
                             style={styles.Input}
                             value={name}
                             onChangeText={(e) => setName(e)}
@@ -258,6 +259,8 @@ export default function EditUser({ navigation, route }) {
                     <View style={styles.BoxInput}>
                         <Text style={styles.titleInput}>Nomor telephone / Hp</Text>
                         <TextInput
+                            keyboardType="phone-pad"
+                            maxLength={15}
                             style={styles.Input}
                             value={phone}
                             onChangeText={(e) => setPhone(e)}
@@ -266,6 +269,8 @@ export default function EditUser({ navigation, route }) {
                     <View style={styles.BoxInput}>
                         <Text style={styles.titleInput}>No. KTP</Text>
                         <TextInput
+                            keyboardType="number-pad"
+                            maxLength={16}
                             style={styles.Input}
                             value={ktp}
                             onChangeText={(e) => setKtp(e)}
@@ -274,6 +279,8 @@ export default function EditUser({ navigation, route }) {
                     <View style={styles.BoxInput}>
                         <Text style={styles.titleInput}>Kode POS</Text>
                         <TextInput
+                            keyboardType="number-pad"
+                            maxLength={5}
                             style={styles.Input}
                             value={kodePos}
                             onChangeText={(e) => setKodePos(e)}
@@ -282,6 +289,7 @@ export default function EditUser({ navigation, route }) {
                     <View style={styles.BoxInput}>
                         <Text style={styles.titleInput}>Alamat</Text>
                         <TextInput
+                            multiline={true}
                             style={styles.Input}
                             value={alamat}
                             onChangeText={(e) => setAlamat(e)}

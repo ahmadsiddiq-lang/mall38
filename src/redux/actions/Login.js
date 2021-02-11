@@ -14,15 +14,15 @@ export const LoginUser = (data, handleErrorLogin, handleLoginSuccess) => {
             },
         })
             .then(dataUser => {
-                // console.log(dataUser);
+                console.log(dataUser.data);
                 handleLoginSuccess(dataUser.data.data);
                 dispatch({
                     type: LOGIN_USER,
                     data: dataUser.data.data,
                 });
             }).catch(err => {
-                handleErrorLogin();
-                console.log(err);
+                handleErrorLogin(err.response.data);
+                // console.log(err.response.data);
             });
     };
 };

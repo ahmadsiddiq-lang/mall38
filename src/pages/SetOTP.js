@@ -4,9 +4,9 @@ import { ActivityIndicator, StatusBar, StyleSheet, Text, TextInput, ToastAndroid
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { color } from '../assets/colors/Index';
 import { Poppins } from '../assets/fonts';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { SCREEN_HEIGHT, SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
-import { StackActions } from '@react-navigation/native';
+// import Ionicons from 'react-native-vector-icons/Ionicons';
+import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
+// import { StackActions } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { resendOTP, setOtp } from '../redux/actions/Register';
 import { getDataUser } from '../redux/actions/User';
@@ -16,32 +16,38 @@ import { ToasInvalid, ToasSuccess, validateEmail } from '../config/function';
 
 export default function SetOTP({ navigation, route }) {
     const dispatch = useDispatch();
-    const [indexOf, setIndex] = React.useState(null);
-    const [kode, setKode] = React.useState([]);
+    // const [indexOf, setIndex] = React.useState(null);
+    // const [kode, setKode] = React.useState([]);
+    const [kode, setKode] = React.useState('');
     const [loading, setLoading] = useState(false);
 
-    const inputRefs = Array(6).fill(React.createRef());
+    // const inputRefs = Array(6).fill(React.createRef());
 
-    const goNextAfterEdit = (e, index) => {
-        // console.log(e);
-        const newData = [...kode];
-        newData.push(e);
-        setKode(newData);
-        if (e > 0) {
-            if (index < inputRefs.length - 1) {
-                inputRefs[index + 1].focus();
-            }
-        }
-        else if (index > 0 || e === 0) {
-            inputRefs[index - 1].focus();
-        }
-    };
+    // const goNextAfterEdit = (e, index) => {
+    //     // console.log(e);
+    //     const newData = [...kode];
+    //     newData.push(e);
+    //     setKode(newData);
+    //     if (e > 0) {
+    //         if (index < inputRefs.length - 1) {
+    //             inputRefs[index + 1].focus();
+    //         }
+    //     }
+    //     else if (index > 0 || e === 0) {
+    //         inputRefs[index - 1].focus();
+    //         const newKode = [...kode];
+    //         newKode.pop();
+    //         setKode(newKode);
+    //     }
+    //     console.log(e);
+    // };
 
     const handleReponsSucces = useCallback(async (idUser) => {
         try {
             const id = JSON.stringify(idUser.id);
             dispatch(getDataUser(id));
             dispatch(getCArt(id));
+            setLoading(false);
             await AsyncStorage.setItem('idUser', id);
             setTimeout(() => {
                 navigation.replace('MyTabbar');
@@ -54,17 +60,18 @@ export default function SetOTP({ navigation, route }) {
         }
     }, [navigation, dispatch]);
 
-    const handleError = useCallback((err) => {
-        console.log(err);
+    const handleError = useCallback(() => {
+        // console.log(err);
         ToasInvalid('Kode tidak valid');
         setLoading(false);
         setKode([]);
     }, []);
 
     const handleButton = useCallback(() => {
-        const kodeNew = { otp: kode.join('') };
-        console.log(kodeNew);
-        if (kodeNew) {
+        // const kodeNew = { otp: kode.join('') };
+        const kodeNew = { otp: kode };
+        // console.log(kode);
+        if (kode.length > 0) {
             setLoading(true);
             dispatch(setOtp(kodeNew, handleReponsSucces, handleError));
         } else {
@@ -130,7 +137,7 @@ export default function SetOTP({ navigation, route }) {
                 }}>Masukkan Kode OTP</Text>
                 <Text style={{ fontSize: sizeFont(3.3), marginVertical: 20, color: color.fontBody1 }}>Masukkan kode verifikasi yang telah dikirim ke alamat email Anda</Text>
                 <View style={styles.BOxContent}>
-                    <View style={styles.BoxItem}>
+                    {/* <View style={styles.BoxItem}>
                         {
                             inputRefs.map((item, index) => {
                                 return (
@@ -147,7 +154,22 @@ export default function SetOTP({ navigation, route }) {
                                 );
                             })
                         }
-                    </View>
+                    </View> */}
+                    <TextInput
+                        maxLength={7}
+                        onChangeText={(e) => setKode(e)}
+                        keyboardType="number-pad"
+                        placeholder="KODE OTP"
+                        style={{
+                            backgroundColor: color.bgWhite,
+                            elevation: 3,
+                            borderRadius: 8,
+                            borderWidth: 1,
+                            borderColor: color.mainColor,
+                            textAlign: 'center',
+                            fontSize: sizeFont(6),
+                        }}
+                    />
                 </View>
                 <View style={styles.Footer}>
                     <TouchableOpacity onPress={() => {

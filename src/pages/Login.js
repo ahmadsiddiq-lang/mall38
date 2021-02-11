@@ -1,9 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, Image, ImageBackground, Modal, ScrollView, StatusBar, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Image, Modal, ScrollView, StatusBar, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import { color } from '../assets/colors/Index';
 import { Poppins } from '../assets/fonts';
-import { SCREEN_HEIGHT, SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
+import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { useDispatch, useSelector } from 'react-redux';
 import { LoginAdmin, LoginUser } from '../redux/actions/Login';
@@ -12,7 +12,6 @@ import { getDataUser } from '../redux/actions/User';
 import { getCArt } from '../redux/actions/Cart';
 import { ToasInvalid, ToasSuccess, validateEmail, validatePassword } from '../config/function';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { TouchableHighlight } from 'react-native-gesture-handler';
 import { getOtpForgote, resendOTP } from '../redux/actions/Register';
 
 export default function Login({ navigation }) {
@@ -31,9 +30,10 @@ export default function Login({ navigation }) {
     // const dataUser = useSelector(state => state.dataLogin.dataUser);
     const dataAdmin = useSelector(state => state.dataLogin.dataAdmin);
 
-    const handleErrorLogin = useCallback(async () => {
+    const handleErrorLogin = useCallback(async (err) => {
         setLoading(false);
-        ToastAndroid.showWithGravity('Email atau Password Anda salah', ToastAndroid.LONG, ToastAndroid.CENTER);
+        // console.log(err);
+        ToastAndroid.showWithGravity(err.errors.email[0], ToastAndroid.LONG, ToastAndroid.CENTER);
     }, []);
 
     const handleLoginSuccess = useCallback(async (idUser) => {
