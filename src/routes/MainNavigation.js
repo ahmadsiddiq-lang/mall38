@@ -28,6 +28,7 @@ import ListProduk from '../pages/ListProduk';
 import Bonus from '../pages/Bonus';
 import SetOTP from '../pages/SetOTP';
 import Promo from '../pages/Promo';
+import PageBayar from '../pages/PageBayar';
 import ForgotePassword from '../pages/ForgotePassword';
 import SaldoBonus from '../components/Akun/Pages/SaldoBonus';
 import RekeningBank from '../components/Akun/Pages/RekeningBank';
@@ -233,6 +234,7 @@ export default function MainNavigation() {
                 <Stack.Screen name="Panduan" component={Panduan} />
                 <Stack.Screen name="Syarat" component={Syarat} />
                 <Stack.Screen name="Kebijakan" component={Kebijakan} />
+                <Stack.Screen name="PageBayar" component={PageBayar} />
             </Stack.Navigator>
         </NavigationContainer>
     );

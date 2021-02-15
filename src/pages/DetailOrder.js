@@ -13,6 +13,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
 import { detailOrder, clearDetailOrder } from '../redux/actions/DetailOrder';
 import { rupiah, objekEmpty, openWhatsApp } from '../config/function';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 
 export default function DetailOrder({ navigation, route }) {
 
@@ -136,6 +137,37 @@ export default function DetailOrder({ navigation, route }) {
                                 dataDetailOrder={dataDetailOrder}
                             />
                         }
+                        <View style={{
+                            backgroundColor: color.bgWhite,
+                            paddingHorizontal: sizeWidth(5),
+                            paddingVertical: heightPercentageToDP(3),
+                            flex: 1,
+                        }}>
+                            <TouchableOpacity
+                                onPress={() => navigation.navigate('PageBayar', { data: dataDetailOrder })}
+                                activeOpacity={0.8}
+                                style={{
+                                    borderWidth: 2,
+                                    borderColor: color.mainColor,
+                                    paddingVertical: sizeHeight(1),
+                                    borderRadius: 8,
+                                    alignItems: 'center',
+                                    backgroundColor: color.bgWhite,
+                                    flexDirection: 'row',
+                                    alignContent: 'center',
+                                    justifyContent: 'center',
+                                    marginHorizontal: sizeWidth(8),
+                                }}
+                            >
+                                <Ionicons name="logo-whatsapp" color={color.fontWhite} size={sizeFont(6)} />
+                                <Text style={{
+                                    color: color.mainColor,
+                                    fontSize: sizeFont(3.5),
+                                    marginLeft: sizeWidth(2),
+                                    fontFamily: Poppins.Medium,
+                                }}>Bayar Sekarang</Text>
+                            </TouchableOpacity>
+                        </View>
                     </ScrollView>
                     :
                     <View style={{
