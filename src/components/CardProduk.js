@@ -68,7 +68,7 @@ export default function CardProduk({ item, navigation, barStatus = '', lableNew,
                                 fontSize: sizeFont(3),
                                 color: color.fontWhite,
                                 zIndex: 1,
-                            }}>Redy to Order</Text>
+                            }}>Ready to Order</Text>
                         </View>
                     }
                 </View>

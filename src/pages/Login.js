@@ -120,7 +120,6 @@ export default function Login({ navigation }) {
         // console.log(emailAkun);
         if (validateEmail(emailAkun)) {
             if (idModal === 0) {
-                console.log('forgote');
                 dispatch(getOtpForgote(emailAkun, resendSuccess, resendError));
             } else {
                 console.log('resend OTP');
@@ -327,7 +326,7 @@ export default function Login({ navigation }) {
                             idModal === 0 ?
                                 <Text style={{
                                     fontSize: sizeFont(3.5),
-                                }}>Forgote Password</Text>
+                                }}>Lupa Password</Text>
                                 :
                                 <Text style={{
                                     fontSize: sizeFont(3.5),
@@ -358,7 +357,7 @@ export default function Login({ navigation }) {
                                     color: color.fontWhite,
                                     textAlign: 'center',
                                     fontFamily: Poppins.Medium,
-                                }}>Send</Text>
+                                }}>Kirim</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
