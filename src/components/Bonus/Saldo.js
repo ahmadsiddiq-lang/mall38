@@ -9,7 +9,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useSelector } from 'react-redux';
 import { rupiah } from '../../config/function';
 
-export default function Saldo({ dataWallet, dataHistoryWallet }) {
+export default function Saldo({ dataWallet, dataHistoryWallet, getMount }) {
 
 
     const BonusMasuk = () => {
@@ -30,7 +30,6 @@ export default function Saldo({ dataWallet, dataHistoryWallet }) {
             return total;
         }
     };
-
 
     // console.log(BonusPasif());
 
@@ -71,6 +70,7 @@ export default function Saldo({ dataWallet, dataHistoryWallet }) {
                 </View>
             </View>
             <TouchableOpacity
+                onPress={() => getMount()}
                 activeOpacity={0.8}
                 style={{
                     marginVertical: sizeHeight(2),
