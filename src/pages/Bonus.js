@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Headers from '../components/Header/Headers';
 import Saldo from '../components/Bonus/Saldo';
@@ -11,35 +11,53 @@ export default function Bonus({ navigation, route }) {
     const dataWallet = route.params.dataWallet !== undefined ? route.params.dataWallet : null;
     const dataHistoryWallet = route.params.dataHistoryWallet !== undefined ? route.params.dataHistoryWallet : null;
 
-    const [dataHostory, setHistory] = useState(null);
-    // const date = [
-    //     {m:0,}
-    // ]
+    const [dataHostory, setHistory] = useState([...dataHistoryWallet]);
 
-    const getMount = () => {
-        // const m = new Date('2021-01-22 07:49:34').getMonth();
-        // const y = new Date('2021-01-22 07:49:34').getFullYear();
+    const [date, setDate] = useState(new Date());
+    const [mount, setMount] = useState(new Date().getMonth());
+    const [year, setYear] = useState(new Date().getFullYear());
+    const [show, setShow] = useState(false);
+
+    const showPicker = useCallback((value) => setShow(value), []);
+
+    const nameMount = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juli', 'Juni', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
+    const onValueChange = useCallback(
+        (event, newDate) => {
+            const selectedDate = newDate || date;
+
+            showPicker(false);
+            const m = new Date(selectedDate).getMonth();
+            const y = new Date(selectedDate).getFullYear();
+            setDate(selectedDate);
+            setMount(m);
+            setYear(y);
+            filterData(m, y);
+        },
+        [date, showPicker, filterData],
+    );
+
+
+    const filterData = useCallback((propMount, propYear) => {
         if (dataHistoryWallet) {
-            let year = [];
+            let yearNew = [];
             dataHistoryWallet.forEach(element => {
                 const m = new Date(element.tanggal_pembayaran).getFullYear();
-                // year.push(m)
-                if (m === 2021) {
-                    year.push(element);
+                if (m === propYear) {
+                    yearNew.push(element);
                 }
             });
-            let mount = [];
-            year.forEach(element => {
+            let mountNew = [];
+            yearNew.forEach(element => {
                 const m = new Date(element.tanggal_pembayaran).getMonth();
-                // year.push(m)
-                if (m === 0) {
-                    mount.push(element);
+                if (m === propMount) {
+                    mountNew.push(element);
                 }
             });
-            setHistory(mount);
-            // console.log(mount);
+            setHistory(mountNew);
+            // console.log(mountNew);
         }
-    };
+    }, [dataHistoryWallet]);
 
 
     return (
@@ -49,12 +67,20 @@ export default function Bonus({ navigation, route }) {
                 title={title}
             />
             <Saldo
+                date={date}
+                show={show}
+                mount={mount}
+                year={year}
+                nameMount={nameMount}
+                onValueChange={onValueChange}
+                showPicker={showPicker}
                 getMount={getMount}
                 dataWallet={dataWallet}
                 dataHistoryWallet={dataHistoryWallet}
             />
             <History
                 dataHistoryWallet={dataHistoryWallet}
+                dataHostory={dataHostory}
                 pageStatus={pageStatus}
             />
         </View>

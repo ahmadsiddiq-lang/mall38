@@ -5388,7 +5388,7 @@ mkdirp@^0.5.1:
   dependencies:
     minimist "^1.2.5"
 
-moment@^2.29.1:
+moment@^2.24.0, moment@^2.29.1:
   version "2.29.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
   integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
@@ -6109,6 +6109,14 @@ react-native-linear-gradient@^2.5.6:
   version "2.5.6"
   resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.5.6.tgz#96215cbc5ec7a01247a20890888aa75b834d44a0"
   integrity sha512-HDwEaXcQIuXXCV70O+bK1rizFong3wj+5Q/jSyifKFLg0VWF95xh8XQgfzXwtq0NggL9vNjPKXa016KuFu+VFg==
+
+react-native-month-year-picker@^1.6.3:
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/react-native-month-year-picker/-/react-native-month-year-picker-1.6.3.tgz#9717ae901950f43329f66703f735de1b178e0c13"
+  integrity sha512-nVsyzq9YpOKqkU2LjAxX9YjNMY+pBnKhJCBUIf3vaAN7peZBP52qUnKP52KTPEpgDWtdRXR5t0q6XaG4v4Gsvw==
+  dependencies:
+    invariant "^2.2.4"
+    moment "^2.24.0"
 
 react-native-push-notification@5.1.0:
   version "5.1.0"

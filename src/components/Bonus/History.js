@@ -6,14 +6,14 @@ import { Poppins } from '../../assets/fonts';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import { rupiah } from '../../config/function';
 
-export default function History({ dataHistoryWallet, pageStatus }) {
+export default function History({ dataHostory, pageStatus }) {
 
-    // console.log(dataHistoryWallet);
+    // console.log(dataHostory);
 
     const TotalBV = () => {
-        if (dataHistoryWallet != null) {
+        if (dataHostory != null) {
             let total = 0;
-            dataHistoryWallet.forEach(element => {
+            dataHostory.forEach(element => {
                 total += element.bonus_passive;
             });
             return total;
@@ -39,7 +39,7 @@ export default function History({ dataHistoryWallet, pageStatus }) {
                         fontSize: sizeFont(3.5),
                         fontFamily: Poppins.Medium,
                         color: color.mainColor,
-                    }}>Total Bonus Pasive: {dataHistoryWallet !== null ? rupiah(TotalBV()) : '0'}</Text>
+                    }}>Total Bonus Pasive: {dataHostory !== null ? rupiah(TotalBV()) : '0'}</Text>
                 }
             </View>
             <ScrollView>
@@ -47,8 +47,8 @@ export default function History({ dataHistoryWallet, pageStatus }) {
                     marginHorizontal: sizeWidth(5),
                 }}>
                     {
-                        dataHistoryWallet != null ?
-                            dataHistoryWallet.map((item, index) => cardHostory({ item, index, pageStatus }))
+                        dataHostory != null ?
+                            dataHostory.map((item, index) => cardHostory({ item, index, pageStatus }))
                             :
                             <View style={{
                                 flex: 1,

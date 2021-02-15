@@ -1,16 +1,15 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { color } from '../../assets/colors/Index';
 import { Poppins } from '../../assets/fonts';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useSelector } from 'react-redux';
 import { rupiah } from '../../config/function';
+import MonthPicker from 'react-native-month-year-picker';
 
-export default function Saldo({ dataWallet, dataHistoryWallet, getMount }) {
-
+export default function Saldo({ dataWallet, dataHistoryWallet, getMount, show = { show }, mount, year, nameMount, onValueChange, showPicker, date }) {
 
     const BonusMasuk = () => {
         if (dataHistoryWallet != null) {
@@ -30,8 +29,6 @@ export default function Saldo({ dataWallet, dataHistoryWallet, getMount }) {
             return total;
         }
     };
-
-    // console.log(BonusPasif());
 
 
     return (
@@ -70,7 +67,8 @@ export default function Saldo({ dataWallet, dataHistoryWallet, getMount }) {
                 </View>
             </View>
             <TouchableOpacity
-                onPress={() => getMount()}
+                onPress={() => showPicker(true)}
+                // onPress={() => getMount()}
                 activeOpacity={0.8}
                 style={{
                     marginVertical: sizeHeight(2),
@@ -99,7 +97,7 @@ export default function Saldo({ dataWallet, dataHistoryWallet, getMount }) {
                         fontSize: sizeFont(3.5),
                         marginLeft: sizeWidth(3),
                         color: color.mainColor,
-                    }}>Januari 2021</Text>
+                    }}>{nameMount[mount] + ' ' + year}</Text>
                 </View>
                 <Ionicons
                     name="chevron-down"
@@ -146,6 +144,15 @@ export default function Saldo({ dataWallet, dataHistoryWallet, getMount }) {
                     }}>{dataHistoryWallet != null ? BonusKeluar() : '0'}</Text>
                 </View>
             </View>
+            {show && (
+                <MonthPicker
+                    onChange={onValueChange}
+                    value={date}
+                    // minimumDate={new Date()}
+                    maximumDate={new Date(2025, 5)}
+                    locale="id"
+                />
+            )}
         </LinearGradient>
     );
 }
