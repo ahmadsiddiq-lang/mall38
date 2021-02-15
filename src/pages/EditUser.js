@@ -1,20 +1,19 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Image, ImageBackground, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Headers from '../components/Header/Headers';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { color } from '../assets/colors/Index';
 import { SCREEN_WIDTH, sizeFont, sizeHeight, sizeWidth } from '../assets/responsive';
 import { Picker } from '@react-native-picker/picker';
 import { Poppins } from '../assets/fonts';
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { launchImageLibrary } from 'react-native-image-picker';
 import { useDispatch } from 'react-redux';
 import { getDataUser, updateProfile } from '../redux/actions/User';
 import { getIdUser, ToasSuccess, ToasInvalid } from '../config/function';
 import FormData from 'form-data';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Clipboard from '@react-native-community/clipboard';
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function EditUser({ navigation, route }) {
     const dataUser = route.params.data;
@@ -125,21 +124,21 @@ export default function EditUser({ navigation, route }) {
         maxWidth: 300,
         maxHeight: 300,
     };
-    const handleCamera = () => {
-        launchCamera(options, (response) => {
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-                return;
-            }
-            // setModalVisible(!modalVisible);
-            // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-            const source = response;
-            if (source) {
-                setImage(source);
-            }
-            console.log('Response = ', source);
-        });
-    };
+    // const handleCamera = () => {
+    //     launchCamera(options, (response) => {
+    //         if (response.didCancel) {
+    //             console.log('User cancelled image picker');
+    //             return;
+    //         }
+    //         // setModalVisible(!modalVisible);
+    //         // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+    //         const source = response;
+    //         if (source) {
+    //             setImage(source);
+    //         }
+    //         console.log('Response = ', source);
+    //     });
+    // };
 
     const handleLibrary = () => {
         launchImageLibrary(options, (response) => {
@@ -169,10 +168,6 @@ export default function EditUser({ navigation, route }) {
 
     return (
         <View style={styles.Container}>
-            <Headers
-                navigation={navigation}
-                title={'Edit Profile'}
-            />
             {
                 loading &&
                 <View style={{
@@ -188,65 +183,124 @@ export default function EditUser({ navigation, route }) {
                     <ActivityIndicator size="large" color={color.mainColor} />
                 </View>
             }
-            <ScrollView>
-                <View style={styles.Banner}>
-                    <TouchableOpacity
-                        onPress={() => handleLibrary()}
-                        activeOpacity={0.8}
-                        style={styles.BoxImage}>
-                        {
-                            image === null ?
-                                photo ?
-                                    <Image
-                                        style={styles.Image}
-                                        resizeMethod="auto"
-                                        source={{ uri: dataUser.user.photo }} />
-                                    :
-                                    <FontAwesome5 name="user" color={color.fontWhite} size={sizeFont(13)} solid />
+            <View style={styles.Banner}>
+                <ImageBackground
+                    resizeMethod="resize"
+                    source={require('../assets/images/background/Background.png')}
+                    style={{
+                        width: SCREEN_WIDTH,
+                        height: hp(20),
+                    }}
+                >
+                    <View style={{
+                        backgroundColor: color.mainColor,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        marginTop: hp(4),
+                    }}>
+                        <TouchableOpacity
+                            activeOpacity={0.8}
+                            onPress={() => navigation.goBack()}
+                            style={{
+                                paddingVertical: sizeWidth(3.5),
+                                paddingLeft: sizeWidth(5),
+                            }}
+                        >
+                            <Ionicons
+                                name="arrow-back"
+                                size={sizeFont(6.5)}
+                                color={color.fontWhite}
+                            />
+                        </TouchableOpacity>
+                        <Text style={{
+                            marginLeft: sizeWidth(5),
+                            fontSize: sizeFont(4.5),
+                            color: color.fontWhite,
+                            fontFamily: Poppins.Medium,
+                        }}>Edit Profile</Text>
+                    </View>
+                </ImageBackground>
+            </View>
+            <View style={{
+                alignItems: 'center',
+                width: SCREEN_WIDTH,
+                position: 'absolute',
+                marginTop: hp(10),
+                zIndex: 999,
+            }}>
+                <TouchableOpacity
+                    onPress={() => handleLibrary()}
+                    activeOpacity={1}
+                    style={styles.BoxImage}>
+                    {
+                        image === null ?
+                            photo ?
+                                <Image
+                                    style={styles.Image}
+                                    resizeMethod="auto"
+                                    source={{ uri: dataUser.user.photo }} />
                                 :
                                 <Image
                                     style={styles.Image}
                                     resizeMethod="auto"
-                                    source={{ uri: image.uri }} />
-                        }
-                    </TouchableOpacity>
+                                    source={{ uri: `https://ui-avatars.com/api/?name=${dataUser.user.name}/background=0D8ABC&color=fff` }} />
+                            :
+                            <Image
+                                style={styles.Image}
+                                resizeMethod="auto"
+                                source={{ uri: image.uri }} />
+                    }
+                    <Image
+                        source={require('../assets/images/pageAkun/IconEditFoto.png')}
+                        style={{
+                            resizeMode: 'contain',
+                            width: sizeWidth(6),
+                            height: sizeWidth(6),
+                            position: 'absolute',
+                            right: 5,
+                            bottom: 8,
+                        }}
+                    />
+                </TouchableOpacity>
+            </View>
+            <View style={styles.content}>
+                <ScrollView showsVerticalScrollIndicator={false} >
                     <TouchableOpacity
-                        onPress={() => handleLibrary()}
+                        onPress={() => SalinAccount()}
                         activeOpacity={0.8}
                         style={{
-                            backgroundColor: color.mainColor,
-                            width: SCREEN_WIDTH,
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            borderBottomColor: color.border2,
+                            marginTop: hp(5),
+                            backgroundColor: '#EADEF4',
+                            paddingVertical: hp(1),
+                            borderRadius: 5,
+                            paddingHorizontal: sizeWidth(5),
+                            marginBottom: hp(2),
+                        }}>
+                        <View style={{
+                            flexDirection: 'row',
                             alignItems: 'center',
-                        }}
-                    >
+                        }}>
+                            <Image
+                                source={require('../assets/images/pageAkun/IconRefferal.png')}
+                                style={{
+                                    resizeMode: 'contain',
+                                    width: sizeWidth(5),
+                                    height: sizeWidth(5),
+                                }}
+                            />
+                            <Text style={{
+                                fontSize: sizeFont(3.5),
+                                marginLeft: sizeWidth(2),
+                            }}>Refferal code</Text>
+                        </View>
                         <Text style={{
-                            color: color.fontWhite,
-                            fontSize: sizeFont(3.5),
-                        }}>Tekan untuk ubah</Text>
+                            fontSize: sizeFont(3.8),
+                            fontFamily: Poppins.Medium,
+                        }}>{dataUser.user.refferal_code}</Text>
                     </TouchableOpacity>
-                </View>
-                <View style={{
-                    flex: 1,
-                    marginBottom: sizeHeight(3),
-                }}>
-                    <View style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        paddingHorizontal: sizeWidth(5),
-                        paddingVertical: hp(2),
-                        borderBottomWidth: 1,
-                        borderBottomColor: color.border2,
-                    }}>
-                        <Text style={{
-                            fontSize: sizeFont(3.5),
-                        }}>Refferal code</Text>
-                        <Text
-                            onPress={() => SalinAccount()}
-                            style={{
-                                fontSize: sizeFont(3.8),
-                                fontFamily: Poppins.Medium,
-                            }}>{dataUser.user.refferal_code}</Text>
-                    </View>
                     <View style={styles.BoxInput}>
                         <Text style={styles.titleInput}>Nama</Text>
                         <TextInput
@@ -262,7 +316,7 @@ export default function EditUser({ navigation, route }) {
                             keyboardType="phone-pad"
                             maxLength={15}
                             style={styles.Input}
-                            value={phone}
+                            value={phone !== 'null' ? phone : null}
                             onChangeText={(e) => setPhone(e)}
                         />
                     </View>
@@ -272,7 +326,7 @@ export default function EditUser({ navigation, route }) {
                             keyboardType="number-pad"
                             maxLength={16}
                             style={styles.Input}
-                            value={ktp}
+                            value={ktp !== 'null' ? ktp : null}
                             onChangeText={(e) => setKtp(e)}
                         />
                     </View>
@@ -282,7 +336,7 @@ export default function EditUser({ navigation, route }) {
                             keyboardType="number-pad"
                             maxLength={5}
                             style={styles.Input}
-                            value={kodePos}
+                            value={kodePos !== 'null' ? kodePos : null}
                             onChangeText={(e) => setKodePos(e)}
                         />
                     </View>
@@ -291,7 +345,7 @@ export default function EditUser({ navigation, route }) {
                         <TextInput
                             multiline={true}
                             style={styles.Input}
-                            value={alamat}
+                            value={alamat !== 'null' ? alamat : null}
                             onChangeText={(e) => setAlamat(e)}
                         />
                     </View>
@@ -300,7 +354,6 @@ export default function EditUser({ navigation, route }) {
                             fontSize: sizeFont(3.5),
                             color: color.fontBlack1,
                             marginTop: sizeHeight(2),
-                            marginLeft: sizeWidth(2),
                         }}>Provinsi</Text>
                         <Picker
                             mode="dialog"
@@ -325,7 +378,6 @@ export default function EditUser({ navigation, route }) {
                             fontSize: sizeFont(3.5),
                             color: color.fontBlack1,
                             marginTop: sizeHeight(2),
-                            marginLeft: sizeWidth(2),
                         }}>Kabupaten</Text>
                         <Picker
                             mode="dialog"
@@ -351,7 +403,6 @@ export default function EditUser({ navigation, route }) {
                             fontSize: sizeFont(3.5),
                             color: color.fontBlack1,
                             marginTop: sizeHeight(2),
-                            marginLeft: sizeWidth(2),
                         }}>Kecamatan</Text>
                         <Picker
                             mode="dialog"
@@ -371,23 +422,24 @@ export default function EditUser({ navigation, route }) {
                             }
                         </Picker>
                     </View>
-                </View>
-                <View style={{
-                    paddingHorizontal: sizeWidth(5),
-                    paddingBottom: sizeHeight(2),
-                }}>
-                    <TouchableOpacity
-                        onPress={() => handleUpdate()}
-                        activeOpacity={0.8}
-                        style={styles.BtnUpdate}>
-                        <Text style={{
-                            fontSize: sizeFont(4),
-                            color: color.fontWhite,
-                            fontFamily: Poppins.Bold,
-                        }}>Update</Text>
-                    </TouchableOpacity>
-                </View>
-            </ScrollView>
+                    <View style={{
+                        paddingHorizontal: sizeWidth(5),
+                        paddingBottom: sizeHeight(2),
+                        marginTop: hp(5),
+                    }}>
+                        <TouchableOpacity
+                            onPress={() => handleUpdate()}
+                            activeOpacity={0.8}
+                            style={styles.BtnUpdate}>
+                            <Text style={{
+                                fontSize: sizeFont(4),
+                                color: color.fontWhite,
+                                fontFamily: Poppins.Bold,
+                            }}>Update</Text>
+                        </TouchableOpacity>
+                    </View>
+                </ScrollView>
+            </View>
         </View>
     );
 }
@@ -395,49 +447,48 @@ export default function EditUser({ navigation, route }) {
 const styles = StyleSheet.create({
     Container: {
         flex: 1,
-        backgroundColor: color.bgWhite,
+        backgroundColor: color.mainColor,
     },
     Banner: {
         alignItems: 'center',
         justifyContent: 'center',
-        flex: 1,
         backgroundColor: color.mainColor,
     },
     BoxImage: {
-        width: sizeWidth(27),
-        height: sizeWidth(27),
-        borderWidth: 4,
-        borderColor: color.border3,
+        width: sizeWidth(25),
+        height: sizeWidth(25),
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 8,
-        overflow: 'hidden',
-        marginVertical: sizeHeight(2),
+        borderRadius: sizeWidth(25),
+        marginTop: hp(1.8),
     },
     Image: {
-        width: sizeWidth(27),
-        height: sizeWidth(27),
+        width: sizeWidth(25),
+        height: sizeWidth(25),
+        borderRadius: sizeWidth(25),
+    },
+    content: {
+        flex: 1,
+        backgroundColor: color.bgWhite,
+        borderTopLeftRadius: 50,
+        paddingTop: hp(4),
+        paddingHorizontal: sizeWidth(5),
     },
     BoxInput: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
         borderBottomWidth: 1,
         borderBottomColor: color.border2,
-        alignItems: 'center',
     },
     titleInput: {
         fontSize: sizeFont(3.3),
-        marginLeft: sizeWidth(5),
         color: color.fontBlack1,
-        marginTop: hp(1),
+        marginTop: hp(2),
         flex: 1,
     },
     Input: {
-        paddingHorizontal: sizeWidth(5),
         fontSize: sizeFont(3.7),
         marginVertical: sizeHeight(0.5),
         flex: 2,
-        textAlign: 'right',
+        padding: 0,
     },
     DropDown: {
         width: '100%',
@@ -445,7 +496,6 @@ const styles = StyleSheet.create({
     BoxDropdown: {
         borderBottomWidth: 1,
         borderBottomColor: color.border2,
-        paddingHorizontal: sizeWidth(3),
     },
     BtnUpdate: {
         backgroundColor: color.mainColor,
