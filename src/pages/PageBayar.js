@@ -8,6 +8,7 @@ import Clipboard from '@react-native-community/clipboard';
 import { rupiah, ToasSuccess } from '../config/function';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import AccordionView from '../components/PageBayar/AccorDion';
 
 
 const Header = ({ handleBackButtonClick }) => {
@@ -173,11 +174,10 @@ export default function PageBayar({ navigation, route }) {
             </View>
             <View style={{
                 backgroundColor: color.bgWhite,
-                alignItems: 'center',
                 flex: 1,
                 marginTop: hp(1),
             }}>
-                <View style={{
+                {/* <View style={{
                     width: sizeWidth(55),
                     height: sizeWidth(55),
                     marginRight: sizeWidth(10),
@@ -196,7 +196,8 @@ export default function PageBayar({ navigation, route }) {
                     textAlign: 'center',
                     marginHorizontal: sizeWidth(5),
                     color: color.fontBlack1,
-                }}>Silahkan melakukan pembayaran sesuai dengan metode yang Anda pilih</Text>
+                }}>Silahkan melakukan pembayaran sesuai dengan metode yang Anda pilih</Text> */}
+                <AccordionView />
             </View>
             <View style={{
                 position: 'absolute',
