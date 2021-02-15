@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Headers from '../components/Header/Headers';
 import Saldo from '../components/Bonus/Saldo';
@@ -11,7 +11,7 @@ export default function Bonus({ navigation, route }) {
     const dataWallet = route.params.dataWallet !== undefined ? route.params.dataWallet : null;
     const dataHistoryWallet = route.params.dataHistoryWallet !== undefined ? route.params.dataHistoryWallet : null;
 
-    const [dataHostory, setHistory] = useState([...dataHistoryWallet]);
+    const [dataHostory, setHistory] = useState(null);
 
     const [date, setDate] = useState(new Date());
     const [mount, setMount] = useState(new Date().getMonth());
@@ -23,7 +23,7 @@ export default function Bonus({ navigation, route }) {
     const nameMount = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juli', 'Juni', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 
     const onValueChange = useCallback(
-        (event, newDate) => {
+        (_, newDate) => {
             const selectedDate = newDate || date;
 
             showPicker(false);
@@ -33,6 +33,7 @@ export default function Bonus({ navigation, route }) {
             setMount(m);
             setYear(y);
             filterData(m, y);
+            setHistory(null);
         },
         [date, showPicker, filterData],
     );
@@ -54,10 +55,22 @@ export default function Bonus({ navigation, route }) {
                     mountNew.push(element);
                 }
             });
-            setHistory(mountNew);
+            const x = setTimeout(() => {
+                setHistory(mountNew);
+                return () => {
+                    clearTimeout(x);
+                };
+            }, 1000);
             // console.log(mountNew);
         }
     }, [dataHistoryWallet]);
+
+    useEffect(() => {
+        filterData(mount, year);
+        return () => {
+            setHistory([...dataHistoryWallet]);
+        };
+    }, [dataHistoryWallet, mount, year, filterData]);
 
 
     return (
@@ -78,7 +91,6 @@ export default function Bonus({ navigation, route }) {
                 dataHistoryWallet={dataHistoryWallet}
             />
             <History
-                dataHistoryWallet={dataHistoryWallet}
                 dataHostory={dataHostory}
                 pageStatus={pageStatus}
             />
