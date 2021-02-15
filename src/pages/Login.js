@@ -58,8 +58,7 @@ export default function Login({ navigation }) {
         };
         if (value != null) {
             if (validateEmail(email)) {
-                // if (validatePassword(password)) {
-                if (password !== null) {
+                if (validatePassword(password)) {
                     setLoading(true);
                     dispatch(LoginUser(data, handleErrorLogin, handleLoginSuccess));
                 } else {

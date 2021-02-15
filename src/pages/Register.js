@@ -253,11 +253,13 @@ export default function Register({ navigation }) {
                             value={toggleCheckBox}
                             onValueChange={(newValue) => setToggleCheckBox(newValue)}
                         />
-                        <Text style={{
-                            fontSize: sizeFont(3),
-                            marginLeft: sizeWidth(2),
-                            color: color.mainColor,
-                        }}>Saya menyetujui syarat & ketentuan yang berlaku</Text>
+                        <Text
+                            onPress={() => navigation.navigate('Syarat')}
+                            style={{
+                                fontSize: sizeFont(3),
+                                marginLeft: sizeWidth(2),
+                                color: color.mainColor,
+                            }}>Saya menyetujui syarat & ketentuan yang berlaku</Text>
                     </View>
                     <View style={styles.BoxContentLogin}>
                         <TouchableOpacity
