@@ -127,8 +127,6 @@ export default function Akun({ navigation }) {
                         onPress={() => handleNavEditUser()}
                         activeOpacity={1}
                         style={{
-                            borderWidth: 3,
-                            borderColor: color.borderWhite,
                             borderRadius: 100,
                             width: sizeWidth(20),
                             height: sizeWidth(20),
@@ -141,7 +139,10 @@ export default function Akun({ navigation }) {
                                 dataScreen.photo !== null && dataScreen.photo !== undefined ?
                                 < Image resizeMethod="auto" style={styles.ImageUser} source={{ uri: dataScreen.photo }} />
                                 :
-                                <FontAwesome5 onPress={() => handleUser()} name="user" color={color.fontWhite} size={sizeFont(10)} solid />
+                                <Image
+                                    style={styles.ImageUser}
+                                    resizeMethod="auto"
+                                    source={{ uri: `https://ui-avatars.com/api/?name=${dataUser.user.name}/background=0D8ABC&color=fff` }} />
                         }
                     </TouchableOpacity>
                     <View style={{
