@@ -74,7 +74,6 @@ export default function Bonus({ navigation, route }) {
                 nameMount={nameMount}
                 onValueChange={onValueChange}
                 showPicker={showPicker}
-                getMount={getMount}
                 dataWallet={dataWallet}
                 dataHistoryWallet={dataHistoryWallet}
             />

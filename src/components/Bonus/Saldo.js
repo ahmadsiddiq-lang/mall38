@@ -9,7 +9,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { rupiah } from '../../config/function';
 import MonthPicker from 'react-native-month-year-picker';
 
-export default function Saldo({ dataWallet, dataHistoryWallet, getMount, show = { show }, mount, year, nameMount, onValueChange, showPicker, date }) {
+export default function Saldo({ dataWallet, dataHistoryWallet, show = { show }, mount, year, nameMount, onValueChange, showPicker, date }) {
 
     const BonusMasuk = () => {
         if (dataHistoryWallet != null) {
