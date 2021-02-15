@@ -15,11 +15,10 @@ export default function Transaksi({ navigation }) {
 
     const dispatch = useDispatch();
     const dataNewOrder = useSelector(state => state.dataTransaksi.dataTransaksi.order);
-    const dataAll = dataNewOrder;
     const [dataTransaksi, setDataTransaksi] = useState(null);
     const [refreshing, setRefreshing] = React.useState(false);
 
-    // console.log(dataAll);
+    // console.log(dataNewOrder);
     const handleGetTransaksi = useCallback(async () => {
         const idUser = await getIdUser();
         if (idUser !== null) {
@@ -28,18 +27,24 @@ export default function Transaksi({ navigation }) {
     }, [dispatch]);
 
     const handleTabbarFilter = (value) => {
-        if (dataNewOrder !== undefined) {
-            if (value === 'Semua') {
-                setDataTransaksi(dataAll);
-                handleGetTransaksi();
-            } else if (value === 'delivery') {
-                const data = dataAll.filter(item => item.status_pengiriman === value);
-                setDataTransaksi(data);
-            } else {
-                const data = dataAll.filter(item => item.status_pembayaran === value);
-                setDataTransaksi(data);
+        setDataTransaksi(null);
+        const x = setTimeout(() => {
+            if (dataNewOrder !== undefined) {
+                if (value === 'Semua') {
+                    setDataTransaksi(dataNewOrder.reverse());
+                    handleGetTransaksi();
+                } else if (value === 'delivery') {
+                    const data = dataNewOrder.filter(item => item.status_pengiriman === value);
+                    setDataTransaksi(data.reverse());
+                } else {
+                    const data = dataNewOrder.filter(item => item.status_pembayaran === value);
+                    setDataTransaksi(data.reverse());
+                }
             }
-        }
+            return () => {
+                clearTimeout(x);
+            };
+        }, 1000);
     };
 
     const wait = useCallback((timeout) => {
@@ -77,13 +82,13 @@ export default function Transaksi({ navigation }) {
     }, [handleGetTransaksi, handleCircle]);
 
     useEffect(() => {
-        if (dataAll) {
-            setDataTransaksi(dataAll.reverse());
+        if (dataNewOrder) {
+            setDataTransaksi(dataNewOrder.reverse());
         }
         return () => {
             setDataTransaksi(null);
         };
-    }, [dataAll]);
+    }, []);
 
     return (
         <View style={styles.Container}>
