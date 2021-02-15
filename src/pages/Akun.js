@@ -142,7 +142,7 @@ export default function Akun({ navigation }) {
                                 <Image
                                     style={styles.ImageUser}
                                     resizeMethod="auto"
-                                    source={{ uri: `https://ui-avatars.com/api/?name=${dataUser.user.name}/background=0D8ABC&color=fff` }} />
+                                    source={{ uri: `https://ui-avatars.com/api/?name=${dataScreen !== undefined ? dataUser.user.name : 'ahmad'}/background=0D8ABC&color=fff` }} />
                         }
                     </TouchableOpacity>
                     <View style={{
