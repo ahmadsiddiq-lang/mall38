@@ -61,16 +61,13 @@ export default function Bonus({ navigation, route }) {
                     clearTimeout(x);
                 };
             }, 1000);
-            // console.log(mountNew);
+            console.log(mountNew);
         }
     }, [dataHistoryWallet]);
 
     useEffect(() => {
         filterData(mount, year);
-        return () => {
-            setHistory([...dataHistoryWallet]);
-        };
-    }, [dataHistoryWallet, mount, year, filterData]);
+    }, [mount, year, filterData]);
 
 
     return (
