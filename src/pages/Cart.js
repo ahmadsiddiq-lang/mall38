@@ -294,6 +294,19 @@ export default function Cart({ navigation }) {
                             textAlign: 'center',
                             marginHorizontal: sizeWidth(7),
                         }}>wah keranjang belanjamu masih kosong, yuk telusuri promo menarik dari Mall 38</Text>
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate('MyTabbar', {
+                                screen: 'Produk',
+                            })}
+                            activeOpacity={0.8}
+                            style={styles.Btn}
+                        >
+                            <Text style={{
+                                fontSize: sizeFont(4),
+                                fontFamily: Poppins.Medium,
+                                color: color.fontWhite,
+                            }}>Lanjutkan belanja</Text>
+                        </TouchableOpacity>
                     </View>
                 }
             </View>
@@ -321,5 +334,13 @@ const styles = StyleSheet.create({
     BoxCard: {
         marginVertical: sizeHeight(1.2),
         backgroundColor: color.bgWhite,
+    },
+    Btn: {
+        marginTop: heightPercentageToDP(3),
+        backgroundColor: color.mainColor,
+        alignItems: 'center',
+        paddingVertical: sizeHeight(0.8),
+        borderRadius: 8,
+        paddingHorizontal: sizeWidth(5),
     },
 });
