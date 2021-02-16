@@ -307,3 +307,326 @@ export const kebijakanProvasi = [
         ],
     },
 ];
+
+
+export const PetunjukTransfer = [
+    {
+        bank: 'bca',
+        data: [
+            {
+                title: 'Petunjuk Transfer ATM',
+                content: [
+                    {
+                        no: 1,
+                        text: 'Pilih transaksi lainnya > Transfer > Ke Rek BCA Virtual Account',
+                    },
+                    {
+                        no: 2,
+                        text: 'Masukkan nomor Virtual Account ',
+                        no_virtual: 209347203947209,
+                    },
+                    {
+                        no: 3,
+                        text: 'Periksa informasi yang tertera di layar. Apakah informasi sudah benar. Jika benar, pilih Ya.',
+                    },
+                ],
+            },
+            {
+                title: 'Petunjuk Transfer iBanking',
+                content: [
+                    {
+                        no: 1,
+                        text: 'Pilih Transfer Dana > Transfer Ke Rek BCA Virtual Account',
+                    },
+                    {
+                        no: 2,
+                        text: 'Centang nomor Virtual Account dan masukkan',
+                        no_virtual: 24892374928927,
+                    },
+                    {
+                        no: 3,
+                        text: 'Periksa informasi yang tertera di layar. Apakah informasi sudah benar. Jika benar, pilih Ya.',
+                    },
+                    {
+                        no: 4,
+                        text: 'Masukkan respon KeyBCA dan klik Kirim',
+                    },
+                ],
+            },
+            {
+                title: 'Petunjuk Transfer mBanking',
+                content: [
+                    {
+                        no: 1,
+                        text: 'Pilih m-Transfer > BCA Virtual Account',
+                    },
+                    {
+                        no: 2,
+                        text: 'Masukkan nomor Virtual Account ',
+                    },
+                    {
+                        no: 3,
+                        text: 'Periksa informasi yang tertera di layar. Apakah informasi sudah benar. Jika benar, pilih Ya.',
+                    },
+                    {
+                        no: 4,
+                        text: 'Masukkan PIN m-BCA Anda dan pilih OK',
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        bank: 'bni',
+        data: [
+            {
+                title: 'Petunjuk Transfer ATM',
+                content: [
+                    {
+                        no: 1,
+                        text: 'Pilih Menu Lain > Transfer',
+                    },
+                    {
+                        no: 2,
+                        text: 'Pilih Jenis rekening asal dan pilih Virtual Account Billing.',
+                    },
+                    {
+                        no: 3,
+                        text: 'Masukkan nomor Virtual Account ',
+                        no_virtual: 8723548273238476,
+                    },
+                    {
+                        no: 4,
+                        text: 'Tagihan yang akan dibayar akan muncul pada layar konfirmasi.',
+                    },
+                    {
+                        no: 5,
+                        text: 'Periksa informasi yang tertera di layar. Apakah informasi sudah benar. Jika benar, pilih Ya.',
+                    },
+                ],
+            },
+            {
+                title: 'Petunjuk Transfer iBanking',
+                content: [
+                    {
+                        no: 1,
+                        text: 'Pilih Transfer > Virtual Account',
+                    },
+                    {
+                        no: 2,
+                        text: 'Masukkan nomor Virtual Account ',
+                        no_virtual: 8723548273238476,
+                    },
+                    {
+                        no: 3,
+                        text: 'Pilih Rekening Debet dan pilih Lanjut.',
+                    },
+                    {
+                        no: 4,
+                        text: 'Tagihan yang akan dibayar akan muncul pada layar konfirmasi.',
+                    },
+                    {
+                        no: 5,
+                        text: 'Periksa informasi yang tertera di layar. Apakah informasi sudah benar. Jika benar, pilih Ya.',
+                    },
+                    {
+                        no: 6,
+                        text: 'Masukkan Kode Otentikasi Token Anda lalu klik Proses',
+                    },
+                ],
+            },
+            {
+                title: 'Petunjuk Transfer mBanking',
+                content: [
+                    {
+                        no: 1,
+                        text: 'Pilih Transfer > Virtual Account Billing',
+                    },
+                    {
+                        no: 2,
+                        text: 'Pilih Rekening Debet > Masukkan nomor Virtual Account ',
+                        no_virtual: 8723548273238476,
+                    },
+                    {
+                        no: 3,
+                        text: 'Tagihan yang akan dibayar akan muncul pada layar konfirmasi.',
+                    },
+                    {
+                        no: 4,
+                        text: 'Periksa informasi yang tertera di layar. Apakah informasi sudah benar. Jika benar, pilih Ya.',
+                    },
+                ],
+            },
+            {
+                title: 'Petunjuk Transfer SMS Banking',
+                content: [
+                    {
+                        no: 1,
+                        text: 'Kirim SMS "TRANSFER ',
+                        text2: 'Rp. (nominal bayar)" ke 3346',
+                        no_virtual: 8723548273238476,
+                    },
+                    {
+                        no: 2,
+                        text: 'Balas SMS yang masuk dengan benar',
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        bank: 'bri',
+        data: [
+            {
+                title: 'Petunjuk Transfer ATM',
+                content: [
+                    {
+                        no: 1,
+                        text: 'Pilih Transaksi Lain > Pembayaran > Lainnya > BRIVA',
+                    },
+                    {
+                        no: 2,
+                        text: 'Masukkan Nomor BRIVA ',
+                        no_virtual: 9261983269037,
+                    },
+                    {
+                        no: 3,
+                        text: 'Periksa informasi yang tertera di layar. Apakah informasi sudah benar. Jika benar, pilih Ya.',
+                    },
+                ],
+            },
+            {
+                title: 'Petunjuk Transfer iBanking',
+                content: [
+                    {
+                        no: 1,
+                        text: 'Pilih menu Pembayaran',
+                    },
+                    {
+                        no: 2,
+                        text: 'Pada kolom navigasi kiri, dalam menu Pembayaran, pilih BRIVA',
+                    },
+                    {
+                        no: 3,
+                        text: 'Pilih rekening asal, lalu Isi Kode Bayar dan masukkan nomor Virtual Account',
+                        no_virtual: 989237498347,
+                    },
+                    {
+                        no: 4,
+                        text: 'Periksa informasi yang tertera di layar. Apakah informasi sudah benar. Jika benar, pilih Ya.',
+                    },
+                ],
+            },
+            {
+                title: 'Petunjuk Transfer mBanking',
+                content: [
+                    {
+                        no: 1,
+                        text: 'Masuk ke menu Mobile Banking BRI Kemudian, pilih Pembayaran > BRIVA ',
+                        no_virtual: 9862348236489,
+                    },
+                    {
+                        no: 1,
+                        text: 'Masukkan Nomor BRIVA ',
+                        no_virtual: 9862348236489,
+                    },
+                    {
+                        no: 2,
+                        text: 'Masukkan Pin Anda dan kemudian pilih Send. Apabila pesan konfirmasi untuk transaksi menggunakan SMS muncul, pilih Ok. Status transaksi akan dikirim melalui SMS dan dapat digunakan sebagai bukti pembayaran',
+                    },
+                ],
+            },
+            {
+                title: 'Petunjuk Transfer Mini ATM / EDC',
+                content: [
+                    {
+                        no: 1,
+                        text: 'Pilih Mini ATM > Pembayaran > BRIVA',
+                    },
+                    {
+                        no: 2,
+                        text: 'Gesek kartu debit BRI Anda',
+                    },
+                    {
+                        no: 3,
+                        text: 'Masukkan Nomor BRIVA',
+                        no_virtual: 989237498347,
+                    },
+                    {
+                        no: 4,
+                        text: 'Masukkan PIN Anda',
+                    },
+                    {
+                        no: 5,
+                        text: 'Periksa informasi yang tertera di layar. Apakah informasi sudah benar. Jika benar, pilih Ya.',
+                    },
+                ],
+            },
+            {
+                title: 'Petunjuk Transfer Setor Tunai',
+                content: [
+                    {
+                        no: 1,
+                        text: 'Isi formulir setor tunai BRI dengan detail',
+                    },
+                    {
+                        no: 2,
+                        text: 'Bawa formulir setor tuani ke teller dan lakukan pembayaran sesuai nominal',
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        bank: 'alfamart',
+        data: [
+            {
+                title: 'Petunjuk Alfamart',
+                content: [
+                    {
+                        no: 1,
+                        text: 'Sampaikan kepada kasir Alfamart untuk melakukan pembayaran Midtrans dengan Virtual Account',
+                    },
+                    {
+                        no: 2,
+                        text: 'Tunjukan kode pembayaran ke kasir dan lakukan pembayaran sesuai dengan yang tertera pada pesanan',
+                    },
+                    {
+                        no: 3,
+                        text: 'Setelah pembayaran berhasil kamu akan mendapatkan bukti pembayaran. Mohon simpan bukti pembayaran sebagai jaminan apabila diperlukan verifikasi lebihlanjut',
+                    },
+                    {
+                        no: 4,
+                        text: 'Pesanan Kamu akan terverifikasi secara otomatis dalam aplikasi Mall 38 setelah pembayaran behasil.',
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        bank: 'indomaret',
+        data: [
+            {
+                title: 'Petunjuk Indomaret',
+                content: [
+                    {
+                        no: 1,
+                        text: 'Sampaikan kepada kasir Indomaret untuk melakukan pembayaran Midtrans dengan Virtual Account',
+                    },
+                    {
+                        no: 2,
+                        text: 'Tunjukan kode pembayaran ke kasir dan lakukan pembayaran sesuai dengan yang tertera pada pesanan',
+                    },
+                    {
+                        no: 3,
+                        text: 'Setelah pembayaran berhasil kamu akan mendapatkan bukti pembayaran. Mohon simpan bukti pembayaran sebagai jaminan apabila diperlukan verifikasi lebihlanjut',
+                    },
+                    {
+                        no: 4,
+                        text: 'Pesanan Kamu akan terverifikasi secara otomatis dalam aplikasi Mall 38 setelah pembayaran behasil.',
+                    },
+                ],
+            },
+        ],
+    },
+];

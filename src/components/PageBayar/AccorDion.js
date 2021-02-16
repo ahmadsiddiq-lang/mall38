@@ -7,42 +7,6 @@ import { sizeFont, sizeWidth } from '../../assets/responsive';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { color } from '../../assets/colors/Index';
 
-const SECTIONS = [
-    {
-        title: 'Petunjuk Transfer ATM',
-        content: [
-            {
-                no: 1,
-                text: 'Pilih transaksi lainnya > Transfer > Ke Rek BCA Virtual Account',
-            },
-            {
-                no: 2,
-                text: 'Masukkan nomor Virtual Account ',
-                text2: ' dan pilih benar',
-                no_virtual: 209347203947209,
-            },
-        ],
-    },
-    {
-        title: 'Petunjuk Transfer iBanking',
-        content: [
-            {
-                no: 1,
-                text: 'Pilih transaksi lainnya > Transfer > Ke Rek BCA Virtual Account',
-            },
-        ],
-    },
-    {
-        title: 'Petunjuk Transfer mBanking',
-        content: [
-            {
-                no: 1,
-                text: 'Pilih transaksi lainnya > Transfer > Ke Rek BCA Virtual Account',
-            },
-        ],
-    },
-];
-
 class AccordionView extends Component {
     state = {
         activeSections: [],
@@ -87,7 +51,7 @@ class AccordionView extends Component {
                                 }}>{item.no}</Text></View>
                                 <Text style={styles.textContent}>{item.text}
                                     <Text>{item.no_virtual}</Text>
-                                    <Text>{item.text2 !== undefined && item.text2}</Text>
+                                    <Text>{item.text2}</Text>
                                 </Text>
                             </View>
                         );
@@ -105,7 +69,7 @@ class AccordionView extends Component {
         return (
             <View style={styles.container}>
                 <Accordion
-                    sections={SECTIONS}
+                    sections={this.props.dataPetunjuk}
                     activeSections={this.state.activeSections}
                     // renderSectionTitle={this._renderSectionTitle}
                     renderHeader={this._renderHeader}

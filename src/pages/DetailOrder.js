@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { detailOrder, clearDetailOrder } from '../redux/actions/DetailOrder';
 import { rupiah, objekEmpty, openWhatsApp } from '../config/function';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
+import { PetunjukTransfer } from '../config/DataDummy';
 
 export default function DetailOrder({ navigation, route }) {
 
@@ -35,6 +36,16 @@ export default function DetailOrder({ navigation, route }) {
             dispatch(clearDetailOrder());
         }
     }, [dispatch, route]);
+
+    const handleNavPageBayar = () => {
+        const bank_name = dataDetailOrder.bank_name;
+        const dataPetunjukFilter = PetunjukTransfer.filter(item => item.bank === bank_name);
+        // console.log(dataPetunjukFilter[0].data);
+        navigation.navigate('PageBayar', {
+            data: dataDetailOrder,
+            dataPetunjuk: dataPetunjukFilter[0].data,
+        });
+    };
 
     useEffect(() => {
         getDataDetailOrder();
@@ -144,7 +155,7 @@ export default function DetailOrder({ navigation, route }) {
                             flex: 1,
                         }}>
                             <TouchableOpacity
-                                onPress={() => navigation.navigate('PageBayar', { data: dataDetailOrder })}
+                                onPress={() => handleNavPageBayar()}
                                 activeOpacity={0.8}
                                 style={{
                                     borderWidth: 2,

@@ -62,7 +62,7 @@ export default function Content({ dataOrder, dataTracking }) {
                         }}>
                             <Text style={{
                                 fontSize: sizeFont(3.5),
-                            }}>Status Pengirman</Text>
+                            }}>Status Pengiriman</Text>
                             <View style={{
                                 flexDirection: 'row',
                             }}>
