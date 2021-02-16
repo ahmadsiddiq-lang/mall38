@@ -61,7 +61,7 @@ export default function Bonus({ navigation, route }) {
                     clearTimeout(x);
                 };
             }, 1000);
-            console.log(mountNew);
+            // console.log(mountNew);
         }
     }, [dataHistoryWallet]);
 
