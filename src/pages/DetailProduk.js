@@ -10,7 +10,7 @@ import ButtonBuy from '../components/DetailProduk/ButtonBuy';
 import Deskripsi from '../components/DetailProduk/Deskripsi';
 import Rekomendasi from '../components/DetailProduk/Rekomendasi';
 import Headers from '../components/Header/HeaderDetailProduk';
-import { getIdUser, objekEmpty, ToasSuccess } from '../config/function';
+import { getIdUser, objekEmpty, ToasInvalid, ToasSuccess } from '../config/function';
 import { addCart, getCArt } from '../redux/actions/Cart';
 import { getDetailProduk, clearDetailProduk } from '../redux/actions/DetailProduk';
 
@@ -28,6 +28,7 @@ export default function DetailProduk({ navigation, route }) {
 
     const dataProduk = useSelector(state => state.produk.produk);
     const detailProduk = useSelector(state => state.detailProduk.detailProduk);
+    const dataCart = useSelector(state => state.cart.dataCart);
     // const responAddCart = useSelector(state => state.cart.responAddCart);
 
     // console.log(route);
@@ -61,11 +62,15 @@ export default function DetailProduk({ navigation, route }) {
             qty: 1,
         };
         if (data.product_id && data.user_id) {
-            dispatch(addCart(data));
-            dispatch(getCArt(idUser));
-            ToasSuccess('Dimasukkan ke keranjang');
+            if (dataCart.length <= 25) {
+                dispatch(addCart(data));
+                dispatch(getCArt(idUser));
+                ToasSuccess('Dimasukkan ke keranjang');
+            } else {
+                ToasInvalid('Maximum Keranjang 25 item');
+            }
         }
-    }, [dispatch]);
+    }, [dispatch, dataCart]);
 
     const handleBuy = useCallback(async (item) => {
         const idUser = await getIdUser();
@@ -76,10 +81,14 @@ export default function DetailProduk({ navigation, route }) {
             qty: 1,
         };
         if (data.product_id && data.user_id) {
-            dispatch(addCart(data));
-            navigation.navigate('Cart');
+            if (dataCart.length <= 25) {
+                dispatch(addCart(data));
+                navigation.navigate('Cart');
+            } else {
+                ToasInvalid('Maximum Keranjang 25 item');
+            }
         }
-    }, [dispatch, navigation]);
+    }, [dispatch, navigation, dataCart]);
 
     const clearDetailProduks = useCallback(async () => {
         dispatch(clearDetailProduk());
