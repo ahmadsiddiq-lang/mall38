@@ -295,9 +295,7 @@ export default function Cart({ navigation }) {
                             marginHorizontal: sizeWidth(7),
                         }}>wah keranjang belanjamu masih kosong, yuk telusuri promo menarik dari Mall 38</Text>
                         <TouchableOpacity
-                            onPress={() => navigation.navigate('MyTabbar', {
-                                screen: 'Produk',
-                            })}
+                            onPress={() => navigation.navigate('Product')}
                             activeOpacity={0.8}
                             style={styles.Btn}
                         >
