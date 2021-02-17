@@ -7,14 +7,12 @@ import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import { rupiah } from '../../config/function';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-export default function History({ dataHostory, pageStatus }) {
-
-    // console.log(dataHostory);
+export default function History({ dataHostory, pageStatus, dataHistoryWallet }) {
 
     const TotalBV = () => {
-        if (dataHostory != null) {
+        if (dataHistoryWallet != null) {
             let total = 0;
-            dataHostory.forEach(element => {
+            dataHistoryWallet.forEach(element => {
                 total += element.bonus_passive;
             });
             return total;
@@ -40,7 +38,7 @@ export default function History({ dataHostory, pageStatus }) {
                         fontSize: sizeFont(3.5),
                         fontFamily: Poppins.Medium,
                         color: color.mainColor,
-                    }}>Total Bonus Pasive: {dataHostory !== null ? rupiah(TotalBV()) : '0'}</Text>
+                    }}>Total Bonus Pasive: {dataHistoryWallet !== null ? rupiah(TotalBV()) : '0'}</Text>
                 }
             </View>
             <ScrollView>

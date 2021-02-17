@@ -40,7 +40,6 @@ export default function Bonus({ navigation, route }) {
 
 
     const filterData = useCallback((propMount, propYear) => {
-        console.log(dataHistoryWallet);
         if (dataHistoryWallet) {
             let yearNew = [];
             dataHistoryWallet.forEach(element => {
@@ -95,6 +94,7 @@ export default function Bonus({ navigation, route }) {
             <History
                 dataHostory={dataHostory}
                 pageStatus={pageStatus}
+                dataHistoryWallet={dataHistoryWallet}
             />
         </View>
     );
