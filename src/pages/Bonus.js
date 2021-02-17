@@ -40,6 +40,7 @@ export default function Bonus({ navigation, route }) {
 
 
     const filterData = useCallback((propMount, propYear) => {
+        console.log(dataHistoryWallet);
         if (dataHistoryWallet) {
             let yearNew = [];
             dataHistoryWallet.forEach(element => {
@@ -66,8 +67,12 @@ export default function Bonus({ navigation, route }) {
     }, [dataHistoryWallet]);
 
     useEffect(() => {
-        filterData(mount, year);
-    }, [mount, year, filterData]);
+        setHistory([...dataHistoryWallet]);
+        return () => {
+            setHistory(null);
+        };
+
+    }, [dataHistoryWallet]);
 
 
     return (
