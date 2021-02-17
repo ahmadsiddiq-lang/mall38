@@ -174,7 +174,6 @@ export default function DetailOrder({ navigation, route }) {
                                 <Text style={{
                                     color: color.mainColor,
                                     fontSize: sizeFont(3.5),
-                                    marginLeft: sizeWidth(2),
                                     fontFamily: Poppins.Medium,
                                 }}>Bayar Sekarang</Text>
                             </TouchableOpacity>
