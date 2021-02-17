@@ -25,7 +25,7 @@ export default function Bonus({ navigation, route }) {
     const onValueChange = useCallback(
         (_, newDate) => {
             const selectedDate = newDate || date;
-
+            // console.log(selectedDate);
             showPicker(false);
             const m = new Date(selectedDate).getMonth();
             const y = new Date(selectedDate).getFullYear();
@@ -42,15 +42,22 @@ export default function Bonus({ navigation, route }) {
     const filterData = useCallback((propMount, propYear) => {
         if (dataHistoryWallet) {
             let yearNew = [];
+            // console.log(propYear);
             dataHistoryWallet.forEach(element => {
-                const m = new Date(element.tanggal_pembayaran).getFullYear();
-                if (m === propYear) {
-                    yearNew.push(element);
+                if (element.tanggal_pembayaran) {
+                    const dateBayar = element.tanggal_pembayaran;
+                    let tgl_bayar = dateBayar.split(' ')[0];
+                    const y = new Date(tgl_bayar).getFullYear();
+                    if (y === propYear) {
+                        yearNew.push(element);
+                    }
                 }
             });
             let mountNew = [];
             yearNew.forEach(element => {
-                const m = new Date(element.tanggal_pembayaran).getMonth();
+                const dateBayar = element.tanggal_pembayaran;
+                let tgl_bayar = dateBayar.split(' ')[0];
+                const m = new Date(tgl_bayar).getMonth();
                 if (m === propMount) {
                     mountNew.push(element);
                 }
