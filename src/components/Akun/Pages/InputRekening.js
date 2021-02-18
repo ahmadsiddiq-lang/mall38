@@ -98,6 +98,12 @@ export default function InputRekening({ navigation }) {
                         selectionColor={color.mainColor}
                     />
                 </View>
+                <View style={{
+                    marginTop: hp(3),
+                }}>
+                    <Text style={styles.text}>* Pastikan nomor rekening yang Anda masukkan sesuai dengan buku tabungan atas nama Anda</Text>
+                    <Text style={styles.text}>* Penggunaan rekening atas nama orang lain tidak dapat kami verifikasi</Text>
+                </View>
             </View>
             <View style={{
                 flex: 2,
@@ -173,5 +179,10 @@ const styles = StyleSheet.create({
         borderColor: color.border2,
         fontSize: sizeFont(4),
         fontFamily: Poppins.Medium,
+    },
+    text: {
+        fontSize: sizeFont(3.3),
+        color: color.mainColor,
+        marginBottom: hp(1),
     },
 });
