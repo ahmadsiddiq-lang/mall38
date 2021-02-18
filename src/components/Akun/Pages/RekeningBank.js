@@ -23,7 +23,7 @@ export default function RekeningBank({ navigation }) {
     const name_user = objekEmpty(dataUser) ? dataUser.user.name : '';
     // const noRekening = [];
 
-    console.log(dataUser);
+    // console.log(dataUser);
 
     const handleGetRekening = useCallback(async () => {
         const idUser = await getIdUser();
@@ -84,9 +84,9 @@ export default function RekeningBank({ navigation }) {
                                                     }}
                                                 />
                                             </View>
-                                            <Text style={styles.TextContent}>{objekEmpty(noRekening) && noRekening.nama_bank}</Text>
-                                            <Text onPress={() => SalinAccount()} style={styles.TextContent}>{objekEmpty(noRekening) && noRekening.no_rek}</Text>
-                                            <Text style={[styles.TextContent, { fontFamily: Poppins.Regular, fontSize: sizeFont(4.5) }]}>{name_user}</Text>
+                                            <Text numberOfLines={2} style={styles.TextContent}>{objekEmpty(noRekening) && noRekening.nama_bank}</Text>
+                                            <Text numberOfLines={2} onPress={() => SalinAccount()} style={styles.TextContent}>{objekEmpty(noRekening) && noRekening.no_rek}</Text>
+                                            <Text numberOfLines={2} style={[styles.TextContent, { fontFamily: Poppins.Regular, fontSize: sizeFont(4.5) }]}>{name_user}</Text>
                                         </View>
                                         <View style={{
                                             flexDirection: 'row',
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
         backgroundColor: color.bgWhite,
     },
     TextContent: {
-        fontSize: sizeFont(5.5),
+        fontSize: sizeFont(5.2),
         color: color.fontWhite,
         fontFamily: Poppins.Medium,
     },

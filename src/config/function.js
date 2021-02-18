@@ -90,7 +90,7 @@ export const ToasSuccess = (message) => {
         data: message,
         textColor: '#ffffff',
         backgroundColor: 'rgba(74, 74, 74,0.7)',
-        duration: WToast.duration.LONG, //1.SHORT 2.LONG
+        duration: WToast.duration.SHORT, //1.SHORT 2.LONG
         position: WToast.position.CENTER, // 1.TOP 2.CENTER 3.BOTTOM
         icon: <Ionicons name="checkmark-circle-outline" size={sizeFont(12)} color={color.fontWhite} />,
         inEasing: Easing.bounce,

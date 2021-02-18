@@ -9,7 +9,7 @@ import { Poppins } from '../../../assets/fonts';
 import { sizeFont, sizeWidth } from '../../../assets/responsive';
 import { dataBank } from '../../../config/DataDummy';
 import { getIdUser, ToasInvalid, ToasSuccess } from '../../../config/function';
-import { updateDataBank } from '../../../redux/actions/User';
+import { getRekening, updateDataBank } from '../../../redux/actions/User';
 import Headers from '../../Header/Headers';
 
 export default function InputRekening({ navigation }) {
@@ -20,33 +20,39 @@ export default function InputRekening({ navigation }) {
 
     const dispatch = useDispatch();
 
+    const handleGetRekening = useCallback(async () => {
+        const idUser = await getIdUser();
+        dispatch(getRekening(idUser, setLoading));
+    }, [dispatch]);
+
 
     const handleSuccess = useCallback(() => {
-        ToasSuccess('Success !');
         setLoading(false);
+        ToasSuccess('Success !');
+        handleGetRekening();
         const x = setTimeout(() => {
             navigation.goBack();
             return () => {
                 clearTimeout(x);
             };
         }, 700);
-    }, [navigation]);
+    }, [navigation, handleGetRekening]);
 
     const handleInvalid = useCallback(() => {
-        ToasInvalid('Gagal !');
         setLoading(false);
+        ToasInvalid('Gagal !');
     }, []);
 
 
     const handleUpdate = useCallback(async () => {
         if (namaBank !== null && noRekeningInput !== null) {
+            setLoading(true);
             const idUser = await getIdUser();
             const data = {
                 user_id: idUser,
                 nama_bank: namaBank,
                 no_rek: noRekeningInput,
             };
-            setLoading(true);
             Keyboard.dismiss();
             dispatch(updateDataBank(data, handleSuccess, handleInvalid));
         } else {
@@ -130,7 +136,9 @@ export default function InputRekening({ navigation }) {
                 }}>
                     <ActivityIndicator style={{
                         backgroundColor: color.mainColor,
-                    }} size="large" color={color.mainColor} />
+                        borderRadius: 100,
+                        padding: 5,
+                    }} size="large" color={color.fontWhite} />
                 </View>
             }
         </View>
