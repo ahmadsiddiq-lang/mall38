@@ -39,6 +39,16 @@ export default function RekeningBank({ navigation }) {
         }
     };
 
+    const formatNoRek = () => {
+        if (objekEmpty(noRekening)) {
+            const no_rek = noRekening.no_rek;
+            var reverse = no_rek.toString().split('').join(''),
+                new_noRek = reverse.match(/\d{1,4}/g);
+            new_noRek = new_noRek.join(' ').split('').join('');
+            return new_noRek;
+        }
+    };
+
 
     useEffect(() => {
         handleGetRekening();
@@ -84,8 +94,8 @@ export default function RekeningBank({ navigation }) {
                                                     }}
                                                 />
                                             </View>
-                                            <Text numberOfLines={2} style={styles.TextContent}>{objekEmpty(noRekening) && noRekening.nama_bank}</Text>
-                                            <Text numberOfLines={2} onPress={() => SalinAccount()} style={styles.TextContent}>{objekEmpty(noRekening) && noRekening.no_rek}</Text>
+                                            <Text no_rekOfLines={2} style={styles.TextContent}>{objekEmpty(noRekening) && noRekening.nama_bank}</Text>
+                                            <Text numberOfLines={2} onPress={() => SalinAccount()} style={styles.TextContent}>{formatNoRek()}</Text>
                                             <Text numberOfLines={2} style={[styles.TextContent, { fontFamily: Poppins.Regular, fontSize: sizeFont(4.5) }]}>{name_user}</Text>
                                         </View>
                                         <View style={{
