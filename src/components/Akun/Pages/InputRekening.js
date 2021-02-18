@@ -66,7 +66,6 @@ export default function InputRekening({ navigation }) {
                 navigation={navigation}
                 title={'Input Rekening Bank'}
             />
-            <Text style={styles.title}>Masukkan rekening bank sesuai dengan KTP</Text>
             <View style={styles.content}>
                 <View style={styles.BoxList}>
                     <Text style={styles.titleInput}>Nama Bank</Text>
@@ -155,12 +154,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: color.bgWhite,
-    },
-    title: {
-        fontSize: sizeFont(3.5),
-        fontFamily: Poppins.Medium,
-        textAlign: 'center',
-        marginTop: hp(4),
     },
     content: {
         marginTop: hp(5),
