@@ -1,13 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, Text, TextInput, TouchableOpacity, View, Modal } from 'react-native';
-import { heightPercentageToDP } from 'react-native-responsive-screen';
+import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useDispatch, useSelector } from 'react-redux';
 import { color } from '../../../assets/colors/Index';
 import { Poppins } from '../../../assets/fonts';
 import { sizeFont, sizeWidth } from '../../../assets/responsive';
-import { getIdUser, objekEmpty, ToasInvalid, ToasSuccess } from '../../../config/function';
-import { getRekening, updateDataBank } from '../../../redux/actions/User';
+import { getIdUser, objekEmpty, openWhatsApp, ToasSuccess } from '../../../config/function';
+import { getRekening } from '../../../redux/actions/User';
 import Headers from '../../Header/Headers';
 import Clipboard from '@react-native-community/clipboard';
 
@@ -16,53 +16,24 @@ export default function RekeningBank({ navigation }) {
     const dispatch = useDispatch();
 
     const noRekening = useSelector(state => state.noRekening.noRekening);
-    const [namaBank, setNamaBank] = useState(null);
-    const [noRekeningInput, setNoRekening] = useState(null);
-    const [lodaing, setLoading] = useState(true);
-    const [modalVisible, setModal] = useState(false);
-    const [buttonLoading, setButtonLoading] = useState(false);
-    // const noRekening = ['mausuk'];
+    const dataUser = useSelector(state => state.dataUser.dataUser);
 
-    // console.log(noRekening);
+    const [lodaing, setLoading] = useState(false);
+
+    const name_user = objekEmpty(dataUser) ? dataUser.user.name : '';
+    // const noRekening = [];
+
+    console.log(dataUser);
 
     const handleGetRekening = useCallback(async () => {
         const idUser = await getIdUser();
         dispatch(getRekening(idUser, setLoading));
     }, [dispatch]);
 
-    const handleSuccess = useCallback(() => {
-        ToasSuccess('Success !');
-        setButtonLoading(false);
-        handleGetRekening();
-        setModal(false);
-    }, [handleGetRekening]);
-
-    const handleInvalid = useCallback(() => {
-        ToasInvalid('Gagal !');
-        setButtonLoading(false);
-        setModal(false);
-    }, []);
-
-
-    const handleUpdate = useCallback(async () => {
-        if (namaBank !== null && noRekeningInput !== null) {
-            const idUser = await getIdUser();
-            const data = {
-                user_id: idUser,
-                nama_bank: namaBank,
-                no_rek: noRekeningInput,
-            };
-            setButtonLoading(true);
-            setModal(false);
-            dispatch(updateDataBank(data, handleSuccess, handleInvalid));
-        } else {
-            ToasInvalid('Data invalid');
-        }
-    }, [dispatch, namaBank, noRekeningInput, handleSuccess, handleInvalid]);
 
     const SalinAccount = () => {
         if (objekEmpty(noRekening)) {
-            Clipboard.setString(noRekening.nama_bank);
+            Clipboard.setString(noRekening.no_rek);
             ToasSuccess('Berhasil disalin');
 
         }
@@ -71,13 +42,6 @@ export default function RekeningBank({ navigation }) {
 
     useEffect(() => {
         handleGetRekening();
-        return () => {
-            setNamaBank(null);
-            setNoRekening(null);
-            setLoading(true);
-            setModal(false);
-            setButtonLoading(false);
-        };
     }, [handleGetRekening]);
 
     return (
@@ -87,253 +51,158 @@ export default function RekeningBank({ navigation }) {
                 title={'Rekening Bank'}
             />
             {
-                buttonLoading &&
-                <View style={{
-                    position: 'absolute',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    top: 0,
-                    left: 0,
-                    bottom: 0,
-                    right: 0,
-                    zIndex: 999,
-                }}>
-                    <ActivityIndicator size="large" color={color.mainColor} />
-                </View>
-            }
-            {
                 lodaing ?
-                    <View style={{
-                        flex: 1,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                    }}>
-                        <ActivityIndicator size="large" color={color.mainColor} />
-                    </View>
-                    :
-                    <View style={[{
-                        borderWidth: 0.2,
-                        marginHorizontal: sizeWidth(5),
-                        padding: sizeWidth(3),
-                        borderRadius: 3,
-                        backgroundColor: color.bgWhite,
-                        shadowRadius: 10,
-                        marginTop: heightPercentageToDP(10),
-                        paddingVertical: heightPercentageToDP(5),
-                        zIndex: -999,
-                    },
-                    !buttonLoading && { elevation: 5 },
-                    ]}>
-                        <Text style={{
-                            fontSize: sizeFont(5),
-                            textAlign: 'center',
-                        }}>Nomor Rekening</Text>
-                        <View style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            alignItems: 'flex-end',
-                            marginTop: heightPercentageToDP(3),
-                        }} >
-                            {
-                                objekEmpty(noRekening) ?
-                                    <View>
+                    <>
+                        {
+                            objekEmpty(noRekening) ?
+                                <View style={{
+                                    flex: 1,
+                                }}>
+                                    <View style={{
+                                        alignItems: 'center',
+                                        marginTop: hp(5),
+                                    }}>
+                                        <View style={{
+                                            width: sizeWidth(85),
+                                            height: sizeWidth(50),
+                                            paddingHorizontal: sizeWidth(8),
+                                            justifyContent: 'space-between',
+                                            paddingVertical: sizeWidth(6),
+                                        }}>
+                                            <View style={{
+                                                width: sizeWidth(85),
+                                                height: sizeWidth(50),
+                                                position: 'absolute',
+                                                left: 0,
+                                            }}>
+                                                <Image
+                                                    source={require('../../../assets/images/Rekening/BG-Kartu.png')}
+                                                    style={{
+                                                        resizeMode: 'stretch',
+                                                        width: '100%',
+                                                        height: '100%',
+                                                    }}
+                                                />
+                                            </View>
+                                            <Text style={styles.TextContent}>{objekEmpty(noRekening) && noRekening.nama_bank}</Text>
+                                            <Text onPress={() => SalinAccount()} style={styles.TextContent}>{objekEmpty(noRekening) && noRekening.no_rek}</Text>
+                                            <Text style={[styles.TextContent, { fontFamily: Poppins.Regular, fontSize: sizeFont(4.5) }]}>{name_user}</Text>
+                                        </View>
                                         <View style={{
                                             flexDirection: 'row',
+                                            width: sizeWidth(80),
+                                            paddingLeft: sizeWidth(5),
+                                            marginTop: hp(5),
                                         }}>
-                                            <Text style={{
-                                                fontSize: sizeFont(3.5),
-                                            }}>Nama Bank : </Text>
-                                            <Text style={{
-                                                fontSize: sizeFont(4),
-                                                fontFamily: Poppins.Medium,
-                                                marginLeft: sizeWidth(2),
-                                            }}>{objekEmpty(noRekening) && noRekening.nama_bank}</Text>
-
+                                            <Image
+                                                source={require('../../../assets/images/Rekening/IconInfo.png')}
+                                                style={{
+                                                    resizeMode: 'contain',
+                                                    width: sizeWidth(4.5),
+                                                    height: sizeWidth(4.5),
+                                                    marginTop: 3,
+                                                }}
+                                            />
+                                            <Text
+                                                onPress={() => openWhatsApp('Salam')}
+                                                style={{
+                                                    marginLeft: sizeWidth(3),
+                                                    fontSize: sizeFont(3.5),
+                                                    color: color.mainColor1,
+                                                }}>Silahkan hubungi customer service untuk mengganti nomor rekening</Text>
                                         </View>
-                                        <Text style={{
-                                            fontSize: sizeFont(4),
-                                            fontFamily: Poppins.Medium,
-                                        }}>{objekEmpty(noRekening) && noRekening.no_rek}</Text>
-                                        <Text
-                                            onPress={() => SalinAccount()}
-                                            style={{
-                                                fontSize: sizeFont(3.5),
-                                                marginTop: heightPercentageToDP(3),
-                                            }}>Salin</Text>
                                     </View>
-                                    :
+                                </View>
+                                :
+                                <View style={{
+                                    flex: 1,
+                                }}>
                                     <View style={{
-                                        flex: 1,
-                                        marginRight: 20,
+                                        flex: 13,
                                     }}>
-                                        <TextInput
-                                            onChangeText={(e) => setNamaBank(e)}
-                                            placeholder="Nama Bank"
-                                            style={{
-                                                backgroundColor: color.bgBlack4,
-                                                elevation: 3,
-                                                paddingLeft: sizeWidth(3),
-                                                fontSize: sizeFont(3.5),
-                                                borderWidth: 0.1,
-                                                marginBottom: heightPercentageToDP(3),
-                                            }}
-                                        />
-                                        <TextInput
-                                            keyboardType="number-pad"
-                                            onChangeText={(e) => setNoRekening(e)}
-                                            placeholder="Nomor Rekening"
-                                            style={{
-                                                backgroundColor: color.bgBlack4,
-                                                elevation: 3,
-                                                paddingLeft: sizeWidth(3),
-                                                fontSize: sizeFont(3.5),
-                                                borderWidth: 0.1,
-                                            }}
-                                        />
+                                        <View style={{
+                                            alignItems: 'center',
+                                            marginTop: hp(7),
+                                        }}>
+                                            <View style={{
+                                                width: sizeWidth(75),
+                                                height: sizeWidth(75),
+                                            }}>
+                                                <Image
+                                                    source={require('../../../assets/images/Rekening/IconKosong.png')}
+                                                    style={{
+                                                        resizeMode: 'contain',
+                                                        width: '100%',
+                                                        height: '100%',
+                                                    }}
+                                                />
+                                            </View>
+                                            <View style={{
+                                                flexDirection: 'row',
+                                                width: sizeWidth(80),
+                                                paddingLeft: sizeWidth(5),
+                                            }}>
+                                                <Image
+                                                    source={require('../../../assets/images/Rekening/IconInfo.png')}
+                                                    style={{
+                                                        resizeMode: 'contain',
+                                                        width: sizeWidth(4.5),
+                                                        height: sizeWidth(4.5),
+                                                        marginTop: 3,
+                                                    }}
+                                                />
+                                                <Text style={{
+                                                    marginLeft: sizeWidth(3),
+                                                    fontSize: sizeFont(3.5),
+                                                    color: color.mainColor1,
+                                                }}>Rekening bak masih kosong. Silahkan masukkan data rekening bank</Text>
+                                            </View>
+                                        </View>
                                     </View>
-                            }
-                            {
-                                objekEmpty(noRekening) ?
-                                    <TouchableOpacity
-                                        onPress={() => setModal(true)}
-                                        activeOpacity={0.8}
-                                        style={{
-                                            paddingVertical: heightPercentageToDP(1.2),
-                                            borderRadius: 8,
-                                            backgroundColor: color.mainColor,
-                                            elevation: 8,
-                                            flex: 0.3,
-                                            alignItems: 'center',
-                                        }}>
-                                        <Text style={{
-                                            fontSize: sizeFont(3.5),
-                                            color: color.fontWhite,
-                                            fontFamily: Poppins.Medium,
-                                        }}>Edit</Text>
-                                    </TouchableOpacity>
-                                    :
-                                    <TouchableOpacity
-                                        onPress={() => handleUpdate()}
-                                        activeOpacity={0.8}
-                                        style={{
-                                            paddingVertical: heightPercentageToDP(1.2),
-                                            borderRadius: 8,
-                                            backgroundColor: color.mainColor,
-                                            elevation: 8,
-                                            flex: 0.3,
-                                            alignItems: 'center',
-                                        }}>
-                                        <Text style={{
-                                            fontSize: sizeFont(3.5),
-                                            color: color.fontWhite,
-                                            fontFamily: Poppins.Medium,
-                                        }}>Create</Text>
-                                    </TouchableOpacity>
-                            }
-                        </View>
+                                    <View style={{
+                                        flex: 2,
+                                        justifyContent: 'center',
+                                        paddingHorizontal: sizeWidth(5),
+                                    }}>
+                                        <TouchableOpacity
+                                            onPress={() => navigation.navigate('InputRekening')}
+                                            activeOpacity={0.8}
+                                            style={{
+                                                paddingVertical: hp(1.6),
+                                                borderRadius: 8,
+                                                backgroundColor: color.mainColor,
+                                                elevation: 8,
+                                                flex: 0.3,
+                                                alignItems: 'center',
+                                            }}>
+                                            <Text style={{
+                                                fontSize: sizeFont(3.5),
+                                                color: color.fontWhite,
+                                                fontFamily: Poppins.Medium,
+                                            }}>Masukkan Rekening</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                        }
+                    </>
+                    :
+                    <View style={{
+                        position: 'absolute',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        top: hp(8),
+                        left: 0,
+                        bottom: 0,
+                        right: 0,
+                        zIndex: 999,
+                    }}>
+                        <ActivityIndicator style={{
+                            backgroundColor: color.mainColor,
+                            borderRadius: 100,
+                            padding: 5,
+                        }} size="large" color={color.fontWhite} />
                     </View>
             }
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => {
-                    setModal(!modalVisible);
-                }}
-
-            >
-                <View style={{
-                    borderWidth: 0.2,
-                    marginHorizontal: sizeWidth(5),
-                    paddingHorizontal: sizeWidth(5),
-                    borderRadius: 3,
-                    backgroundColor: color.bgWhite,
-                    elevation: 5,
-                    shadowRadius: 10,
-                    marginTop: heightPercentageToDP(15),
-                    paddingVertical: heightPercentageToDP(5),
-                    height: heightPercentageToDP(45),
-                }}>
-                    <View style={{
-                        flex: 1,
-                    }}>
-                        <Text style={{
-                            fontSize: sizeFont(3.5),
-                            marginBottom: heightPercentageToDP(1),
-                        }}>Nama Bank</Text>
-                        <TextInput
-                            value={objekEmpty(noRekening) ? noRekening.nama_bank : null}
-                            onChangeText={(e) => setNamaBank(e)}
-                            placeholder="Nama Bank"
-                            style={{
-                                backgroundColor: color.bgBlack4,
-                                elevation: 3,
-                                paddingLeft: sizeWidth(3),
-                                fontSize: sizeFont(3.5),
-                                borderWidth: 0.1,
-                                marginBottom: heightPercentageToDP(3),
-                            }}
-                        />
-                        <Text style={{
-                            fontSize: sizeFont(3.5),
-                            marginBottom: heightPercentageToDP(1),
-                        }}>Nomor Rekening</Text>
-                        <TextInput
-                            value={objekEmpty(noRekening) ? noRekening.no_rek : null}
-                            onChangeText={(e) => setNoRekening(e)}
-                            keyboardType="number-pad"
-                            placeholder="Nomor Rekening"
-                            style={{
-                                backgroundColor: color.bgBlack4,
-                                elevation: 3,
-                                paddingLeft: sizeWidth(3),
-                                fontSize: sizeFont(3.5),
-                                borderWidth: 0.1,
-                            }}
-                        />
-                    </View>
-                    <View style={{
-                        flexDirection: 'row',
-                        justifyContent: 'flex-end',
-                    }}>
-                        <TouchableOpacity
-                            onPress={() => setModal(false)}
-                            activeOpacity={0.8}
-                            style={{
-                                paddingVertical: heightPercentageToDP(1.2),
-                                borderRadius: 8,
-                                backgroundColor: color.mainColor,
-                                elevation: 8,
-                                flex: 0.3,
-                                alignItems: 'center',
-                            }}>
-                            <Text style={{
-                                fontSize: sizeFont(3.5),
-                                color: color.fontWhite,
-                                fontFamily: Poppins.Medium,
-                            }}>Cancel</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={() => handleUpdate()}
-                            activeOpacity={0.8}
-                            style={{
-                                paddingVertical: heightPercentageToDP(1.2),
-                                borderRadius: 8,
-                                backgroundColor: color.mainColor,
-                                elevation: 8,
-                                flex: 0.3,
-                                alignItems: 'center',
-                                marginLeft: sizeWidth(5),
-                            }}>
-                            <Text style={{
-                                fontSize: sizeFont(3.5),
-                                color: color.fontWhite,
-                                fontFamily: Poppins.Medium,
-                            }}>Update</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </Modal>
         </View>
     );
 }
@@ -342,5 +211,10 @@ const styles = StyleSheet.create({
     Container: {
         flex: 1,
         backgroundColor: color.bgWhite,
+    },
+    TextContent: {
+        fontSize: sizeFont(5.5),
+        color: color.fontWhite,
+        fontFamily: Poppins.Medium,
     },
 });

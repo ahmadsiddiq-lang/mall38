@@ -198,7 +198,7 @@ export const getRekening = (idUser, setLoading) => {
                 type: GET_REKENING,
                 data: response.data.data,
             });
-            setLoading(false);
+            setLoading(true);
         }).catch(err => {
             console.log(err.response);
         });

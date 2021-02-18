@@ -32,6 +32,7 @@ import PageBayar from '../pages/PageBayar';
 import ForgotePassword from '../pages/ForgotePassword';
 import SaldoBonus from '../components/Akun/Pages/SaldoBonus';
 import RekeningBank from '../components/Akun/Pages/RekeningBank';
+import InputRekening from '../components/Akun/Pages/InputRekening';
 import UbahPin from '../components/Akun/Pages/UbahPin';
 import Panduan from '../components/Akun/Pages/Panduan';
 import Syarat from '../components/Akun/Pages/Syarat';
@@ -235,6 +236,7 @@ export default function MainNavigation() {
                 <Stack.Screen name="Syarat" component={Syarat} />
                 <Stack.Screen name="Kebijakan" component={Kebijakan} />
                 <Stack.Screen name="PageBayar" component={PageBayar} />
+                <Stack.Screen name="InputRekening" component={InputRekening} />
             </Stack.Navigator>
         </NavigationContainer>
     );
