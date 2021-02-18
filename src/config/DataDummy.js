@@ -323,7 +323,6 @@ export const PetunjukTransfer = [
                     {
                         no: 2,
                         text: 'Masukkan nomor Virtual Account ',
-                        no_virtual: 209347203947209,
                     },
                     {
                         no: 3,

@@ -49,10 +49,7 @@ class AccordionView extends Component {
                                     color: color.fontWhite,
                                     marginTop: 5,
                                 }}>{item.no}</Text></View>
-                                <Text style={styles.textContent}>{item.text}
-                                    <Text>{item.no_virtual}</Text>
-                                    <Text>{item.text2}</Text>
-                                </Text>
+                                <Text style={styles.textContent}>{item.text}</Text>
                             </View>
                         );
                     })
