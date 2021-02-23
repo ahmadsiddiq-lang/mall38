@@ -8,7 +8,8 @@ import { rupiah } from '../../config/function';
 
 export default function CardProduk({ item, navigation }) {
 
-    const produk = item.order_product[0].product;
+    const produk = item.order_product.length > 0 ? item.order_product[0].product : null;
+    const qty = item.order_product.length > 0 ? item.order_product[0].qty : null;
     // console.log(item);
 
     return (
@@ -42,7 +43,7 @@ export default function CardProduk({ item, navigation }) {
                 }}>
                     <View style={styles.BoxImage}>
                         {
-                            produk !== undefined ?
+                            produk !== null ?
                                 <Image
                                     resizeMethod="auto"
                                     style={{
@@ -69,7 +70,7 @@ export default function CardProduk({ item, navigation }) {
                         <Text numberOfLines={1} style={{
                             fontSize: sizeFont(3.5),
                             fontFamily: Poppins.Medium,
-                        }}>{produk.name}</Text>
+                        }}>{produk !== null && produk.name}</Text>
                         <View style={{
                             flexDirection: 'row',
                             justifyContent: 'space-between',
@@ -77,11 +78,11 @@ export default function CardProduk({ item, navigation }) {
                             <Text style={{
                                 fontSize: sizeFont(3.3),
                                 color: color.fontBlack1,
-                            }}>{produk.category.name}</Text>
+                            }}>{produk !== null && produk.category.name}</Text>
                             <Text style={{
                                 fontSize: sizeFont(3.3),
                                 color: color.fontBlack1,
-                            }}>x{item.order_product[0].qty}</Text>
+                            }}>x{qty !== null && qty}</Text>
                         </View>
                         <View style={{
                             flexDirection: 'row',
@@ -102,7 +103,7 @@ export default function CardProduk({ item, navigation }) {
                             textAlign: 'right',
                             fontSize: sizeFont(3.3),
                             color: color.mainColor,
-                        }}>Rp. {produk.price !== undefined && rupiah(produk.price)}</Text>
+                        }}>Rp. {produk !== null && produk.price !== undefined && rupiah(produk.price)}</Text>
                     </View>
                 </View>
                 {
@@ -136,7 +137,7 @@ export default function CardProduk({ item, navigation }) {
                             fontSize: sizeFont(3.5),
                             fontFamily: Poppins.Medium,
                             color: color.mainColor,
-                        }}>  Rp. {produk.price !== undefined && rupiah(item.total_pembayaran)}</Text>
+                        }}>  Rp. {produk !== null && produk.price !== undefined && rupiah(item.total_pembayaran)}</Text>
                     </Text>
                 </View>
             </View>
