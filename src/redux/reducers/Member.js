@@ -1,4 +1,4 @@
-import { GET_MEMBER } from '../actions/Member';
+import { CLEAR_MEMBER, GET_MEMBER } from '../actions/Member';
 
 const initioalState = {
     dataMember: [],
@@ -7,6 +7,11 @@ const initioalState = {
 const cartReducer = (state = initioalState, action) => {
     switch (action.type) {
         case GET_MEMBER:
+            return {
+                ...state,
+                dataMember: action.data,
+            };
+        case CLEAR_MEMBER:
             return {
                 ...state,
                 dataMember: action.data,

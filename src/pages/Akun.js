@@ -13,6 +13,7 @@ import { getDataUser, clearDataUser, getWallet, getHostoryWallet, clearDataWalle
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { clearTransaksi } from '../redux/actions/Transaksi';
 import { clearEdge } from '../redux/actions/edgeOrder';
+import { clearDataMember } from '../redux/actions/Member';
 
 export default function Akun({ navigation }) {
 
@@ -44,6 +45,7 @@ export default function Akun({ navigation }) {
             dispatch(clearDataWallet());
             dispatch(clearHistoryWallet());
             dispatch(clearTransaksi());
+            dispatch(clearDataMember());
             await AsyncStorage.clear();
             setModalVisible(!modalVisible);
             navigation.replace('Login');

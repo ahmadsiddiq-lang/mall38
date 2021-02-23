@@ -3,8 +3,9 @@ import { getToken } from '../../config/function';
 import { BASE_URL } from '../../config/URL';
 
 export const GET_MEMBER = 'GET_MEMBER';
+export const CLEAR_MEMBER = 'CLEAR_MEMBER';
 
-export const getMember = (kode) => {
+export const getMember = (kode, setLoading) => {
     return async (dispatch) => {
         await Axios.get(BASE_URL + 'get-member?refferal_code=' + kode, {
             withCredentials: true,
@@ -18,8 +19,18 @@ export const getMember = (kode) => {
                 type: GET_MEMBER,
                 data: response.data.data.member,
             });
+            setLoading(true);
         }).catch(err => {
             console.log(err.response);
+        });
+    };
+};
+
+export const clearDataMember = () => {
+    return (dispatch) => {
+        dispatch({
+            type: CLEAR_MEMBER,
+            data: [],
         });
     };
 };

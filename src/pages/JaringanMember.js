@@ -2,35 +2,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { heightPercentageToDP, widthPercentageToDP as wp } from 'react-native-responsive-screen';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { useDispatch, useSelector } from 'react-redux';
 import { color } from '../assets/colors/Index';
 import { SCREEN_HEIGHT, sizeFont } from '../assets/responsive';
 import Headers from '../components/Header/Headers';
 import { getMember } from '../redux/actions/Member';
-
-const data = [
-    { id: 1 },
-    { id: 2 },
-    { id: 3 },
-    { id: 4 },
-    { id: 5 },
-    { id: 6 },
-    // { id: 7 },
-    // { id: 8 },
-    // { id: 9 },
-    // { id: 10 },
-    // { id: 11 },
-    // { id: 12 },
-    // { id: 13 },
-    // { id: 14 },
-    // { id: 15 },
-    // { id: 16 },
-    // { id: 17 },
-    // { id: 18 },
-    // { id: 19 },
-    // { id: 20 },
-];
 
 export default function JaringanMember({ navigation }) {
 
@@ -42,6 +18,7 @@ export default function JaringanMember({ navigation }) {
     const nameUser = dataUser.name !== undefined ? dataUser.name : null;
 
     const [dataMember, setDataMember] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     // console.log(dataMemberHit);
 
@@ -63,13 +40,16 @@ export default function JaringanMember({ navigation }) {
 
     const getDataMember = useCallback(async () => {
         if (refferal_code !== null) {
-            dispatch(getMember(refferal_code));
+            dispatch(getMember(refferal_code, setLoading));
         }
     }, [dispatch, refferal_code]);
 
     useEffect(() => {
         pushSetLastData();
         getDataMember();
+        return () => {
+            setDataMember([]);
+        };
     }, [pushSetLastData, getDataMember]);
 
     return (
@@ -79,80 +59,98 @@ export default function JaringanMember({ navigation }) {
                 navigation={navigation}
             />
             {
-                dataMember.length > 0 ?
-                    <View style={styles.content}>
+                loading > 0 ?
+                    <>
+                        {
+                            dataMember.length > 0 ?
+                                <View style={styles.content}>
 
-                        <View style={styles.boxUser}>
-                            <View style={[styles.boxCard, {
-                                maxWidth: wp(25),
-                                minHeight: wp(15),
-                            }]}>
-                                <View style={styles.boxDesk}>
-                                    <Text style={styles.textDesk}>Parent</Text>
-                                </View>
-                                <Text numberOfLines={2} onPress={() => pushSetLastData()}>{nameUser !== null && nameUser}</Text>
-                            </View>
-                        </View>
-
-                        <View style={styles.boxLine1}>
-                            <View style={styles.boxLineUser} />
-                        </View>
-                        <View style={styles.boxRight}>
-                            <ScrollView>
-                                <View style={[styles.boxRight,
-                                dataMember.length <= 8 && {
-                                    // borderWidth: 1,
-                                    height: SCREEN_HEIGHT - heightPercentageToDP(23),
-                                }, {
-                                    marginVertical: heightPercentageToDP(2),
-                                    paddingBottom: heightPercentageToDP(4),
-                                }]}>
-                                    <View style={styles.boxLineGap}>
-                                        {
-                                            dataMember.length > 0 &&
-                                            dataMember.map((item, index) => {
-                                                if (dataMember.length === 1) {
-                                                    return (
-                                                        <View key={index} style={styles.boxLine}>
-                                                            <View style={styles.line} />
-                                                        </View>
-                                                    );
-                                                } else if (item.check === false) {
-                                                    return (
-                                                        <View key={index} style={styles.boxLine}>
-                                                            <View style={styles.box} />
-                                                        </View>
-                                                    );
-                                                }
-                                            })
-                                        }
+                                    <View style={styles.boxUser}>
+                                        <View style={[styles.boxCard, {
+                                            maxWidth: wp(25),
+                                            minHeight: wp(15),
+                                        }]}>
+                                            <View style={styles.boxDesk}>
+                                                <Text style={styles.textDesk}>Parent</Text>
+                                            </View>
+                                            <Text numberOfLines={2} onPress={() => pushSetLastData()}>{nameUser !== null && nameUser}</Text>
+                                        </View>
                                     </View>
 
-                                    <View style={styles.boxMember}>
-                                        {
-                                            dataMember.length > 0 &&
-                                            dataMember.map((item, index) => {
-                                                return (
-                                                    <View key={index}>
-                                                        <View style={styles.boxCard}>
-                                                            <View style={styles.boxDesk}>
-                                                                <Text style={styles.textDesk}>Member</Text>
-                                                            </View>
-                                                            <Text>{item.user_id.name}</Text>
-                                                        </View>
-                                                        {
-                                                            item.check === false &&
-                                                            <View style={styles.boxGap} />
-                                                        }
-                                                    </View>
-                                                );
-                                            })
-                                        }
+                                    <View style={styles.boxLine1}>
+                                        <View style={styles.boxLineUser} />
+                                    </View>
+                                    <View style={styles.boxRight}>
+                                        <ScrollView>
+                                            <View style={[styles.boxRight,
+                                            dataMember.length <= 8 && {
+                                                // borderWidth: 1,
+                                                height: SCREEN_HEIGHT - heightPercentageToDP(23),
+                                            }, {
+                                                marginVertical: heightPercentageToDP(2),
+                                                paddingBottom: heightPercentageToDP(4),
+                                            }]}>
+                                                <View style={styles.boxLineGap}>
+                                                    {
+                                                        dataMember.length > 0 &&
+                                                        dataMember.map((item, index) => {
+                                                            if (dataMember.length === 1) {
+                                                                return (
+                                                                    <View key={index} style={styles.boxLine}>
+                                                                        <View style={styles.line} />
+                                                                    </View>
+                                                                );
+                                                            } else if (item.check === false) {
+                                                                return (
+                                                                    <View key={index} style={styles.boxLine}>
+                                                                        <View style={styles.box} />
+                                                                    </View>
+                                                                );
+                                                            }
+                                                        })
+                                                    }
+                                                </View>
+
+                                                <View style={styles.boxMember}>
+                                                    {
+                                                        dataMember.length > 0 &&
+                                                        dataMember.map((item, index) => {
+                                                            return (
+                                                                <View key={index}>
+                                                                    <View style={styles.boxCard}>
+                                                                        <View style={styles.boxDesk}>
+                                                                            <Text style={styles.textDesk}>Member</Text>
+                                                                        </View>
+                                                                        <Text style={{
+                                                                            fontSize: sizeFont(3.5),
+                                                                        }}>{item.user_id.name}</Text>
+                                                                    </View>
+                                                                    {
+                                                                        item.check === false &&
+                                                                        <View style={styles.boxGap} />
+                                                                    }
+                                                                </View>
+                                                            );
+                                                        })
+                                                    }
+                                                </View>
+                                            </View>
+                                        </ScrollView>
                                     </View>
                                 </View>
-                            </ScrollView>
-                        </View>
-                    </View>
+                                :
+                                <View style={{
+                                    flex: 1,
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                }}>
+                                    <Text style={{
+                                        fontSize: sizeFont(4),
+                                        color: color.fontBlack1,
+                                    }}>Belum ada member</Text>
+                                </View>
+                        }
+                    </>
                     :
                     <View style={{
                         flex: 1,
@@ -176,7 +174,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     boxUser: {
-        flex: 1,
+        flex: 1.3,
         // borderWidth: 1,
         alignItems: 'flex-end',
         justifyContent: 'center',
