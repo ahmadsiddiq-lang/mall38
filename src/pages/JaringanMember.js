@@ -4,9 +4,74 @@ import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-nat
 import { heightPercentageToDP, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { useDispatch, useSelector } from 'react-redux';
 import { color } from '../assets/colors/Index';
+import { Poppins } from '../assets/fonts';
 import { SCREEN_HEIGHT, sizeFont } from '../assets/responsive';
 import Headers from '../components/Header/Headers';
+import { rupiah } from '../config/function';
 import { getMember } from '../redux/actions/Member';
+
+// const dataMemberHit = [
+//     {
+//         user_id: 1,
+//         name: 'ahmad',
+//     },
+//     {
+//         user_id: 2,
+//         name: 'ahmad',
+//     },
+//     {
+//         user_id: 3,
+//         name: 'ahmad',
+//     },
+//     {
+//         user_id: 4,
+//         name: 'ahmad',
+//     },
+//     {
+//         user_id: 5,
+//         name: 'ahmad',
+//     },
+//     {
+//         user_id: 6,
+//         name: 'ahmad',
+//     },
+//     {
+//         user_id: 7,
+//         name: 'ahmad',
+//     },
+//     {
+//         user_id: 8,
+//         name: 'ahmad',
+//     },
+//     {
+//         user_id: 9,
+//         name: 'ahmad',
+//     },
+//     {
+//         user_id: 10,
+//         name: 'ahmad',
+//     },
+//     {
+//         user_id: 11,
+//         name: 'ahmad',
+//     },
+//     {
+//         user_id: 12,
+//         name: 'ahmad',
+//     },
+//     {
+//         user_id: 13,
+//         name: 'ahmad',
+//     },
+//     {
+//         user_id: 14,
+//         name: 'ahmad',
+//     },
+//     {
+//         user_id: 15,
+//         name: 'ahmad',
+//     },
+// ];
 
 export default function JaringanMember({ navigation }) {
 
@@ -14,6 +79,7 @@ export default function JaringanMember({ navigation }) {
 
     const dataUser = useSelector(state => state.dataUser.dataUser.user);
     const dataMemberHit = useSelector(state => state.dataMember.dataMember);
+
     const refferal_code = dataUser.refferal_code !== undefined ? dataUser.refferal_code : null;
     const nameUser = dataUser.name !== undefined ? dataUser.name : null;
 
@@ -47,9 +113,6 @@ export default function JaringanMember({ navigation }) {
     useEffect(() => {
         pushSetLastData();
         getDataMember();
-        return () => {
-            setDataMember([]);
-        };
     }, [pushSetLastData, getDataMember]);
 
     return (
@@ -64,7 +127,28 @@ export default function JaringanMember({ navigation }) {
                         {
                             dataMember.length > 0 ?
                                 <View style={styles.content}>
-
+                                    <View style={{
+                                        position: 'absolute',
+                                        top: heightPercentageToDP(5),
+                                        left: wp(5),
+                                        alignItems: 'center',
+                                        borderRadius: 8,
+                                        padding: wp(2),
+                                        maxWidth: wp(35),
+                                        flexWrap: 'nowrap',
+                                    }}>
+                                        <Text style={{
+                                            fontSize: sizeFont(4),
+                                            color: color.mainColor,
+                                            borderBottomWidth: 1,
+                                            borderBottomColor: color.mainColor,
+                                        }}>Total Member</Text>
+                                        <Text style={{
+                                            fontFamily: Poppins.Medium,
+                                            fontSize: sizeFont(5),
+                                            color: color.mainColor,
+                                        }}>{rupiah(dataMember.length)}</Text>
+                                    </View>
                                     <View style={styles.boxUser}>
                                         <View style={[styles.boxCard, {
                                             maxWidth: wp(25),
@@ -86,9 +170,9 @@ export default function JaringanMember({ navigation }) {
                                             dataMember.length <= 8 && {
                                                 // borderWidth: 1,
                                                 height: SCREEN_HEIGHT - heightPercentageToDP(23),
+                                                paddingVertical: 0,
                                             }, {
-                                                marginVertical: heightPercentageToDP(2),
-                                                paddingBottom: heightPercentageToDP(4),
+                                                paddingVertical: heightPercentageToDP(3),
                                             }]}>
                                                 <View style={styles.boxLineGap}>
                                                     {
@@ -121,7 +205,7 @@ export default function JaringanMember({ navigation }) {
                                                                         <View style={styles.boxDesk}>
                                                                             <Text style={styles.textDesk}>Member</Text>
                                                                         </View>
-                                                                        <Text style={{
+                                                                        <Text numberOfLines={1} style={{
                                                                             fontSize: sizeFont(3.5),
                                                                         }}>{item.user_id.name}</Text>
                                                                     </View>
@@ -174,7 +258,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     boxUser: {
-        flex: 1.3,
+        flex: 1.2,
         // borderWidth: 1,
         alignItems: 'flex-end',
         justifyContent: 'center',
@@ -191,11 +275,14 @@ const styles = StyleSheet.create({
     boxRight: {
         flex: 2,
         flexDirection: 'row',
+        // borderWidth: 1,
+        alignItems: 'center',
+        paddingRight: wp(2),
     },
     boxLineGap: {
         // flexDirection: 'column',
-        flex: 0.3,
         // borderWidth: 1,
+        flex: 0.3,
         justifyContent: 'center',
     },
     boxLine: {

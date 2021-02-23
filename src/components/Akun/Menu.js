@@ -96,7 +96,7 @@ export default function Menu({ handleNavEditUser, navigation }) {
                         flexDirection: 'row',
                         alignItems: 'center',
                     }}>
-                        <FontAwesome5 name={'network-wired'} size={sizeFont(4)} color={color.fontBlack1} solid />
+                        <FontAwesome5 name={'network-wired'} size={sizeFont(4)} color={color.mainColor} solid />
                         <Text style={{
                             fontSize: sizeFont(3.3),
                             marginLeft: sizeWidth(3),
