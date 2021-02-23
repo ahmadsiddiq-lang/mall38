@@ -3,6 +3,15 @@ import { StatusBar } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useDispatch, useSelector } from 'react-redux';
+import { getIdUser } from '../config/function';
+import { getTransaksi } from '../redux/actions/Transaksi';
+import { linking } from '../config/Linking';
+import { fcmService } from '../config/FCMService';
+import { localNotificationService } from '../config/LocalNotificationService';
+import { setEdge } from '../redux/actions/edgeOrder';
+import { sizeFont } from '../assets/responsive';
+import { color } from '../assets/colors/Index';
 import Home from '../pages/Home';
 import Product from '../pages/Product';
 import TransaksiInfo from '../pages/TransaksiInfo';
@@ -10,8 +19,6 @@ import ProductCategori from '../pages/ProductCategori';
 import Akun from '../pages/Akun';
 import DetailProduk from '../pages/DetailProduk';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { sizeFont } from '../assets/responsive';
-import { color } from '../assets/colors/Index';
 import Login from '../pages/Login';
 import Cart from '../pages/Cart';
 import Register from '../pages/Register';
@@ -30,6 +37,7 @@ import SetOTP from '../pages/SetOTP';
 import Promo from '../pages/Promo';
 import PageBayar from '../pages/PageBayar';
 import ForgotePassword from '../pages/ForgotePassword';
+import JaringanMember from '../pages/JaringanMember';
 import SaldoBonus from '../components/Akun/Pages/SaldoBonus';
 import RekeningBank from '../components/Akun/Pages/RekeningBank';
 import InputRekening from '../components/Akun/Pages/InputRekening';
@@ -37,13 +45,7 @@ import UbahPin from '../components/Akun/Pages/UbahPin';
 import Panduan from '../components/Akun/Pages/Panduan';
 import Syarat from '../components/Akun/Pages/Syarat';
 import Kebijakan from '../components/Akun/Pages/Kebijakan';
-import { useDispatch, useSelector } from 'react-redux';
-import { getIdUser } from '../config/function';
-import { getTransaksi } from '../redux/actions/Transaksi';
-import { linking } from '../config/Linking';
-import { fcmService } from '../config/FCMService';
-import { localNotificationService } from '../config/LocalNotificationService';
-import { setEdge } from '../redux/actions/edgeOrder';
+
 
 const Tab = createBottomTabNavigator();
 
@@ -237,6 +239,7 @@ export default function MainNavigation() {
                 <Stack.Screen name="Kebijakan" component={Kebijakan} />
                 <Stack.Screen name="PageBayar" component={PageBayar} />
                 <Stack.Screen name="InputRekening" component={InputRekening} />
+                <Stack.Screen name="JaringanMember" component={JaringanMember} />
             </Stack.Navigator>
         </NavigationContainer>
     );

@@ -5,6 +5,7 @@ import { color } from '../../assets/colors/Index';
 import { Poppins } from '../../assets/fonts';
 import { sizeFont, sizeHeight, sizeWidth } from '../../assets/responsive';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 export default function Menu({ handleNavEditUser, navigation }) {
 
@@ -41,6 +42,29 @@ export default function Menu({ handleNavEditUser, navigation }) {
                     <Ionicons name="chevron-forward" size={sizeFont(3.5)} color={color.fontBlack1} />
                 </TouchableOpacity> */}
                 <TouchableOpacity
+                    onPress={() => handleNavEditUser()}
+                    activeOpacity={0.8}
+                    style={styles.BtnList}
+                >
+                    <View style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                    }}>
+                        <Image
+                            style={{
+                                resizeMode: 'contain',
+                                width: sizeWidth(5),
+                                height: sizeWidth(5),
+                            }}
+                            source={require('../../assets/images/pageAkun/Profile.png')} />
+                        <Text style={{
+                            fontSize: sizeFont(3.3),
+                            marginLeft: sizeWidth(3),
+                        }}>Profile</Text>
+                    </View>
+                    <Ionicons name="chevron-forward" size={sizeFont(3.5)} color={color.fontBlack1} />
+                </TouchableOpacity>
+                <TouchableOpacity
                     onPress={() => navigation.navigate('RekeningBank')}
                     activeOpacity={0.8}
                     style={styles.BtnList}
@@ -64,7 +88,7 @@ export default function Menu({ handleNavEditUser, navigation }) {
                     <Ionicons name="chevron-forward" size={sizeFont(3.5)} color={color.fontBlack1} />
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={() => handleNavEditUser()}
+                    onPress={() => navigation.navigate('JaringanMember')}
                     activeOpacity={0.8}
                     style={styles.BtnList}
                 >
@@ -72,17 +96,11 @@ export default function Menu({ handleNavEditUser, navigation }) {
                         flexDirection: 'row',
                         alignItems: 'center',
                     }}>
-                        <Image
-                            style={{
-                                resizeMode: 'contain',
-                                width: sizeWidth(5),
-                                height: sizeWidth(5),
-                            }}
-                            source={require('../../assets/images/pageAkun/Profile.png')} />
+                        <FontAwesome5 name={'network-wired'} size={sizeFont(4)} color={color.fontBlack1} solid />
                         <Text style={{
                             fontSize: sizeFont(3.3),
                             marginLeft: sizeWidth(3),
-                        }}>Profile</Text>
+                        }}>Jaringan Member</Text>
                     </View>
                     <Ionicons name="chevron-forward" size={sizeFont(3.5)} color={color.fontBlack1} />
                 </TouchableOpacity>
