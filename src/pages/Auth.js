@@ -14,7 +14,7 @@ export default function Auth({ navigation }) {
     const dispatch = useDispatch();
     const cekLogin = React.useCallback(async () => {
         const idUser = await getIdUser();
-        const spalsh = await AsyncStorage.getItem('splash');
+        const spalsh = await AsyncStorage.removeItem('splash');
         const x = setTimeout(() => {
             if (idUser !== null) {
                 navigation.replace('MyTabbar');

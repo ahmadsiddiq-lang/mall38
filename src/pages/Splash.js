@@ -1,12 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React from 'react';
-import { FlatList, Image, StyleSheet, Text, View, Animated } from 'react-native';
+import { Image, StyleSheet, Text, View, Animated } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { color } from '../assets/colors/Index';
 import { Poppins } from '../assets/fonts';
-import { SCREEN_HEIGHT, SCREEN_WIDTH, sizeFont } from '../assets/responsive';
+import { SCREEN_WIDTH, sizeFont } from '../assets/responsive';
 
 const image = [
     {
@@ -45,7 +45,6 @@ export default function Splash({ navigation }) {
         <View style={styles.container}>
             <Animated.FlatList
                 showsHorizontalScrollIndicator={false}
-                // pagingEnabled
                 snapToInterval={SCREEN_WIDTH}
                 decelerationRate="fast"
                 horizontal
