@@ -38,6 +38,7 @@ import Promo from '../pages/Promo';
 import PageBayar from '../pages/PageBayar';
 import ForgotePassword from '../pages/ForgotePassword';
 import JaringanMember from '../pages/JaringanMember';
+import Splash from '../pages/Splash';
 import SaldoBonus from '../components/Akun/Pages/SaldoBonus';
 import RekeningBank from '../components/Akun/Pages/RekeningBank';
 import InputRekening from '../components/Akun/Pages/InputRekening';
@@ -240,6 +241,7 @@ export default function MainNavigation() {
                 <Stack.Screen name="PageBayar" component={PageBayar} />
                 <Stack.Screen name="InputRekening" component={InputRekening} />
                 <Stack.Screen name="JaringanMember" component={JaringanMember} />
+                <Stack.Screen name="Splash" component={Splash} />
             </Stack.Navigator>
         </NavigationContainer>
     );

@@ -14,11 +14,16 @@ export default function Auth({ navigation }) {
     const dispatch = useDispatch();
     const cekLogin = React.useCallback(async () => {
         const idUser = await getIdUser();
+        const spalsh = await AsyncStorage.getItem('splash');
         const x = setTimeout(() => {
             if (idUser !== null) {
                 navigation.replace('MyTabbar');
             } else {
-                navigation.replace('Login');
+                if (spalsh == null) {
+                    navigation.replace('Splash');
+                } else {
+                    navigation.replace('Login');
+                }
             }
             return () => {
                 clearTimeout(x);

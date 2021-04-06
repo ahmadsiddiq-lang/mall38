@@ -13,7 +13,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
 import { detailOrder, clearDetailOrder } from '../redux/actions/DetailOrder';
 import { rupiah, objekEmpty, openWhatsApp } from '../config/function';
-import { heightPercentageToDP } from 'react-native-responsive-screen';
+import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { PetunjukTransfer } from '../config/DataDummy';
 
 export default function DetailOrder({ navigation, route }) {
@@ -61,6 +61,24 @@ export default function DetailOrder({ navigation, route }) {
             {
                 objekEmpty(dataDetailOrder) ?
                     <ScrollView>
+                        <View style={{
+                            paddingHorizontal: widthPercentageToDP(5),
+                            marginBottom: heightPercentageToDP(1),
+                            paddingVertical: heightPercentageToDP(2),
+                            backgroundColor: color.bgWhite,
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                        }}>
+                            <Text style={{
+                                fontSize: sizeFont(3.5),
+                                fontFamily: Poppins.Medium,
+                            }}>No. Invoice</Text>
+                            <Text style={{
+                                fontSize: sizeFont(3.5),
+                                fontFamily: Poppins.Medium,
+                                color: color.mainColor,
+                            }}>{objekEmpty(dataDetailOrder) && dataDetailOrder.invoice}</Text>
+                        </View>
                         <Alamat
                             dataDetailOrder={dataDetailOrder}
                         />

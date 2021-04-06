@@ -46,7 +46,7 @@ export default function Akun({ navigation }) {
             dispatch(clearHistoryWallet());
             dispatch(clearTransaksi());
             dispatch(clearDataMember());
-            await AsyncStorage.clear();
+            await AsyncStorage.multiRemove(['idUser', 'token']);
             setModalVisible(!modalVisible);
             navigation.replace('Login');
         }
